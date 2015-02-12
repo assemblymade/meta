@@ -10,43 +10,45 @@ class Webhooks::GithubController < WebhookController
 
   def process_request
     type = request.headers['X-GitHub-Event']
-    if payload = ::Github::Payload.load(type, params)
+    return unless type == 'push'
 
-      product = Product.with_repo(payload.repo).first
-      if product.nil?
-        log "Product not found: #{payload.repo}"
-        return
-      end
+    payload = ::Github::Payload.load(type, params)
+    log 'Malformed payload' and return unless payload
 
-      if payload.nil?
-        log "Malformed payload"
-      else
-        # specs for this are found here:
-        # http://developer.github.com/v3/activity/events/types/#pushevent
+    product = Product.with_repo(payload.repo).first
+    log "Product not found: #{payload.repo}" and return unless product
 
-        if type == 'push'
-          Github::UpdateCommitCount.perform_async(product.id)
-          payload.commits.each do |commit|
-            author = commit['author']
-            if username = author['username']
-              user = User.find_by(github_login: username)
+    # specs for this are found here:
+    # http://developer.github.com/v3/activity/events/types/#pushevent
 
-              work = WorkFactory.create_with_transaction_entry!(
-                product: product,
-                user: user,
-                url: commit['url'],
-                metadata: { author: author, message: commit['message'], distinct: commit['distinct'], sha: commit['sha'] }
-              )
+    Github::UpdateCommitCount.perform_async(product.id)
 
-              Activities::GitPush.publish!(
-                actor: user,
-                subject: work,
-                target: product
-              )
-            end
-          end
-        end
-      end
+    payload.commits.each do |commit|
+      author = commit['author']
+
+      username = author['username']
+      next unless username
+
+      user = User.find_by(github_login: username)
+      next unless user
+
+      work = WorkFactory.create_with_transaction_entry!(
+        product: product,
+        user: user,
+        url: commit['url'],
+        metadata: {
+          author: author,
+          message: commit['message'],
+          distinct: commit['distinct'],
+          sha: commit['sha']
+        }
+      )
+
+      Activities::GitPush.publish!(
+        actor: user,
+        subject: work,
+        target: product
+      )
     end
   end
 

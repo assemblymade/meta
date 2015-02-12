@@ -14,4 +14,24 @@ describe 'Post' do
       post.update(title: 'A History of the World')
     end
   end
+
+  describe '#mark_names' do
+    let(:core) { User.make! }
+
+    before do
+      product.core_team << core
+    end
+
+    it 'does not allow #announcement unless user is core' do
+      expect {
+        Post.make!(author: author, product: product, mark_names: ['announcement'])
+      }.to raise_error
+    end
+
+    it 'automatically marks #announcement if user is core' do
+      post = Post.make!(author: core, product: product)
+
+      expect(post.mark_names).to include('announcement')
+    end
+  end
 end

@@ -73,7 +73,7 @@ var NewIdeaForm = React.createClass({
         <div className="clearfix mt3">
           <div className="right ml4">
             <Button type="primary" action={this.onNextClick}>
-              Start a discussion
+              Next
             </Button>
           </div>
 

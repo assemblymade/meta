@@ -1,6 +1,6 @@
 jest.dontMock(pathToFile('stores/posts_store'));
 
-var ActionTypes = global.CONSTANTS.ActionTypes;
+var ActionTypes = require(appFile('constants')).ActionTypes;
 
 describe('PostsStore', function(){
   var callback;

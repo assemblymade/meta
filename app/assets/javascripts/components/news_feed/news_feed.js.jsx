@@ -196,6 +196,11 @@ var NewsFeed = React.createClass({
     return _.map(this.state.items, function(item) {
       var target = item.target;
 
+      // FIXME: (pletcher) We should probably cull this sort of thing on the server.
+      if (!target) {
+        return;
+      }
+
       if (target.type === 'team_membership' && !productPage) {
         return null;
       }

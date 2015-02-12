@@ -1,8 +1,6 @@
 var ActionTypes = require('../constants').ActionTypes
-var AppsActionCreators = require('../actions/apps_action_creators')
 var Dispatcher = require('../dispatcher');
 var Store = require('./es6_store')
-var url = require('url')
 
 var _apps = null
 
@@ -28,7 +26,7 @@ class AppsStore extends Store {
           return
       }
       this.emitChange()
-    })
+    });
   }
 
   getApps() {
@@ -37,20 +35,5 @@ class AppsStore extends Store {
 }
 
 var store = new AppsStore()
-
-var dataTag = document.getElementById('AppsStore')
-if (dataTag) {
-  Dispatcher.dispatch({
-    type: ActionTypes.APPS_RECEIVE,
-    apps: JSON.parse(dataTag.innerHTML)
-  })
-} else {
-  var query = url.parse(window.location.href, true).query
-  if (query.search) {
-    AppsActionCreators.search(query.search)
-  } else {
-    AppsActionCreators.filterSelected(query)
-  }
-}
 
 module.exports = store

@@ -47,13 +47,14 @@ EOS
 end
 
 ROUTES = [
+  'award_product_wip',
   'discover',
   'discussion_comment',
   'discussion_comments',
   'edit_product',
   'heartables_lovers',
-  'idea',
   'idea_mark',
+  'idea',
   'ideas',
   'new_idea',
   'new_product_asset',
@@ -62,8 +63,10 @@ ROUTES = [
   'new_user_session',
   'notifications',
   'product',
+  'product_activity',
   'product_assets',
   'product_chat',
+  'product_financials',
   'product_follow',
   'product_people',
   'product_person',
@@ -73,12 +76,13 @@ ROUTES = [
   'product_screenshots',
   'product_tips',
   'product_unfollow',
-  'product_update',
   'product_update_subscribe',
   'product_update_unsubscribe',
-  'product_wips',
+  'product_update',
   'product_wip_close',
   'product_wip_reopen',
+  'product_wips',
+  'product',
   'readraptor',
   'user'
 ]

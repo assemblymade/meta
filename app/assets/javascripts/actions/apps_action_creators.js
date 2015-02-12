@@ -2,8 +2,26 @@ var ActionTypes = require('../constants').ActionTypes;
 var Dispatcher = require('../dispatcher');
 var elasticsearch = require('elasticsearch');
 var routes = require('../routes');
+var url = require('url');
 
 var AppsActionCreators = {
+  initialize: function() {
+    var dataTag = document.getElementById('AppsStore')
+    if (dataTag) {
+      Dispatcher.dispatch({
+        type: ActionTypes.APPS_RECEIVE,
+        apps: JSON.parse(dataTag.innerHTML)
+      })
+    } else {
+      var query = url.parse(window.location.href, true).query
+      if (query.search) {
+        this.search(query.search)
+      } else {
+        this.filterSelected(query)
+      }
+    }
+  },
+
   search: function(search) {
     Dispatcher.dispatch({
       type: ActionTypes.APPS_START_SEARCH

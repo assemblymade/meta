@@ -1,6 +1,6 @@
 jest.dontMock(pathToFile('stores/uploading_attachments_store'));
 
-var ActionTypes = global.CONSTANTS.ActionTypes;
+var ActionTypes = require(appFile('constants')).ActionTypes;
 
 describe('UploadingAttachmentsStore', function(){
   var callback;

@@ -348,7 +348,7 @@ var DashboardIndex = React.createClass({
               <p className="gray-2 mb0">Products here are built and owned by the community. When you contribute to a product the community rewards you with an ownership stake in its success.</p>
             </div>
             <div className="p3 center" style={{ backgroundColor: '#f9f9f9' }}>
-              <Button action={function() {window.location = "/discover"}}>Explore products</Button>
+              <Button action="/discover">Explore products</Button>
 
               <div className="mt2 center">
                 or <a href="/start" className="mt3 center">start your own</a>

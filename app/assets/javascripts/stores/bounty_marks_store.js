@@ -23,7 +23,7 @@ class BountyMarksStore extends Store {
   }
 
   getMarks() {
-    return marks.toJS();
+    return marks;
   }
 
   getMarkNames() {

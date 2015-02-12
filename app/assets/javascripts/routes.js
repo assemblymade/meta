@@ -206,6 +206,23 @@ exports.discussion_comment_path = function(options){
   }
 }
 
+exports.product_activity_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/activity?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/activity'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/activity'
+  }
+}
+
 exports.product_follow_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -393,6 +410,23 @@ exports.product_repos_path = function(options){
   }
 }
 
+exports.award_product_wip_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/' + params.id + '/award?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/' + params.id + '/award'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/bounties/' + params.id + '/award'
+  }
+}
+
 exports.product_wip_close_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -526,6 +560,23 @@ exports.product_post_path = function(options){
   } else {
     var params = options;
     return '/' + params.product_id + '/posts/' + params.id + ''
+  }
+}
+
+exports.product_financials_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/financials?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/financials'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/financials'
   }
 }
 

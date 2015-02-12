@@ -2,7 +2,7 @@ jest.dontMock(appFile('actions/news_feed_item_action_creators'));
 
 describe('NewsFeedItemActionCreators', function() {
   var NewsFeedItemActionCreators, dispatcherCallback;
-  var ActionTypes = global.CONSTANTS.ActionTypes;
+  var ActionTypes = require(appFile('constants')).ActionTypes;
 
   beforeEach(function() {
     $.ajax = jest.genMockFunction();

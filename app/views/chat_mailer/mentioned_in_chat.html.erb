@@ -40,7 +40,9 @@
         <tbody class="width-toggle" style="display:block;">
             <tr class="width-toggle" style="display:block;">
             <td class="width-toggle" style="display:block;">
-              <%= render 'emails/timeline_timestamp', timestamp: @previous_events.first.created_at %>
+              <% if @previous_events.present? %>
+                <%= render 'emails/timeline_timestamp', timestamp: @previous_events.first.created_at %>
+              <% end %>
               <% @comments.each.with_index do |c, i| %>
                 <%= render 'emails/timeline_spacer' if i > 0 %>
 

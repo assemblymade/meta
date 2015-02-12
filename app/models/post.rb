@@ -1,4 +1,4 @@
-  require 'activerecord/uuid'
+require 'activerecord/uuid'
 
 class Post < ActiveRecord::Base
   include ActiveRecord::UUID
@@ -66,13 +66,24 @@ class Post < ActiveRecord::Base
   end
 
   def mark_as_announcement
-    if self.product.core_team?(self.user)
+    if product.core_team?(user)
       Marking.create!(markable: self, mark: Mark.find_or_create_by!(name: ANNOUNCEMENT_MARK), weight: 1.0)
     end
   end
 
   def mark_as_discussion
     Marking.create!(markable: self, mark: Mark.find_or_create_by!(name: DISCUSSION_MARK), weight: 1.0)
+  end
+
+  def mark_names
+    marks.map(&:name)
+  end
+
+  def mark_names=(names)
+    self.marks = Array.wrap(names).flatten.map do |n|
+      raise "Cannot create an announcement" if n.strip == ANNOUNCEMENT_MARK && !product.core_team?(self.user)
+      Mark.find_or_create_by!(name: n.strip)
+    end
   end
 
   def push_to_news_feed
