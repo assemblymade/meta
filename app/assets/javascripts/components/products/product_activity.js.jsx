@@ -8,10 +8,10 @@ const IntroductionActions = require('../../actions/introduction_actions');
 const IntroductionStore = require('../../stores/introduction_store');
 const NewsFeed = require('../news_feed/news_feed.js.jsx');
 const NewsFeedItemsStore = require('../../stores/news_feed_items_store');
-const ProductImportantLinks = require('./product_important_links.js.jsx');
-const ProductHeader = require('./product_header.js.jsx');
-const ProductStore = require('../../stores/product_store');
 const PostMarksStore = require('../../stores/post_marks_store');
+const ProductHeader = require('./product_header.js.jsx');
+const ProductImportantLinks = require('./product_important_links.js.jsx');
+const ProductStore = require('../../stores/product_store');
 const Routes = require('../../routes');
 const Tile = require('../ui/tile.js.jsx');
 const TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
@@ -148,7 +148,7 @@ let ProductActivity = React.createClass({
   renderBountyFilters() {
     let renderedTags = this.renderMarkFilters(
       BOUNTY_TARGET_TYPE,
-      (this.state.bountyMarks || []).map(mark => mark[0])
+      (this.state.bountyMarks || Immutable.List())
     ) || [];
 
 

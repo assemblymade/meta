@@ -48,7 +48,7 @@ let ProductBounty = React.createClass({
       bounty: BountyStore.getBounty(),
       item: NewsFeedItemStore.getItem(),
       product: ProductStore.getProduct(),
-      tags: BountyMarksStore.getMarkNames(),
+      tags: BountyMarksStore.getMarks(),
       valuation: ValuationStore.getValuation()
     };
   },
@@ -61,7 +61,7 @@ let ProductBounty = React.createClass({
 
   onBountyMarksChange() {
     this.setState({
-      tags: BountyMarksStore.getMarkNames(),
+      tags: BountyMarksStore.getMarks(),
     });
   },
 

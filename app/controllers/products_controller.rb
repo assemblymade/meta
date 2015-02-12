@@ -239,7 +239,10 @@ class ProductsController < ProductController
 
     news_feed_items = @product.news_feed_items
 
-    @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
+    @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT).map do |name, number|
+      name
+    end
+
     @post_marks = Marking.includes(:mark).uniq.
       where(markable_type: Post, markable_id: news_feed_items.pluck(:target_id)).pluck(:name)
 

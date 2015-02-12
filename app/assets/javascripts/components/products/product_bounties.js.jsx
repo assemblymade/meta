@@ -49,7 +49,7 @@ let ProductBounties = React.createClass({
     return {
       assets: AssetsStore.getAssets(),
       product: ProductStore.getProduct(),
-      tags: BountyMarksStore.getMarkNames(),
+      tags: BountyMarksStore.getMarks(),
       valuation: ValuationStore.getValuation()
     };
   },
@@ -62,7 +62,7 @@ let ProductBounties = React.createClass({
 
   onBountyMarksChange() {
     this.setState({
-      tags: BountyMarksStore.getMarkNames(),
+      tags: BountyMarksStore.getMarks(),
     });
   },
 

@@ -358,7 +358,7 @@ let Bounty = React.createClass({
     BountyActionCreators.call(e, 'bounty.started', startWorkUrl);
 
     this.setState({
-      worker: currentUser && currentUser.attributes,
+      worker: currentUser,
       lockUntil: moment().add(60, 'hours')
     });
   },

@@ -88,7 +88,7 @@
             </a>
           </li>
         )
-      }.bind(this))
+      }.bind(this)).toJS();
     },
 
     renderAssets: function() {
@@ -131,7 +131,7 @@
                   Getting Started with Bounties
                 </div>
                 <div className="h6 m0 gray-1">
-                  A bounty is the community asking for help on {product.name}. 
+                  A bounty is the community asking for help on {product.name}.
                   Find one that you would like to do and jump right in.
                   <br/><br/>
                   Ping <a href={product.people_url}>@core</a> in our chat room if you have any questions.
