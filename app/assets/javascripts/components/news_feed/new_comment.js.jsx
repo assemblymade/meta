@@ -109,7 +109,7 @@ var NewComment = React.createClass({
       'full-width': true,
       'form-control': true,
       '_border-rad0_5': true,
-      'h5 mt0 mb0': true
+      'h5 mt0 mb2': true
     });
 
     return (

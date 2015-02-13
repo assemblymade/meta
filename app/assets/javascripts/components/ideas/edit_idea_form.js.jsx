@@ -66,7 +66,7 @@ var EditIdeaForm = React.createClass({
 
     return (
       <form>
-        <div className="px4 form-group">
+        <div className="px4 mt3 form-group">
           <label>What's the elevator pitch?</label>
           <input type="text"
             className="form-control"
@@ -74,8 +74,6 @@ var EditIdeaForm = React.createClass({
             value={this.state.ideaName}
             onChange={this.handleIdeaNameChange} />
         </div>
-
-        <hr style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
 
         <div className="px4 form-group">
           <label>Describe it in more detail</label>
@@ -89,8 +87,6 @@ var EditIdeaForm = React.createClass({
               thread={item.id}
               url="/ideas" />
         </div>
-
-        <hr style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
 
         <div className="px4 form-group">
           <fieldset>
@@ -124,8 +120,6 @@ var EditIdeaForm = React.createClass({
             </div>
           </fieldset>
         </div>
-
-        <hr className="py0 mb0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
 
         <div className="clearfix px4 py2">
           <div className="right">

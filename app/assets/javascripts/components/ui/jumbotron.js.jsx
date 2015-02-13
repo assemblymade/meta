@@ -1,9 +1,4 @@
 var Jumbotron = React.createClass({
-
-  propTypes: {
-    bg: React.PropTypes.string.isRequired
-  },
-
   render() {
     return (
       <div className="jumbotron">

@@ -5,6 +5,7 @@ const Button = require('../ui/button.js.jsx');
 const CreateProductItem = require('../create_product_item.js.jsx');
 const CreateProductItemStore = require('../../stores/create_product_item_store');
 const Icon = require('../ui/icon.js.jsx');
+const page = require('page');
 const ProductFollowers = require('../product_followers.js.jsx');
 const ProductHeaderStore = require('../../stores/product_header_store');
 const ProductStore = require('../../stores/product_store');

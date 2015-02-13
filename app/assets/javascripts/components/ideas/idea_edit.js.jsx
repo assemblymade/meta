@@ -1,8 +1,11 @@
-var EditIdeaForm = require('./edit_idea_form.js.jsx');
-var IdeaContainer = require('./idea_container.js.jsx');
-var IdeaStore = require('../../stores/idea_store');
+'use strict';
 
-var IdeaEdit = React.createClass({
+const Drawer = require('../ui/drawer.js.jsx');
+const EditIdeaForm = require('./edit_idea_form.js.jsx');
+const IdeaContainer = require('./idea_container.js.jsx');
+const IdeaStore = require('../../stores/idea_store');
+
+let IdeaEdit = React.createClass({
   propTypes: {
     navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
@@ -23,7 +26,14 @@ var IdeaEdit = React.createClass({
     getInitialState() {
       return {
         idea: IdeaStore.getIdea(),
+        isDrawerOpen: false
       };
+    },
+
+    handleHowItWorksClick() {
+      this.setState({
+        isDrawerOpen: !this.state.isDrawerOpen
+      });
     },
 
     onIdeaChange() {
@@ -33,14 +43,14 @@ var IdeaEdit = React.createClass({
     render() {
       return (
         <IdeaContainer showRelatedIdeas={false}>
-          <div className="clearfix py2">
-            <div className="left px2">
+          <div className="clearfix py2 border-bottom border-gray">
+            <div className="left px4">
               <h4 className="mb0 mt0">Edit your idea</h4>
             </div>
 
-            <div className="right px2">
+            <div className="right px4">
               <small className="mt2">
-                <a href="#">
+                <a href="javascript:void(0);" onClick={this.handleHowItWorksClick}>
                   How it works{' '}
                   <span style={{ color: '#fe8100' }}>
                     <Icon icon="question-circle" />
@@ -50,7 +60,19 @@ var IdeaEdit = React.createClass({
             </div>
           </div>
 
-          <hr className="mt0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
+          <div className="px4">
+            <Drawer open={this.state.isDrawerOpen}>
+              <div className="px3 mt2 gray-1">
+                <p className="px3">
+                  After you submit your idea, you'll hash out the specifics of your{' '}
+                  project with the Assembly community. Gain enough traction (through{' '}
+                  hearts on your idea), and you'll be ready to launch! Others{' '}
+                  will jump in and help shape your idea &mdash; you'll be building{' '}
+                  alongside an awesome community of talented folks from all over.
+                </p>
+              </div>
+            </Drawer>
+          </div>
 
           <EditIdeaForm idea={this.state.idea} />
         </IdeaContainer>

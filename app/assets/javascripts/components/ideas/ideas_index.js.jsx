@@ -1,21 +1,23 @@
-var App = require('../app.js.jsx')
-var Button = require('../ui/button.js.jsx');
-var DropdownMenu = require('../ui/dropdown_menu.js.jsx')
-var IdeaTile = require('./idea_tile.js.jsx');
-var IdeaAdminStore = require('../../stores/idea_admin_store');
-var IdeasStore = require('../../stores/ideas_store');
-var IdeaTile = require('./idea_tile.js.jsx');
-var Nav = require('../ui/nav.js.jsx')
-var NewIdeaModal = require('./new_idea_modal.js.jsx');
-var Pagination = require('../pagination/pagination.js.jsx');
-var UserStore = require('../../stores/user_store');
-var Jumbotron = require('../ui/jumbotron.js.jsx')
+'use strict';
 
-var IdeasIndex = React.createClass({
+const App = require('../app.js.jsx')
+const Button = require('../ui/button.js.jsx');
+const DropdownMenu = require('../ui/dropdown_menu.js.jsx')
+const IdeaAdminStore = require('../../stores/idea_admin_store');
+const IdeasStore = require('../../stores/ideas_store');
+const IdeaTile = require('./idea_tile.js.jsx');
+const Jumbotron = require('../ui/jumbotron.js.jsx');
+const Nav = require('../ui/nav.js.jsx');
+const NewIdeaModal = require('./new_idea_modal.js.jsx');
+const page = require('page');
+const Pagination = require('../pagination/pagination.js.jsx');
+const UserStore = require('../../stores/user_store');
+
+let IdeasIndex = React.createClass({
   displayName: 'IdeasIndex',
 
   propTypes: {
-    navigate: React.PropTypes.func.isRequired,
+    navigate: React.PropTypes.func,
     params: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object
@@ -50,10 +52,10 @@ var IdeasIndex = React.createClass({
   },
 
   render() {
-    var currentApp, lastApp
-    var navigate = this.props.navigate
+    let currentApp, lastApp
+    let navigate = this.props.navigate
 
-    var topicsDropdownMenu = this.renderTopics()
+    let topicsDropdownMenu = this.renderTopics()
 
     if (this.state.currentProduct) {
       currentApp = <App app={this.state.currentProduct} />
@@ -136,7 +138,7 @@ var IdeasIndex = React.createClass({
   },
 
   renderIdeas() {
-    var ideas = this.state.ideas;
+    let ideas = this.state.ideas;
 
     if (ideas.length) {
       return ideas.map((idea) => {
@@ -148,24 +150,23 @@ var IdeasIndex = React.createClass({
   },
 
   renderMyIdeas() {
-    var navigate = this.props.navigate;
-    var user = UserStore.getUser()
-    var username = user && user.username;
+    let user = UserStore.getUser()
+    let username = user && user.username;
 
     if (username) {
-      var url = "/ideas?user=" + username
+      let url = "/ideas?user=" + username
       return [
-        <Nav.Divider />,
-        <Nav.Item label="My ideas" href={url} onClick={navigate.bind(null, url)} />
+        <Nav.Divider key="nav-divider" />,
+        <Nav.Item label="My ideas" href={url} onClick={function() { page(url) }} key={url} />
       ]
     }
   },
 
   renderTopics() {
-    var availableTopics = IdeaAdminStore.getAvailableTopics();
+    let availableTopics = IdeaAdminStore.getAvailableTopics();
 
     if ((availableTopics || []).length > 0) {
-      var topics = availableTopics.map((topic) => {
+      let topics = availableTopics.map((topic) => {
         return (
           <DropdownMenu.Item label={topic.name} key={topic.slug} action={'/ideas?topic=' + topic.slug} />
         );
