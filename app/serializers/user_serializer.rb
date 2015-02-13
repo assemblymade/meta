@@ -12,7 +12,7 @@ class UserSerializer < ApplicationSerializer
   end
 
   def avatar_url
-    object.avatar.url(140).to_s
+    object.avatar.url(288).to_s
   end
 
   def last_online
