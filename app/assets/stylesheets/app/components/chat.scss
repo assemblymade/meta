@@ -48,10 +48,11 @@
 
 .chat .markdown img {
   max-width: 50%;
+  width: 50%;
+}
 
-  .emoji {
-    width: inherit;
-  }
+.chat .markdown .emoji {
+  width: inherit;
 }
 
 .chat .activity-content {
