@@ -5,7 +5,7 @@ module.exports = {
   searchUsers: function(text) {
     var postData = {
       suggest_username: {
-        text: text,
+        text: text.toLowerCase(),
         completion: {
           field: 'suggest_username'
         }

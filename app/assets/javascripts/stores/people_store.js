@@ -17,7 +17,7 @@ var _peopleStore = _.extend(_store, {
 
   filterByUsername: function(partial) {
     return _(_people).filter(function(user){
-      return user.username.toLowerCase().indexOf(partial) != -1
+      return user.username.toLowerCase().indexOf((partial || '').toLowerCase()) != -1
     })
   },
 
