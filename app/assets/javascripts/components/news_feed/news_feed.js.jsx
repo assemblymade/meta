@@ -110,20 +110,9 @@ let NewsFeed = React.createClass({
       <div>
         {this.spinner()}
 
-        <div className="container" key="news-feed-container">
-          <div className="py1 center" key="news-feed-filter-count">
-            {this.displayCount()}
-          </div>
-          <div className="clearfix mxn2" key="news-feed-items">
+        <div className="container">
+          <div className="clearfix mxn2">
             {this.renderItems()}
-          </div>
-
-          <div className="mb4" key="news-feed-load-more">
-            <a href="javascript:void(0);"
-                  onClick={this.fetchMoreNewsFeedItems()}
-                  className="btn btn-default btn-block" disabled={disabled}>
-              {this.state.disabled ? <Spinner /> : 'Load more'}
-            </a>
           </div>
         </div>
       </div>
@@ -135,7 +124,7 @@ let NewsFeed = React.createClass({
       <div className="well center">
         There hasn't been any activity yet. Why not <a href="/chat/meta">jump into chat</a> to see where you can help?
       </div>
-    ); // '
+    );
   },
 
   renderItems: function() {

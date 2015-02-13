@@ -217,7 +217,7 @@ let ProductsHandlers = {
     });
 
     _showCreatePost();
-    _setActiveTab('updates');
+    _setActiveTab('activity');
   },
 
   showProductPost(data) {
@@ -259,7 +259,7 @@ let ProductsHandlers = {
     });
 
     _showCreatePost();
-    _setActiveTab('updates');
+    _setActiveTab('activity');
   },
 
   showProductPosts(data) {
@@ -288,7 +288,7 @@ let ProductsHandlers = {
     });
 
     _showCreatePost();
-    _setActiveTab('updates');
+    _setActiveTab('activity');
   }
 };
 

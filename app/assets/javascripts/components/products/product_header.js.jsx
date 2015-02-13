@@ -118,7 +118,7 @@ let ProductHeader = React.createClass({
                   <a style={navStyle} href={product.url + '/bounties'}>Bounties</a>
                 </li>
 
-                <li className={this.isActive('updates')}>
+                <li>
                   <a style={navStyle} href={product.url + '/chat'}>Chat</a>
                 </li>
               </ul>
