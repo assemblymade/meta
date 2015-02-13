@@ -5,6 +5,7 @@ const Button = require('../ui/button.js.jsx');
 const CreateProductItem = require('../create_product_item.js.jsx');
 const CreateProductItemStore = require('../../stores/create_product_item_store');
 const Icon = require('../ui/icon.js.jsx');
+const page = require('page');
 const ProductFollowers = require('../product_followers.js.jsx');
 const ProductHeaderStore = require('../../stores/product_header_store');
 const ProductStore = require('../../stores/product_store');
@@ -118,8 +119,8 @@ let ProductHeader = React.createClass({
                   <a style={navStyle} href={product.url + '/bounties'}>Bounties</a>
                 </li>
 
-                <li className={this.isActive('updates')}>
-                  <a style={navStyle} href={product.url + '/posts'}>Updates</a>
+                <li>
+                  <a style={navStyle} href={product.url + '/chat'}>Chat</a>
                 </li>
               </ul>
             </div>

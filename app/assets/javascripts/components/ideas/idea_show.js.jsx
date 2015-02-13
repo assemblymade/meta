@@ -1,39 +1,34 @@
-var Avatar = require('../ui/avatar.js.jsx');
-var Button = require('../ui/button.js.jsx');
-var Drawer = require('../ui/drawer.js.jsx');
-var Heart = require('../heart.js.jsx');
-var Icon = require('../ui/icon.js.jsx');
-var Idea = require('./idea.js.jsx')
-var IdeaLovers = require('./idea_lovers.js.jsx');
-var IdeaProgressBar = require('./idea_progress_bar.js.jsx');
-var IdeaSharePanel = require('./idea_share_panel.js.jsx');
-var IdeaStore = require('../../stores/idea_store');
-var IdeaTile = require('./idea_tile.js.jsx');
-var Discussion = require('../ui/discussion.js.jsx');
-var LoveStore = require('../../stores/love_store');
-var Markdown = require('../markdown.js.jsx');
-var moment = require('moment');
-var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
-var ProgressBar = require('../ui/progress_bar.js.jsx');
-var RelatedIdeas = require('./related_ideas.js.jsx');
-var SvgIcon = require('../ui/svg_icon.js.jsx');
-var UserStore = require('../../stores/user_store');
-var TextPost = require('../ui/text_post.js.jsx')
-var Tile = require('../ui/tile.js.jsx')
+'use strict';
 
-var TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
+const Avatar = require('../ui/avatar.js.jsx');
+const Button = require('../ui/button.js.jsx');
+const Discussion = require('../ui/discussion.js.jsx');
+const Drawer = require('../ui/drawer.js.jsx');
+const Heart = require('../heart.js.jsx');
+const Icon = require('../ui/icon.js.jsx');
+const Idea = require('./idea.js.jsx');
+const IdeaLovers = require('./idea_lovers.js.jsx');
+const IdeaProgressBar = require('./idea_progress_bar.js.jsx');
+const IdeaSharePanel = require('./idea_share_panel.js.jsx');
+const IdeaStore = require('../../stores/idea_store');
+const IdeaTile = require('./idea_tile.js.jsx');
+const LoveStore = require('../../stores/love_store');
+const Markdown = require('../markdown.js.jsx');
+const moment = require('moment');
+const NewCommentActionCreators = require('../../actions/new_comment_action_creators');
+const page = require('page');
+const ProgressBar = require('../ui/progress_bar.js.jsx');
+const RelatedIdeas = require('./related_ideas.js.jsx');
+const SvgIcon = require('../ui/svg_icon.js.jsx');
+const TextPost = require('../ui/text_post.js.jsx');
+const Tile = require('../ui/tile.js.jsx');
+const UserStore = require('../../stores/user_store');
 
-function twitterUrl(url, message) {
-  return 'http://twitter.com/share?url=' +
-    url +
-    '&text=' +
-    message +
-    '&';
-}
+const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
-var IdeaShow = React.createClass({
+let IdeaShow = React.createClass({
   propTypes: {
-    navigate: React.PropTypes.func.isRequired,
+    navigate: React.PropTypes.func,
     params: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object
@@ -69,14 +64,14 @@ var IdeaShow = React.createClass({
   handlePingClick(e) {
     e.stopPropagation();
 
-    var idea = this.state.idea;
-    var item = idea.news_feed_item;
-    var thread = item.id;
-    var text = 'Hey @' + idea.user.username + ', how can I help you build this?';
+    let idea = this.state.idea;
+    let item = idea.news_feed_item;
+    let thread = item.id;
+    let text = 'Hey @' + idea.user.username + ', how can I help you build this?';
 
     NewCommentActionCreators.updateComment(thread, text);
 
-    var $commentBox = $('#event_comment_body');
+    let $commentBox = $('#event_comment_body');
 
     $('html, body').animate({
       scrollTop: $commentBox.offset().top
@@ -112,15 +107,13 @@ var IdeaShow = React.createClass({
   },
 
   render() {
-    var idea = this.state.idea
+    let idea = this.state.idea
 
     if (_.isEmpty(idea)) {
       return null;
     }
 
-    var nfi = idea.news_feed_item
-
-    var navigate = this.props.navigate;
+    let nfi = idea.news_feed_item
 
     return (
       <div>
@@ -133,7 +126,7 @@ var IdeaShow = React.createClass({
               </h4>
             </div>
             <div className="right py1">
-              <Button action={navigate.bind(null, '/ideas/new')}>
+              <Button action={function() { page('/ideas/new'); }}>
                 Start your product idea
               </Button>
             </div>
@@ -255,3 +248,11 @@ var IdeaShow = React.createClass({
 });
 
 module.exports = IdeaShow;
+
+function twitterUrl(url, message) {
+  return 'http://twitter.com/share?url=' +
+    url +
+    '&text=' +
+    message +
+    '&';
+}

@@ -1,17 +1,19 @@
-var Button = require('../ui/button.js.jsx');
-var CommentActionCreators = require('../../actions/comment_action_creators');
-var Drawer = require('../ui/drawer.js.jsx');
-var Icon = require('../ui/icon.js.jsx');
-var IdeaActionCreators = require('../../actions/idea_action_creators');
-var IdeaContainer = require('./idea_container.js.jsx');
-var IdeaStore = require('../../stores/idea_store');
-var Lightbox = require('../lightbox.js.jsx');
-var NewComment = require('../news_feed/new_comment.js.jsx');
-var NewCommentStore = require('../../stores/new_comment_store');
-var Routes = require('../../routes');
-var UserStore = require('../../stores/user_store');
+'use strict';
 
-var IdeaStartConversation = React.createClass({
+const Button = require('../ui/button.js.jsx');
+const CommentActionCreators = require('../../actions/comment_action_creators');
+const Drawer = require('../ui/drawer.js.jsx');
+const Icon = require('../ui/icon.js.jsx');
+const IdeaActionCreators = require('../../actions/idea_action_creators');
+const IdeaContainer = require('./idea_container.js.jsx');
+const IdeaStore = require('../../stores/idea_store');
+const Lightbox = require('../lightbox.js.jsx');
+const NewComment = require('../news_feed/new_comment.js.jsx');
+const NewCommentStore = require('../../stores/new_comment_store');
+const Routes = require('../../routes');
+const UserStore = require('../../stores/user_store');
+
+let IdeaStartConversation = React.createClass({
   propTypes: {
     navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
@@ -23,10 +25,12 @@ var IdeaStartConversation = React.createClass({
 
   componentDidMount() {
     IdeaStore.addChangeListener(this.onIdeaChange);
+    NewCommentStore.addChangeListener(this.validateQuestion);
   },
 
   componentWillUnmount() {
     IdeaStore.removeChangeListener(this.onIdeaChange);
+    NewCommentStore.removeChangeListener(this.validateQuestion);
   },
 
   getInitialState() {
@@ -57,9 +61,9 @@ var IdeaStartConversation = React.createClass({
   },
 
   onPostQuestionClick(e) {
-    var idea = this.state.idea;
-    var question = this.state.question;
-    var url = Routes.discussion_comments_path({
+    let idea = this.state.idea;
+    let question = this.state.question;
+    let url = Routes.discussion_comments_path({
       discussion_id: idea.news_feed_item.id
     });
 
@@ -71,16 +75,16 @@ var IdeaStartConversation = React.createClass({
   },
 
   render() {
-    var idea = this.state.idea;
-    var item = idea.news_feed_item;
-    var placeholder = "";
-    var url = Routes.discussion_comments_path({
+    let idea = this.state.idea;
+    let item = idea.news_feed_item;
+    let placeholder = "";
+    let url = Routes.discussion_comments_path({
       discussion_id: item.id
     });
 
     return (
       <IdeaContainer showRelatedIdeas={false}>
-        <div className="clearfix py2">
+        <div className="clearfix py2 border-bottom border-gray">
           <div className="left ml4">
             <h4 className="mb0 mt0">Asking a first question gets things going.</h4>
           </div>
@@ -97,23 +101,21 @@ var IdeaStartConversation = React.createClass({
           </div>
         </div>
 
-        <hr className="mt0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
-
         <form>
           <div className="form-group px4 mb0">
             <Drawer open={this.state.isDrawerOpen}>
               <div className="px3 gray-1">
                 <p className="px3">
-                  After you submit your idea, you'll hash out the specifics of your
-                  project with the Assembly community. Gain enough traction (through
-                  hearts on your idea), and you'll be ready to launch!
+                  After you submit your idea, you'll hash out the specifics of your{' '}
+                  project with the Assembly community. Gain enough traction (through{' '}
+                  hearts on your idea), and you'll be ready to launch! Others{' '}
+                  will jump in and help shape your idea &mdash; you'll be building{' '}
+                  alongside an awesome community of talented folks from all over.
                 </p>
               </div>
-
-              <hr className="mb0 mt0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
             </Drawer>
 
-            <div className="mb3">
+            <div className="py3">
               <p>
                 Examples:
               </p>
@@ -124,23 +126,20 @@ var IdeaStartConversation = React.createClass({
               </ol>
             </div>
             <NewComment canContainWork={false}
-              dropzoneInnerText={false}
-              hideAvatar={true}
-              hideButtons={true}
-              onChange={this.validateQuestion}
-              placeholder={placeholder}
-              thread={item.id}
-              url={url}
-              user={UserStore.getUser()} />
+                dropzoneInnerText={false}
+                hideAvatar={true}
+                hideButtons={true}
+                placeholder={placeholder}
+                thread={item.id}
+                url={url}
+                user={UserStore.getUser()} />
             {this.renderQuestionWarning()}
           </div>
 
-          <hr className="mb0 mt0" style={{ borderBottomColor: '#ededed', borderWidth: 2 }} />
-
-          <div className="clearfix px4 py3">
+          <div className="clearfix px4 mb3">
             <div className="left mt1">
               <a href="javscript:void(0);" onClick={this.onBackClick}>
-                <Icon icon="arrow-left" /> Back
+                <Icon icon="chevron-left" /> Back
               </a>
             </div>
 
@@ -148,7 +147,7 @@ var IdeaStartConversation = React.createClass({
               <Button type="primary"
                   action={
                     !this.state.showWarning &&
-                    this.state.question &&
+                    this.state.question.length > 0 &&
                     this.onPostQuestionClick
               }>
                 <span className="title">Submit idea</span>
@@ -173,15 +172,13 @@ var IdeaStartConversation = React.createClass({
     return <div className="inline-block mt0 m1"><span style={{ height: '100%' }} />&nbsp;</div>;
   },
 
-  validateQuestion(e) {
-    var question = e.target.value;
+  validateQuestion() {
+    let question = NewCommentStore.getComment(this.state.idea.news_feed_item.id) || '';
 
-    if (question) {
-      this.setState({
-        question: question,
-        showWarning: question.indexOf('?') < 0
-      });
-    }
+    this.setState({
+      question: question,
+      showWarning: question.indexOf('?') < 0
+    });
   }
 });
 

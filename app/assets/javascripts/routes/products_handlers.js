@@ -36,8 +36,8 @@ let ProductsHandlers = {
       items,
       page,
       pages,
+      post_marks: postMarks,
       product,
-      product_marks: productMarks,
       user_hearts: userHearts,
       valuation
     } = data;
@@ -68,8 +68,8 @@ let ProductsHandlers = {
     });
 
     Dispatcher.dispatch({
-      type: ActionTypes.PRODUCT_MARKS_RECEIVE,
-      marks: productMarks
+      type: ActionTypes.POST_MARKS_RECEIVE,
+      marks: postMarks
     });
 
     Dispatcher.dispatch({
@@ -217,7 +217,7 @@ let ProductsHandlers = {
     });
 
     _showCreatePost();
-    _setActiveTab('updates');
+    _setActiveTab('activity');
   },
 
   showProductPost(data) {
@@ -259,7 +259,7 @@ let ProductsHandlers = {
     });
 
     _showCreatePost();
-    _setActiveTab('updates');
+    _setActiveTab('activity');
   },
 
   showProductPosts(data) {
@@ -288,7 +288,7 @@ let ProductsHandlers = {
     });
 
     _showCreatePost();
-    _setActiveTab('updates');
+    _setActiveTab('activity');
   }
 };
 

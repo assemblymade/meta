@@ -1,7 +1,11 @@
 var Button = React.createClass({
 
   propTypes: {
-    action: React.PropTypes.func,
+    action: React.PropTypes.oneOfType([
+      React.PropTypes.bool,
+      React.PropTypes.func,
+      React.PropTypes.string
+    ]),
     type:   React.PropTypes.oneOf(['default', 'primary']),
     block:  React.PropTypes.bool,
     active: React.PropTypes.bool
@@ -17,6 +21,7 @@ var Button = React.createClass({
   },
 
   render: function() {
+    var action = this.props.action
     var cs = React.addons.classSet({
       'button': true,
       'button-default': this.props.type === 'default',
@@ -26,8 +31,12 @@ var Button = React.createClass({
       'button-block': this.props.block
     })
 
+    if (_.isString(action)) {
+      return <a className={cs} href={action}>{this.props.children}</a>
+    }
+
     return (
-      <button className={cs} onClick={this.props.action} type={this.submitType()} disabled={!this.props.action}>
+      <button className={cs} onClick={action} type={this.buttonType()} disabled={!this.props.action}>
         {this.props.children}
       </button>
     )
@@ -35,7 +44,7 @@ var Button = React.createClass({
 
   // --
 
-  submitType: function() {
+  buttonType: function() {
     return this.props.submit ? "submit" : "button"
   }
 })

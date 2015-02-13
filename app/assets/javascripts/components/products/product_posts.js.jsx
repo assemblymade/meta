@@ -3,6 +3,7 @@
 const PostsIndex = require('../posts/posts_index.js.jsx');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductStore = require('../../stores/product_store');
+const url = require('url');
 
 let ProductPosts = React.createClass({
   propTypes: {
@@ -18,6 +19,12 @@ let ProductPosts = React.createClass({
     document.title = 'Posts · ' + this.state.product.name;
 
     ProductStore.addChangeListener(this.onProductChange);
+
+    let query = url.parse(window.location.toString(), true).query || {};
+
+    if (query.modal) {
+      window.showCreatePost && window.showCreatePost();
+    }
   },
 
   componentWillUnmount() {

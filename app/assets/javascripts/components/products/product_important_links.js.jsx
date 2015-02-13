@@ -13,90 +13,88 @@ let ProductImportantLinks = React.createClass({
   render() {
     let product = this.props.product;
     let slug = product.slug;
-    let style = {
-      borderColor: '#dbdee3'
-    };
 
     return (
       <div>
-        <div className="border-bottom mt3" style={style}>
+        <div className="border-bottom border-gray-4 mt3">
           <h5>Important links</h5>
         </div>
 
         {this.renderHomepageUrl()}
 
-        <div className="border-bottom py2" style={style}>
+        <a className="block border-bottom border-gray-4 py2" href={Routes.product_chat_path({ product_id: slug })}>
           <span className="mr3 gray-2">
             <Icon icon="comments" />
           </span>
-          <a href={Routes.product_chat_path({ product_id: slug })}>
-            Chat
-          </a>
-        </div>
+          Chat
+        </a>
 
-        <div className="border-bottom py2" style={style}>
+        <a className="block border-bottom border-gray-4 py2" href={Routes.product_wips_path({
+              params: {
+                product_id: slug
+              },
+              data: {
+                modal: true,
+                tags: 'bug'
+              }
+            })}>
           <span className="mr3 gray-2">
             <Icon icon="warning" />
           </span>
-          <a href={Routes.product_wips_path({
-                params: {
-                  product_id: slug
-                },
-                data: {
-                  modal: true,
-                  tags: 'bug'
-                }
-              })}>
-            File a bug
-          </a>
-        </div>
+          File a bug
+        </a>
 
-        <div className="border-bottom py2" style={style}>
+        <a className="block border-bottom border-gray-4 py2" href={Routes.product_posts_path({
+            params: {
+              product_id: slug
+            },
+            data: {
+              modal: true,
+              tags: 'question'
+            }
+        })}>
           <span className="mr3 gray-2">
             <Icon icon="question-circle" />
           </span>
-          <a href={Routes.product_posts_path({ product_id: slug })}>
-            Ask a question
-          </a>
-        </div>
+          Ask a question
+        </a>
 
-        <div className="border-bottom py2" style={style}>
+        <a className="block border-bottom border-gray-4 py2" href={Routes.product_repos_path({ product_id: slug })}>
           <span className="mr3 gray-2">
             <Icon icon="code" />
           </span>
-          <a href={Routes.product_repos_path({ product_id: slug })}>
-            Source code
-          </a>
-        </div>
+          Source code
+        </a>
 
-        <div className="py2">
+        <a className="block border-bottom border-gray-4 py2" href={Routes.product_assets_path({ product_id: slug })}>
           <span className="mr3 gray-2">
             <Icon icon="photo" />
           </span>
-          <a href={Routes.product_assets_path({ product_id: slug })}>
-            Assets
-          </a>
-        </div>
+          Assets
+        </a>
+
+        <a className="block py2" href={Routes.product_financials_path({product_id: slug })}>
+          <span className="mr3 gray-2">
+            <Icon icon="bar-chart" />
+          </span>
+          Financials
+        </a>
+
       </div>
     );
   },
 
   renderHomepageUrl() {
     let product = this.props.product;
-    let style = {
-      borderColor: '#dbdee3'
-    };
 
     if (product.homepage_url) {
       return (
-        <div className="border-bottom py2" style={style}>
+        <a className="block border-bottom border-gray-4 py2"  href={product.homepage_url}>
           <span className="mr3 gray-2">
             <Icon icon="home" />
           </span>
-          <a href={product.homepage_url}>
-            Home
-          </a>
-        </div>
+          Home
+        </a>
       );
     }
   }

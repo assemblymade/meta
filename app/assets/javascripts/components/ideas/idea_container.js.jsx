@@ -1,7 +1,10 @@
-var RelatedIdeas = require('./related_ideas.js.jsx');
-var Tile = require('../ui/tile.js.jsx');
+'use strict';
 
-var IdeaContainer = React.createClass({
+const Icon = require('../ui/icon.js.jsx');
+const RelatedIdeas = require('./related_ideas.js.jsx');
+const Tile = require('../ui/tile.js.jsx');
+
+let IdeaContainer = React.createClass({
   propTypes: {
     showRelatedIdeas: React.PropTypes.bool
   },
@@ -13,17 +16,17 @@ var IdeaContainer = React.createClass({
   },
 
   render() {
-    var showRelatedIdeas = this.props.showRelatedIdeas;
-    var leftColumnClasses = React.addons.classSet({
+    let showRelatedIdeas = this.props.showRelatedIdeas;
+    let leftColumnClasses = React.addons.classSet({
       col: showRelatedIdeas,
       'col-8': true,
       'mx-auto': !showRelatedIdeas,
       'px2': true
     });
 
-    var rightColumnClasses = React.addons.classSet({
+    let rightColumnClasses = React.addons.classSet({
       'display-none': !showRelatedIdeas,
-      'col': showRelatedIdeas,
+      col: showRelatedIdeas,
       'col-4': showRelatedIdeas,
       'px2': showRelatedIdeas
     });
@@ -32,8 +35,8 @@ var IdeaContainer = React.createClass({
       <div className="container">
         <div className="clearfix mxn2 py3">
           <div className={leftColumnClasses}>
-            <a href="/ideas" className="h6 block black">
-              &#8592; All product ideas
+            <a href="/ideas" className="h6 bold gray-2">
+              <Icon icon="chevron-left" /> All ideas
             </a>
           </div>
 

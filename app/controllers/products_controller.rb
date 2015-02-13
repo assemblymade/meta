@@ -237,31 +237,18 @@ class ProductsController < ProductController
       page_views.drop_older_than(5.minutes)
     end
 
-    #queue recording of view event as 'viewing'
-    # FIXME: This call is dominating the worker queue
-    # if current_user && @product
-    #   ViewWorker.perform_async(current_user.id, @product.id, "Product")
-    # end
+    news_feed_items = @product.news_feed_items
 
-
-    @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT)
-    @product_marks = @product.marks.pluck(:name).uniq
-
-    if @product_marks.count > PRODUCT_MARK_DISPLAY_LIMIT
-      @product_marks = @product_marks[0..PRODUCT_MARK_DISPLAY_LIMIT]
+    @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT).map do |name, number|
+      name
     end
 
-    query = if params[:filter].present?
-      @mark_name = params[:filter]
-      MakeMarks.new.
-          news_feed_items_per_product_per_mark(@product, @mark_name)
-    else
-      @product.news_feed_items
-    end
+    @post_marks = Marking.includes(:mark).uniq.
+      where(markable_type: Post, markable_id: news_feed_items.pluck(:target_id)).pluck(:name)
 
-    query = query.unarchived_items.where.not(last_commented_at: nil).
-                  where.not(target_type: 'Discussion').
-                  page(params[:page]).per(10).order(last_commented_at: :desc)
+    query = FilterUpdatesQuery.call(news_feed_items, filter_params)
+
+    query = query.page(params[:page]).per(10).order(last_commented_at: :desc)
     total_pages = query.total_pages
 
     @news_feed_items = query.map do |nfi|
@@ -283,13 +270,13 @@ class ProductsController < ProductController
           bounty_marks: @top_wip_tags,
           heartables: @heartables,
           items: @news_feed_items,
-          page: params[:page],
+          page: params[:page] || 1,
           pages: total_pages,
+          post_marks: @post_marks,
           product: ProductSerializer.new(
             @product,
             scope: current_user
           ),
-          product_marks: @product_marks,
           screenshots: ActiveModel::ArraySerializer.new(
             @product.screenshots.order(position: :asc).limit(6),
             each_serializer: ScreenshotSerializer
@@ -298,6 +285,10 @@ class ProductsController < ProductController
         }
       }
     end
+  end
+
+  def filter_params
+    params.permit(:archived, :mark, :type)
   end
 
   def product_params

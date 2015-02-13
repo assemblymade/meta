@@ -95,12 +95,7 @@ let ProductShow = React.createClass({
         <ProductHeader />
 
         <div className="container mt3">
-          <div className="py1">
-            <a href={Routes.edit_product_path({ id: slug })}
-                className="gray-2">
-              <Icon icon="pencil" /> Edit product details
-            </a>
-          </div>
+          {this.renderEditButton()}
 
           <div className="clearfix mxn3">
             <div className={leftColumnClasses}>
@@ -136,15 +131,8 @@ let ProductShow = React.createClass({
 
                 <div className="bg-gray-6">
                   <div className="p3 center">
-                    <a href={Routes.product_wips_path({ product_id: slug })}
-                        className="block">
-                      <Button type="default" action={function() {}}>
-                        Build with us
-                      </Button>
-                    </a>
-
                     <div className="gray-2 mt1">
-                      or <a href="/help">see how Assembly works</a>
+                      <a href="/help">See how Assembly works</a>
                     </div>
                   </div>
                 </div>
@@ -168,6 +156,21 @@ let ProductShow = React.createClass({
           <div className="px3 py2">
             <span className="gray-1">Verified community-built</span>
           </div>
+        </div>
+      );
+    }
+  },
+
+  renderEditButton() {
+    if (ProductStore.isCoreTeam(UserStore.getUser())) {
+      let slug = this.state.product.slug;
+
+      return (
+        <div className="py1">
+          <a href={Routes.edit_product_path({ id: slug })}
+              className="gray-2">
+            <Icon icon="pencil" /> Edit product details
+          </a>
         </div>
       );
     }

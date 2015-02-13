@@ -113,6 +113,7 @@ ASM::Application.routes.draw do
     get '/users/:id/karma' => 'users#karma', :as => :user_karma
     get '/users/:id/assets' => 'users#assets', :as => :user_assets
     post '/users/:id/dismiss_welcome_banner' => 'users#dismiss_welcome_banner', :as => :dismiss_welcome_banner
+    post '/users/:id/dismiss_showcase_banner' => 'users#dismiss_showcase_banner', :as => :dismiss_showcase_banner
 
     resources :notifications, only: [:index]
     resources :choices, only: [:index, :create, :update, :destroy]
@@ -166,6 +167,10 @@ ASM::Application.routes.draw do
   # Help
   get '/help/:group', :to => 'questions#index', :as => :help
   get '/help' => redirect('/help/basics'), :as => :faq
+
+  # Guides
+  get '/guides/:group', :to => 'guides#index', :as => :guides
+  get '/guides', :to => 'guides#index'
 
   # redirect support-foo to helpful
   get '/support-foo', to: redirect('/helpful')

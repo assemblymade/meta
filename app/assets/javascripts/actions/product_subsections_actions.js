@@ -36,8 +36,8 @@ class ProductSubsectionActions {
         });
       },
 
-      error: function(jqXhr, textStatus, error) {
-        console.log(error);
+      error: function err(jqXhr, textStatus, e) {
+        console.log(e);
       }
     });
   }

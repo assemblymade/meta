@@ -7,13 +7,13 @@ const Store = require('./es6_store');
 
 let marks = Immutable.List();
 
-class ProductMarksStore extends Store {
+class PostMarksStore extends Store {
   constructor() {
     super();
 
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
-        case ActionTypes.PRODUCT_MARKS_RECEIVE:
+        case ActionTypes.POST_MARKS_RECEIVE:
           marks = Immutable.List(action.marks);
           this.emitChange();
           break;
@@ -22,8 +22,8 @@ class ProductMarksStore extends Store {
   }
 
   getMarks() {
-    return marks.toJS();
+    return marks;
   }
 };
 
-module.exports = new ProductMarksStore();
+module.exports = new PostMarksStore();

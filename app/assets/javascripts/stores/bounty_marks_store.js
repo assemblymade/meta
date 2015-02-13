@@ -14,34 +14,19 @@ class BountyMarksStore extends Store {
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
         case ActionTypes.BOUNTY_MARKS_RECEIVE:
-          marks = [];
-          _setMarks(action);
-          this.emitChange();
+          marks = Immutable.List(action.marks)
           break;
+        default:
+         return;
       }
+
+      this.emitChange();
     });
   }
 
   getMarks() {
-    return marks.toJS();
-  }
-
-  getMarkNames() {
-    return marks.map((mark) => {
-      return mark[1];
-    }).toJS();
+    return marks;
   }
 };
 
 module.exports = new BountyMarksStore();
-
-function _setMarks(action) {
-  let m = action.marks;
-  let _marks = [];
-
-  for (var name in m) {
-    _marks.push([name, m[name]]);
-  }
-
-  marks = Immutable.List(_marks);
-}

@@ -74,28 +74,6 @@ var PostsIndex = React.createClass({
       <div className="row">
         <div className="col-xs-12 col-sm-4 r768_float-right">
           <div className="col-sm-11 col-sm-push-1 p0">
-            <div className="bg-white rounded shadow pt3 pr3 pb4 pl3 mb2" style={{paddingLeft: '1.75rem'}}>
-              <div className="block h5 mt0 mb1 bold">
-                Getting Started
-              </div>
-              <div className="h6 m0 gray-1">
-                Updates are a great way to keep new contributors up to date{' '}
-                with progress and new ways to help out. When you're ready,{' '}
-                we'll also email the entry to everyone following{' '}
-                <a href={product.url}>{product.name}</a>. You can include{' '}
-                images and use Markdown to make it more awesome. Still have{' '}
-                questions? Jump into chat and ping @core.
-              </div>
-
-              <div className="center mt2 border-top">
-                <div className="mt2">
-                  <Button type="default" action={function() { window.open('chat', '_blank'); }}>
-                    Jump into chat
-                  </Button>
-                </div>
-              </div>
-            </div>
-
             <div className="col-xs-6 col-sm-12">
               <div className="pb1"> {/*Filters*/}
                 <Accordion title="Filters">

@@ -9,10 +9,6 @@ global.appFile = pathToFile;
 global._ = require('underscore');
 global.$ = require('jquery');
 
-global.CONSTANTS = require('../../app/assets/javascripts/constants')
-
-global.EventEmitter = require('events').EventEmitter
-
 global.React = require('react/addons');
 global.TestUtils = React.addons.TestUtils;
 

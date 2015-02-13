@@ -1,5 +1,5 @@
 describe('CommentAttachmentStore', function() {
-  var ActionTypes = global.CONSTANTS.ActionTypes;
+  var ActionTypes = require(appFile('constants')).ActionTypes;
 
   var dispatcherCallback;
   var CommentAttachmentStore;

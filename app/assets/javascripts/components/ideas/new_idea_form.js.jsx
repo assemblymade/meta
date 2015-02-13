@@ -1,18 +1,30 @@
-var Button = require('../ui/button.js.jsx');
-var FormGroup = require('../form_group.js.jsx');
-var Icon = require('../ui/icon.js.jsx');
-var IdeaActionCreators = require('../../actions/idea_action_creators');
-var NewComment = require('../news_feed/new_comment.js.jsx');
-var NewCommentStore = require('../../stores/new_comment_store');
-var UserStore = require('../../stores/user_store');
-var CharacterLimiter = require('../character_limiter.js.jsx')
+'use strict';
 
-var IDEA_BODY_ID = 'new_idea';
+const Button = require('../ui/button.js.jsx');
+const CharacterLimitedInput = require('../ui/character_limited_input.js.jsx');
+const FormGroup = require('../form_group.js.jsx');
+const Icon = require('../ui/icon.js.jsx');
+const IdeaActionCreators = require('../../actions/idea_action_creators');
+const NewComment = require('../news_feed/new_comment.js.jsx');
+const NewCommentStore = require('../../stores/new_comment_store');
+const TypeaheadUserTextarea = require('../typeahead_user_textarea.js.jsx');
+const UserStore = require('../../stores/user_store');
 
-var NewIdeaForm = React.createClass({
+const IDEA_BODY_ID = 'new_idea';
+
+let NewIdeaForm = React.createClass({
+  componentDidMount() {
+    NewCommentStore.addChangeListener(this.onIdeaBodyChange);
+  },
+
+  componentWillUnmount() {
+    NewCommentStore.removeChangeListener(this.onIdeaBodyChange);
+  },
+
   getInitialState() {
     return {
       firstQuestion: '',
+      ideaBody: '',
       ideaName: '',
       isFounder: true,
       showWarning: false
@@ -25,18 +37,29 @@ var NewIdeaForm = React.createClass({
     });
   },
 
+  isValidIdea() {
+    return this.state.ideaName.length >= 2 &&
+      this.state.ideaBody.length >= 2;
+  },
+
   onFounderOptionClick(e) {
     this.setState({
       isFounder: !this.state.isFounder
     });
   },
 
+  onIdeaBodyChange() {
+    this.setState({
+      ideaBody: NewCommentStore.getComment(IDEA_BODY_ID)
+    });
+  },
+
   onNextClick(e) {
     e.preventDefault();
 
-    var idea = {
+    let idea = {
       name: this.state.ideaName,
-      body: NewCommentStore.getComment(IDEA_BODY_ID),
+      body: this.state.ideaBody,
       founder_preference: this.state.isFounder
     };
 
@@ -50,9 +73,10 @@ var NewIdeaForm = React.createClass({
           <label className="control-label">What's the quick pitch?</label>
 
           <p className="mb2 h6 gray-2">If you had 30 seconds to describe your product to a friend, what would you say? Use simple, direct words.</p>
-          <CharacterLimiter limit={60} control={<input type="text" className="form-control input-lg"
-          value={this.state.ideaName}
-          onChange={this.handleIdeaNameChange} />} />
+          <CharacterLimitedInput limit={60}
+              value={this.state.ideaName}
+              onChange={this.handleIdeaNameChange}
+              size="large" />
         </div>
 
         <div className="form-group mb3">
@@ -68,12 +92,13 @@ var NewIdeaForm = React.createClass({
               placeholder={''}
               thread={IDEA_BODY_ID}
               url="/ideas" />
+            <span className="gray-2 h6 mt2">Accepts <a href="//daringfireball.net/projects/markdown/" target="_blank">Markdown</a> and file uploads (just drag and drop)</span>
         </div>
 
         <div className="clearfix mt3">
           <div className="right ml4">
-            <Button type="primary" action={this.onNextClick}>
-              Start a discussion
+            <Button type="primary" action={this.isValidIdea() && this.onNextClick}>
+              Next
             </Button>
           </div>
 

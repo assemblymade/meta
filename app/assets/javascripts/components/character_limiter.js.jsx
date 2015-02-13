@@ -1,23 +1,25 @@
-var CharacterLimiter = React.createClass({
+'use strict';
+
+let CharacterLimiter = React.createClass({
 
   propTypes: {
     control: React.PropTypes.element.isRequired,
     limit: React.PropTypes.number.isRequired
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       limit: 140
     }
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
-      text: "",
+      textLength: "",
     };
   },
 
-  render: function() {
+  render() {
     return (
       <div onChange={this.updateText}>
         {this.props.control}
@@ -28,18 +30,19 @@ var CharacterLimiter = React.createClass({
     )
   },
 
-  updateText: function(e) {
-    this.setState({text: e.target.value})
+  updateText(e) {
+    this.setState({
+      textLength: e.target.value.length
+    });
   },
 
-  characterCount: function() {
-    return this.props.limit - this.state.text.length
+  characterCount() {
+    return this.props.limit - this.state.textLength
   },
 
-  isOverCharacterLimit: function() {
-    return this.characterCount() <= 0
+  isOverCharacterLimit() {
+    return this.characterCount() < 0
   }
+});
 
-})
-
-module.exports = window.CharacterLimiter = CharacterLimiter
+module.exports = CharacterLimiter;

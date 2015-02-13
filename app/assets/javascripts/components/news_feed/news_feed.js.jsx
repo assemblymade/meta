@@ -1,11 +1,14 @@
-var MasonryMixin = require('../../mixins/masonry_mixin.js');
-var NewsFeedItem = require('./news_feed_item.js.jsx');
-var NewsFeedItemsStore = require('../../stores/news_feed_items_store');
-var NewsFeedMixin = require('../../mixins/news_feed_mixin.js.jsx');
-var Spinner = require('../spinner.js.jsx');
+'use strict';
 
-var NewsFeed = React.createClass({
-  mixins: [MasonryMixin('masonryContainer', {transitionDuration: 0}), NewsFeedMixin],
+const { List } = require('immutable');
+const NewsFeedItem = require('./news_feed_item.js.jsx');
+const NewsFeedItemsStore = require('../../stores/news_feed_items_store');
+const NewsFeedMixin = require('../../mixins/news_feed_mixin.js.jsx');
+const Spinner = require('../spinner.js.jsx');
+const url = require('url');
+
+let NewsFeed = React.createClass({
+  mixins: [React.addons.PureRenderMixin, NewsFeedMixin],
   propTypes: {
     filterCounts: function(props, propName, componentName) {
       if (!props.productPage && !props.filterCounts) {
@@ -32,10 +35,10 @@ var NewsFeed = React.createClass({
   },
 
   displayCount: function() {
-    var filter = this.state.hoverFilter;
+    let filter = this.state.hoverFilter;
 
     if (filter) {
-      var count = this.countFor(filter);
+      let count = this.countFor(filter);
 
       return (
         <span className="gray-1 text-large">
@@ -55,46 +58,12 @@ var NewsFeed = React.createClass({
     return _.debounce(this.eagerlyFetchMoreNewsFeedItems, 200);
   },
 
-  filterBy: function(filter, e) {
-    this.setState({
-      filter: filter
-    }, function() {
-      var url = window.location.pathname + '?page=' + this.state.page +
-        '&filter=' + filter;
-
-      window.xhr.get(url, this._handleFilteredNewsFeedItems);
-    }.bind(this));
-  },
-
-  filters: function() {
-    return (
-      <ul className="nav nav-skills bg-white mb2" key="news-feed-filter-list">
-        {_.map(_.keys(this.props.filters), this.renderFilterListItem)}
-      </ul>
-    );
-  },
-
-  getDefaultProps: function() {
-    var filters = lowerCaseAndReflect([
-      'Frontend',
-      'Backend',
-      'Design',
-      'Marketing',
-      'Writing',
-      'Mobile'
-    ]);
-
-    return {
-      filters: filters
-    };
-  },
-
   getInitialState: function() {
-    var queryKey = window.parseUri(window.location).queryKey || {};
+    let queryKey = url.parse(window.location.toString(), true).query || {};
 
     return {
       filter: (queryKey.filter || ''),
-      items: this.props.items,
+      items: NewsFeedItemsStore.getNewsFeedItems(),
       loading: false,
       page: (queryKey.page || 1)
     };
@@ -114,21 +83,23 @@ var NewsFeed = React.createClass({
 
   onNewsFeedItemsChange: function() {
     this.setState({
-      items: NewsFeedItemsStore.getNewsFeedItems()
+      items: NewsFeedItemsStore.getNewsFeedItems(),
+      page: NewsFeedItemsStore.getPage(),
+      pages: NewsFeedItemsStore.getPages()
     });
   },
 
   render: function() {
-    var disabled = false;
+    let disabled = false;
 
     if (this.state.disableLoadMoreButton) {
       disabled = true;
     }
 
     if (this.props.productPage) {
-      var style = null
+      let style = null
 
-      if (this.props.items.length) {
+      if (this.state.items.size) {
         style = { marginTop: '-1rem' }
       }
 
@@ -137,23 +108,11 @@ var NewsFeed = React.createClass({
 
     return (
       <div>
-        {this.filters()}
         {this.spinner()}
 
-        <div className="container" key="news-feed-container">
-          <div className="py1 center" key="news-feed-filter-count">
-            {this.displayCount()}
-          </div>
-          <div className="clearfix mxn2" ref="masonryContainer" key="news-feed-items">
+        <div className="container">
+          <div className="clearfix mxn2">
             {this.renderItems()}
-          </div>
-
-          <div className="mb4" key="news-feed-load-more">
-            <a href="javascript:void(0);"
-                  onClick={this.fetchMoreNewsFeedItems()}
-                  className="btn btn-default btn-block" disabled={disabled}>
-              {this.state.disabled ? <Spinner /> : 'Load more'}
-            </a>
           </div>
         </div>
       </div>
@@ -165,42 +124,25 @@ var NewsFeed = React.createClass({
       <div className="well center">
         There hasn't been any activity yet. Why not <a href="/chat/meta">jump into chat</a> to see where you can help?
       </div>
-    ); // '
-  },
-
-  renderFilterListItem: function(filter) {
-    var label = this.props.filters[filter];
-    var buttonClass = filter === this.state.filter ?
-      'active' :
-      '';
-
-    // var onClick = this.filterBy.bind(this, filter);
-    var onClick = function() {
-      window.analytics.track('news_feed_item.filter.clicked', { filter: filter });
-    };
-
-    return (
-      <li className={buttonClass} key={filter}>
-        <a href={"?filter=" + filter}
-            onMouseOver={this.handleFilterMouseOver.bind(this, filter)}
-            onMouseOut={this.handleFilterMouseOut.bind(this, filter)}>
-          {label}
-        </a>
-      </li>
     );
   },
 
   renderItems: function() {
-    var productPage = this.props.productPage;
+    let productPage = this.props.productPage;
 
-    return _.map(this.state.items, function(item) {
-      var target = item.target;
+    return (this.state.items || List()).map(function(item) {
+      let target = item.target;
+
+      // FIXME: (pletcher) We should probably cull this sort of thing on the server.
+      if (!target) {
+        return;
+      }
 
       if (target.type === 'team_membership' && !productPage) {
         return null;
       }
 
-      var classes = React.addons.classSet({
+      let classes = React.addons.classSet({
         'sm-col': !productPage,
         'sm-col-6': !productPage,
         'px1': !productPage
@@ -211,7 +153,7 @@ var NewsFeed = React.createClass({
           <NewsFeedItem {...item} productPage={productPage} />
         </div>
       )
-    });
+    }).toJS();
   },
 
   spinner: function() {
@@ -225,31 +167,14 @@ var NewsFeed = React.createClass({
         </div>
       );
     }
-  },
-
-  _handleFilteredNewsFeedItems: function(err, results) {
-    if (err) {
-      return console.error(err);
-    }
-
-    var items;
-    try {
-      items = JSON.parse(results);
-    } catch (e) {
-      return console.error(e);
-    }
-
-    this.setState({
-      items: items
-    });
   }
 });
 
 function lowerCaseAndReflect(array) {
-  var map = {};
+  let map = {};
 
-  for (var i = 0, l = array.length; i < l; i++) {
-    var item = array[i];
+  for (let i = 0, l = array.length; i < l; i++) {
+    let item = array[i];
 
     map[item.toLowerCase()] = item;
   }

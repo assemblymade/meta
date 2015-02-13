@@ -1,12 +1,12 @@
-var Drawer = require('../ui/drawer.js.jsx');
-var IdeaContainer = require('./idea_container.js.jsx');
-var Tile = require('../ui/tile.js.jsx')
-var NewIdeaForm = require('./new_idea_form.js.jsx');
-var Icon = require('../ui/icon.js.jsx')
+'use strict';
 
-var IdeasNew = React.createClass({
-  displayName: 'IdeasNew',
+const Drawer = require('../ui/drawer.js.jsx');
+const IdeaContainer = require('./idea_container.js.jsx');
+const Tile = require('../ui/tile.js.jsx')
+const NewIdeaForm = require('./new_idea_form.js.jsx');
+const Icon = require('../ui/icon.js.jsx')
 
+let IdeasNew = React.createClass({
   propTypes: {
     navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
@@ -37,8 +37,15 @@ var IdeasNew = React.createClass({
   render() {
     return (
       <div className="container">
-        <div className="clearfix mt4 mb4">
+        <div className="clearfix mb4">
           <div className="col-8 mx-auto">
+
+            <div className="py3">
+              <a href="/ideas" className="h6 bold gray-2">
+                <Icon icon="chevron-left" /> All ideas
+              </a>
+            </div>
+
             <Tile>
               <div className="p4">
                 <div className="mb4 h1 yellow center">

@@ -1,24 +1,27 @@
-var App = require('../app.js.jsx');
-var AppIcon = require('../app_icon.js.jsx');
-var Button = require('../ui/button.js.jsx');
-var Drawer = require('../ui/drawer.js.jsx');
-var Heart = require('../heart.js.jsx');
-var IdeaLovers = require('../ideas/idea_lovers.js.jsx');
-var IdeaProgressBar = require('../ideas/idea_progress_bar.js.jsx');
-var IdeaSharePanel = require('../ideas/idea_share_panel.js.jsx');
-var page = require('page');
-var SvgIcon = require('../ui/svg_icon.js.jsx');
-var TextPost = require('../ui/text_post.js.jsx');
-var UserStore = require('../../stores/user_store');
+'use strict';
 
-var Idea = React.createClass({
+const App = require('../app.js.jsx');
+const AppIcon = require('../app_icon.js.jsx');
+const Button = require('../ui/button.js.jsx');
+const Drawer = require('../ui/drawer.js.jsx');
+const Heart = require('../heart.js.jsx');
+const IdeaLovers = require('../ideas/idea_lovers.js.jsx');
+const IdeaProgressBar = require('../ideas/idea_progress_bar.js.jsx');
+const IdeaSharePanel = require('../ideas/idea_share_panel.js.jsx');
+const page = require('page');
+const SvgIcon = require('../ui/svg_icon.js.jsx');
+const TextPost = require('../ui/text_post.js.jsx');
+const UserStore = require('../../stores/user_store');
+
+const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
+
+let Idea = React.createClass({
   propTypes: {
-    // (@chrislloyd) Sorry @pletcher!
     idea: React.PropTypes.object
   },
 
   render() {
-    var idea = this.props.idea
+    let idea = this.props.idea
 
     return (
       <div className="p4">
@@ -30,42 +33,20 @@ var Idea = React.createClass({
   },
 
   renderAdminRow() {
-    var currentUser = UserStore.getUser();
-    if (currentUser && currentUser.is_staff) {
-      var idea = this.props.idea;
+    let currentUser = UserStore.getUser();
+
+    if (currentUser && currentUser.staff) {
+      let idea = this.props.idea;
 
       return (
-        <a className="bold inline-block mt3" href={idea.url + '/admin'}>Admin</a>
+        <a className="bold inline-block mt3 right" href={idea.url + '/admin'}>Admin</a>
       )
     }
   },
 
-  renderCreateProductRow() {
-    var idea = this.props.idea;
-    var ideaUser = idea.user;
-
-    if (ideaUser.id === UserStore.getId()) {
-      return (
-        <div className="clearfix border-bottom py2">
-          <div className="left mt1 px4">
-            Are you ready to start building this idea?
-          </div>
-
-          <div className="right mr2">
-            <Button type="primary" action={function() {
-                page('/create?pitch=' + idea.name + '&idea_id=' + idea.id);
-              }}>
-              Create a product
-            </Button>
-          </div>
-        </div>
-      );
-    }
-  },
-
   renderProductRow() {
-    var idea = this.props.idea;
-    var product = idea.product;
+    let idea = this.props.idea;
+    let product = idea.product;
 
     if (!_.isNull(product)) {
       return (
@@ -87,13 +68,13 @@ var Idea = React.createClass({
       );
     }
 
-    if (idea.user.id === UserStore.getId()) {
+    if (idea.user.id === UserStore.getId() && this.hasEnoughHearts()) {
       return (
         <div className="mt4">
           <div className="p2 border rounded clearfix">
             <div  className="right">
               <Button action={function() {
-                  page('/create?pitch=' + idea.name + '&idea_id=' + idea.id);
+                  window.location = '/create?pitch=' + idea.name + '&idea_id=' + idea.id;
                 }}>
                 Create a product
               </Button>
@@ -105,6 +86,13 @@ var Idea = React.createClass({
         </div>
       )
     }
+  },
+
+  hasEnoughHearts() {
+    let { idea } = this.props;
+
+    return idea.hearts_count >= 5 ||
+      (Date.now() - new Date(idea.created_at) > TWO_DAYS && idea.hearts_count > 0);
   }
 });
 

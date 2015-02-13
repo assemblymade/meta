@@ -63,4 +63,12 @@ class Dashboard
   def dashboard_query
     @dashboard_query ||= DashboardQuery.new(user, filter)
   end
+
+  def current_product
+    SevenDayMVP.current
+  end
+
+  def recent_products
+    SevenDayMVP.recent
+  end
 end

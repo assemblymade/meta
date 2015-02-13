@@ -1,6 +1,7 @@
 'use strict';
 
 const FormGroup = require('../form_group.js.jsx');
+const NewPostForm = require('../posts/new_post_form.js.jsx');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductStore = require('../../stores/product_store');
 const UserStore = require('../../stores/user_store');
@@ -27,29 +28,9 @@ let ProductNewPost = React.createClass({
   },
 
   getInitialState() {
-    let csrfTokenElement = document.getElementsByName('csrf-token')[0];
-
     return {
-      csrf: csrfTokenElement && csrfTokenElement.content,
-      error: null,
-      title: '',
       product: ProductStore.getProduct()
     };
-  },
-
-  handleTitleChange(e) {
-    this.setState({
-      title: e.target.value
-    });
-  },
-
-  handlePreviewClick(e) {
-    e.preventDefault();
-    let btn = $("#preview-post-btn"),
-        msg = btn.text();
-    $.post(btn.attr('href'), $('#new_post').serialize());
-    btn.text('Sent!');
-    delay(3000, function() { btn.text(msg); });
   },
 
   onProductChange() {
@@ -59,9 +40,6 @@ let ProductNewPost = React.createClass({
   },
 
   render() {
-    let csrf = this.state.csrf;
-    let product = this.state.product;
-
     return (
       <div>
         <ProductHeader />
@@ -71,30 +49,9 @@ let ProductNewPost = React.createClass({
 
           <div className="clearfix mxn2">
 
-            <form id="new_post" action={'/' + product.slug + '/posts'} method="post">
-              <input name="authenticity_token" type="hidden" value={csrf} />
-
-              <div className="col col-9 px2">
-                <FormGroup error={this.state.error}>
-                  <label for="post_title" className="control-label">Title</label>
-                  <input className="form-control"
-                      type="text"
-                      name="post[title]"
-                      id="post_title"
-                      value={this.state.title}
-                      onChange={this.handleTitleChange} />
-                </FormGroup>
-
-                <FormGroup error={this.state.error}>
-                  <label class="control-label" for="post_body">Body</label>
-                  <MarkdownEditor name="post[body]" id="post_body" />
-                </FormGroup>
-
-                <div className="form-actions">
-                  <input type="submit" className="btn btn-primary" value="Submit" />
-                </div>
-              </div>
-            </form>
+            <div className="col col-9 px2">
+              <NewPostForm />
+            </div>
 
             <div className="col col-3 px2">
               <div className="h6 mt0 mb0 gray-2">
@@ -118,14 +75,15 @@ let ProductNewPost = React.createClass({
       let product = this.state.product;
 
       return [
-        <p>
+        <p key={product.name + '-post-warning'}>
           You're on the core team, so everyone following {product.name} will get an email with your post.
         </p>,
 
         <a className="btn btn-default btn-block"
             id="preview-post-btn"
             href={'/' + product.slug + '/posts/preview'}
-            onClick={this.handlePreviewClick}>
+            onClick={this.handlePreviewClick}
+            key={product.name + '-post-preview'}>
           Preview email
         </a>
       ];

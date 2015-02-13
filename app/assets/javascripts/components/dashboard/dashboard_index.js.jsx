@@ -1,23 +1,28 @@
-var AppIcon = require('../app_icon.js.jsx')
-var BountyCard = require('../bounty_card.js.jsx')
-var BountiesStore = require('../../stores/bounties_store.js')
-var Button = require('../ui/button.js.jsx')
-var DashboardStore = require('../../stores/dashboard_store.js')
-var Heart = require('../heart.js.jsx')
-var Nav = require('../ui/nav.js.jsx')
-var NewsFeedItemsStore = require('../../stores/news_feed_items_store.js')
-var NewsFeedItemsActionCreators = require('../../actions/news_feed_items_action_creators.js')
-var ProductsStore = require('../../stores/products_store.js')
-var UserBountiesStore = require('../../stores/user_bounties_store.js')
-var UserStore = require('../../stores/user_store.js')
-var Spinner = require('../spinner.js.jsx')
-var SvgIcon = require('../ui/svg_icon.js.jsx')
-var Tile = require('../ui/tile.js.jsx')
+'use strict';
 
-// TODO: Add navigate func prop
-var DashboardIndex = React.createClass({
+const App = require('../app.js.jsx')
+const AppIcon = require('../app_icon.js.jsx')
+const BountyCard = require('../bounty_card.js.jsx')
+const BountiesStore = require('../../stores/bounties_store.js')
+const Button = require('../ui/button.js.jsx')
+const DashboardStore = require('../../stores/dashboard_store.js')
+const Heart = require('../heart.js.jsx')
+const { List } = require('immutable');
+const Nav = require('../ui/nav.js.jsx')
+const NewsFeedItemsStore = require('../../stores/news_feed_items_store.js')
+const NewsFeedItemsActionCreators = require('../../actions/news_feed_items_action_creators.js')
+const page = require('page')
+const ProductsStore = require('../../stores/products_store.js')
+const UserBountiesStore = require('../../stores/user_bounties_store.js')
+const UserStore = require('../../stores/user_store.js')
+const ShowcaseBanner = require('../showcase_banner.js.jsx')
+const Spinner = require('../spinner.js.jsx')
+const SvgIcon = require('../ui/svg_icon.js.jsx')
+const Tile = require('../ui/tile.js.jsx')
+
+let DashboardIndex = React.createClass({
   propTypes: {
-    navigate: React.PropTypes.func.isRequired,
+    navigate: React.PropTypes.func,
   },
 
   getInitialState: function() {
@@ -29,10 +34,12 @@ var DashboardIndex = React.createClass({
       loading: false,
       lockedBounties: [],
       marks: [],
-      newsFeedItems: [],
+      newsFeedItems: List(),
       reviewingBounties: [],
       selected: [],
       showAll: false,
+      currentProduct: null,
+      recentProducts: []
     }
   },
 
@@ -41,6 +48,7 @@ var DashboardIndex = React.createClass({
     NewsFeedItemsStore.addChangeListener(this.getStateFromStore)
     ProductsStore.addChangeListener(this.getStateFromStore)
     UserBountiesStore.addChangeListener(this.getStateFromStore)
+    UserStore.addChangeListener(this.getStateFromStore)
 
     window.addEventListener('scroll', this.onScroll)
 
@@ -52,12 +60,13 @@ var DashboardIndex = React.createClass({
     NewsFeedItemsStore.removeChangeListener(this.getStateFromStore)
     ProductsStore.removeChangeListener(this.getStateFromStore)
     UserBountiesStore.removeChangeListener(this.getStateFromStore)
+    UserStore.removeChangeListener(this.getStateFromStore)
 
     window.removeEventListener('scroll', this.onScroll)
   },
 
   onScroll: function() {
-    var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 200
+    let atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 200
 
     if (atBottom) {
       NewsFeedItemsActionCreators.requestNextPage(this.params())
@@ -65,9 +74,9 @@ var DashboardIndex = React.createClass({
   },
 
   renderProduct: function() {
-    var filter = this.state.filter
+    let filter = this.state.filter
 
-    var product = _.find(this.state.followedProducts, function(product) {
+    let product = _.find(this.state.followedProducts, function(product) {
       return product.slug == filter
     })
 
@@ -110,12 +119,12 @@ var DashboardIndex = React.createClass({
   },
 
   renderNav: function() {
-    var filter = this.state.filter
-    var showAll = this.state.showAll
-    var followedProducts = showAll ? this.state.followedProducts : this.state.followedProducts.slice(0, 8)
-    var followingNavItem = null
-    var divider = null
-    var showAllLink = null
+    let filter = this.state.filter
+    let showAll = this.state.showAll
+    let followedProducts = showAll ? this.state.followedProducts : this.state.followedProducts.slice(0, 8)
+    let followingNavItem = null
+    let divider = null
+    let showAllLink = null
 
     if (followedProducts.length) {
       followingNavItem = <Nav.Item label="Following" href='/dashboard/following' active={filter == 'following'} />
@@ -123,7 +132,7 @@ var DashboardIndex = React.createClass({
     }
 
     if (this.state.followedProducts.length > 8 && !showAll) {
-      var click = function(event) {
+      let click = function(event) {
         event.stopPropagation()
         event.preventDefault()
 
@@ -146,7 +155,7 @@ var DashboardIndex = React.createClass({
             {divider}
 
             {followedProducts.map(function(product) {
-              return <Nav.Item label={product.name} href={'/dashboard/' + product.slug } active={filter == product.slug} small={true} />
+              return <Nav.Item label={product.name} href={'/dashboard/' + product.slug } active={filter == product.slug} key={product.slug} small={true} />
             })}
 
             {showAllLink}
@@ -163,7 +172,7 @@ var DashboardIndex = React.createClass({
   },
 
   renderMarks: function(section) {
-    var marks = this.state.marks[section]
+    let marks = this.state.marks[section]
 
     return (
       <div >
@@ -176,11 +185,11 @@ var DashboardIndex = React.createClass({
   },
 
   renderMark: function(mark) {
-    var selected = this.state.selected
-    var index = selected.indexOf(mark)
-    var isSelected = index >= 0
+    let selected = this.state.selected
+    let index = selected.indexOf(mark)
+    let isSelected = index >= 0
 
-    var click = function(event) {
+    let click = function(event) {
       event.stopPropagation()
       event.preventDefault()
 
@@ -195,7 +204,7 @@ var DashboardIndex = React.createClass({
       })
     }.bind(this)
 
-    var classes = ['mark']
+    let classes = ['mark']
 
     if (isSelected) {
       classes = classes.concat(['mark-is-selected'])
@@ -209,7 +218,7 @@ var DashboardIndex = React.createClass({
   },
 
   renderProgress: function() {
-    var progress = (this.state.selected.length / 3) * 360;
+    let progress = (this.state.selected.length / 3) * 360;
 
     return (
       <span className="mr2 pie-container">
@@ -220,15 +229,14 @@ var DashboardIndex = React.createClass({
   },
 
   renderSubmit: function() {
-    var selected = this.state.selected
-    var classes = ['pill-button', 'pill-button-theme-white', 'pill-button-border', 'pill-button-shadow', 'bold']
-    var selectionsNeeded = 3 - selected.length
-    var progress = null
-    var text = null
-    var topics = null
-    var padding = null
-    var click = function() {}
-    var navigate = this.props.navigate
+    let selected = this.state.selected
+    let classes = ['pill-button', 'pill-button-theme-white', 'pill-button-border', 'pill-button-shadow', 'bold']
+    let selectionsNeeded = 3 - selected.length
+    let progress = null
+    let text = null
+    let topics = null
+    let padding = null
+    let click = function() {}
 
     if (selectionsNeeded <= 0) {
       text = 'Yay! Take a look at your suggestions'
@@ -247,7 +255,7 @@ var DashboardIndex = React.createClass({
             }
           },
           success: function() {
-            navigate('/dashboard/interests')
+            page('/dashboard/interests')
           }
         })
       }.bind(this)
@@ -268,13 +276,13 @@ var DashboardIndex = React.createClass({
 
       text = 'Pick at least ' + topics
 
-      var progress = (
+      let progress = (
         <div style={{ marginTop: 1, marginLeft: 3 }}>
           {this.renderProgress()}
         </div>
       )
 
-      var padding = 46
+      let padding = 46
     }
 
     return (
@@ -286,11 +294,11 @@ var DashboardIndex = React.createClass({
   },
 
   renderNewsFeedItems: function() {
-    var items = this.state.newsFeedItems
-    var spinner = this.renderSpinner()
-    var filter = this.state.filter
-    var interests = this.state.interests
-    var user = this.state.currentUser
+    let items = this.state.newsFeedItems.toJS()
+    let spinner = this.renderSpinner()
+    let filter = this.state.filter
+    let interests = this.state.interests
+    let user = this.state.currentUser
 
     if (filter == 'interests' && !interests.length) {
       return (
@@ -348,7 +356,7 @@ var DashboardIndex = React.createClass({
               <p className="gray-2 mb0">Products here are built and owned by the community. When you contribute to a product the community rewards you with an ownership stake in its success.</p>
             </div>
             <div className="p3 center" style={{ backgroundColor: '#f9f9f9' }}>
-              <Button action={function() {window.location = "/discover"}}>Explore products</Button>
+              <Button action="/discover">Explore products</Button>
 
               <div className="mt2 center">
                 or <a href="/start" className="mt3 center">start your own</a>
@@ -359,8 +367,9 @@ var DashboardIndex = React.createClass({
       )
     }
 
+    let lockedBounties;
     if (this.state.lockedBounties.length) {
-      var lockedBounties = (
+      lockedBounties = (
         <div className="mb3">
           <h6 className="gray-3 caps mt2 mb2">Bounties you&#8217;re working on</h6>
           {this.state.lockedBounties.map(function(bounty) {
@@ -374,8 +383,9 @@ var DashboardIndex = React.createClass({
       )
     }
 
+    let reviewingBounties;
     if (this.state.reviewingBounties.length) {
-      var reviewingBounties = (
+      reviewingBounties = (
         <div className="mb3">
           <h6 className="gray-3 caps mt2 mb2">Bounties to review</h6>
           {this.state.reviewingBounties.map(function(bounty) {
@@ -389,7 +399,7 @@ var DashboardIndex = React.createClass({
       )
     }
 
-    var bounties = (
+    let bounties = (
       <div>
         {lockedBounties}
         {reviewingBounties}
@@ -399,26 +409,39 @@ var DashboardIndex = React.createClass({
     return bounties
   },
 
+  renderBanner: function() {
+    if (this.state.user) {
+      return <ShowcaseBanner
+        current={this.state.currentProduct}
+        recent={this.state.recentProducts}
+        user={this.state.user} />
+    }
+  },
+
   render: function() {
-    var nav = this.renderNav()
-    var newsFeedItems = this.renderNewsFeedItems()
-    var product = this.renderProduct()
-    var bounties = this.renderBounties()
+    let banner = this.renderBanner()
+    let nav = this.renderNav()
+    let newsFeedItems = this.renderNewsFeedItems()
+    let product = this.renderProduct()
+    let bounties = this.renderBounties()
 
     return (
-      <div className="container clearfix mt1">
-        <div className="mxn2">
-          <div className="md-col md-col-2 px2">
-            <div style={{ marginTop: 42 }}></div>
-            {nav}
-          </div>
-          <div className="md-col md-col-right md-col-4 px2">
-            {product}
-            {bounties}
-          </div>
-          <div className="md-col md-col-6 px2 mb4">
-            <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>
-            {newsFeedItems}
+      <div>
+        {banner}
+        <div className="container clearfix mt1">
+          <div className="mxn2">
+            <div className="md-col md-col-2 px2">
+              <div style={{ marginTop: 42 }}></div>
+              {nav}
+            </div>
+            <div className="md-col md-col-right md-col-4 px2">
+              {product}
+              {bounties}
+            </div>
+            <div className="md-col md-col-6 px2 mb4">
+              <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>
+              {newsFeedItems}
+            </div>
           </div>
         </div>
       </div>
@@ -426,7 +449,7 @@ var DashboardIndex = React.createClass({
   },
 
   getStateFromStore: function() {
-    var dashboard = DashboardStore.getDashboard()
+    let dashboard = DashboardStore.getDashboard()
 
     this.setState({
       filter: dashboard.filter,
@@ -437,6 +460,9 @@ var DashboardIndex = React.createClass({
       lockedBounties: UserBountiesStore.getLockedBounties(),
       newsFeedItems: NewsFeedItemsStore.getNewsFeedItems(),
       reviewingBounties: UserBountiesStore.getReviewingBounties(),
+      currentProduct: dashboard.current_product,
+      recentProducts: dashboard.recent_products,
+      user: UserStore.getUser()
     })
   },
 
