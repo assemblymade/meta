@@ -46,9 +46,16 @@
   background-color: $red;
 }
 
-.chat .markdown img {
+.chat .markdown {
   max-width: 50%;
-  width: 50%;
+
+  img {
+    width: 50%;
+  }
+
+  .emoji {
+    width: inherit;
+  }
 }
 
 .chat .activity-content {
