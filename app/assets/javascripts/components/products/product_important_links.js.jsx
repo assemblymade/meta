@@ -44,7 +44,15 @@ let ProductImportantLinks = React.createClass({
           File a bug
         </a>
 
-        <a className="block border-bottom border-gray-4 py2" href={Routes.product_posts_path({ product_id: slug })}>
+        <a className="block border-bottom border-gray-4 py2" href={Routes.product_posts_path({
+            params: {
+              product_id: slug
+            },
+            data: {
+              modal: true,
+              tags: 'question'
+            }
+        })}>
           <span className="mr3 gray-2">
             <Icon icon="question-circle" />
           </span>
