@@ -53,7 +53,6 @@ let IdeasIndex = React.createClass({
 
   render() {
     let currentApp, lastApp
-    let navigate = this.props.navigate
 
     let topicsDropdownMenu = this.renderTopics()
 
@@ -115,7 +114,7 @@ let IdeasIndex = React.createClass({
             </div>
 
             <div className="center">
-              <Pagination actionCall={navigate} />
+              <Pagination actionCall={page} />
             </div>
           </div>
         </section>
@@ -130,7 +129,7 @@ let IdeasIndex = React.createClass({
             <h1 className="mt0 mb0">
               The best product ideas &mdash; built by all of us.
             </h1>
-            <Button type="primary" action={this.props.navigate.bind(null, '/ideas/new')}>Add your product idea</Button>
+            <Button type="primary" action={page.bind(page, '/ideas/new')}>Add your product idea</Button>
 
         </div>
       </Jumbotron>

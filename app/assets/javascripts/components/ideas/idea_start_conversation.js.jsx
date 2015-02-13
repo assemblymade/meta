@@ -1,4 +1,4 @@
-'use struct';
+'use strict';
 
 const Button = require('../ui/button.js.jsx');
 const CommentActionCreators = require('../../actions/comment_action_creators');
