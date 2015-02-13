@@ -249,7 +249,11 @@ class Idea < ActiveRecord::Base
   end
 
   def twitter_description
-    self.body.truncate(199)
+    if self.body
+      self.body.truncate(199)
+    else
+      ''
+    end
   end
 
   def twitter_title
