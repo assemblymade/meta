@@ -258,8 +258,8 @@ var ChatNotifications = React.createClass({
     for (var i = 0; i < values.length; i++) {
       var entry = values[i];
 
-      entry.readState = entry.updated_at > entry.last_read_at ? 'A' : 'Z';
-      entry.lastUpdated = - entry.updated_at
+      entry.readState = entry.updated > entry.last_read_at ? 'A' : 'Z';
+      entry.lastUpdated = - entry.updated
       entry.sortIndex = this.state.sortKeys.indexOf(entry.id);
 
       if (entry.sortIndex === -1) {
