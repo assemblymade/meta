@@ -44,6 +44,8 @@
 
   </div>
 
+  <div id="chart_div" style="width: 800px; height: 500px;"></div>
+
   <hr>
 
   <table class="table table-responsive table-hover">
@@ -108,3 +110,36 @@
     </tbody>
   </table>
 <% end %>
+
+<% content_for :javascript do %>
+  <script>
+    $(document).ready(function() {
+      var data = <%= @moneystream.to_json.html_safe %>;
+      var dates = <%= @dates.to_json.html_safe %>;
+      FinanceGraph(data);
+    })
+  </script>
+<% end %>
+<!--
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+      var data = google.visualization.arrayToDataTable(
+      <%= @moneystream.to_json.html_safe %>
+      );
+
+    var showEvery = parseInt(data.getNumberOfRows() / 4);
+    var options = {
+      title: 'Cash Flow History',
+      isStacked: true,
+      hAxis: {title: 'Time',  titleTextStyle: {color: '#333'}, showTextEvery: showEvery,  textPosition: 'none'},
+      vAxis: {title: 'Dollars', minValue: 0}
+    };
+    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+
+</script> -->
