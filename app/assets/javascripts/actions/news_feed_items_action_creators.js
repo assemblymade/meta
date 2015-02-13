@@ -43,7 +43,7 @@ module.exports = {
       success: function(data) {
         Dispatcher.dispatch({
           type: ActionTypes.NEWS_FEED_ITEMS_RECEIVE,
-          news_feed_items: items.concat(data.news_feed_items),
+          news_feed_items: items.toJS().concat(data.news_feed_items),
           page: data.meta.pagination.page,
           pages: data.meta.pagination.pages
         })

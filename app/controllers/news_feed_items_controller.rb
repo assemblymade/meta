@@ -19,7 +19,8 @@ class NewsFeedItemsController < ProductController
       end
 
       format.json do @product.news_feed_items
-        render json: @product.news_feed_items.page(params[:page]),
+        @news_feed_items = @product.news_feed_items.unarchived_items.order(last_commented_at: :desc)
+        render json: @news_feed_items.page(params[:page]).per(10),
           serializer: PaginationSerializer,
           each_serializer: NewsFeedItemSerializer,
           root: :news_feed_items

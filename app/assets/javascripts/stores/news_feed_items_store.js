@@ -1,11 +1,14 @@
-var ActionTypes = require('../constants').ActionTypes;
-var Dispatcher = require('../dispatcher');
-var Store = require('./es6_store');
+'use strict';
 
-var _items = [];
-var _loading = false
-var _page = 0
-var _pages = 0
+const ActionTypes = require('../constants').ActionTypes;
+const Dispatcher = require('../dispatcher');
+const { List } = require('immutable');
+const Store = require('./es6_store');
+
+let _items = List();
+let _loading = false
+let _page = 1
+let _pages = 1
 
 class NewsFeedItemsStore extends Store {
   constructor() {
@@ -14,7 +17,7 @@ class NewsFeedItemsStore extends Store {
     this.dispatchIndex = Dispatcher.register((action) => {
       switch (action.type) {
         case ActionTypes.NEWS_FEED_ITEMS_RECEIVE:
-          _items = action.news_feed_items || []
+          _items = List(action.news_feed_items)
           _page = action.page
           _pages = action.pages
           _loading = false
@@ -46,12 +49,12 @@ class NewsFeedItemsStore extends Store {
   }
 }
 
-var store = new NewsFeedItemsStore()
+let store = new NewsFeedItemsStore()
 
-var dataTag = document.getElementById('NewsFeedItemsStore')
+let dataTag = document.getElementById('NewsFeedItemsStore')
 if (dataTag) {
-  var data = JSON.parse(dataTag.innerHTML)
-  var action = {
+  let data = JSON.parse(dataTag.innerHTML)
+  let action = {
     type: ActionTypes.NEWS_FEED_ITEMS_RECEIVE,
     news_feed_items: data.news_feed_items
   }

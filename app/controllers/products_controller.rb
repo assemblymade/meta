@@ -270,7 +270,7 @@ class ProductsController < ProductController
           bounty_marks: @top_wip_tags,
           heartables: @heartables,
           items: @news_feed_items,
-          page: params[:page],
+          page: params[:page] || 1,
           pages: total_pages,
           post_marks: @post_marks,
           product: ProductSerializer.new(

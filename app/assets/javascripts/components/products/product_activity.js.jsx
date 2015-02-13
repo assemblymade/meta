@@ -161,6 +161,64 @@ let ProductActivity = React.createClass({
     );
   },
 
+  renderIntroductionForm() {
+    let product = this.state.product;
+    let user = UserStore.getUser();
+
+    if (user && !product.is_member) {
+      return (
+        <div className="mb2">
+          <Tile>
+            <div className="px3 py2">
+              <h5 className="mt0 mb1">Hey {user.username}!</h5>
+              <div className="gray-1 h6 markdown markdown-normalized py1 mb2">
+                Ready to pitch in on {product.name}? Introduce yourself.
+              </div>
+
+              <TypeaheadUserTextArea className="form-control mb2"
+                  onChange={this.handleIntroductionChange}
+                  placeholder={"What kinds of problems do you like to solve? What skills can you contribute to " +
+                    product.name + "? Are you a coder, a designer, a marketer, or simply a doer?"}
+                  rows="2"
+                  value={this.state.introduction}
+                  style={{ fontSize: 13 }} />
+              <div className="center">
+                <Button type="default" action={this.handleIntroductionSubmit}>
+                  Introduce yourself!
+                </Button>
+              </div>
+            </div>
+          </Tile>
+        </div>
+      );
+    }
+
+    return (
+      <div className="mb2">
+        <Tile>
+          <div className="p3">
+            <div className="block h5 mt0 mb1 bold">
+              Getting Started with Updates
+            </div>
+            <div className="h6 m0 gray-1">
+              Catch up on the latest {product.name} updates, milestones, and other announcements here.
+              <br/><br/>
+              Jump into chat and ping <a href={product.people_url}>@core</a> if you have any questions.
+            </div>
+
+            <div className="center mt2 border-top">
+              <div className="mt2">
+                <Button type="default" action={function() { window.open('chat', '_blank'); }}>
+                  Jump into chat
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Tile>
+      </div>
+    );
+  },
+
   renderMarkFilters(targetType, filters) {
     if ((filters || Immutable.List()).size) {
       let product = this.state.product;
@@ -190,9 +248,8 @@ let ProductActivity = React.createClass({
     let items = this.state.items;
     let product = this.state.product;
 
-    if (items.length) {
-      return <NewsFeed items={items}
-                productPage={true}
+    if (items.size) {
+      return <NewsFeed productPage={true}
                 url={product.url} />;
     }
 
@@ -265,64 +322,6 @@ let ProductActivity = React.createClass({
     );
 
     return renderedTags;
-  },
-
-  renderIntroductionForm() {
-    let product = this.state.product;
-    let user = UserStore.getUser();
-
-    if (user && !product.is_member) {
-      return (
-        <div className="mb2">
-          <Tile>
-            <div className="px3 py2">
-              <h5 className="mt0 mb1">Hey {user.username}!</h5>
-              <div className="gray-1 h6 markdown markdown-normalized py1 mb2">
-                Ready to pitch in on {product.name}? Introduce yourself.
-              </div>
-
-              <TypeaheadUserTextArea className="form-control mb2"
-                onChange={this.handleIntroductionChange}
-                placeholder={"What kinds of problems do you like to solve? What skills can you contribute to " +
-                  product.name + "? Are you a coder, a designer, a marketer, or simply a doer?"}
-                rows="2"
-                value={this.state.introduction}
-                style={{ fontSize: 13 }} />
-              <div className="center">
-                <Button type="default" action={this.handleIntroductionSubmit}>
-                  Introduce yourself!
-                </Button>
-              </div>
-            </div>
-          </Tile>
-        </div>
-      );
-    }
-
-    return (
-      <div className="mb2">
-        <Tile>
-          <div className="p3">
-            <div className="block h5 mt0 mb1 bold">
-              Getting Started with Updates
-            </div>
-            <div className="h6 m0 gray-1">
-              Catch up on the latest {product.name} updates, milestones, and other announcements here.
-              <br/><br/>
-              Jump into chat and ping <a href={product.people_url}>@core</a> if you have any questions.
-            </div>
-
-            <div className="center mt2 border-top">
-              <div className="mt2">
-                <Button type="default" action={function() { window.open('chat', '_blank'); }}>
-                  Jump into chat
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Tile>
-      </div>
-    );
   }
 });
 

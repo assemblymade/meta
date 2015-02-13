@@ -1,5 +1,6 @@
 'use strict';
 
+const Icon = require('../ui/icon.js.jsx');
 const RelatedIdeas = require('./related_ideas.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 
