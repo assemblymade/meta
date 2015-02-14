@@ -7,7 +7,9 @@ class GuidesGroup < StaticContentGroup
     ['starting-ios', 'Starting an iOS app'],
     ['transferring-ios', 'Transferring an iOS app'],
     ['starting-android', 'Starting an Android app'],
-    ['transferring-android', 'Transferring an Android app']
+    ['transferring-android', 'Transferring an Android app'],
+    ['starting-web', 'Starting a Web app'],
+    ['transferring-web', 'Transferring a Web app']
   ]
 
   def self.all
