@@ -2,17 +2,14 @@ var Accordion = require('./accordion.js.jsx');
 var Spinner = require('./spinner.js.jsx');
 var TextPost = require('./ui/text_post.js.jsx')
 var UserStore = require('../stores/user_store')
-var Tile = require('./tile.js.jsx')
+var Tile = require('./ui/tile.js.jsx')
 var ProgressBar = require('./ui/progress_bar.js.jsx')
 var Button = require('./ui/button.js.jsx')
 var MarkdownEditor = require('./markdown_editor.js.jsx');
-var DatePicker = require('react-datepicker-component/DatePicker.jsx')
-var DatePickerInput = require('react-datepicker-component/DatePickerInput.jsx')
 var NewComment = require('./news_feed/new_comment.js.jsx');
 var NewCommentStore = require('../stores/new_comment_store');
 
 var ProposalCreation = React.createClass({
-  displayName: 'ProposalCreation',
   propTypes: {
     user: React.PropTypes.object,
     product: React.PropTypes.object,
@@ -151,7 +148,7 @@ var ProposalCreation = React.createClass({
   renderDatePicker: function(){
     return (
       <div>
-        <input type="date" onChange = {this.handleTextChange('date')}/>
+        <input type="date" onChange={this.handleTextChange('date')}/>
       </div>
     )
   },
@@ -160,7 +157,7 @@ var ProposalCreation = React.createClass({
     return (
       <div>
         <form>
-            <fieldset>
+          <fieldset>
             <div className="form-group form-group-lg">
               <label className="control-label">
                 Proposal Name

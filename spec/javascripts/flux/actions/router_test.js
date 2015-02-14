@@ -1,8 +1,6 @@
 'use strict';
 
 jest.dontMock(appFile('actions/router'));
-jest.dontMock('masonry');
-jest.dontMock('outlayer');
 jest.dontMock('url');
 
 const url = require('url');

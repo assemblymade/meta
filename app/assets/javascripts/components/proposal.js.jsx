@@ -1,7 +1,7 @@
 var Spinner = require('./spinner.js.jsx');
 var TextPost = require('./ui/text_post.js.jsx')
 var UserStore = require('../stores/user_store')
-var Tile = require('./tile.js.jsx')
+var Tile = require('./ui/tile.js.jsx')
 var ProgressBar = require('./ui/progress_bar.js.jsx')
 var Button = require('./ui/button.js.jsx')
 var Heart = require('./heart.js.jsx')
@@ -9,7 +9,6 @@ var ProposalActions = require('../actions/proposal_actions.js')
 var ProposalStore = require('../stores/proposal_store')
 
 var Proposal = React.createClass({
-  displayName: 'Proposal',
   propTypes: {
     newsFeedItem: React.PropTypes.object,
     user: React.PropTypes.object,

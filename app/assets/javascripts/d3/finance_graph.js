@@ -1,5 +1,3 @@
-var c3 = require('c3');
-
 var FinanceGraph = function FinanceGraph(data) {
   var graph = c3.generate({
       bindto: '#chart_div',
@@ -23,7 +21,6 @@ var FinanceGraph = function FinanceGraph(data) {
        }
    }
   });
-  return 0
-}
+};
 
 window.FinanceGraph = FinanceGraph;

@@ -1,33 +1,33 @@
-var ActivityFeedComment = require('../activity_feed_comment.js.jsx');
-var AppIcon = require('../app_icon.js.jsx');
-var ArchivedNewsFeedItemsStore = require('../../stores/archived_news_feed_items_store');
-var Avatar = require('../ui/avatar.js.jsx');
-var Bounty = require('../bounty.js.jsx')
-var Comment = require('../comment.js.jsx');
-var Discussion = require('../ui/discussion.js.jsx')
-var Heart = require('../heart.js.jsx');
-var Introduction = require('../introduction.js.jsx')
-var Lightbox = require('../lightbox.js.jsx')
-var Markdown = require('../markdown.js.jsx');
-var moment = require('moment');
-var NewsFeedItemActionCreators = require('../../actions/news_feed_item_action_creators');
-var NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
-var NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
-var NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
-var NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
-var ProductStore = require('../../stores/product_store');
-var SubscriptionsStore = require('../../stores/subscriptions_store');
-var SvgIcon = require('../ui/svg_icon.js.jsx')
-var Tag = require('../tag.js.jsx');
-var Tile = require('../tile.js.jsx');
-var Update = require('../update.js.jsx')
-var UserStore = require('../../stores/user_store');
+'use strict';
 
-var ONE_DAY = 24 * 60 * 60 * 1000;
+const ActivityFeedComment = require('../activity_feed_comment.js.jsx');
+const AppIcon = require('../app_icon.js.jsx');
+const ArchivedNewsFeedItemsStore = require('../../stores/archived_news_feed_items_store');
+const Avatar = require('../ui/avatar.js.jsx');
+const Bounty = require('../bounty.js.jsx')
+const Comment = require('../comment.js.jsx');
+const Discussion = require('../ui/discussion.js.jsx')
+const Heart = require('../heart.js.jsx');
+const Introduction = require('../introduction.js.jsx')
+const Lightbox = require('../lightbox.js.jsx')
+const Markdown = require('../markdown.js.jsx');
+const moment = require('moment');
+const NewsFeedItemActionCreators = require('../../actions/news_feed_item_action_creators');
+const NewsFeedItemBounty = require('./news_feed_item_bounty.js.jsx');
+const NewsFeedItemIntroduction = require('./news_feed_item_introduction.js.jsx');
+const NewsFeedItemModal = require('./news_feed_item_modal.js.jsx');
+const NewsFeedItemPost = require('./news_feed_item_post.js.jsx');
+const ProductStore = require('../../stores/product_store');
+const SubscriptionsStore = require('../../stores/subscriptions_store');
+const SvgIcon = require('../ui/svg_icon.js.jsx')
+const Tag = require('../tag.js.jsx');
+const Tile = require('../ui/tile.js.jsx');
+const Update = require('../update.js.jsx')
+const UserStore = require('../../stores/user_store');
 
-var NewsFeedItem = React.createClass({
-  displayName: 'NewsFeedItem',
+const ONE_DAY = 24 * 60 * 60 * 1000;
 
+let NewsFeedItem = React.createClass({
   propTypes: {
     commentable: React.PropTypes.bool,
     enableModal: React.PropTypes.bool,
@@ -62,7 +62,7 @@ var NewsFeedItem = React.createClass({
   },
 
   getInitialState: function() {
-    var id = this.props.id;
+    let id = this.props.id;
 
     return {
       isArchived: ArchivedNewsFeedItemsStore.isArchived(id),
@@ -72,7 +72,7 @@ var NewsFeedItem = React.createClass({
   },
 
   getStateFromStore: function() {
-    var target = this.props.target;
+    let target = this.props.target;
 
     if (target && target.type === 'post') {
       this.setState({
@@ -83,8 +83,8 @@ var NewsFeedItem = React.createClass({
   },
 
   handleArchive: function() {
-    var productSlug = this.props.product.slug;
-    var itemId = this.props.id;
+    let productSlug = this.props.product.slug;
+    let itemId = this.props.id;
 
     if (this.state.isArchived) {
       NewsFeedItemActionCreators.unarchive(productSlug, itemId);
@@ -94,8 +94,8 @@ var NewsFeedItem = React.createClass({
   },
 
   handleSubscribe: function() {
-    var productSlug = this.props.product.slug;
-    var itemId = this.props.id;
+    let productSlug = this.props.product.slug;
+    let itemId = this.props.id;
 
     if (this.state.isSubscribed) {
       NewsFeedItemActionCreators.unsubscribe(productSlug, itemId);
@@ -131,7 +131,7 @@ var NewsFeedItem = React.createClass({
 
     // only turn on for posts
     if (this.props.target && this.props.target.type === 'post') {
-      var text = 'Archive';
+      let text = 'Archive';
       if (this.state.isArchived) {
         text = 'Unarchive';
       }
@@ -145,7 +145,7 @@ var NewsFeedItem = React.createClass({
   },
 
   renderComments: function() {
-    var comment = this.props.last_comment
+    let comment = this.props.last_comment
 
     if (comment) {
       return (
@@ -158,7 +158,7 @@ var NewsFeedItem = React.createClass({
 
   renderEditButton: function() {
     if (ProductStore.isCoreTeam(UserStore.getUser()) || this.props.user.id === UserStore.getId()) {
-      var target = this.props.target;
+      let target = this.props.target;
 
       // only turn on for posts
       if (target && target.type === 'post') {
@@ -172,9 +172,9 @@ var NewsFeedItem = React.createClass({
   },
 
   renderTags: function() {
-    var target = this.props.target
-    var tags = target && (target.tags || target.marks);
-    var tagItems;
+    let target = this.props.target
+    let tags = target && (target.tags || target.marks);
+    let tagItems;
 
     if (tags && tags.length) {
       tagItems = _.map(tags, function(tag) {
@@ -194,12 +194,12 @@ var NewsFeedItem = React.createClass({
   },
 
   renderDetails: function() {
-    var target = this.props.target;
+    let target = this.props.target;
 
-    var bountyValue = this.renderBountyValue();
-    var commentsCount = this.renderCommentsCount();
-    var share = this.renderShare();
-    var heart = this.renderHeart();
+    let bountyValue = this.renderBountyValue();
+    let commentsCount = this.renderCommentsCount();
+    let share = this.renderShare();
+    let heart = this.renderHeart();
 
     return (
       <div className="border-top clearfix">
@@ -215,7 +215,7 @@ var NewsFeedItem = React.createClass({
   },
 
   renderBountyValue: function() {
-    var target = this.props.target;
+    let target = this.props.target;
 
     if (target && target.type == 'task') {
       return (
@@ -227,9 +227,9 @@ var NewsFeedItem = React.createClass({
   },
 
   renderCommentsCount: function() {
-    var _commentsCount = function() {
-      var commentsCount = this.props.comments_count
-      var target = this.props.target;
+    let _commentsCount = function() {
+      let commentsCount = this.props.comments_count
+      let target = this.props.target;
 
       if (this.props.target && this.props.target.url) {
         return (
@@ -283,11 +283,11 @@ var NewsFeedItem = React.createClass({
   },
 
   renderModal: function() {
-    var item = this.props
-    var product = this.props.product
-    var target = this.props.target
+    let item = this.props
+    let product = this.props.product
+    let target = this.props.target
 
-    var modalTarget;
+    let modalTarget;
 
     target.product = product
 
@@ -328,7 +328,7 @@ var NewsFeedItem = React.createClass({
   },
 
   renderSource: function() {
-    var product = this.props.product
+    let product = this.props.product
 
     if (!product) {
       return;
@@ -347,7 +347,7 @@ var NewsFeedItem = React.createClass({
   },
 
   renderSubscribeButton: function() {
-    var user = UserStore.getUser();
+    let user = UserStore.getUser();
 
     if (!user) {
       return (
@@ -359,7 +359,7 @@ var NewsFeedItem = React.createClass({
 
     // only turn on for posts
     if (this.props.target && this.props.target.type === 'post') {
-      var text = 'Subscribe';
+      let text = 'Subscribe';
       if (this.state.isSubscribed) {
         text = 'Unsubscribe';
       }
@@ -373,9 +373,9 @@ var NewsFeedItem = React.createClass({
   },
 
   renderTarget: function() {
-    var product = this.props.product;
-    var target = this.props.target;
-    var triggerModal = this.triggerModal;
+    let product = this.props.product;
+    let target = this.props.target;
+    let triggerModal = this.triggerModal;
 
     if (target) {
       switch (target.type) {
@@ -421,7 +421,7 @@ var NewsFeedItem = React.createClass({
   },
 
   targetNoun: function(type) {
-    var typeMap = this.typeMap;
+    let typeMap = this.typeMap;
 
     if (typeMap[type]) {
       return typeMap[type];
@@ -437,8 +437,4 @@ var NewsFeedItem = React.createClass({
   }
 });
 
-if (typeof module !== 'undefined') {
-  module.exports = NewsFeedItem;
-}
-
-window.NewsFeedItem = NewsFeedItem;
+module.exports = window.NewsFeedItem = NewsFeedItem;
