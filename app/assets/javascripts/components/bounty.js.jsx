@@ -120,7 +120,7 @@ let Bounty = React.createClass({
       if (currentUser && worker.id === currentUser.id) {
         lockMessage = (
           <div className="px3 py2 border-bottom border-gray-5 gray-1" style={{backgroundColor: '#F4FFC0'}}>
-            <Icon icon="lock" /> You have a hold on this bounty until {this.state.lockUntil.format('dddd [at] h a')} &mdash; <a href="javascript:void(0)" onClick={this.abandonWork}>release this bounty</a> or <a href="javascript:void(0)" onClick={this.extendWork}>extend for two days</a>
+            <Icon icon="lock" /> You have a hold on this bounty until {this.state.lockUntil.format('dddd [at] h a')} &mdash; <a href="javascript:void(0)" onClick={this.abandonWork}>release this bounty</a> or <a href="javascript:void(0)" onClick={this.extendWork}>hold until two days from now</a>
           </div>
         )
       } else {
