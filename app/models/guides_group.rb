@@ -3,7 +3,11 @@ class GuidesGroup < StaticContentGroup
     ['platform',    'The Assembly Platform'],
     ['getting-started',    'Getting Started'],
     ['building-products',    'Building Products'],
-    ['project-management', 'Project Management']
+    ['project-management', 'Project Management'],
+    ['starting-ios', 'Starting an iOS app'],
+    ['transferring-ios', 'Transferring an iOS app'],
+    ['starting-android', 'Starting an Android app'],
+    ['transferring-android', 'Transferring an Android app']
   ]
 
   def self.all
