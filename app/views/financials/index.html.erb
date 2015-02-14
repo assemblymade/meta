@@ -44,6 +44,8 @@
 
   </div>
 
+  <div id="chart_div" style="width: 800px; height: 500px;"></div>
+
   <hr>
 
   <table class="table table-responsive table-hover">
@@ -107,4 +109,13 @@
       <% end %>
     </tbody>
   </table>
+<% end %>
+
+<% content_for :javascript do %>
+  <script>
+    $(document).ready(function() {
+      var data = <%= @moneystream.to_json.html_safe %>;
+      FinanceGraph(data);
+    })
+  </script>
 <% end %>

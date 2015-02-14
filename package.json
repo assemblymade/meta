@@ -6,8 +6,8 @@
     "test": "node_modules/.bin/jest",
     "lint": "node_modules/.bin/jsxhint app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx",
     "postinstall": "npm run bundle",
-    "bundle": "node_modules/.bin/browserify -t [ 6to5ify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js",
-    "watch": "node_modules/.bin/watchify -t [ 6to5ify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx -o app/assets/javascripts/components.js -v"
+    "bundle": "node_modules/.bin/browserify -t [ 6to5ify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx app/assets/javascripts/d3/*.js -o app/assets/javascripts/components.js",
+    "watch": "node_modules/.bin/watchify -t [ 6to5ify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx app/assets/javascripts/d3/*.js -o app/assets/javascripts/components.js -v"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,8 @@
     "6to5ify": "^4.0.0",
     "Set": "^0.4.1",
     "browserify": "^5.9.1",
+    "c3": "^0.4.9",
+    "d3": "^3.5.5",
     "elasticsearch": "^3.1.1",
     "imagesloaded": "^3.1.8",
     "immutable": "^3.3.0",
@@ -47,8 +49,8 @@
     "nprogress": "^0.1.6",
     "page": "^1.5.0",
     "qs": "^2.3.3",
-    "react-datepicker-component": "^1.0.2",
     "react": "^0.12.2",
+    "react-datepicker-component": "^1.0.2",
     "react-router": "^0.11.6",
     "react-spinner": "^0.1.9",
     "react-tools": "^0.12.0",
