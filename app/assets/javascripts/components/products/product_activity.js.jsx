@@ -4,8 +4,7 @@ const Accordion = require('../accordion.js.jsx');
 const BountyMarksStore = require('../../stores/bounty_marks_store');
 const Button = require('../ui/button.js.jsx');
 const Immutable = require('immutable');
-const IntroductionActions = require('../../actions/introduction_actions');
-const IntroductionStore = require('../../stores/introduction_store');
+const IntroductionForm = require('./introduction_form.js.jsx');
 const NewsFeed = require('../news_feed/news_feed.js.jsx');
 const NewsFeedItemsStore = require('../../stores/news_feed_items_store');
 const PostMarksStore = require('../../stores/post_marks_store');
@@ -37,7 +36,6 @@ let ProductActivity = React.createClass({
     document.title = this.state.product.name;
 
     BountyMarksStore.addChangeListener(this.onBountyMarksChange);
-    IntroductionStore.addChangeListener(this.onIntroductionChange);
     NewsFeedItemsStore.addChangeListener(this.onNewsFeedChange);
     PostMarksStore.addChangeListener(this.onPostMarksChange);
     ProductStore.addChangeListener(this.onProductChange);
@@ -45,7 +43,6 @@ let ProductActivity = React.createClass({
 
   componentWillUnmount() {
     BountyMarksStore.removeChangeListener(this.onBountyMarksChange);
-    IntroductionStore.removeChangeListener(this.onIntroductionChange);
     NewsFeedItemsStore.removeChangeListener(this.onNewsFeedChange);
     PostMarksStore.removeChangeListener(this.onPostMarksChange);
     ProductStore.removeChangeListener(this.onProductChange);
@@ -54,35 +51,15 @@ let ProductActivity = React.createClass({
   getInitialState() {
     return {
       bountyMarks: BountyMarksStore.getMarks(),
-      introduction: IntroductionStore.getIntroduction(),
       items: NewsFeedItemsStore.getNewsFeedItems(),
       postMarks: PostMarksStore.getMarks(),
       product: ProductStore.getProduct()
     };
   },
 
-  handleIntroductionChange(e) {
-    IntroductionActions.updateIntroduction(e.target.value);
-  },
-
-  handleIntroductionSubmit() {
-    let introduction = IntroductionStore.getIntroduction();
-    let product = this.state.product;
-    let slug = product.slug;
-    let userId = UserStore.getId();
-
-    IntroductionActions.submitIntroduction(slug, userId, introduction)
-  },
-
   onBountyMarksChange() {
     this.setState({
       bountyMarks: BountyMarksStore.getMarks()
-    });
-  },
-
-  onIntroductionChange() {
-    this.setState({
-      introduction: IntroductionStore.getIntroduction()
     });
   },
 
@@ -170,23 +147,7 @@ let ProductActivity = React.createClass({
         <div className="mb2">
           <Tile>
             <div className="px3 py2">
-              <h5 className="mt0 mb1">Hey {user.username}!</h5>
-              <div className="gray-1 h6 markdown markdown-normalized py1 mb2">
-                Ready to pitch in on {product.name}? Introduce yourself.
-              </div>
-
-              <TypeaheadUserTextArea className="form-control mb2"
-                  onChange={this.handleIntroductionChange}
-                  placeholder={"What kinds of problems do you like to solve? What skills can you contribute to " +
-                    product.name + "? Are you a coder, a designer, a marketer, or simply a doer?"}
-                  rows="2"
-                  value={this.state.introduction}
-                  style={{ fontSize: 13 }} />
-              <div className="center">
-                <Button type="default" action={this.handleIntroductionSubmit}>
-                  Introduce yourself!
-                </Button>
-              </div>
+              <IntroductionForm product={product} />
             </div>
           </Tile>
         </div>

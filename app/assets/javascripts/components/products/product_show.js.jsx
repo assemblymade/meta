@@ -1,10 +1,8 @@
 'use strict';
 
 const Avatar = require('../ui/avatar.js.jsx');
-const Button = require('../ui/button.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
-const IntroductionActions = require('../../actions/introduction_actions');
-const IntroductionStore = require('../../stores/introduction_store');
+const IntroductionForm = require('./introduction_form.js.jsx');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductImportantLinks = require('./product_important_links.js.jsx');
 const ProductScreenshotPlaceholder = require('./product_screenshot_placeholder.js.jsx');
@@ -28,12 +26,10 @@ let ProductShow = React.createClass({
   componentDidMount() {
     document.title = this.state.product && this.state.product.name;
 
-    IntroductionStore.addChangeListener(this.onIntroductionChange);
     ProductStore.addChangeListener(this.onProductChange);
   },
 
   componentWillUnmount() {
-    IntroductionStore.removeChangeListener(this.onIntroductionChange);
     ProductStore.removeChangeListener(this.onProductChange);
   },
 
@@ -45,21 +41,6 @@ let ProductShow = React.createClass({
     return {
       product: ProductStore.getProduct()
     };
-  },
-
-  handleIntroductionSubmit() {
-    let introduction = IntroductionStore.getIntroduction();
-    let product = this.state.product;
-    let slug = product.slug;
-    let userId = UserStore.getId();
-
-    IntroductionActions.submitIntroduction(slug, userId, introduction)
-  },
-
-  onIntroductionChange() {
-    this.setState({
-      introduction: IntroductionStore.getIntroduction()
-    });
   },
 
   onProductChange() {
@@ -183,22 +164,7 @@ let ProductShow = React.createClass({
     if (user && !product.is_member) {
       return (
         <div className="mt2">
-          <div className="gray-1 h6 markdown markdown-normalized py1 mb2">
-            Ready to pitch in on {product.name}? Introduce yourself.
-          </div>
-
-          <TypeaheadUserTextArea className="form-control mb2"
-            onChange={this.handleIntroductionChange}
-            placeholder={"What kinds of problems do you like to solve? What skills can you contribute to " +
-              product.name + "? Are you a coder, a designer, a marketer, or simply a doer?"}
-            rows="2"
-            value={this.state.introduction}
-            style={{ fontSize: 13 }} />
-          <div className="center">
-            <Button type="default" action={this.handleIntroductionSubmit}>
-              Introduce yourself!
-            </Button>
-          </div>
+          <IntroductionForm product={product} />
         </div>
       );
     }
