@@ -84,16 +84,6 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def update_pusher
-    event_hash = EventSerializer.for(self, nil).as_json.merge(socket_id: self.socket_id)
-    event_hash[:mentions] = mentioned_users.map(&:username)
-    event_hash.delete :body
-    event_hash[:body_html] = truncate(event_hash[:body_html], length: 200)
-
-    channels = self.wip.followers.map{|u| "@#{u.username}"} + [wip.push_channel]
-    PusherWorker.perform_async channels, 'event.added', event_hash.to_json
-  end
-
   def mentioned_users
     users = []
     TextFilters::UserMentionFilter.mentioned_usernames_in(self.body, self.wip.product) do |username, u|

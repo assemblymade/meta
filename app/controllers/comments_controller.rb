@@ -42,6 +42,7 @@ class CommentsController < ApplicationController
       @comment.publish_activity!
       @comment.notify_subscribers!
       @comment.track_acknowledgements!
+      push_mentions(@comment)
     end
 
     respond_with({
@@ -67,5 +68,18 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def push_mentions(comment)
+    # push @mentions to mentionee
+    (comment.mentioned_users - [comment.user]).each do |user|
+      PushMention.push(
+        user.id,
+        params[:socket_id],
+        "@#{comment.user.username} mentioned you",
+        comment,
+        url_for(comment.url_params)
+      )
+    end
   end
 end

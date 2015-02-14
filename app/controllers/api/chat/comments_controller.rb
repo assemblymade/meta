@@ -20,6 +20,18 @@ module Api
             socket_id: params[:socket_id]
           )
 
+          # push @mentions to mentionee
+          (@event.mentioned_user_ids - [@event.user_id]).each do |user_id|
+            PushMention.push(
+              user_id,
+              params[:socket_id],
+              "@#{@event.user.username} mentioned you in ##{@chat_room.slug}",
+              @event,
+              url_for(@event.url_params)
+            )
+          end
+
+          # push chat added to all chat followers
           channels = @chat_room.follower_ids.map{|user_id| "user.#{user_id}"}
           if channels.any?
             PusherWorker.perform_async(

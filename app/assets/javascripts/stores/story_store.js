@@ -1,6 +1,5 @@
 var ActionTypes = require('../constants').ActionTypes;
 var Dispatcher = require('../dispatcher');
-var PusherStore = require('../stores/pusher_store')
 var Store = require('./es6_store')
 var StoryActions = require('../actions/story_actions')
 var UserStore = require('./user_store')

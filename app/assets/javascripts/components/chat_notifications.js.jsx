@@ -5,7 +5,6 @@ var Dispatcher = require('../dispatcher');
 var LocalStorageMixin = require('../mixins/local_storage.js');
 var Spinner = require('./spinner.js.jsx');
 
-var ICON_URL = 'https://d8izdk6bl4gbi.cloudfront.net/80x/http://f.cl.ly/items/1I2a1j0M0w0V2p3C3Q0M/Assembly-Twitter-Avatar.png';
 var N = CONSTANTS.CHAT_NOTIFICATIONS;
 
 var NotificationsList = React.createClass({
@@ -85,7 +84,7 @@ var ChatNotifications = React.createClass({
     var _this = this;
 
     this.onPush(function(event, msg) {
-      if (_.contains(msg.mentions, _this.props.username)) {
+      if (event == 'mentioned') {
         _this.desktopNotify(msg);
       }
 
@@ -107,20 +106,20 @@ var ChatNotifications = React.createClass({
   },
 
   desktopNotify: function(event) {
-    var n = new Notify("New message on " + (event.wip.product_name), {
-      body: (event.actor.username + ": " + event.body_sanitized),
-      tag: event.id,
-      icon: ICON_URL,
+    var options = {
+      body: event.body,
+      tag: event.tag,
+      icon: (event.icon || '/assets/asm-logo-flag-2x.png'),
       timeout: 15,
 
       notifyClick: function() {
         $(window).focus();
-
-        if (window.app.wip.id != event.wip.id) {
-          window.app.redirectTo(event.wip.url);
+        if (window.location.href.indexOf(event.url) == -1) {
+            window.location = event.url
         }
       }
-    });
+    }
+    var n = new Notify(event.title, options);
 
     return n.show();
   },
