@@ -40,6 +40,10 @@ class BountySerializer < ApplicationSerializer
     bounty.flagged?
   end
 
+  def comments_count
+    object.news_feed_item.comments_count
+  end
+
   def following
     bounty.followed_by?(current_user)
   end

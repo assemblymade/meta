@@ -41,7 +41,7 @@ var Heart = React.createClass({
       return <div />
     }
 
-    var icon = <Icon icon="heart" />
+    var icon = <Icon icon="heart" verticalAlign={1} />
     if (!UserStore.isSignedIn()) {
       return icon;
     }

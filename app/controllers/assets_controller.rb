@@ -13,9 +13,7 @@ class AssetsController < ProductController
   end
 
   def create
-    if params[:event_id]
-      add_all_event_assets
-    elsif params[:attachment_url]
+    if params[:attachment_url]
       add_attachment
     else
       @asset = @product.assets.create(asset_params.merge(user: current_user))
@@ -36,14 +34,6 @@ class AssetsController < ProductController
 
   def asset_params
     params.require(:asset).permit(:attachment_id, :name)
-  end
-
-  def add_all_event_assets
-    event = Event.find(params[:event_id])
-
-    event.attachments.map do |attachment_id|
-      create_from_attachment(Attachment.find(attachment_id))
-    end
   end
 
   def add_attachment

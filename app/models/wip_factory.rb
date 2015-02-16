@@ -16,7 +16,6 @@ class WipFactory
     wip = @scope.create(@params.merge(user: @creator))
 
     if wip.valid?
-      add_description(wip)
       watch_product
       prioritize(wip)
 
@@ -35,15 +34,6 @@ class WipFactory
     end
 
     wip
-  end
-
-  def add_description(wip)
-    unless @comment.blank?
-      wip.events << Event::Comment.new(
-        user_id: @creator.id,
-        body: @comment
-      )
-    end
   end
 
   def watch_product

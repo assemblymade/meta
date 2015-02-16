@@ -135,28 +135,4 @@ class Event < ActiveRecord::Base
       [event, Mustache.render(File.read(template_path), event_data)]
     end
   end
-
-  def self.create_from_comment(wip, type, body, user, socket_id = nil, attachments = nil)
-    case type.to_s
-    when Event::Close.to_s
-      wip.close!(user, body)
-
-    when Event::ReviewReady.to_s
-      wip.review_me!(user)
-
-    when Event::Reopen.to_s
-      wip.reopen!(user, body)
-
-    when Event::Comment.to_s
-      wip.comments.create(
-        user_id: user.id,
-        body: body,
-        socket_id: socket_id,
-        attachments: attachments
-      )
-
-    else
-      raise 'Unknown event'
-    end
-  end
 end

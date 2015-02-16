@@ -13,12 +13,17 @@ class PusherStore extends Store {
     _dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {
         case ActionTypes.PUSHER_INITIALIZED:
+          console.log('initialized')
           _client = action.client
 
           if (UserStore.getUser() && _client) {
+            console.log('subscribed', 'user.' + UserStore.getId())
+
             _client.
               subscribe('user.' + UserStore.getId()).
               bind_all((payload, data) => {
+                console.log('  pushed', payload, data)
+
                 Dispatcher.dispatch({
                   type: ActionTypes.PUSHER_USER_ACTION,
                   event: payload,

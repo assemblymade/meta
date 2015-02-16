@@ -7,7 +7,12 @@ module Api
         body = params[:body] || params[:message] # TODO: (whatupdave) change Kernel to use body
         @chat_room = ChatRoom.includes(:wip).find_by!(slug: params[:chat_room_id])
         @chat_room.with_lock do
-          @event = Event.create_from_comment(@chat_room.wip, Event::Comment, body, current_user, params[:socket_id])
+          @event = Event::Comment.create(
+            user: current_user,
+            wip: @chat_room.wip,
+            body: body,
+            socket_id: params[:socket_id]
+          )
         end
 
         if @event.valid?
@@ -27,7 +32,7 @@ module Api
               params[:socket_id],
               "@#{@event.user.username} mentioned you in ##{@chat_room.slug}",
               @event,
-              url_for(@event.url_params)
+              chat_room_path(@chat_room)
             )
           end
 
@@ -36,7 +41,7 @@ module Api
           if channels.any?
             PusherWorker.perform_async(
               channels,
-              "chat-added",
+              "CHAT_ADDED",
               { chat_room: @chat_room.id, updated: @event.created_at.to_i },
               socket_id: params[:socket_id]
             )

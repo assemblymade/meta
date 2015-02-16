@@ -2,9 +2,9 @@ class BountyListSerializer < ApplicationSerializer
   include MarkdownHelper
 
   attributes :closed_at,
-             :comments_count,
              :earnable_coins_cache,
              :news_feed_item_id,
+             :comments_count,
              :number,
              :priority,
              :product_slug,
@@ -15,6 +15,10 @@ class BountyListSerializer < ApplicationSerializer
   has_one :user
 
   has_many :tags
+
+  def comments_count
+    object.news_feed_item.comments_count
+  end
 
   def url
     product_wip_path(object.product, object)

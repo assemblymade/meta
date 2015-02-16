@@ -144,10 +144,8 @@ ChatNotificationsStore.dispatchIndex = Dispatcher.register(function(payload) {
   var sync = payload.sync;
 
   switch(payload.type) {
-    case ActionTypes.PUSHER_USER_ACTION:
-      if (payload.event == 'chat-added') {
-        _chatRooms['chat_' + payload.payload.chat_room].updated_at = payload.payload.updated_at
-      }
+    case ActionTypes.CHAT_ADDED:
+      _chatRooms['chat_' + data.chat_room].updated_at = data.updated
       ChatNotificationsStore.emitChange()
       break;
   }

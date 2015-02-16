@@ -1,5 +1,6 @@
 var ActionTypes = require('../constants').ActionTypes;
 var Dispatcher = require('../dispatcher');
+var PusherStore = require('./pusher_store') // don't remove this
 var Store = require('./es6_store')
 var StoryActions = require('../actions/story_actions')
 var UserStore = require('./user_store')
@@ -47,12 +48,9 @@ class StoryStore extends Store {
           this.emitChange()
           break
 
-        case ActionTypes.PUSHER_USER_ACTION:
-          if (action.event == 'story-added') {
-            StoryActions.fetchStories()
-            this.emitChange()
-          }
-          break;
+        case ActionTypes.STORY_ADDED:
+          StoryActions.fetchStories()
+          this.emitChange()
       }
     })
   }

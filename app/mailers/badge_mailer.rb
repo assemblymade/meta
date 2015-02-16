@@ -7,7 +7,7 @@ class BadgeMailer < BaseMailer
     mailgun_campaign 'notifications'
 
     if @event = Event.find_by(id: event_id)
-      @wip = @event.wip.decorate
+      @wip = @event.wip
     else
       @event = NewsFeedItemComment.find(event_id)
       @wip = @event.news_feed_item.target

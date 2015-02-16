@@ -14,12 +14,6 @@ describe User do
     }.to change { user.has_voted_for?(product) }.from(false).to(true)
   end
 
-  it 'should get a list of a users contributions' do
-    event = Event::Comment.make!
-    user = event.user
-    user.wips_contributed_to.should include(event.wip)
-  end
-
   it 'should return wips a user is working on' do
     user = User.make!
     task = Task.make!

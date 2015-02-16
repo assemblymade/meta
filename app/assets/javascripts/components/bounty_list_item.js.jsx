@@ -115,10 +115,10 @@ var BountyListItem = React.createClass({
                 <div className="left px1">
                   <AppCoins n={this.props.bounty.earnable_coins_cache} />
                 </div>
-                <div className="left px1 bold">
+                <div className="left px1">
                   <IconWithNumber icon={<Icon icon="comment" />} n={bounty.comments_count} />
                 </div>
-                <div className="left px1 bold">
+                <div className="left px1">
                   <Heart size="small" heartable_id={this.props.bounty.news_feed_item_id} heartable_type="NewsFeedItem" />
                 </div>
                 <div className="left px1">

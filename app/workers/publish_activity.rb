@@ -23,15 +23,16 @@ class PublishActivity
   end
 
   def push_to_feeds!(story, socket_id)
+    pusher_channels = story.reader_ids.map{|user_id| "user.#{user_id}" }
     story.reader_ids.each do |user_id|
       NewsFeed.new(User, user_id).push(story)
-      PusherWorker.perform_async(
-        "user.#{user_id}",
-        "story-added",
-        story.id,
-        socket_id: socket_id
-      )
     end
+    PusherWorker.perform_async(
+      pusher_channels,
+      "STORY_ADDED",
+      story.id,
+      socket_id: socket_id
+    )
   end
 
   def register_with_readraptor!(story)

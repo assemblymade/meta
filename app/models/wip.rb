@@ -14,7 +14,6 @@ class Wip < ActiveRecord::Base
   belongs_to :product, :touch => (update_parent_product_for_caching = true), counter_cache: true
   belongs_to :user
 
-  has_many :comments, class_name: 'Event::Comment'
   has_one  :chat_room
   has_many :events
   has_many :followings, class_name: 'Watching', as: :watchable
@@ -116,8 +115,7 @@ class Wip < ActiveRecord::Base
   end
 
   def sanitized_description
-    text = (description || comments.order(:created_at).last.try(:body))
-    Search::Sanitizer.new.sanitize(text) if text
+    Search::Sanitizer.new.sanitize(description)
   end
 
   def to_param
@@ -262,7 +260,6 @@ class Wip < ActiveRecord::Base
 
   def event_added(event)
     Wip.reset_counters(self.id, :events)
-    Wip.reset_counters(self.id, :comments)
   end
 
   def vote_added(vote)
@@ -293,9 +290,9 @@ class Wip < ActiveRecord::Base
       indexes :hidden, index: 'not_analyzed'
       indexes :state,  index: 'not_analyzed'
 
-      indexes :comments do
-        indexes :sanitized_body, analyzer: 'snowball'
-      end
+      # indexes :comments do
+      #   indexes :sanitized_body, analyzer: 'snowball'
+      # end
 
       indexes :product do
         indexes :slug, index: 'not_analyzed'
@@ -309,7 +306,7 @@ class Wip < ActiveRecord::Base
       methods: [:hidden],
 
       include: {
-        comments: {only: [:id, :number], methods: [:sanitized_body]},
+        # comments: {only: [:id, :number], methods: [:sanitized_body]},
         product: {only: [:slug] }
       }
     )

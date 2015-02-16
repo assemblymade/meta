@@ -8,8 +8,8 @@ describe 'showing all bounties' do
   before { login_as(user, scope: :user) }
 
   it 'shows all bounties for a given product', js: true do
-    Task.make!(title: 'Design a new logo', product: product)
-    Task.make!(title: 'Add some tests', product: product)
+    Task.make!(title: 'Design a new logo', product: product).tap{|t| NewsFeedItem.create_with_target(t) }
+    Task.make!(title: 'Add some tests', product: product).tap{|t| NewsFeedItem.create_with_target(t) }
 
     visit product_wips_path(product)
 
@@ -18,8 +18,8 @@ describe 'showing all bounties' do
   end
 
   it 'shows all bounties in a specific state', js: true do
-    Task.make!(title: 'Design a new logo', product: product)
-    Task.make!(title: 'Add some tests', product: product, state: 'closed')
+    Task.make!(title: 'Design a new logo', product: product).tap{|t| NewsFeedItem.create_with_target(t) }
+    Task.make!(title: 'Add some tests', product: product, state: 'closed').tap{|t| NewsFeedItem.create_with_target(t) }
 
     visit product_wips_path(product)
 

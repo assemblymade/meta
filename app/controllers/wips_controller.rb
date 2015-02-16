@@ -188,9 +188,9 @@ class WipsController < ProductController
   def set_wip
     number = params[:wip_id] || params[:task_id] || params[:id]
     if number.to_i.zero?
-      @wip = @product.main_thread.decorate
+      @wip = @product.main_thread
     else
-      @wip = @product.wips.find_by!(number: number).decorate
+      @wip = @product.wips.find_by!(number: number)
     end
     @events = @wip.events.includes(:tips).order(:number)
 

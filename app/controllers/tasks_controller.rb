@@ -224,7 +224,7 @@ class TasksController < WipsController
   # private
 
   def find_wips
-    FilterWipsQuery.call(product_wips, current_user, params.symbolize_keys)
+    FilterWipsQuery.call(product_wips, current_user, params.symbolize_keys).includes(:news_feed_item)
   end
 
   def wip_class

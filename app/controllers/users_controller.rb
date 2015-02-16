@@ -15,8 +15,7 @@ class UsersController < ApplicationController
     }.with_indifferent_access
 
     filters = default_filters.merge(params.slice(:user, :state, :page))
-    query = FilterWipsQuery.call(Task.all, @user, filters)
-    @wips = PaginatingDecorator.new(query)
+    @wips = FilterWipsQuery.call(Task.all, @user, filters)
 
     set_empty_state if @wips.empty?
 

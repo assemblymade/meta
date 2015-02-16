@@ -20,15 +20,6 @@
 
       <h6>Task list</h6>
       <%= render partial: 'task_list', object: @milestone %>
-
-      <br>
-      <hr>
-
-      <h6 id="comments">Discussion</h6>
-      <div id="discussion-view-el">
-        <%= render 'wips/discussion', events: @events %>
-        <%= render 'discussions/new_event_form' %>
-      </div>
     </div>
 
 
@@ -115,13 +106,5 @@
     app.wipEvents = new WipEvents(<%== @wip.events.map {|e| EventSerializer.for(e, current_user)}.to_json %>, {
       url: '<%= product_wip_comments_path(@wip.product, @wip) %>'
     });
-
-    $(document).ready(function() {
-      <%= render 'wips/add_tips_to_wip_events' %>
-      new DiscussionView({
-        el: $('#discussion-view-el'),
-        model: app.wip
-      });
-    })
   </script>
 <% end %>

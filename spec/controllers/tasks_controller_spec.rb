@@ -5,7 +5,7 @@ describe TasksController do
   let(:worker) { User.make! }
   let(:product) { Product.make!(user: user, state: 'team_building') }
   let!(:wips) { [Task.make!(user: user, product: product)] }
-  let!(:event) { Event::Comment.make!(wip: wips.first, user: worker) }
+  let!(:event) { NewsFeedItemComment.make!(user: worker) }
 
   describe '#create' do
     let(:follower) { User.make! }
