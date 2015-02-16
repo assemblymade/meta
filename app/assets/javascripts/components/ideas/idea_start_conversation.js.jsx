@@ -19,7 +19,7 @@ let IdeaStartConversation = React.createClass({
     params: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object
-      ]),
+    ]),
     query: React.PropTypes.object
   },
 
@@ -139,7 +139,7 @@ let IdeaStartConversation = React.createClass({
           <div className="clearfix px4 mb3">
             <div className="left mt1">
               <a href="javscript:void(0);" onClick={this.onBackClick}>
-                <Icon icon="chevron-left" /> Back
+                <Icon icon="chevron-left" /> Edit your idea
               </a>
             </div>
 

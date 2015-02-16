@@ -22,6 +22,10 @@ class Ability
       user == current_user
     end
 
+    can [:update], Idea do |idea|
+      (idea.user_id == current_user.id)
+    end
+
     # NewsFeedItems
     can [:update], NewsFeedItem do |nfi|
       (nfi.product && nfi.product.core_team?(current_user)) || current_user.staff?

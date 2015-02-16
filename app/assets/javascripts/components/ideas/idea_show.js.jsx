@@ -113,7 +113,10 @@ let IdeaShow = React.createClass({
       return null;
     }
 
-    let nfi = idea.news_feed_item
+    let nfi = idea.news_feed_item;
+
+    // Discussion expects the NFI to have a url
+    nfi.url = idea.url;
 
     return (
       <div>
@@ -143,7 +146,7 @@ let IdeaShow = React.createClass({
 
           <div className="clearfix mxn2">
             <div className="col col-8 px2">
-              <Discussion newsFeedItem={idea.news_feed_item}>
+              <Discussion newsFeedItem={nfi}>
                 <Idea idea={idea} />
               </Discussion>
             </div>
@@ -181,7 +184,7 @@ let IdeaShow = React.createClass({
 
                       <ul className="h3 list-reset clearfix mxn1 mb0">
                         <li className="left p1">
-                          <a className="gray-3 gray-2-hover bold" href="#" onClick={this.handleTwitterClick}>
+                          <a className="gray-3 gray-2-hover bold clickable" onClick={this.handleTwitterClick}>
                             <Icon icon="twitter" />
                           </a>
                         </li>
@@ -216,7 +219,6 @@ let IdeaShow = React.createClass({
 
   handleTwitterClick(e) {
     e.preventDefault()
-
     window.open(
       twitterUrl(this.shareUrl(), this.state.idea.name),
       'twitterwindow',
@@ -234,8 +236,8 @@ let IdeaShow = React.createClass({
     FB.ui({
       method: 'share',
       display: 'popup',
-      href: this.shareUrl(),
-    })
+      href: this.shareUrl()
+    });
   },
 
   shareUrl() {
@@ -250,9 +252,5 @@ let IdeaShow = React.createClass({
 module.exports = IdeaShow;
 
 function twitterUrl(url, message) {
-  return 'http://twitter.com/share?url=' +
-    url +
-    '&text=' +
-    message +
-    '&';
+  return `http://twitter.com/share?url=${url}&text=${message}&`;
 }

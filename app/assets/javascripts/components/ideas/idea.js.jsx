@@ -17,7 +17,16 @@ const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
 let Idea = React.createClass({
   propTypes: {
-    idea: React.PropTypes.object
+    idea: React.PropTypes.shape({
+      body: React.PropTypes.string.isRequired,
+      created_at: React.PropTypes.string.isRequired,
+      hearts_count: React.PropTypes.number,
+      name: React.PropTypes.string.isRequired,
+      url: React.PropTypes.string.isRequired,
+      user: React.PropTypes.shape({
+        id: React.PropTypes.string.isRequired
+      }).isRequired
+    })
   },
 
   render() {
@@ -68,19 +77,21 @@ let Idea = React.createClass({
       );
     }
 
-    if (idea.user.id === UserStore.getId() && this.hasEnoughHearts()) {
+    if (idea.user.id === UserStore.getId()) {
       return (
         <div className="mt4">
           <div className="p2 border rounded clearfix">
             <div  className="right">
-              <Button action={function() {
+              <Button action={this.hasEnoughHearts() && function() {
                   window.location = '/create?pitch=' + idea.name + '&idea_id=' + idea.id;
                 }}>
                 Create a product
               </Button>
             </div>
             <div className="overflow-hidden py1">
-              Are you ready to start building this idea?
+              {this.hasEnoughHearts() ?
+                'Are you ready to start building this idea?' :
+                'Psst! Get five hearts to jumpstart this idea.'}
             </div>
           </div>
         </div>

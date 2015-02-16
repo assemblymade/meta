@@ -12,7 +12,7 @@ let IdeasNew = React.createClass({
     params: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object
-      ]),
+    ]),
     query: React.PropTypes.object
   },
 

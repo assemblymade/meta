@@ -12,6 +12,7 @@ class IdeaStore extends Store {
       switch (action.type) {
         case ActionTypes.IDEA_RECEIVE:
         case ActionTypes.IDEAS_NEW_IDEA_CREATED:
+        case ActionTypes.IDEA_UPDATED:
           _setIdea(action)
           this.emitChange()
           break
