@@ -84,9 +84,9 @@ let IdeaStartConversation = React.createClass({
 
     return (
       <IdeaContainer showRelatedIdeas={false}>
-        <div className="clearfix py2 border-bottom border-gray">
+        <div className="clearfix mt2 mb1">
           <div className="left ml4">
-            <h4 className="mb0 mt0">Asking a first question gets things going.</h4>
+            <h5 className="mb0 mt0">Asking a first question gets things going.</h5>
           </div>
 
           <div className="right px4">
@@ -102,20 +102,20 @@ let IdeaStartConversation = React.createClass({
         </div>
 
         <form>
-          <div className="form-group px4 mb0">
-            <Drawer open={this.state.isDrawerOpen}>
-              <div className="px3 gray-1">
-                <p className="px3">
-                  After you submit your idea, you'll hash out the specifics of your{' '}
-                  project with the Assembly community. Gain enough traction (through{' '}
-                  hearts on your idea), and you'll be ready to launch! Others{' '}
-                  will jump in and help shape your idea &mdash; you'll be building{' '}
-                  alongside an awesome community of talented folks from all over.
-                </p>
+          <Drawer open={this.state.isDrawerOpen}>
+            <div className="border-bottom border-gray bg-gray-6">
+              <div className="px3 gray-2 h6 py1 center">
+                After you submit your idea, you'll hash out the specifics of your{' '}
+                project with the Assembly community. Gain enough traction (through{' '}
+                hearts on your idea), and you'll be ready to launch! Others{' '}
+                will jump in and help shape your idea &mdash; you'll be building{' '}
+                alongside an awesome community of talented folks from all over.
               </div>
-            </Drawer>
+            </div>
+          </Drawer>
 
-            <div className="py3">
+          <div className="form-group px4 mb0">
+            <div className="py3 h6 gray-2">
               <p>
                 Examples:
               </p>
