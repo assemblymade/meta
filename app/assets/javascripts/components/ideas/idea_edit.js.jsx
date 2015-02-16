@@ -45,9 +45,9 @@ let IdeaEdit = React.createClass({
   render() {
     return (
       <IdeaContainer showRelatedIdeas={false}>
-        <div className="clearfix py2 border-bottom border-gray">
+        <div className="clearfix py2">
           <div className="left px4">
-            <h4 className="mb0 mt0">Edit your idea</h4>
+            <h5 className="mb0 mt0">Edit your idea</h5>
           </div>
 
           <div className="right px4">
@@ -62,19 +62,17 @@ let IdeaEdit = React.createClass({
           </div>
         </div>
 
-        <div className="px4">
-          <Drawer open={this.state.isDrawerOpen}>
-            <div className="px3 mt2 gray-1">
-              <p className="px3">
-                After you submit your idea, you'll hash out the specifics of your{' '}
-                project with the Assembly community. Gain enough traction (through{' '}
-                hearts on your idea), and you'll be ready to launch! Others{' '}
-                will jump in and help shape your idea &mdash; you'll be building{' '}
-                alongside an awesome community of talented folks from all over.
-              </p>
+        <Drawer open={this.state.isDrawerOpen}>
+          <div className="bg-gray-6">
+            <div className="px3 gray-2 h6 py1 center">
+              After you submit your idea, you'll hash out the specifics of your{' '}
+              project with the Assembly community. Gain enough traction (through{' '}
+              hearts on your idea), and you'll be ready to launch! Others{' '}
+              will jump in and help shape your idea &mdash; you'll be building{' '}
+              alongside an awesome community of talented folks from all over.
             </div>
-          </Drawer>
-        </div>
+          </div>
+        </Drawer>
 
         <EditIdeaForm idea={this.state.idea} />
       </IdeaContainer>

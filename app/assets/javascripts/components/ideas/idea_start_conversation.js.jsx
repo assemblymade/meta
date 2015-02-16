@@ -103,7 +103,7 @@ let IdeaStartConversation = React.createClass({
 
         <form>
           <Drawer open={this.state.isDrawerOpen}>
-            <div className="border-bottom border-gray bg-gray-6">
+            <div className="bg-gray-6">
               <div className="px3 gray-2 h6 py1 center">
                 After you submit your idea, you'll hash out the specifics of your{' '}
                 project with the Assembly community. Gain enough traction (through{' '}
