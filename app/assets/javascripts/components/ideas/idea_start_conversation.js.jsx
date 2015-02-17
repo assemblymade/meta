@@ -6,6 +6,7 @@ const Drawer = require('../ui/drawer.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
 const IdeaActionCreators = require('../../actions/idea_action_creators');
 const IdeaContainer = require('./idea_container.js.jsx');
+const IdeaHowItWorks = require('./idea_how_it_works.js.jsx');
 const IdeaStore = require('../../stores/idea_store');
 const Lightbox = require('../lightbox.js.jsx');
 const NewComment = require('../news_feed/new_comment.js.jsx');
@@ -103,15 +104,7 @@ let IdeaStartConversation = React.createClass({
 
         <form>
           <Drawer open={this.state.isDrawerOpen}>
-            <div className="bg-gray-6">
-              <div className="px3 gray-2 h6 py1 center">
-                After you submit your idea, you'll hash out the specifics of your{' '}
-                project with the Assembly community. Gain enough traction (through{' '}
-                hearts on your idea), and you'll be ready to launch! Others{' '}
-                will jump in and help shape your idea &mdash; you'll be building{' '}
-                alongside an awesome community of talented folks from all over.
-              </div>
-            </div>
+            <IdeaHowItWorks />
           </Drawer>
 
           <div className="form-group px4 mb0">
