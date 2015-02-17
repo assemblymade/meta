@@ -52,7 +52,7 @@ var TagList = React.createClass({
         data: {
           tag: tag,
           url: self.props.url
-        },
+        }
       });
 
       self.setState({
@@ -191,7 +191,7 @@ var TagList = React.createClass({
     var self = this;
     var addedTags = TagListStore.getTags();
 
-    var mappedTags = _.map(tags, function(tag) {
+    var mappedTags = _.map(tags, function(tag, i) {
       if (!tag) {
         return;
       }
@@ -209,7 +209,7 @@ var TagList = React.createClass({
       }
 
       return (
-        <li key={tag} style={{ margin: '10px 0 0 0' }}>
+        <li key={tag + '-' + i} style={{ margin: '10px 0 0 0' }}>
           <a style={style}
               className="tag"
               href={self.props.filterUrl && self.props.destination ?
@@ -227,10 +227,10 @@ var TagList = React.createClass({
     if (this.props.destination &&
         !this.props.newBounty &&
         (_.isEmpty(mappedTags) ||
-          (mappedTags[0] == undefined &&
-           mappedTags[1] == undefined))) {
+        (mappedTags[0] == undefined &&
+         mappedTags[1] == undefined))) {
       return (
-        <li style={{ color: '#333', fontSize: '13px' }}>
+        <li key="no_tags" style={{ color: '#333', fontSize: '13px' }}>
           <BsPopover
               content={this.suggestedTags()}
               placement="bottom"

@@ -114,19 +114,14 @@ class Idea < ActiveRecord::Base
     end
   end
 
-  def add_marks(mark_names)
-    return false unless mark_names.is_a? Array
-    if mark_names.reject(&:blank?).empty?
-      return self.markings.destroy_all
-    else
-      mark_names.each do |mark_name|
-        self.add_mark(mark_name)
-      end
-    end
+  def mark_names
+    marks.map(&:name)
   end
 
-  def add_mark(mark_name)
-    MakeMarks.new.mark_with_name(self, mark_name)
+  def mark_names=(names)
+    self.marks = Array.wrap(names).flatten.map do |n|
+      Mark.find_or_create_by!(name: n.strip)
+    end
   end
 
   def greenlight!

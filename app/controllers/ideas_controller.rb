@@ -160,7 +160,8 @@ class IdeasController < ProductController
       :flagged_at,
       :founder_preference,
       :topics => [],
-      :categories => []
+      :categories => [],
+      :mark_names => []
     ])
   end
 

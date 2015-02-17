@@ -1,10 +1,13 @@
-var Button = require('../ui/button.js.jsx');
-var IdeaContainer = require('./idea_container.js.jsx');
-var IdeaAdminActionCreators = require('../../actions/idea_admin_action_creators.js');
-var IdeaAdminStore = require('../../stores/idea_admin_store');
-var IdeaStore = require('../../stores/idea_store');
+'use strict';
 
-var IdeaAdmin = React.createClass({
+const Button = require('../ui/button.js.jsx');
+const IdeaContainer = require('./idea_container.js.jsx');
+const IdeaAdminActionCreators = require('../../actions/idea_admin_action_creators.js');
+const IdeaAdminStore = require('../../stores/idea_admin_store');
+const IdeaStore = require('../../stores/idea_store');
+const TagList = require('../tag_list.js.jsx');
+
+let IdeaAdmin = React.createClass({
   propTypes: {
     navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
@@ -33,8 +36,8 @@ var IdeaAdmin = React.createClass({
   },
 
   handleCategorySelected(category, e) {
-    var idea = this.state.idea;
-    var index = idea.categories.indexOf(category);
+    let idea = this.state.idea;
+    let index = idea.categories.indexOf(category);
 
     if (index === -1) {
       idea.categories.push(category);
@@ -50,7 +53,7 @@ var IdeaAdmin = React.createClass({
       idea: idea
     });
 
-    var updateIdea = {
+    let updateIdea = {
       idea: {
         categories: idea.categories
       },
@@ -63,7 +66,7 @@ var IdeaAdmin = React.createClass({
   handleFlagClick(e) {
     e.stopPropagation();
 
-    var idea = this.state.idea;
+    let idea = this.state.idea;
 
     if (idea.flagged_at) {
       idea.flagged_at = null
@@ -75,7 +78,7 @@ var IdeaAdmin = React.createClass({
       idea: idea
     });
 
-    var updateIdea = {
+    let updateIdea = {
       idea: {
         flagged_at: idea.flagged_at
       },
@@ -86,7 +89,7 @@ var IdeaAdmin = React.createClass({
   },
 
   handleTopicSelected(topic, e) {
-    var idea = this.state.idea;
+    let idea = this.state.idea;
 
     idea.topics = [topic];
 
@@ -94,7 +97,7 @@ var IdeaAdmin = React.createClass({
       idea: idea
     });
 
-    var updateIdea = {
+    let updateIdea = {
       idea: {
         topics: idea.topics
       },
@@ -118,7 +121,7 @@ var IdeaAdmin = React.createClass({
   },
 
   render() {
-    var idea = this.state.idea;
+    let idea = this.state.idea;
 
     return (
       <IdeaContainer showRelatedIdeas={false}>
@@ -133,14 +136,22 @@ var IdeaAdmin = React.createClass({
             {this.renderFlag()}
             {this.renderSave()}
           </div>
+
+          <h5>Tags</h5>
+          <TagList destination={true} newBounty={true} tags={idea.mark_names || []} url={idea.url} />
+
+          <TextInput width="125px" size="small" label="Add tag" prepend="#" prompt="Add" />
+
+          <h5>Suggested tags</h5>
+          <TagList tags={window.app.suggestedTags()} destination={false} url={idea.url}  />
         </div>
       </IdeaContainer>
     );
   },
 
   renderCategories() {
-    var idea = this.state.idea;
-    var ideaCategories = idea.categories;
+    let idea = this.state.idea;
+    let ideaCategories = idea.categories;
 
     return this.state.availableCategories.map((category) => {
       return (
@@ -158,7 +169,7 @@ var IdeaAdmin = React.createClass({
 
 
   renderFlag() {
-    var idea = this.state.idea;
+    let idea = this.state.idea;
 
     return (
       <div className="form-group left">
@@ -170,7 +181,7 @@ var IdeaAdmin = React.createClass({
   },
 
   renderSave() {
-    var idea = this.state.idea;
+    let idea = this.state.idea;
 
     return (
       <div className="form-group right">
@@ -184,8 +195,8 @@ var IdeaAdmin = React.createClass({
   },
 
   renderTopics() {
-    var idea = this.state.idea;
-    var ideaTopics = idea.topics;
+    let idea = this.state.idea;
+    let ideaTopics = idea.topics;
 
     return this.state.availableTopics.map((topic) => {
       return (
