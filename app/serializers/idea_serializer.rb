@@ -16,7 +16,7 @@ class IdeaSerializer < ApplicationSerializer
   end
 
   def comments_count
-    object.comments_count
+    object.news_feed_item.comments_count
   end
 
   def path
