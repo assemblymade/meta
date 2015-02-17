@@ -227,6 +227,7 @@ class Task < Wip
     stop_work!(winning_event.user)
 
     minting = nil
+    award = nil
     add_activity(closer, Activities::Award) do
       win = ::Event::Win.new(user: closer)
       add_event(win) do
@@ -244,6 +245,7 @@ class Task < Wip
     end
 
     CoinsMinted.new.perform(minting.id) if minting
+    award
   end
 
   def work_submitted(submitter)

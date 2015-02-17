@@ -7,13 +7,6 @@ describe AssetsController do
     let(:product) { Product.make!(user: current_user) }
     let(:attachment) { Attachment.make!(user: current_user) }
     let(:wip) { Task.make!(product: product, user: current_user) }
-    let(:event) {
-      Event::Comment.make!(
-        attachments: [attachment.id],
-        user: current_user,
-        wip: wip
-      )
-    }
 
     before do
       sign_in current_user
@@ -23,12 +16,6 @@ describe AssetsController do
       post :create, product_id: product.slug, attachment_url: attachment.url
 
       expect(assigns(:asset).product).to eq(product)
-    end
-
-    it "transfers an event's attachments if passed an event_id" do
-      expect {
-        post :create, product_id: product.slug, event_id: event.id
-      }.to change(Asset, :count).by(1)
     end
 
     it "transfers one attachment if passed an attachment_url" do

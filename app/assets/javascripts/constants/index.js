@@ -127,8 +127,9 @@ var CONSTANTS = {
 
     BOUNTY_REOPENED: null,
 
-    CHAT_USER_ONLINE: null,
+    CHAT_ADDED: null,
     CHAT_MESSAGE_RECEIVE_ACTIVITIES: null,
+    CHAT_USER_ONLINE: null,
 
     COMMENT_ADDED: null,
 
@@ -216,9 +217,7 @@ var CONSTANTS = {
     PRODUCTS_SEARCH_INVALIDATE: null,
     PRODUCTS_SEARCH_RECEIVE: null,
 
-    PUSHER_INITIALIZED: null,
     PUSHER_PRESENCE_CONNECTED: null,
-    PUSHER_USER_ACTION: null,
 
     RELATED_IDEAS_RECEIVE: null,
 
@@ -242,6 +241,7 @@ var CONSTANTS = {
     TIP_OPTIMISTIC: null,
     TIP_COMPLETED: null,
 
+    USER_MENTIONED: null,
     USER_RECEIVE: null,
     USER_SIGNED_IN: null,
 

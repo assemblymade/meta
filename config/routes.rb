@@ -206,7 +206,6 @@ ASM::Application.routes.draw do
       patch :publish
     end
     resources :users
-    resources :wips
 
     get '/' => redirect('/admin/withdrawals')
   end

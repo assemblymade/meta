@@ -3,7 +3,7 @@ class WipSerializer < ActiveModel::Serializer
   attributes :id, :url
 
   attributes :product_slug, :product_name, :title, :number, :state,
-    :winner, :promoted, :push_channel, :comments_count, :deliverable,
+    :winner, :promoted, :push_channel, :deliverable,
     :can_close
 
   # personalized

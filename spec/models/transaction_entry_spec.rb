@@ -7,12 +7,11 @@ describe 'log entries' do
 
   context 'bounty awarded' do
     let(:bounty) { Task.make! product: product, user: bounty_creator }
-    let(:winning_event) { Event::Comment.new(body: 'Dagron', user: bounty_creator) }
+    let(:winning_event) { NewsFeedItemComment.make!(body: 'Dagron', user: bounty_creator) }
 
     before {
       TransactionLogEntry.minted!(nil, Time.now, product, creator.id, 100)
       Offer.create!(bounty: bounty, user: creator, amount: 100, ip: '1.1.1.1')
-      bounty.events << winning_event
     }
 
     # (pletcher): I'm worried that this test might have been broken by removing `work_id` from

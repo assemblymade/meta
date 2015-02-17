@@ -11,17 +11,16 @@ describe CoinsMinted do
 
   context 'work on wip' do
     let(:work) { Task.make!(product: product, user: proposer) }
-    let(:winning_event) { work.comments.make!(user: worker) }
-    let(:award) { work.awards.make!(awarder: proposer, winner: worker, event: winning_event, wip: work) }
+    let(:nfi) { NewsFeedItem.create_with_target(work) }
+    let(:winning_event) { nfi.comments.make!(user: worker) }
 
     it 'transfers coins based on tip contracts' do
       start_at = Time.now
 
-      work.award!(proposer, winning_event)
+      award = work.award!(proposer, winning_event)
 
       AutoTipContract.create!(product: product, user: product.user, amount: 0.025)
       AutoTipContract.create!(product: product, user: benefactor, amount: 0.020)
-
 
       entry = TransactionLogEntry.minted!(work.id, work.created_at, product, award.id, 10000)
 

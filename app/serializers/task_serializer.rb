@@ -5,7 +5,7 @@ class TaskSerializer < ApplicationSerializer
   include TruncateHtmlHelper
 
   attributes :number, :title, :url, :value, :markdown_description, :state,
-    :short_description, :comments_count, :thumbnails, :push_channel, :steps,
+    :short_description, :thumbnails, :push_channel, :steps,
     :offers_url, :contracts, :earnable_coins_cache
 
   has_one :product

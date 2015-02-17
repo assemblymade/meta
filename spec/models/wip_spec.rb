@@ -3,12 +3,12 @@ require 'spec_helper'
 describe Wip do
   let(:owner) { User.make! }
   let(:product) { Product.make! }
-  let(:wip) { Task.make!(user: owner, product: product) }
+  let(:wip) { Task.make!(user: owner, product: product).tap{|t| NewsFeedItem.create_with_target(t) } }
   let(:voter) { User.make! }
   let(:winner) { User.make! }
   let(:closer) { User.make! }
-  let(:winning_event) { Event::Comment.make!(wip: wip, user: winner) }
-  let(:nfi) { NewsFeedItem.make!(target: wip, source: owner) }
+  let(:winning_event) { NewsFeedItemComment.make!(news_feed_item: nfi, user: winner) }
+  let(:nfi) { wip.news_feed_item }
 
   let(:joe_random) { User.make!(is_staff: false) }
   let(:core_member) { user = User.make!; product.team_memberships.create(user: user, is_core: true); user }

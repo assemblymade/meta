@@ -48,49 +48,4 @@ namespace :news_feed_items do
       end
     end
   end
-
-  task retroactively_push_intros_to_chat: :environment do
-    include MarkdownHelper
-    NewsFeedItem.where(target_type: 'TeamMembership').each do |item|
-      if item.comments.any?
-        target = item.target
-        wip = target.product.main_thread
-
-        item.comments.each do |comment|
-          event = Event.create_from_comment(
-            wip,
-            Event::Comment,
-            product_markdown(target.product,
-              "_" + comment.body + "_"
-            ),
-            comment.user
-          )
-
-          Activities::Chat.publish!(
-            actor: event.user,
-            subject: event,
-            target: wip
-          )
-        end
-      end
-    end
-  end
-
-  task repopulate_comments: :environment do
-    Event::Comment.all.each do |comment|
-      if nfi = NewsFeedItem.find_by(target_id: comment.wip_id)
-        NewsFeedItemComment.delete_all(news_feed_item_id: nfi.id)
-
-        nfi.comments.create(
-          user_id: comment.user_id,
-          body: comment.body,
-          created_at: comment.created_at,
-          updated_at: comment.updated_at,
-          target_id: comment.id
-        )
-
-        nfi.update(last_commented_at: comment.created_at)
-      end
-    end
-  end
 end

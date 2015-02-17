@@ -5,7 +5,7 @@ describe Task do
   let(:task) { Task.make! }
   let(:product) { task.product }
   let(:core_member) { User.make! }
-  let(:comment) { task.comments.create!(body: 'TROGDOR', user: worker) }
+  let(:comment) { NewsFeedItemComment.make!(body: 'TROGDOR', user: worker) }
 
   before {
     product.team_memberships.create!(user: core_member, is_core: true)
