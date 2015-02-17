@@ -6,9 +6,6 @@ class WipSerializer < ActiveModel::Serializer
     :winner, :promoted, :push_channel, :deliverable,
     :can_close
 
-  # personalized
-  attributes :own_comments
-
   has_one  :user, :key => :author, serializer: UserSerializer
 
   def product_slug
@@ -48,12 +45,6 @@ class WipSerializer < ActiveModel::Serializer
     if winners = wip.winners
       winners.each { |winner| UserSerializer.new(winner) }
     end
-  end
-
-  # personalized
-
-  def own_comments
-    wip.comments.where(user: scope).count if scope
   end
 
   # private
