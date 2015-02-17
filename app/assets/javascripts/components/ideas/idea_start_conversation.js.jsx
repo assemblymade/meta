@@ -143,7 +143,7 @@ let IdeaStartConversation = React.createClass({
                     this.state.question.length > 0 &&
                     this.onPostQuestionClick
               }>
-                <span className="title">Submit idea</span>
+                <span className="title">Get started</span>
               </Button>
             </div>
           </div>
