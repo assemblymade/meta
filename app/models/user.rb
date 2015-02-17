@@ -390,6 +390,40 @@ class User < ActiveRecord::Base
     Tweeter.new.tweet_welcome_user(self)
   end
 
+  def cluster_score(mark_cluster)
+    s = 0
+    mark_cluster.marks.each do |m|
+      r = Marking.where(markable_id: self.user_identity.id).where(mark_id: m.id).sum(:weight)
+      s = s + r
+    end
+    s
+  end
+
+  def cluster_scores
+    r = []
+    MarkCluster.all.each do |m|
+      r.append([m.name, self.cluster_score(m)])
+    end
+    r
+  end
+
+  def normalized_cluster_scores
+    s = self.cluster_scores
+    normalized_scores = []
+    s.each do |clustername, score|
+      m = [clustername]
+      markings_n = Marking.where(mark: MarkCluster.find_by(name: clustername).marks).sum(:weight)
+      multiplier = 1.0 / markings_n.to_f
+      newscore = score * multiplier #Here it is weighted but not normalized
+      m.append(newscore)
+      normalized_scores.append(m)
+    end
+    #normalize now that scores are weighted
+    t = normalized_scores.sum{|a,b| b}
+    normalized_scores.map{|a, b| [a, b/t]}
+
+  end
+
   #governance
 
   def can_vote?(product)

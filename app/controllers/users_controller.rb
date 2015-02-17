@@ -22,6 +22,11 @@ class UsersController < ApplicationController
 
     @show_karma = current_user && current_user.staff?
 
+    @preferences = QueryMarks.new.legible_mark_vector(@user.user_identity.get_mark_vector.take(10))
+    @clusters = @user.normalized_cluster_scores
+    @cluster_leaders = MarkCluster.all.map{|a| a.top_users(18, true).take(5) }
+    @cluster_names = MarkCluster.all.map{|a| a.name}
+
     respond_with @user
   end
 

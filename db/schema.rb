@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212211001) do
+ActiveRecord::Schema.define(version: 20150217165046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -375,6 +375,12 @@ ActiveRecord::Schema.define(version: 20150212211001) do
     t.datetime "updated_at"
   end
 
+  create_table "mark_clusters", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "name"
+  end
+
   create_table "mark_stems", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.datetime "created_at"
@@ -394,9 +400,10 @@ ActiveRecord::Schema.define(version: 20150212211001) do
   add_index "markings", ["markable_id", "mark_id"], name: "index_markings_on_markable_id_and_mark_id", unique: true, using: :btree
 
   create_table "marks", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string   "name",         limit: 255, null: false
+    t.string   "name",            limit: 255, null: false
     t.datetime "created_at"
     t.uuid     "mark_stem_id"
+    t.uuid     "mark_cluster_id"
   end
 
   add_index "marks", ["mark_stem_id"], name: "index_marks_on_mark_stem_id", using: :btree
