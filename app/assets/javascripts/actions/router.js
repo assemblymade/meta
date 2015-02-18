@@ -33,11 +33,6 @@ class Router {
     page.start();
   }
 
-  navigate(url, e) {
-    e && e.preventDefault();
-    page(url);
-  }
-
   stop() {
     page.stop();
   }

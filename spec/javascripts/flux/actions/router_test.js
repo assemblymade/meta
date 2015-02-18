@@ -24,12 +24,6 @@ describe('Router', () => {
     expect(page).toBeCalledWith('*', mockParse);
   });
 
-  it('navigates using `page`', () => {
-    router.navigate('/barf');
-
-    expect(page).toBeCalledWith('/barf');
-  });
-
   it('stops page when told', () => {
     router.stop();
 
