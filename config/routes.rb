@@ -6,6 +6,9 @@ ASM::Application.routes.draw do
     mount Sidekiq::Web => '/admin/sidekiq'
     mount Split::Dashboard  => '/admin/split'
     mount PgHero::Engine => "/admin/postgres"
+    use_doorkeeper do
+      skip_controllers :authorizations, :tokens
+    end
   end
 
   if Rails.env.development?
@@ -176,6 +179,10 @@ ASM::Application.routes.draw do
   get '/support-foo', to: redirect('/helpful')
   get '/support-foo/*extra', to: redirect {|p, req| "/helpful/#{p[:extra]}" }
 
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications
+  end
+
   # Admin
   namespace :admin do
     resources :apps, only: [:index, :update]
@@ -248,6 +255,8 @@ ASM::Application.routes.draw do
       # deprecate (launchpad)
       resources :potential_users, controller: 'subscribers', only: [:create, :destroy]
     end
+
+    resource :profile, only: [:show]
 
     resources :textcompletes, only: [:index]
   end
