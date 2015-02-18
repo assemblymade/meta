@@ -285,6 +285,8 @@ ASM::Application.routes.draw do
 
     match 'flag',    via: [:get, :post]
 
+    get '/transactions' => 'financials#transactions'
+
     get 'welcome'
     get 'activity'
     get 'admin'

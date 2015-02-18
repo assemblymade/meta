@@ -235,7 +235,8 @@ class Task < Wip
           awarder: closer,
           winner: winning_event.user,
           event: win,
-          wip: self
+          wip: self,
+          cents: self.earnable_coins_cache
         )
 
         minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, self.value)
