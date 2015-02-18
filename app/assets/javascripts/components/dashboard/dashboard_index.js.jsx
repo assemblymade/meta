@@ -19,6 +19,7 @@ const ShowcaseBanner = require('../showcase_banner.js.jsx')
 const Spinner = require('../spinner.js.jsx')
 const SvgIcon = require('../ui/svg_icon.js.jsx')
 const Tile = require('../ui/tile.js.jsx')
+const Leaderboard = require('../leaderboard.js.jsx')
 
 let DashboardIndex = React.createClass({
   propTypes: {
@@ -363,6 +364,9 @@ let DashboardIndex = React.createClass({
               </div>
             </div>
           </Tile>
+
+          <Leaderboard/>
+
         </div>
       )
     }
