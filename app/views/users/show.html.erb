@@ -71,20 +71,12 @@
           <div class="col-md-12">
             <h3>Radar graph</h3>
             <div id="radar-graph">
-              
+
             </div>
           </div>
         </div>
-<<<<<<< HEAD
-
-        <div class="col-md-8">
-          <h2>Leaderboard</h2>
-          <% (0..@cluster_names.count-1).each do |a| %>
-            <h3><%= @cluster_names[a] %></h3>
-=======
         <div class="row">
           <div class="col-md-12">
->>>>>>> eda69f886ff588a24f30fa02d74bdc8d3f9db370
             <table>
               <thead>
                 <tr>
@@ -105,7 +97,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <h2>Leaderboard</h2>  
+            <h2>Leaderboard</h2>
             <% (0..@cluster_names.count-1).each do |a| %>
               <h3><%= @cluster_names[a] %></h3>
               <table>
@@ -179,19 +171,19 @@
               //Create the title for the legend
               var text = svg.append("text")
                 .attr("class", "title")
-                .attr('transform', 'translate(90,0)') 
+                .attr('transform', 'translate(90,0)')
                 .attr("x", w - 70)
                 .attr("y", 10)
                 .attr("font-size", "12px")
                 .attr("fill", "#404040")
                 .text("What % of owners use a specific service in a week");
-                  
-              //Initiate Legend 
+
+              //Initiate Legend
               var legend = svg.append("g")
                 .attr("class", "legend")
                 .attr("height", 100)
                 .attr("width", 200)
-                .attr('transform', 'translate(90,20)') 
+                .attr('transform', 'translate(90,20)')
                 ;
                 //Create colour squares
                 legend.selectAll('rect')
@@ -214,7 +206,7 @@
                   .attr("font-size", "11px")
                   .attr("fill", "#737373")
                   .text(function(d) { return d; })
-                  ; 
+                  ;
 
             })
           </script>
