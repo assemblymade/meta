@@ -6,12 +6,14 @@ var IconToggler = require('./ui/icon_toggler.js.jsx')
 var IconWithNumber = require('./ui/icon_with_number.js.jsx')
 var SvgIcon = require('./ui/svg_icon.js.jsx');
 const Tile = require('./ui/tile.js.jsx')
+const Nav = require('./ui/nav.js.jsx')
 
 var Leaderboard = React.createClass({
 
   getInitialState: function() {
     return {
-      rank_data: []
+      rank_data: [],
+      show_all: false
     }
   },
 
@@ -28,16 +30,44 @@ var Leaderboard = React.createClass({
   },
 
   renderCategories: function(rank_data) {
+
+    let click = function() {}
+    click = function(event) {
+      event.stopPropagation()
+      event.preventDefault()
+      this.setState({show_all: !this.state.show_all})
+    }.bind(this)
+
     var a = _.pairs(rank_data)
-    var b = a.map(function(c){
-        var name = c[0]
-        var rankd = c[1]
-        return this.renderCategory(name, rankd);
 
+    if (this.state.show_all) {
+      var showAllLink = <Nav.Item label="Hide" onClick={click} small={true} />
+      var b = a.map(function(c){
+          var name = c[0]
+          var rankd = c[1]
+          return this.renderCategory(name, rankd);
+      }.bind(this))
+      return (
+        <div>
+          {b}
+          <div className="center">
+            {showAllLink}
+          </div>
+        </div>
+      )
+    }
+    else {
+      var showAllLink = <Nav.Item label="Show all" onClick={click} small={true} />
+      return (
+        <div>
+          {this.renderCategory("Overall", rank_data['Overall'])}
+          <div className="center">
+            {showAllLink}
+          </div>
+        </div>
+      )
+    }
 
-    }.bind(this))
-    console.log('b', b)
-    return b
   },
 
   renderCategory: function(name, rankd) {
@@ -67,7 +97,7 @@ var Leaderboard = React.createClass({
 
   render: function() {
     return (
-      <div className = "py3 px2">
+      <div className = "py2">
         <Tile>
           <h4 className="center">Recent Leaderboard</h4>
           {this.renderCategories(this.state.rank_data)}
