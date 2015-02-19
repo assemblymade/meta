@@ -120,7 +120,7 @@ var Apps = React.createClass({
       {this.renderAppsList(this.state.apps.slice(3, 3 + 6))}
 
       <div className="bg-white p3 center clearfix mb3 rounded shadow">
-          <strong>Don't know where to start?</strong> The community is fast-tracking <a href="/signupsumo">Signup Sumo</a> this week.
+          <strong>Don't know where to start?</strong> The community is fast-tracking <a href="/gamamia">Gamamia</a> this week.
       </div>
 
       {this.renderAppsList(_(this.state.apps).last(9))}

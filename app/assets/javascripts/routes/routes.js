@@ -1,3 +1,5 @@
+'use strict';
+
 const DashboardHandlers = require('./dashboard_handlers');
 const IdeasHandlers = require('./ideas_handlers');
 const ProductsHandlers = require('./products_handlers');

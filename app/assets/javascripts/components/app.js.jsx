@@ -37,9 +37,8 @@ var App = React.createClass({
         </div>
 
         <div className="p3 mt2">
-          <h4 className="regular mt0 mb0 gray-2">{name}</h4>
-
-          <div style={{minHeight: '6rem'}}>
+          <div style={{minHeight: '8rem'}}>
+            <h4 className="regular mt0 mb0 gray-2">{name}</h4>
             <p className="h4 mt0 mb0 bold black">{this.pitch()}</p>
           </div>
 

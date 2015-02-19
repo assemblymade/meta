@@ -1,9 +1,11 @@
+var ActionTypes = require('../constants').ActionTypes;
 var ChatNotificationsStore = require('../stores/chat_notifications_store');
 var CONSTANTS = require('../constants');
 var DesktopNotifications = require('./desktop_notifications.js.jsx');
 var Dispatcher = require('../dispatcher');
 var LocalStorageMixin = require('../mixins/local_storage.js');
 var Spinner = require('./spinner.js.jsx');
+var UserStore = require('../stores/user_store.js');
 
 var N = CONSTANTS.CHAT_NOTIFICATIONS;
 
@@ -81,19 +83,17 @@ var ChatNotifications = React.createClass({
   },
 
   componentDidMount: function() {
-    var _this = this;
-
     this.onPush(function(event, msg) {
-      if (event == 'mentioned') {
-        _this.desktopNotify(msg);
+      if (event == ActionTypes.USER_MENTIONED) {
+        this.desktopNotify(msg);
       }
 
-      _this.fetchNotifications();
-    });
+      this.fetchNotifications();
+    }.bind(this));
 
     window.visibility(function(visible) {
-      if (visible) { _this.fetchNotifications(); }
-    });
+      if (visible) { this.fetchNotifications(); }
+    }.bind(this));
 
     ChatNotificationsStore.addChangeListener(this.handleChatRoomsChanged);
     this.fetchNotifications();
@@ -164,8 +164,8 @@ var ChatNotifications = React.createClass({
 
   onPush: function(fn) {
     if (window.pusher) {
-      var channel = window.pusher.subscribe('@' + this.props.username);
-      channel.bind_all(fn);
+      var channel = window.pusher.subscribe('user.' + UserStore.getId())
+      channel.bind_all(fn)
     }
   },
 

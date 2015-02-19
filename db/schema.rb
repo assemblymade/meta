@@ -1137,7 +1137,6 @@ ActiveRecord::Schema.define(version: 20150217234413) do
     t.uuid     "winning_event_id"
     t.datetime "promoted_at"
     t.integer  "events_count",                     default: 0,       null: false
-    t.integer  "comments_count",                   default: 0,       null: false
     t.datetime "pinned_at"
     t.integer  "trending_score",       limit: 8
     t.string   "state",                limit: 255

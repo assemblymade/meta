@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Activity do
   let(:actor) { User.make! }
-  let(:subject) { Event::Comment.make! }
-  let(:target) { Task.make! }
+  let(:subject) { Task.make! }
+  let(:target) { subject.product }
 
   it 'tracks after create' do
     expect {

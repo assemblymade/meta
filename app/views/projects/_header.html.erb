@@ -26,11 +26,6 @@
       <li>
         <%= pluralize project.tasks.open.count, 'task' %> remaining
       </li>
-      <li>
-        <a href="<%= product_project_path(@product, project, anchor: 'comments') %>">
-          <%= pluralize project.wip.comments.count, 'comment' %>
-        </a>
-      </li>
     </ul>
   </div>
 

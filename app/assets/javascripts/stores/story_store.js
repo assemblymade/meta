@@ -47,12 +47,9 @@ class StoryStore extends Store {
           this.emitChange()
           break
 
-        case ActionTypes.PUSHER_USER_ACTION:
-          if (action.event == 'story-added') {
-            StoryActions.fetchStories()
-            this.emitChange()
-          }
-          break;
+        case ActionTypes.STORY_ADDED:
+          StoryActions.fetchStories()
+          this.emitChange()
       }
     })
   }

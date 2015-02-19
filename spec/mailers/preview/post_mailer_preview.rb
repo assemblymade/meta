@@ -11,4 +11,12 @@ class PostMailerPreview < ActionMailer::Preview
     PostMailer.mailing_list(post.id, User.sample.email)
   end
 
+  def preview
+    product = Product.sample
+    PostMailer.preview(product.id, {
+      title: "7 Days, 1 MVP",
+      body: "We rock!"
+    }, product.core_team.sample)
+  end
+
 end

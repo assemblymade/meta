@@ -9,11 +9,12 @@ describe Webhooks::ReadRaptorController do
       let(:product) { Product.make! }
       let(:wips) { [product.tasks.make!, product.tasks.make!] }
       let(:flagged_wip) { product.tasks.make!(user: flagged_user) }
-      let(:comments) { [wips[0].comments.make!, wips[1].comments.make!] }
-      let(:flagged_comment) { flagged_wip.comments.make!(user: flagged_user) }
+      let(:comments) { [wips[0].news_feed_item.comments.make!, wips[1].news_feed_item.comments.make!] }
+      let(:flagged_comment) { flagged_wip.news_feed_item.comments.make!(user: flagged_user) }
 
       describe 'successful' do
         before do
+          wips.each{|w| NewsFeedItem.create_with_target(w) }
           post :immediate,
             user: user.id,
             entity_id: wips.first.id,
@@ -31,6 +32,7 @@ describe Webhooks::ReadRaptorController do
 
       describe 'unsuccessful' do
         it 'does not notify from a flagged user' do
+          NewsFeedItem.create_with_target(flagged_wip)
           post :immediate,
             user: flagged_user.id,
             entity_id: flagged_wip.id,

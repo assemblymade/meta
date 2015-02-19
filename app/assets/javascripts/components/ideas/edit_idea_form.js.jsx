@@ -38,12 +38,6 @@ var EditIdeaForm = React.createClass({
     });
   },
 
-  onFounderOptionClick(e) {
-    this.setState({
-      isFounder: !this.state.isFounder
-    });
-  },
-
   onUpdateClick(e) {
     e.preventDefault();
 
@@ -57,7 +51,7 @@ var EditIdeaForm = React.createClass({
       founder_preference: this.state.isFounder
     };
 
-    IdeaActionCreators.updateIdeaClicked(idea);
+    IdeaActionCreators.updateIdea(idea);
   },
 
   render() {
@@ -86,39 +80,7 @@ var EditIdeaForm = React.createClass({
               placeholder={''}
               thread={item.id}
               url="/ideas" />
-        </div>
-
-        <div className="px4 form-group">
-          <fieldset>
-            <label>What do you want to do with this idea? (You can change your mind later.)</label>
-            <div className="radio">
-              <label key="founder-option">
-                <input type="radio"
-                  ref="founder"
-                  checked={this.state.isFounder}
-                  onChange={this.onFounderOptionClick} />
-                I want to be the founder.
-                <p className="gray-2">
-                  As a founder, you determine the course of the app. If you
-                  decide Assembly is not for you, you can remove the idea before
-                  you start building it here.
-                </p>
-              </label>
-
-              <label key="non-founder-option">
-                <input type="radio"
-                  ref="non-founder"
-                  checked={!this.state.isFounder}
-                  onChange={this.onFounderOptionClick} />
-                I just want to share the idea and let someone else be a founder.
-                <p className="gray-2">
-                  You don't have to be a founder of the app, you can just drop
-                  it off, or even work on it but leave the founding role to
-                  someone else.
-                </p>
-              </label>
-            </div>
-          </fieldset>
+          <span className="gray-2 h6 mt2">Accepts <a href="//daringfireball.net/projects/markdown/" target="_blank">Markdown</a> and file uploads (just drag and drop)</span>
         </div>
 
         <div className="clearfix px4 py2">

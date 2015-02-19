@@ -6,7 +6,7 @@ class IdeaSerializer < ApplicationSerializer
     :flagged_at, :founder_preference, :greenlit_at, :hearts_count,
     :heart_distance_from_percentile, :id, :name, :news_feed_item, :path,
     :percentile, :product, :rank, :rank_total, :raw_body, :score,
-    :short_body, :tilting_threshold, :topics, :url
+    :short_body, :tilting_threshold, :topics, :url, :mark_names
 
   has_one :product
   has_one :user
@@ -16,7 +16,7 @@ class IdeaSerializer < ApplicationSerializer
   end
 
   def comments_count
-    object.comments.count
+    object.news_feed_item.comments_count
   end
 
   def path

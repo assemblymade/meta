@@ -19,8 +19,7 @@ var AsmApp = React.createClass({
 
     this.replaceState({
       component: <Component params={context.params}
-          query={context.query}
-          navigate={Router.navigate} />
+          query={context.query} />
     });
   },
 

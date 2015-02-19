@@ -62,7 +62,7 @@ var _tagListStore = _.extend(_store, {
           tags: tags
         },
         idea: {
-          tag_list: tags
+          mark_names: tags
         }
       },
 

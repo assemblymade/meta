@@ -13,6 +13,14 @@ const UserStore = require('../../stores/user_store');
 const IDEA_BODY_ID = 'new_idea';
 
 let NewIdeaForm = React.createClass({
+  propTypes: {
+    idea: React.PropTypes.shape({
+      founder_preference: React.PropTypes.bool,
+      name: React.PropTypes.string.isRequired,
+      raw_body: React.PropTypes.string.isRequired
+    })
+  },
+
   componentDidMount() {
     NewCommentStore.addChangeListener(this.onIdeaBodyChange);
   },
@@ -21,11 +29,19 @@ let NewIdeaForm = React.createClass({
     NewCommentStore.removeChangeListener(this.onIdeaBodyChange);
   },
 
+  getDefaultProps() {
+    return {
+      initialIdea: {}
+    };
+  },
+
   getInitialState() {
+    let idea = this.props.initialIdea;
+
     return {
       firstQuestion: '',
-      ideaBody: '',
-      ideaName: '',
+      ideaBody: idea.raw_body || '',
+      ideaName: idea.name || '',
       isFounder: true,
       showWarning: false
     };

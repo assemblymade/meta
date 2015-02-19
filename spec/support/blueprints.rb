@@ -1,15 +1,15 @@
 require 'machinist/active_record'
 
 Activity.blueprint do
-  subject  { Task.make! }
+  subject  { NewsFeedItem.make! }
   actor    { User.make! }
-  target   { Event::Comment.make! }
+  target   { NewsFeedItemComment.make! }
 end
 
 Activities::Post.blueprint do
   subject  { Task.make! }
   actor    { User.make! }
-  target   { Event::Comment.make! }
+  target   { NewsFeedItemComment.make! }
 end
 
 AssemblyAsset.blueprint do
@@ -172,13 +172,6 @@ Work.blueprint do
     message: "I just made some rad code",
     distinct: true
   }}
-end
-
-Event::Comment.blueprint do
-  user
-  wip  { Discussion.make! }
-  body { Faker::Lorem.paragraph }
-  attachments { [] }
 end
 
 Financial::Account.blueprint do

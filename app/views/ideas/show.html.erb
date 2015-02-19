@@ -1,5 +1,5 @@
 <% title "Idea", @idea.name %>
-
+<%= track_engaged 'show_idea' %>
 <%= react_component 'AsmApp' %>
 
 <% if signed_in? %>

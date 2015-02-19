@@ -1,5 +1,5 @@
 class BountyShallowSerializer < ApplicationSerializer
-  attributes :title, :comments_count, :hearts_count, :locked_at, :title
+  attributes :title, :hearts_count, :locked_at, :title
 
   attributes :url
 

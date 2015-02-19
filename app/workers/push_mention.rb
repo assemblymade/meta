@@ -3,7 +3,7 @@ class PushMention
 
   def perform(user_id, socket_id, tag, title, body, icon, url)
     user = User.find(user_id)
-    PusherWorker.new.perform("@#{user.username}", 'mentioned', {
+    PusherWorker.new.perform(user.pusher_channel, 'USER_MENTIONED', {
         tag: tag,
         title: title,
         body: body,

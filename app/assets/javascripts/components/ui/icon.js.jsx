@@ -13,7 +13,13 @@ var CustomIcons = [
 
 var Icon = React.createClass({
   propTypes: {
-    icon: React.PropTypes.string.isRequired
+    icon: React.PropTypes.string.isRequired,
+  },
+
+  getDefaultProps: function() {
+    return {
+      verticalAlign: 0
+    }
   },
 
   render: function() {
@@ -22,7 +28,7 @@ var Icon = React.createClass({
       React.addons.classSet('icon', 'icon-' + icon) :
       React.addons.classSet('fa', 'fa-' + icon);
 
-    return <span className={cs} />;
+    return <span className={cs} style={{verticalAlign: this.props.verticalAlign}} />;
   }
 });
 

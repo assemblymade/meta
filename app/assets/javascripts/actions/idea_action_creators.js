@@ -35,7 +35,7 @@ class IdeaActionCreators {
     });
   }
 
-  updateIdeaClicked(idea) {
+  updateIdea(idea) {
     var url = Routes.idea_path({
       id: idea.id
     });
@@ -53,7 +53,11 @@ class IdeaActionCreators {
       contentType: 'application/json',
       dataType: 'json',
       success: function(idea) {
-        page(idea.path);
+        if (idea.comments_count && idea.comments_count > 0) {
+          page(idea.path);
+        } else {
+          page(idea.path + '/start-conversation');
+        }
 
         Dispatcher.dispatch({
           type: ActionTypes.IDEA_UPDATED,

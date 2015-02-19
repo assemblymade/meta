@@ -6,6 +6,7 @@ const Drawer = require('../ui/drawer.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
 const IdeaActionCreators = require('../../actions/idea_action_creators');
 const IdeaContainer = require('./idea_container.js.jsx');
+const IdeaHowItWorks = require('./idea_how_it_works.js.jsx');
 const IdeaStore = require('../../stores/idea_store');
 const Lightbox = require('../lightbox.js.jsx');
 const NewComment = require('../news_feed/new_comment.js.jsx');
@@ -19,7 +20,7 @@ let IdeaStartConversation = React.createClass({
     params: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object
-      ]),
+    ]),
     query: React.PropTypes.object
   },
 
@@ -84,9 +85,9 @@ let IdeaStartConversation = React.createClass({
 
     return (
       <IdeaContainer showRelatedIdeas={false}>
-        <div className="clearfix py2 border-bottom border-gray">
+        <div className="clearfix mt2 mb1">
           <div className="left ml4">
-            <h4 className="mb0 mt0">Asking a first question gets things going.</h4>
+            <h5 className="mb0 mt0">Asking a first question gets things going.</h5>
           </div>
 
           <div className="right px4">
@@ -102,20 +103,12 @@ let IdeaStartConversation = React.createClass({
         </div>
 
         <form>
-          <div className="form-group px4 mb0">
-            <Drawer open={this.state.isDrawerOpen}>
-              <div className="px3 gray-1">
-                <p className="px3">
-                  After you submit your idea, you'll hash out the specifics of your{' '}
-                  project with the Assembly community. Gain enough traction (through{' '}
-                  hearts on your idea), and you'll be ready to launch! Others{' '}
-                  will jump in and help shape your idea &mdash; you'll be building{' '}
-                  alongside an awesome community of talented folks from all over.
-                </p>
-              </div>
-            </Drawer>
+          <Drawer open={this.state.isDrawerOpen}>
+            <IdeaHowItWorks />
+          </Drawer>
 
-            <div className="py3">
+          <div className="form-group px4 mb0">
+            <div className="py3 h6 gray-2">
               <p>
                 Examples:
               </p>
@@ -139,7 +132,7 @@ let IdeaStartConversation = React.createClass({
           <div className="clearfix px4 mb3">
             <div className="left mt1">
               <a href="javscript:void(0);" onClick={this.onBackClick}>
-                <Icon icon="chevron-left" /> Back
+                <Icon icon="chevron-left" /> Edit your idea
               </a>
             </div>
 
@@ -150,7 +143,7 @@ let IdeaStartConversation = React.createClass({
                     this.state.question.length > 0 &&
                     this.onPostQuestionClick
               }>
-                <span className="title">Submit idea</span>
+                <span className="title">Get started</span>
               </Button>
             </div>
           </div>

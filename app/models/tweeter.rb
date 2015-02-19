@@ -174,7 +174,7 @@ class Tweeter
       idea = news_feed_item.target
       title = news_feed_item.target.name
       participants = idea_participants(idea)
-      link = IdeaSerializer.new(idea).url,
+      link = IdeaSerializer.new(idea).url
       hashtags = idea_marks(idea)
       proceed=true
     end

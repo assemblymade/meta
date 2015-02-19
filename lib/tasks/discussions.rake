@@ -45,28 +45,6 @@ namespace :discussions do
     end
   end
 
-  task reset_comment_created_at: :environment do
-    NewsFeedItem.where(target_type: 'Post').each do |nfi|
-      if nfi.comments.any?
-        nfi.comments.each do |comment|
-          youngest = Time.new(2014)
-
-          if event = Event::Comment.find_by(user: comment.user, body: comment.body)
-            comment.update(created_at: event.created_at)
-
-            if event.created_at > youngest
-              youngest = event.created_at
-            end
-          end
-
-          nfi.update(last_commented_at: youngest)
-        end
-      else
-        nfi.update(last_commented_at: nfi.target.created_at)
-      end
-    end
-  end
-
   task remove_main_threads: :environment do
     NewsFeedItem.where(target_type: 'Post').each do |nfi|
       if nfi.target.try(:title) == 'Main thread'
