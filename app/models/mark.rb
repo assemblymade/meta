@@ -12,6 +12,8 @@ class Mark < ActiveRecord::Base
   has_many :watchers, -> { where(watchings: { unwatched_at: nil }) }, :through => :watchings, :source => :user
   belongs_to :mark_stem, touch: true, counter_cache: true
 
+  belongs_to :mark_cluster
+
   after_commit :assign_stem, on: :create
 
   validates :name, length: { minimum: 2 }, allow_blank: true
@@ -72,6 +74,10 @@ class Mark < ActiveRecord::Base
     ms = MarkStem.where(name: mark_name.try(:stem)).first_or_create
     update_attribute(:mark_stem_id, ms.id) if mark_stem_id.blank? || mark_stem_id != ms.id
     ms.name
+  end
+
+  def assign_cluster(mark_cluster)
+    self.update!(mark_cluster_id: mark_cluster.id)
   end
 
 end

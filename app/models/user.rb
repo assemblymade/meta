@@ -7,9 +7,12 @@ class User < ActiveRecord::Base
   include Elasticsearch::Model
   include GlobalID::Identification
 
+  LEADER_TIME_SPAN = 7.days
+
   attr_encryptor :wallet_private_key, :key => ENV["USER_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
 
   belongs_to :user_cluster
+  has_many :leader_positions
 
   has_many :activities,    foreign_key: 'actor_id'
   has_many :core_products, through: :core_team_memberships, source: :product
@@ -322,6 +325,27 @@ class User < ActiveRecord::Base
     (self.withdrawals.where.not(payment_sent_at: nil).sum(:amount_withheld)/100).round(2)
   end
 
+  def user_awards_score
+    scores = {}
+    Award.where(winner_id: self.id).each do |a|
+      time_diff = (DateTime.now.to_i - a.created_at.to_i).to_f / LEADER_TIME_SPAN.to_f
+      multiplier = 2.0**(-1.0 * time_diff.to_f)
+      mv = a.wip.mark_vector.take(10)
+      mv.each do |q|
+        weight = q[1] * multiplier
+        q[0] = Mark.find_by(id: q[0]).name
+        if scores.has_key?(q[0])
+          scores[q[0]] = scores[q[0]] + weight
+        else
+          scores[q[0]] = weight
+        end
+      end
+    end
+    m = scores.sum{|k, v| v}
+    scores['Overall'] = m
+    scores.sort_by{|k,v| -v}
+  end
+
   # elasticsearch
   mappings do
     indexes :username
@@ -391,6 +415,37 @@ class User < ActiveRecord::Base
 
   def welcome_tweet
     Tweeter.new.tweet_welcome_user(self)
+  end
+
+  def cluster_score(mark_cluster)
+    s = 0
+    mark_cluster.marks.each do |m|
+      r = Marking.where(markable_id: self.user_identity.id).where(mark_id: m.id).sum(:weight)
+      s = s + r
+    end
+    s
+  end
+
+  def cluster_scores
+    MarkCluster.all.map{|a|
+      [a.name, self.cluster_score(a)]
+    }
+  end
+
+  def normalized_cluster_scores
+    s = self.cluster_scores
+    normalized_scores = []
+    s.each do |clustername, score|
+      m = [clustername]
+      markings_n = Marking.where(mark: MarkCluster.find_by(name: clustername).marks).sum(:weight)
+      multiplier = 1.0 / markings_n.to_f
+      newscore = score * multiplier #Here it is weighted but not normalized
+      m.append(newscore)
+      normalized_scores.append(m)
+    end
+    #normalize now that scores are weighted
+    t = Math.sqrt(normalized_scores.sum{|a,b| b*b})
+    normalized_scores.map{|a, b| [a, b/t]}
   end
 
   #governance

@@ -35,7 +35,9 @@ class UserClusterAssignments
     end
     new_cluster = all_clusters[best_cluster]
     if new_cluster != current_cluster
-      current_cluster.remove_user_id(user.id, user_vector)
+      if current_cluster
+        current_cluster.remove_user_id(user.id, user_vector)
+      end
       new_cluster.add_user_id(user.id, user_vector)
     end
     new_cluster
@@ -77,14 +79,20 @@ class UserClusterAssignments
   end
 
   def cluster_frack
-    clusters = [UserCluster.new, UserCluster.new, UserCluster.new]
-    u1 = User.find_by(username: "mdeiters")
+    clusters = [UserCluster.new, UserCluster.new, UserCluster.new, UserCluster.new, UserCluster.new]
+    u1 = User.find_by(username: "chrislloyd")
     clusters.first.add_user_id(u1, u1.user_identity.get_mark_vector)
 
     u2 = User.find_by(username: "barisser")
     clusters.second.add_user_id(u2, u2.user_identity.get_mark_vector)
 
     u3 = User.find_by(username: "bshyong")
+    clusters.third.add_user_id(u3, u3.user_identity.get_mark_vector)
+
+    u4 = User.find_by(username: "whatupdave")
+    clusters.third.add_user_id(u3, u3.user_identity.get_mark_vector)
+
+    u5 = User.find_by(username: "awwstn")
     clusters.third.add_user_id(u3, u3.user_identity.get_mark_vector)
 
     q = 0

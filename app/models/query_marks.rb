@@ -1,6 +1,6 @@
 class QueryMarks
 
-  INHERITED_TAGS_PRODUCTS_TO_WIPS = 0.2
+  INHERITED_TAGS_PRODUCTS_TO_WIPS = 0.04
   INHERITED_TAGS_WIPS_TO_PRODUCTS = 0.2
 
   def find_mark_from_name(name)
@@ -253,6 +253,16 @@ class QueryMarks
       end}
     r.delete(['', 0])
     r
+  end
+
+  def get_greatest_users_with_mark(mark_id)
+    m = Marking.where(mark_id: mark_id).where(markable_type: "UserIdentity")
+    m = m.sort_by{|a| -a.weight}
+
+    m.map{|a|
+      s = Marking.where(markable: a.markable).sum(:weight)
+      [a.markable.user.username, a.weight/s]
+    }
   end
 
   #RUN DAILY
