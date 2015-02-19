@@ -30,7 +30,7 @@ var Leaderboard = React.createClass({
   },
 
   renderCategories: function(rank_data) {
-    click = function(event) {
+    var click = function(event) {
       event.stopPropagation()
       event.preventDefault()
       this.setState({show_all: !this.state.show_all})
