@@ -12,8 +12,14 @@ class MarkCluster < ActiveRecord::Base
 
   def top_users(n, filter_staff)
     threshold_date = DateTime.now - LEADER_TIMESPAN
-    markings = Marking.where('updated_at > ?', threshold_date).where(mark_id: self.marks.map(&:id)).where(markable_type: "UserIdentity")
-    markings = markings.group(:markable_id).sum(:weight).sort_by{|k, v| -v}.take(n)
+    markings = Marking.where('updated_at > ?', threshold_date)
+    .where(mark_id: self.marks.map(&:id))
+    .where(markable_type: "UserIdentity")
+
+    markings = Marking.where(markable_type: "UserIdentity").group(:markable_id).select("markable_id, SUM(weight) as weight_sum")
+    .order("weight_sum desc").where.not(weight: "NaN").limit(10)
+    .map { |a| [a['markable_id'], a['weight_sum']] }
+
     r = markings.map{|k,v| [UserIdentity.find_by(id: k).user.username, v]}
 
     if filter_staff
