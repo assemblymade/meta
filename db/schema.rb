@@ -1016,7 +1016,6 @@ ActiveRecord::Schema.define(version: 20150217234413) do
     t.uuid     "user_cluster_id"
     t.datetime "flagged_at"
     t.datetime "showcase_banner_dismissed_at"
-    t.uuid     "leader_position_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
