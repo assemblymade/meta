@@ -10,11 +10,11 @@ class LeaderDetermination
 
     scores = []
 
-    recent_users.each do |a|
-      top_work = a.user_awards_score.take(5)
-      top_work.each do |g|
-        if top_marks.has_key?(g[0])
-          top_marks[g[0]].append([a.username, g[1]])
+    recent_users.each do |user|
+      top_work = user.user_awards_score.take(5)
+      top_work.each do |mark_name, mark_score|
+        if top_marks.has_key?(mark_name)
+          top_marks[mark_name].append([user.username, mark_score])
         end
       end
     end

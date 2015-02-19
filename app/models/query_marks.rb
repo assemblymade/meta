@@ -258,12 +258,11 @@ class QueryMarks
   def get_greatest_users_with_mark(mark_id)
     m = Marking.where(mark_id: mark_id).where(markable_type: "UserIdentity")
     m = m.sort_by{|a| -a.weight}
-    r = []
-    m.each do |a|
-      s = Marking.where(markable: a.markable).sum(&:weight)
-      r.append([a.markable.user.username, a.weight/s])
-    end
-    return r
+
+    m.map{|a|
+      s = Marking.where(markable: a.markable).sum(:weight)
+      [a.markable.user.username, a.weight/s]
+    }
   end
 
   #RUN DAILY
