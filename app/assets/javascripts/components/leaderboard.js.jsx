@@ -40,14 +40,14 @@ var Leaderboard = React.createClass({
 
     if (this.state.show_all) {
       var showAllLink = <Nav.Item label="Hide" onClick={click} small={true} />
-      var b = a.map(function(c){
+      var category_rankings = a.map(function(c){
           var name = c[0]
           var rankd = c[1]
           return this.renderCategory(name, rankd);
       }.bind(this))
       return (
         <div>
-          {b}
+          {category_rankings}
           <div className="center">
             {showAllLink}
           </div>
@@ -95,7 +95,7 @@ var Leaderboard = React.createClass({
 
   render: function() {
     return (
-      <div className = "py2">
+      <div className="py2">
         <Tile>
           <p className="center py2 h4 gray-1 bold">Recent Awards Leaderboard</p>
           {this.renderCategories(this.state.rank_data)}
