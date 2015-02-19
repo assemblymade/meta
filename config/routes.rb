@@ -137,6 +137,8 @@ ASM::Application.routes.draw do
 
   resources :stories, only: [:show]
 
+  get '/leaderboards' => 'leaderboards#index'
+
   # Webhooks
   namespace :webhooks do
     post '/mailgun' => 'mailgun#create'

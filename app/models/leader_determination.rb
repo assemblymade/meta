@@ -33,4 +33,13 @@ class LeaderDetermination
     p.map{|a| [a.user.username, a.rank] }
   end
 
+  def assemble_rank_data
+    d = {}
+    lpt = LeaderPosition.pluck(:leader_type).uniq
+    lpt.each do |p|
+      d[p] = LeaderPosition.where(leader_type: p).map{|a| [a.user.username, a.rank, user_path(a.user)]}
+    end
+    d
+  end
+
 end

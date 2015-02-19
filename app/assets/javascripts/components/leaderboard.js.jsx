@@ -9,8 +9,56 @@ const Tile = require('./ui/tile.js.jsx')
 
 var Leaderboard = React.createClass({
 
-  propTypes: {
-    rank_data: React.PropTypes.array
+  getInitialState: function() {
+    return {
+      rank_data: []
+    }
+  },
+
+  componentDidMount: function() {
+    $.ajax({
+      url: '/leaderboards',
+      method: 'GET',
+      success: function(data) {
+          this.setState({rank_data: data});
+
+      }.bind(this)
+    });
+
+  },
+
+  renderCategories: function(rank_data) {
+    var a = _.pairs(rank_data)
+    var b = a.map(function(c){
+        var name = c[0]
+        var rankd = c[1]
+        return this.renderCategory(name, rankd);
+
+
+    }.bind(this))
+    console.log('b', b)
+    return b
+  },
+
+  renderCategory: function(name, rankd) {
+
+    return (
+      <div>
+        {name}
+        <table>
+          <tbody>
+              {_.map(rankd, function(d) {
+                return (
+                  <tr>
+                    <td>{d[0]}</td>
+                    <td>{d[1]}</td>
+                  </tr>
+                )
+              })}
+          </tbody>
+        </table>
+      </div>
+    )
   },
 
   render: function() {
@@ -18,34 +66,8 @@ var Leaderboard = React.createClass({
       <div className = "py2">
         <Tile>
           <h4 className="center">Leaderboard</h4>
-          {renderCategories(this.props.rank_data);}
+          {this.renderCategories(this.state.rank_data)}
         </Tile>
-      </div>
-    )
-  },
-
-  renderCategories: function(rank_data) {
-    return _.map(rank_data, function(rankd) {
-      return renderCategory(rankd);
-    });
-  },
-
-  renderCategory: function(rank) {
-    return (
-      <div>
-        {rank[0]}
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                {rank[1]}
-              </td>
-              <td>
-                {rank[2]}
-              </td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     )
   }
