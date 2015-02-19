@@ -44,7 +44,7 @@ var Leaderboard = React.createClass({
 
     return (
       <div>
-        {name}
+        <h5>{name}</h5>
         <table>
           <tbody>
               {_.map(rankd, function(d) {
@@ -67,9 +67,9 @@ var Leaderboard = React.createClass({
 
   render: function() {
     return (
-      <div className = "py2">
+      <div className = "py3 px2">
         <Tile>
-          <h4 className="center">Leaderboard</h4>
+          <h4 className="center">Recent Leaderboard</h4>
           {this.renderCategories(this.state.rank_data)}
         </Tile>
       </div>

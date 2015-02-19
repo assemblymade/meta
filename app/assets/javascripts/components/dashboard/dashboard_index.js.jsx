@@ -364,9 +364,6 @@ let DashboardIndex = React.createClass({
               </div>
             </div>
           </Tile>
-
-          <Leaderboard/>
-
         </div>
       )
     }
@@ -441,6 +438,7 @@ let DashboardIndex = React.createClass({
             <div className="md-col md-col-right md-col-4 px2">
               {product}
               {bounties}
+              <Leaderboard/>
             </div>
             <div className="md-col md-col-6 px2 mb4">
               <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>

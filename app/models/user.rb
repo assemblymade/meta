@@ -338,6 +338,8 @@ class User < ActiveRecord::Base
         end
       end
     end
+    m = scores.sum{|k, v| v}
+    scores['Overall'] = m
     scores.sort_by{|k,v| -v}
   end
 
