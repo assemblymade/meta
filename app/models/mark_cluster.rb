@@ -1,6 +1,8 @@
 class MarkCluster < ActiveRecord::Base
   has_many :marks
 
+  LEADER_TIMESPAN = 7.days.ago
+
   def assign_mark(mark_name)
     m = Mark.find_by(name: mark_name)
     if m

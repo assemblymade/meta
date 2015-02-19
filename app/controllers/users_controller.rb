@@ -24,8 +24,6 @@ class UsersController < ApplicationController
 
     @preferences = QueryMarks.new.legible_mark_vector(@user.user_identity.get_mark_vector.take(10))
     @clusters = @user.normalized_cluster_scores
-    @cluster_leaders = MarkCluster.all.map{|a| a.top_users(18, true).take(5) }
-    @cluster_names = MarkCluster.all.map{|a| a.name}
     @radar_data = [@clusters.map{|p| {axis: p[0], value: p[1]}}]
 
     respond_with @user
