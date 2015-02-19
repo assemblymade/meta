@@ -30,8 +30,6 @@ var Leaderboard = React.createClass({
   },
 
   renderCategories: function(rank_data) {
-
-    let click = function() {}
     click = function(event) {
       event.stopPropagation()
       event.preventDefault()
@@ -74,13 +72,13 @@ var Leaderboard = React.createClass({
 
     return (
       <div>
-        <h5>{name}</h5>
+        <p className="h5 gray-1">{name}</p>
         <table>
           <tbody>
               {_.map(rankd, function(d) {
                 return (
                   <tr>
-                    <td>{d[1]}</td>
+                    <td className="gray-2">{d[1]}</td>
                     <td>
                       <a href={d[2]}>
                         {d[0]}
@@ -99,7 +97,7 @@ var Leaderboard = React.createClass({
     return (
       <div className = "py2">
         <Tile>
-          <h4 className="center">Recent Leaderboard</h4>
+          <p className="center py2 h4 gray-1 bold">Recent Awards Leaderboard</p>
           {this.renderCategories(this.state.rank_data)}
         </Tile>
       </div>
