@@ -58,7 +58,7 @@ class LeaderDetermination
         end
       end
     end
-    r.sort_by{|k, v| -v}
+    r.sort_by{|_, v| -v}
   end
 
   def all_cluster_ranks
