@@ -427,11 +427,9 @@ class User < ActiveRecord::Base
   end
 
   def cluster_scores
-    r = []
-    MarkCluster.all.each do |m|
-      r.append([m.name, self.cluster_score(m)])
-    end
-    r
+    MarkCluster.all.map{|a|
+      [a.name, self.cluster_score(a)]
+    }
   end
 
   def normalized_cluster_scores
