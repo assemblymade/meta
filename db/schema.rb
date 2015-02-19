@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20150217234413) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "uuid-ossp"
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pg_stat_statements"
+  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -1136,6 +1136,7 @@ ActiveRecord::Schema.define(version: 20150217234413) do
     t.uuid     "winning_event_id"
     t.datetime "promoted_at"
     t.integer  "events_count",                     default: 0,       null: false
+    t.integer  "comments_count",                   default: 0,       null: false
     t.datetime "pinned_at"
     t.integer  "trending_score",       limit: 8
     t.string   "state",                limit: 255
