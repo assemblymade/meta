@@ -1,6 +1,6 @@
 class LeaderDetermination
   def sorted_marks
-    recent_users = User.where('last_sign_in_at > ?',30.days.ago).select{|a| !a.staff?}
+    recent_users = User.where('last_sign_in_at > ?',30.days.ago).where(is_staff: false)
 
     top_users = {}
     top_marks = Marking.group('mark_id').sum(:weight).select{|a, b| b > 0}.sort_by{|k, v| -v}

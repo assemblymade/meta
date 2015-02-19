@@ -27,14 +27,12 @@ class UserClusterAssignments
     q = 0
     all_clusters.each do |c|
       d=QueryMarks.new.vector_square_distance(user_vector, c.average_vector)
-      puts "distance #{d}"
       if d<best_distance
         best_cluster=q
         best_distance=d
       end
       q = q + 1
     end
-    puts best_cluster
     new_cluster = all_clusters[best_cluster]
     if new_cluster != current_cluster
       if current_cluster
