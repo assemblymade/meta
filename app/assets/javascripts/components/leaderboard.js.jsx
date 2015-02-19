@@ -50,8 +50,12 @@ var Leaderboard = React.createClass({
               {_.map(rankd, function(d) {
                 return (
                   <tr>
-                    <td>{d[0]}</td>
                     <td>{d[1]}</td>
+                    <td>
+                      <a href={d[2]}>
+                        {d[0]}
+                      </a>
+                    </td>
                   </tr>
                 )
               })}

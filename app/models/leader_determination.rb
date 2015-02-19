@@ -37,7 +37,7 @@ class LeaderDetermination
     d = {}
     lpt = LeaderPosition.pluck(:leader_type).uniq
     lpt.each do |p|
-      d[p] = LeaderPosition.where(leader_type: p).map{|a| [a.user.username, a.rank, user_path(a.user)]}
+      d[p] = LeaderPosition.where(leader_type: p).map{|a| [a.user.username, a.rank, UserSerializer.new(a.user).full_url]}
     end
     d
   end
