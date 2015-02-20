@@ -71,8 +71,9 @@
 
     addTag: function(tag) {
       return function(event) {
-        var value = this.state.value + ' ' + 'tag:' + tag
+        event.preventDefault()
 
+        var value = this.state.value + ' ' + 'tag:' + tag
         this.setState({ value: value })
 
         this.getBounties(value, this.state.sort, 1)

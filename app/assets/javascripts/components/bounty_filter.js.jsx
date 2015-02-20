@@ -35,6 +35,8 @@ var BountyFilter = React.createClass({
         <ul className="dropdown-menu" style={{ marginTop: 14, marginLeft: -24 }}>
           {filters.map(function(filter, i) {
             var onChange = function(event) {
+              event.preventDefault()
+
               this.props.onValueChange({
                 target: {
                   value: filter.query
@@ -83,6 +85,8 @@ var BountyFilter = React.createClass({
         <ul className="dropdown-menu">
           {sorts.map(function(sort, i) {
             var onChange = function(event) {
+              event.preventDefault()
+
               this.props.onSortChange({
                 target: {
                   value: sort.value
