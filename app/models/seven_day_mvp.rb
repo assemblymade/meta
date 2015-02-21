@@ -1,9 +1,9 @@
 class SevenDayMVP
   def self.current
-    Product.find_by(slug: 'gamamia')
+    Product.find_by(slug: 'landline')
   end
 
   def self.recent
-    ['giraff', 'signupsumo'].map { |s| Product.find_by(slug: s) }
+    ['gamamia', 'giraff'].map { |s| Product.find_by(slug: s) }
   end
 end
