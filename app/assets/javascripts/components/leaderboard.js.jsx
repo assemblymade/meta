@@ -8,8 +8,6 @@ var SvgIcon = require('./ui/svg_icon.js.jsx');
 const Tile = require('./ui/tile.js.jsx')
 const Nav = require('./ui/nav.js.jsx')
 const UserStore = require('./../stores/user_store.js')
-var Avatar = require('./ui/avatar.js.jsx')
-var Vignette = require('./ui/vignette.js.jsx')
 const AvatarWithUsername = require('./ui/avatar_with_username.js.jsx');
 
 var Leaderboard = React.createClass({
