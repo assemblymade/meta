@@ -8,6 +8,9 @@ var SvgIcon = require('./ui/svg_icon.js.jsx');
 const Tile = require('./ui/tile.js.jsx')
 const Nav = require('./ui/nav.js.jsx')
 const UserStore = require('./../stores/user_store.js')
+var Avatar = require('./ui/avatar.js.jsx')
+var Vignette = require('./ui/vignette.js.jsx')
+const AvatarWithUsername = require('./ui/avatar_with_username.js.jsx');
 
 var Leaderboard = React.createClass({
 
@@ -20,7 +23,6 @@ var Leaderboard = React.createClass({
   },
 
   componentDidMount: function() {
-    console.log('componentDidMount')
     UserStore.addChangeListener(this.onChange)
     $.ajax({
       url: '/leaderboards',
@@ -32,7 +34,6 @@ var Leaderboard = React.createClass({
   },
 
   onChange: function() {
-    console.log('onChange', UserStore.isStaff())
     this.setState({staff_user: UserStore.isStaff()})
   },
 
@@ -73,19 +74,23 @@ var Leaderboard = React.createClass({
   },
 
   renderCategory: function(name, rankd) {
+    var size = 30
     return (
       <div>
         <p className="h5 gray-2 center mt3">{name}</p>
 
           {_.map(rankd, function(d) {
+            console.log(d)
+            var user = {username: d[0], avatar_url: d[3]}
             return (
               <div>
                 <a className="bg-gray-4-hover block" href={d[2]}>
                   <div className="clearfix px3">
                     <div className="left mr3">{d[1]}</div>
-                    <div className="overflow-hidden">
-                      {d[0]}
+                    <div className="overflow-hidden py1">
+                      <AvatarWithUsername user={user} size={35} />
                     </div>
+
                   </div>
                 </a>
               </div>
@@ -97,8 +102,6 @@ var Leaderboard = React.createClass({
   },
 
   render: function() {
-    console.log(this.state.staff_user)
-    console.log(UserStore.isStaff())
     if (this.state.staff_user)
       {
         return (
