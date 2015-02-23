@@ -7,6 +7,7 @@ var IconWithNumber = require('./ui/icon_with_number.js.jsx')
 var SvgIcon = require('./ui/svg_icon.js.jsx');
 const Tile = require('./ui/tile.js.jsx')
 const Nav = require('./ui/nav.js.jsx')
+const UserStore = require('./../stores/user_store.js')
 
 var Leaderboard = React.createClass({
 
@@ -94,14 +95,24 @@ var Leaderboard = React.createClass({
   },
 
   render: function() {
-    return (
-      <div className="py2">
-        <Tile>
-          <p className="center py2 h4 gray-1 bold">Recent Awards Leaderboard</p>
-          {this.renderCategories(this.state.rank_data)}
-        </Tile>
-      </div>
-    )
+    if (UserStore.isStaff())
+      {
+        return (
+          <div className="py2">
+            <Tile>
+              <p className="center py2 h4 gray-1 bold">Recent Awards Leaderboard</p>
+              {this.renderCategories(this.state.rank_data)}
+            </Tile>
+          </div>
+        )
+      }
+    else {
+      return (
+        <div>
+        </div>
+      )
+    }
+
   }
 
 })
