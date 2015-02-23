@@ -13,8 +13,7 @@ var Leaderboard = React.createClass({
   getInitialState: function() {
     return {
       rank_data: [],
-      show_all: false,
-      currentUser: UserStore.getUser()
+      show_all: false
     }
   },
 
