@@ -65,39 +65,39 @@ var Leaderboard = React.createClass({
         </div>
       )
     }
-
   },
 
   renderCategory: function(name, rankd) {
-
     return (
       <div>
-        <p className="h5 gray-1">{name}</p>
-        <table>
-          <tbody>
-              {_.map(rankd, function(d) {
-                return (
-                  <tr>
-                    <td className="gray-2">{d[1]}</td>
-                    <td>
-                      <a href={d[2]}>
-                        {d[0]}
-                      </a>
-                    </td>
-                  </tr>
-                )
-              })}
-          </tbody>
-        </table>
+        <p className="h5 gray-2 center">{name}</p>
+
+          {_.map(rankd, function(d) {
+            return (
+              <div>
+                <a className="bg-gray-4-hover block" href={d[2]}>
+                  <div className="clearfix">
+                    <div className="col col-3">{d[1]}</div>
+                    <div className="col col-5">
+                      {d[0]}
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+            )
+          })}
+
+
       </div>
     )
   },
 
   render: function() {
     return (
-      <div className="py2">
+      <div className="py2 hide">
         <Tile>
-          <p className="center py2 h4 gray-1 bold">Recent Awards Leaderboard</p>
+          <p className="center py2 h5 gray-1 bold">Recent Awards Leaderboard</p>
           {this.renderCategories(this.state.rank_data)}
         </Tile>
       </div>
