@@ -10,6 +10,7 @@ var UserStore = _.extend(Object.create(Store), {
     _dispatchToken = Dispatcher.register(function(action) {
       switch(action.type) {
         case ActionTypes.USER_RECEIVE:
+          console.log('set user', action.user)
           _setUser(action.user)
           this.emitChange();
 
@@ -37,7 +38,7 @@ var UserStore = _.extend(Object.create(Store), {
   },
 
   isStaff: function() {
-    return _currentUser && _currentUser.is_staff;
+    return _currentUser && _currentUser.staff;
   }
 });
 

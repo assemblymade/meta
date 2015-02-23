@@ -7,26 +7,33 @@ var IconWithNumber = require('./ui/icon_with_number.js.jsx')
 var SvgIcon = require('./ui/svg_icon.js.jsx');
 const Tile = require('./ui/tile.js.jsx')
 const Nav = require('./ui/nav.js.jsx')
+const UserStore = require('./../stores/user_store.js')
 
 var Leaderboard = React.createClass({
 
   getInitialState: function() {
     return {
       rank_data: [],
-      show_all: false
+      show_all: false,
+      staff_user: UserStore.isStaff()
     }
   },
 
   componentDidMount: function() {
+    console.log('componentDidMount')
+    UserStore.addChangeListener(this.onChange)
     $.ajax({
       url: '/leaderboards',
       method: 'GET',
       success: function(data) {
           this.setState({rank_data: data});
-
       }.bind(this)
     });
+  },
 
+  onChange: function() {
+    console.log('onChange', UserStore.isStaff())
+    this.setState({staff_user: UserStore.isStaff()})
   },
 
   renderCategories: function(rank_data) {
@@ -39,7 +46,7 @@ var Leaderboard = React.createClass({
     var a = _.pairs(rank_data)
 
     if (this.state.show_all) {
-      var showAllLink = <Nav.Item label="Hide" onClick={click} small={true} />
+      var showAllLink = <a className="px3 py2 border-top" onClick={click}>Hide</a>
       var category_rankings = a.map(function(c){
           var name = c[0]
           var rankd = c[1]
@@ -55,13 +62,11 @@ var Leaderboard = React.createClass({
       )
     }
     else {
-      var showAllLink = <Nav.Item label="Show all" onClick={click} small={true} />
+      var showAllLink = <a className="block center px3 py2 border-top" href="javascript:void(0)" onClick={click}>Hide</a>
       return (
         <div>
           {this.renderCategory("Overall", rank_data['Overall'])}
-          <div className="center">
-            {showAllLink}
-          </div>
+          {showAllLink}
         </div>
       )
     }
@@ -70,15 +75,15 @@ var Leaderboard = React.createClass({
   renderCategory: function(name, rankd) {
     return (
       <div>
-        <p className="h5 gray-2 center">{name}</p>
+        <p className="h5 gray-2 center mt3">{name}</p>
 
           {_.map(rankd, function(d) {
             return (
               <div>
                 <a className="bg-gray-4-hover block" href={d[2]}>
-                  <div className="clearfix">
-                    <div className="col col-3">{d[1]}</div>
-                    <div className="col col-5">
+                  <div className="clearfix px3">
+                    <div className="left mr3">{d[1]}</div>
+                    <div className="overflow-hidden">
                       {d[0]}
                     </div>
                   </div>
@@ -87,21 +92,33 @@ var Leaderboard = React.createClass({
 
             )
           })}
-
-
       </div>
     )
   },
 
   render: function() {
-    return (
-      <div className="py2 hide">
-        <Tile>
-          <p className="center py2 h5 gray-1 bold">Recent Awards Leaderboard</p>
-          {this.renderCategories(this.state.rank_data)}
-        </Tile>
-      </div>
-    )
+    console.log(this.state.staff_user)
+    console.log(UserStore.isStaff())
+    if (this.state.staff_user)
+      {
+        return (
+          <div className="py2">
+            <Tile>
+              <p className="center py2 h5 gray-1 bold">Recent Awards Leaderboard</p>
+              {this.renderCategories(this.state.rank_data)}
+            </Tile>
+          </div>
+        )
+      }
+    else {
+      return (
+        <div>
+        </div>
+      )
+    }
+
+
+
   }
 
 })
