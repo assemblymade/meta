@@ -45,7 +45,7 @@ var Leaderboard = React.createClass({
     var a = _.pairs(rank_data)
 
     if (this.state.show_all) {
-      var showAllLink = <a className="px3 py2 border-top" onClick={click}>Hide</a>
+      var showAllLink = <a className="block px3 py2 border-top center" onClick={click}>Hide</a>
       var category_rankings = a.map(function(c){
           var name = c[0]
           var rankd = c[1]
@@ -53,18 +53,20 @@ var Leaderboard = React.createClass({
       }.bind(this))
       return (
         <div>
-          {category_rankings}
-          <div className="center">
-            {showAllLink}
+          <div className="mb3">
+            {category_rankings}
           </div>
+          {showAllLink}
         </div>
       )
     }
     else {
-      var showAllLink = <a className="block center px3 py2 border-top" href="javascript:void(0)" onClick={click}>Hide</a>
+      var showAllLink = <a className="block center px3 py2 border-top" href="javascript:void(0)" onClick={click}>Show All</a>
       return (
         <div>
-          {this.renderCategory("Overall", rank_data['Overall'])}
+          <div className="mb3">
+            {this.renderCategory("Overall", rank_data['Overall'])}
+          </div>
           {showAllLink}
         </div>
       )
@@ -72,21 +74,20 @@ var Leaderboard = React.createClass({
   },
 
   renderCategory: function(name, rankd) {
-    var size = 30
+    var size = 24
     return (
       <div>
         <p className="h5 gray-2 center mt3">{name}</p>
 
           {_.map(rankd, function(d) {
-            console.log(d)
             var user = {username: d[0], avatar_url: d[3]}
             return (
               <div>
                 <a className="bg-gray-4-hover block" href={d[2]}>
                   <div className="clearfix px3">
-                    <div className="left mr3">{d[1]}</div>
+                    <div className="left mr3 gray-2">{d[1]}</div>
                     <div className="overflow-hidden py1">
-                      <AvatarWithUsername user={user} size={35} />
+                      <AvatarWithUsername user={user} size={size} />
                     </div>
 
                   </div>
