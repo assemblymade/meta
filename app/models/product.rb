@@ -115,7 +115,7 @@ class Product < ActiveRecord::Base
   scope :team_building, -> { public_products.where(state: 'team_building') }
   scope :greenlit,     -> { public_products.where(state: 'greenlit') }
   scope :profitable,   -> { public_products.where(state: 'profitable') }
-  scope :live,         -> { where.not(try_url: nil) }
+  scope :live,         -> { where.not(try_url: [nil, '']) }
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
   scope :with_topic,   -> (topic) { where('topics @> ARRAY[?]::varchar[]', topic) }
   scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
@@ -769,6 +769,10 @@ class Product < ActiveRecord::Base
       end
     end
     contracts
+  end
+
+  def try_url=(new_try_url)
+    self.try_url = new_try_url.presence
   end
 
   protected
