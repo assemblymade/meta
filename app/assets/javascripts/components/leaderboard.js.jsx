@@ -102,7 +102,7 @@ var Leaderboard = React.createClass({
     if (this.state.staff_user)
       {
         return (
-          <div className="py2">
+          <div className="py2 hide">
             <Tile>
               <p className="center py2 h5 gray-1 bold">Recent Awards Leaderboard</p>
               {this.renderCategories(this.state.rank_data)}
