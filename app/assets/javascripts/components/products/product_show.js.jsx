@@ -108,15 +108,13 @@ let ProductShow = React.createClass({
                   </div>
                 </div>
 
-                {this.renderMostActiveUsers()}
-
-                <div className="bg-gray-6">
-                  <div className="p3 center">
-                    <div className="gray-2 mt1">
-                      <a href="/help">See how Assembly works</a>
-                    </div>
-                  </div>
+                <div className="border-bottom">
+                  {this.renderMostActiveUsers()}
                 </div>
+
+                <a href="/help" className="block px3 py2 center">
+                  See how Assembly works
+                </a>
               </Tile>
 
               <ProductImportantLinks product={product} />
@@ -186,18 +184,16 @@ let ProductShow = React.createClass({
     });
 
     return (
-      <div className="border-bottom">
-        <div className="px3 py2">
-          <h5 className="mt0 mb2">Most active members</h5>
-          <div className="clearfix">
-            {renderedContributors}
-          </div>
-          <div className="gray-3 mt2">
-            <a href={Routes.product_people_path({ product_id: product.slug })}
-                className="gray-3 underline">
-              <small>View all partners</small>
-            </a>
-          </div>
+      <div className="px3 py2">
+        <h5 className="mt0 mb2">Most active members</h5>
+        <div className="clearfix">
+          {renderedContributors}
+        </div>
+        <div className="gray-3 mt2">
+          <a href={Routes.product_people_path({ product_id: product.slug })}
+              className="gray-3 underline">
+            <small>View all partners</small>
+          </a>
         </div>
       </div>
     );
