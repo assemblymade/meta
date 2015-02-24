@@ -101,7 +101,6 @@ var Leaderboard = React.createClass({
   },
 
   render: function() {
-<<<<<<< HEAD
     return (
       <div className="py2">
         <Tile>
@@ -110,9 +109,7 @@ var Leaderboard = React.createClass({
         </Tile>
       </div>
     )
-=======
-    console.log(this.state.staff_user)
-    console.log(UserStore.isStaff())
+
     if (this.state.staff_user)
       {
         return (
@@ -130,12 +127,7 @@ var Leaderboard = React.createClass({
         </div>
       )
     }
-
-
-
->>>>>>> 7a4e59266062116b37b61b799cc3f7b5b05d0168
   }
-
 })
 
 module.exports = Leaderboard
