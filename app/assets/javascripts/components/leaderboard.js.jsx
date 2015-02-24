@@ -101,24 +101,14 @@ var Leaderboard = React.createClass({
   },
 
   render: function() {
-    return (
-      <div className="py2">
-        <Tile>
-          <p className="center py2 h5 gray-1 bold">Recent Awards Leaderboard</p>
-          {this.renderCategories(this.state.rank_data)}
-        </Tile>
-      </div>
-    )
-
     if (this.state.staff_user)
       {
-        return (
-          <div className="py2 hide">
-            <Tile>
-              <p className="center py2 h5 gray-1 bold">Recent Awards Leaderboard</p>
-              {this.renderCategories(this.state.rank_data)}
-            </Tile>
-          </div>
+        <div className="py2">
+          <Tile>
+            <p className="center py2 h5 gray-1 bold">Recent Awards Leaderboard</p>
+            {this.renderCategories(this.state.rank_data)}
+          </Tile>
+        </div>
         )
       }
     else {
