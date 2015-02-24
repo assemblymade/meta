@@ -3,8 +3,11 @@ var NewsFeedItemEvent = require('./news_feed_item_event.js.jsx');
 
 var NewsFeedItemBountyTitleChange = React.createClass({
   propTypes: {
-    actor: React.PropTypes.object.isRequired,
-    target: React.PropTypes.object.isRequired
+    actor: React.PropTypes.shape({
+      url: React.PropTypes.string.isRequired,
+      username: React.PropTypes.string.isRequired,
+    }).isRequired,
+    body: React.PropTypes.string.isRequired
   },
 
   render: function() {
@@ -13,7 +16,7 @@ var NewsFeedItemBountyTitleChange = React.createClass({
     return (
       <NewsFeedItemEvent>
         <a href={actor.url}>{actor.username}</a>
-        {' '} renamed this from {this.props.old_title}
+        {' '} renamed this from <strong>{this.props.body}</strong>
       </NewsFeedItemEvent>
     );
   }
