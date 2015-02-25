@@ -43,7 +43,7 @@ class AppsQuery
     when ORDER_NEW
       Product.order(created_at: :desc)
     else
-      when_clauses = SevenDayMVP::PRODUCTS.each_with_index.map { |slug, i| "WHEN slug='#{slug}' THEN #{i}" }.join(' ')
+      when_clauses = SevenDayMVP::PRODUCTS.each_with_index.map { |slug, i| "WHEN products.slug='#{slug}' THEN #{i}" }.join(' ')
       case_statement = "(CASE #{when_clauses} ELSE #{SevenDayMVP::PRODUCTS.size} END) ASC"
 
       Product.order(case_statement).
