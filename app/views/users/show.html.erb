@@ -85,10 +85,10 @@
                 </tr>
               </thead>
               <tbody>
-            <% @clusters.each do |p| %>
+            <% @clusters.each do |name, score| %>
               <tr>
-                <td><%= p[0] %></td>
-                <td><%= (p[1]*100).round(0) %></td>
+                <td><%= name %></td>
+                <td><%= ((score.nan? ? 0 : score) * 100).round(0) %></td>
               </tr>
             <% end %>
             </tbody>
