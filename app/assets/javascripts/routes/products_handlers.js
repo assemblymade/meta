@@ -206,6 +206,13 @@ let ProductsHandlers = {
     _setActiveTab('bounties');
   },
 
+  showProductMetrics(product) {
+    Dispatcher.dispatch({
+      type: ActionTypes.PRODUCT_RECEIVE,
+      product: product
+    });
+  },
+
   showProductNewPost(data) {
     let {
       product

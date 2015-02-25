@@ -17,6 +17,7 @@ module.exports = [
   ['/:product_id/activity', require('../components/products/product_activity.js.jsx'), ProductsHandlers.showProductActivity],
   ['/:product_id/bounties', require('../components/products/product_bounties.js.jsx'), ProductsHandlers.showProductBounties],
   ['/:product_id/bounties/:id', require('../components/products/product_bounty.js.jsx'), ProductsHandlers.showProductBounty],
+  ['/:product_id/metrics', require('../components/products/metrics_index.js.jsx'), ProductsHandlers.showProductMetrics],
   ['/:product_id/posts', require('../components/products/product_posts.js.jsx'), ProductsHandlers.showProductPosts],
   ['/:product_id/posts/new', require('../components/products/product_new_post.js.jsx'), ProductsHandlers.showProductNewPost],
   ['/:product_id/posts/:id', require('../components/products/product_post.js.jsx'), ProductsHandlers.showProductPost]
