@@ -163,4 +163,16 @@ describe Product do
       expect(product.send(field.to_sym)).to eq(field)
     end
   end
+
+  describe '#try_url=' do
+    it 'sets try_url to nil if blank' do
+      product = Product.make!
+
+      product.try_url = 'http://test.com'
+      expect(product.try_url).to eq('http://test.com')
+
+      product.try_url = '  '
+      expect(product.try_url).to be_nil
+    end
+  end
 end

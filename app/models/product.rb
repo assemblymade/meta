@@ -772,7 +772,7 @@ class Product < ActiveRecord::Base
   end
 
   def try_url=(new_try_url)
-    self.try_url = new_try_url.presence
+    super(new_try_url.presence)
   end
 
   protected
