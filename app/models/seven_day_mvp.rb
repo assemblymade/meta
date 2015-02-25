@@ -1,5 +1,5 @@
 class SevenDayMVP
-  PRODUCTS = ['landline', 'gamamia', 'giraff'].freeze
+  PRODUCTS = ['textshots', 'landline', 'gamamia'].freeze
 
   def self.current
     Product.find_by(slug: PRODUCTS.first)
