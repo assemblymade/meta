@@ -216,10 +216,6 @@ ASM::Application.routes.draw do
     resources :attachments, only: [:create]
   end
 
-  resources :metrics, only: [:create]
-  # hack route for Metrics gem (/v1/metrics)
-  post '/v1/metrics', to: 'metrics#create'
-
   # api
   # ◕ᴥ◕
   namespace :api do
@@ -368,15 +364,14 @@ ASM::Application.routes.draw do
       resources :comments, only: [:show, :create, :edit, :update]
     end
 
-    resources :resources, only: [:index]
-    resources :domains, only: [:create]
-
     resources :tips, only: [:create]
 
     resources :contracts, only: [:index, :create, :update, :destroy]
-
+    resources :domains, only: [:create]
+    resources :metrics, only: [:index]
     resources :governance, only: [:index, :create, :edit, :show]
     resources :proposals, only: [:index, :create, :edit, :update, :destroy, :show]
+    resources :resources, only: [:index]
 
     resources :posts do
       post :preview, on: :collection

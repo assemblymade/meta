@@ -73,17 +73,24 @@ let ProductImportantLinks = React.createClass({
           Assets
         </a>
 
-        <a className="block py2" href={Routes.product_financials_path({product_id: slug })}>
+        <a className="block border-bottom border-gray-4 py2" href={Routes.product_financials_path({product_id: slug })}>
           <span className="mr3 gray-2">
             <Icon icon="bar-chart" />
           </span>
           Financials
         </a>
 
+        <a className="block py2 hidden" href={Routes.product_metrics_path({product_id: slug })}>
+          <span className="mr3 gray-2">
+            <Icon icon="line-chart" />
+          </span>
+          Metrics
+        </a>
+
       </div>
     );
   },
-
+  
   renderHomepageUrl() {
     let product = this.props.product;
 
