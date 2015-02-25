@@ -19,7 +19,6 @@ class AppsController < ApplicationController
       end
       format.html do
         if params[:search].blank?
-
           @products_count = AppsQuery.new(current_user, params).perform.count
           @total_pages = (@products_count / PER_PAGE.to_f).ceil
         end
