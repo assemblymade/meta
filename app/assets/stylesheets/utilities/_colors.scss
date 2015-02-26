@@ -15,19 +15,28 @@ $colors: (
   "orange":     $orange
 );
 
-@each $color, $hex in $colors {
-  .#{$color}        { color: $hex }
-  .bg-#{$color}     { background-color: $hex }
-  .border-#{$color} { border-color: $hex }
-  .fill-#{$color}   { fill: $hex }
+@each $color, $value in $colors {
+  .#{$color},
+  .#{$color}-hover:hover,
+  .#{$color}-focus:focus {
+    color: $value
+  }
 
-  .#{$color}-hover:hover        { color: $hex }
-  .bg-#{$color}-hover:hover     { background-color: $hex }
-  .border-#{$color}-hover:hover { border-color: $hex }
-  .fill-#{$color}-hover:hover   { fill: $hex }
+  .bg-#{$color},
+  .bg-#{$color}-hover:hover,
+  .bg-#{$color}-focus:focus {
+    background-color: $value
+  }
 
-  .#{$color}-focus:focus        { color: $hex }
-  .bg-#{$color}-focus:focus     { background-color: $hex }
-  .border-#{$color}-focus:focus { border-color: $hex }
-  .fill-#{$color}-focus:focus   { fill: $hex }
+  .border-#{$color},
+  .border-#{$color}-hover:hover,
+  .border-#{$color}-focus:focus {
+    border-color: $value
+  }
+
+  .fill-#{$color},
+  .fill-#{$color}-hover:hover,
+  .fill-#{$color}-focus:focus {
+    fill: $value
+  }
 }
