@@ -1,4 +1,4 @@
-#Coins
+# Coins
 
 Product ownership is represented by App Coins.  Each product has its own coin.
 Users earn ownership by completing tasks such as bounties or receiving tips
@@ -6,6 +6,41 @@ which award coins.  At any time, you can view the coin distribution for a given
 product under the '/partners' ownership page for a product.  Similarly, each
 user can see his coins among the products has has contributed to on the profile
 page.
+
+# How coins work for contributors
+
+On Assembly, product contributors are rewarded with coins for that product.
+When a bounty is created, unvested coins (explained later in this guide), are
+allocated for a specific task. The core team determines the valuation and will
+eventually award these coins to the contributor or set of contributors. These
+coins do not come from the core team or the person who awarded them. They are
+simply coins that have not yet been allocated for the product.
+
+The percentage of coins that you own determine your ownership of the product
+and the percentage of the profits that you will receive each month. However, as
+more coins are awarded, your percentage will change, because you would then own
+less of the total number of awarded coins.
+
+Here's an example of how awarding coins changes the owernship of a product over
+time:
+
+1. @vanstee creates a product named Helpful and receives an initial share of
+   500,000 coins.
+
+   @vanstee owns 500,000/500,000 coins, equaling 100% ownership in the product
+
+2. @chrislloyd puts together a homepage for Helpful and is awarded a bounty
+   valued at 50,000 coins.
+
+   @vanstee owns 500,000/550,000 coins, equaling 90% ownership in the product
+   @chrisloyd owns 50,000/550,000 coins, equaling 10% ownership in the product
+
+3. @chrislloyd tips @vanstee 500 coins for a suggestion on a bounty.
+
+   @vanstee owns 500,500/550,000 coins, equaling 91% ownership in the product
+   @chrisloyd owns 49,500/550,000 coins, equaling 9% ownership in the product
+
+# How coins work behind the scenes
 
 Coins come in several forms.  Each product has its own coin.  A new product is
 initialized with 10 million unvested coins.  An unvested coin is a coin that
