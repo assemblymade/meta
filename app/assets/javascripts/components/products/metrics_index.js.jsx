@@ -19,6 +19,8 @@ var MetricsIndex = React.createClass({
                 Metrics tracking code
               </h5>
 
+              <p>This example can be dropped into an ERB template for rails, you'll need to modify it for other languages and web frameworks</p>
+
               <pre><code style={{fontSize:12}}>{this.state.product.asmlytics_snippet}</code></pre>
             </div>
           </Tile>

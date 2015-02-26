@@ -41,10 +41,11 @@
 
   asml('create', '<%= ENV['ASMLYTICS'] %>');
   <% if signed_in? %>
-    asml('setUserId', '<%= current_user.id %>')
+      asml('track', '<%= current_user.email %>');
+    <% else %>
+      asml('track');
+    <% end %>
   <% end %>
-  asml('track');
-<% end %>
 </script>
 
 <% unless !!current_user.try(:staff?) %>
