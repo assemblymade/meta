@@ -4,7 +4,7 @@ class MetricsController < ProductController
   def index
     find_product!
 
-    snippet = render_to_string(partial: 'metrics/snippet', layout: false)
+    snippet = render_to_string(partial: 'metrics/snippet', layout: false, formats: 'html')
 
     respond_to do |format|
       format.html
