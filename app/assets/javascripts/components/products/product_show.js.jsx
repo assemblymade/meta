@@ -85,15 +85,27 @@ let ProductShow = React.createClass({
                 <Screenshots key="product-screenshots" />
 
                 <div className="clearfix p3 sm-p4">
-                  <h5 className="mt0 mb2" style={{ fontSize: 16 }}>
-                    {product.pitch}
-                  </h5>
-
                   <Markdown content={product.description_html} normalized={true} />
 
-                  <div className="mt4">
+
+                  <div className="mt3">
                     <ProductSubsections />
                   </div>
+
+
+                  <hr />
+
+                  <div className="mb4">
+                    <h6 className="gray-2 caps mt0 mb2">Core team ({product.core_team.length})</h6>
+                    <div className="clearfix mxn1 py2">
+                      {product.core_team.map(function(user) {
+                        return <a className="left block p1" key={user.id}>
+                          <Avatar user={user} size={36}/>
+                        </a>
+                      })}
+                    </div>
+                  </div>
+
                 </div>
               </Tile>
             </div>
