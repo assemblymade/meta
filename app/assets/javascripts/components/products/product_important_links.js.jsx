@@ -16,20 +16,20 @@ let ProductImportantLinks = React.createClass({
 
     return (
       <div>
-        <div className="border-bottom border-gray-4 mt3">
+        <div className="border-bottom border-gray-5 mt3">
           <h5>Important links</h5>
         </div>
 
         {this.renderHomepageUrl()}
 
-        <a className="block border-bottom border-gray-4 py2" href={Routes.product_chat_path({ product_id: slug })}>
+        <a className="block border-bottom border-gray-5 py2" href={Routes.product_chat_path({ product_id: slug })}>
           <span className="mr3 gray-2">
             <Icon icon="comments" />
           </span>
           Chat
         </a>
 
-        <a className="block border-bottom border-gray-4 py2" href={Routes.product_wips_path({
+        <a className="block border-bottom border-gray-5 py2" href={Routes.product_wips_path({
               params: {
                 product_id: slug
               },
@@ -44,7 +44,7 @@ let ProductImportantLinks = React.createClass({
           File a bug
         </a>
 
-        <a className="block border-bottom border-gray-4 py2" href={Routes.product_posts_path({
+        <a className="block border-bottom border-gray-5 py2" href={Routes.product_posts_path({
             params: {
               product_id: slug
             },
@@ -59,21 +59,21 @@ let ProductImportantLinks = React.createClass({
           Ask a question
         </a>
 
-        <a className="block border-bottom border-gray-4 py2" href={Routes.product_repos_path({ product_id: slug })}>
+        <a className="block border-bottom border-gray-5 py2" href={Routes.product_repos_path({ product_id: slug })}>
           <span className="mr3 gray-2">
             <Icon icon="code" />
           </span>
           Source code
         </a>
 
-        <a className="block border-bottom border-gray-4 py2" href={Routes.product_assets_path({ product_id: slug })}>
+        <a className="block border-bottom border-gray-5 py2" href={Routes.product_assets_path({ product_id: slug })}>
           <span className="mr3 gray-2">
             <Icon icon="photo" />
           </span>
           Assets
         </a>
 
-        <a className="block border-bottom border-gray-4 py2" href={Routes.product_financials_path({product_id: slug })}>
+        <a className="block border-bottom border-gray-5 py2" href={Routes.product_financials_path({product_id: slug })}>
           <span className="mr3 gray-2">
             <Icon icon="bar-chart" />
           </span>
@@ -90,13 +90,13 @@ let ProductImportantLinks = React.createClass({
       </div>
     );
   },
-  
+
   renderHomepageUrl() {
     let product = this.props.product;
 
     if (product.homepage_url) {
       return (
-        <a className="block border-bottom border-gray-4 py2"  href={product.homepage_url}>
+        <a className="block border-bottom border-gray-5 py2"  href={product.homepage_url}>
           <span className="mr3 gray-2">
             <Icon icon="home" />
           </span>
