@@ -142,7 +142,7 @@ var BountyIndex = React.createClass({
                 <strong>Coins determine your ownership of a product.</strong> You'll
                 notice each bounty below is assigned a coin value.  Complete
                 the bounty and you'll be awarded those coins which represent
-                your ownership. <a href="/guides#coins">Learn more</a>
+                your ownership. <a href="/guides/platform#earning-coins">Learn more</a>
               </div>
             </Callout>
           </div>
