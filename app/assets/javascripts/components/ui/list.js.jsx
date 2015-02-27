@@ -17,7 +17,7 @@ var List = React.createClass({
   render() {
     var type = this.props.type
     var cs = React.addons.classSet({
-      'list-reset': true,
+      'list-reset mb0': true,
       'list--inline': type === 'inline',
       'list--piped':  type === 'piped'
     })
