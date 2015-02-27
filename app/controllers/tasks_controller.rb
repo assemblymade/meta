@@ -1,6 +1,9 @@
 class TasksController < WipsController
   wrap_parameters format: [:json]
 
+  after_filter -> { current_user.update(coin_callout_viewed_at: Time.now) },
+    only: :index
+
   def index
     reject_blacklisted_users!
 

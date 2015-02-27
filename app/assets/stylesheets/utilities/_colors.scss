@@ -11,7 +11,8 @@ $colors: (
   "green":      $green,
   "blue":       $blue,
   "red":        $red,
-  "yellow":     $yellow
+  "yellow":     $yellow,
+  "orange":     $orange
 );
 
 @each $color, $hex in $colors {

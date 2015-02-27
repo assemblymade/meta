@@ -4,8 +4,10 @@ var BountyActionCreators = require('../actions/bounty_action_creators.js')
 var BountyFilter = require('./bounty_filter.js.jsx')
 var BountyList = require('./bounty_list.js.jsx')
 var Button = require('./ui/button.js.jsx')
+var Callout = require('./callout.js.jsx')
 var PaginationLinks = require('./pagination_links.js.jsx')
 var Spinner = require('./spinner.js.jsx')
+var UserStore = require('../stores/user_store.js')
 
 var BountyIndex = React.createClass({
   propTypes: {
@@ -19,16 +21,22 @@ var BountyIndex = React.createClass({
   getInitialState: function() {
     return {
       value: 'is:open ',
-      sort: 'priority'
+      sort: 'priority',
+      user: null
     }
   },
 
   componentDidMount: function() {
+    UserStore.addChangeListener(this.getStateFromStore)
+
+    this.getStateFromStore();
+
     window.addEventListener('scroll', this.onScroll);
   },
 
   componentWillUnmount: function() {
     window.removeEventListener('scroll', this.onScroll);
+    UserStore.removeChangeListener(this.getStateFromStore)
   },
 
   onScroll: function() {
@@ -123,57 +131,79 @@ var BountyIndex = React.createClass({
       return null;
     }
 
-    return (
-      <div className="row">
-        <div className="col-xs-12 col-sm-4 r768_float-right">
-          <span className="col-sm-11 col-sm-push-1 p0">
-            <div className="bg-white rounded shadow pt3 pr3 pb4 pl3 mb2" style={{paddingLeft: '1.75rem'}}>
-              <div className="block h5 mt0 mb1 bold">
-                Getting Started with Bounties
-              </div>
-              <div className="h6 m0 gray-1">
-                A bounty is the community asking for help on {product.name}.
-                Find one that you would like to do and jump right in.
-                <br/><br/>
-                Ping <a href={product.people_url}>@core</a> in our chat room if you have any questions.
-              </div>
+    var callout = null
 
-              <div className="center mt2 border-top">
-                <div className="mt2">
-                  <Button type="default" action={function() { window.open('chat', '_blank'); }}>
-                    Jump into chat
-                  </Button>
+    if (this.state.user && !this.state.user.coin_callout_viewed_at) {
+      callout = (
+        <div className="row">
+          <div className="col-xs-12">
+            <Callout>
+              <div className="overflow-hidden" style={{ padding: '1.5rem 2rem', height: '84px' }}>
+                <strong>Coins determine your ownership of a product.</strong> You'll
+                notice each bounty below is assigned a coin value.  Complete
+                the bounty and you'll be awarded those coins which represent
+                your ownership. <a href="/guides#coins">Learn more</a>
+              </div>
+            </Callout>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div>
+        {callout}
+        <div className="row">
+          <div className="col-xs-12 col-sm-4 r768_float-right">
+            <span className="col-sm-11 col-sm-push-1 p0">
+              <div className="bg-white rounded shadow pt3 pr3 pb4 pl3 mb2" style={{paddingLeft: '1.75rem'}}>
+                <div className="block h5 mt0 mb1 bold">
+                  Getting Started with Bounties
+                </div>
+                <div className="h6 m0 gray-1">
+                  A bounty is the community asking for help on {product.name}.
+                  Find one that you would like to do and jump right in.
+                  <br/><br/>
+                  Ping <a href={product.people_url}>@core</a> in our chat room if you have any questions.
+                </div>
+
+                <div className="center mt2 border-top">
+                  <div className="mt2">
+                    <Button type="default" action={function() { window.open('chat', '_blank'); }}>
+                      Jump into chat
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-xs-6 col-sm-12">
-              <div className="pb1"> {/*Tags*/}
-                <Accordion title="Tags">
-                  <ul className="list-reset mxn2">
-                    {this.renderTags()}
-                  </ul>
-                </Accordion>
+              <div className="col-xs-6 col-sm-12">
+                <div className="pb1"> {/*Tags*/}
+                  <Accordion title="Tags">
+                    <ul className="list-reset mxn2">
+                      {this.renderTags()}
+                    </ul>
+                  </Accordion>
+                </div>
               </div>
-            </div>
-            <div className="col-xs-6 col-sm-12">
-              <div className="mb1"> {/*Assets*/}
-                <Accordion title="Assets" >
-                  {this.renderAssets()}
-                </Accordion>
+              <div className="col-xs-6 col-sm-12">
+                <div className="mb1"> {/*Assets*/}
+                  <Accordion title="Assets" >
+                    {this.renderAssets()}
+                  </Accordion>
+                </div>
               </div>
-            </div>
-          </span>
-        </div>
-        <div className="col-xs-12 col-sm-8 r768_pr0">
-          <BountyFilter {...bountyFilterProps}
-              value={this.state.value}
-              onValueChange={this.handleValueChange}
-              sort={this.state.sort}
-              onSortChange={this.handleSortChange} />
-          <BountyList product={this.props.product}
-              valuation={this.props.valuation}
-              onPageChange={this.handlePageChange}
-              draggable={this.draggable()} />
+            </span>
+          </div>
+          <div className="col-xs-12 col-sm-8 r768_pr0">
+            <BountyFilter {...bountyFilterProps}
+                value={this.state.value}
+                onValueChange={this.handleValueChange}
+                sort={this.state.sort}
+                onSortChange={this.handleSortChange} />
+            <BountyList product={this.props.product}
+                valuation={this.props.valuation}
+                onPageChange={this.handlePageChange}
+                draggable={this.draggable()} />
+          </div>
         </div>
       </div>
     );
@@ -215,6 +245,12 @@ var BountyIndex = React.createClass({
 
     var params = this.params(this.state.value, this.state.sort)
     return params.sort == 'priority' && params.state == 'open'
+  },
+
+  getStateFromStore: function() {
+    this.setState({
+      user: UserStore.getUser()
+    });
   }
 });
 

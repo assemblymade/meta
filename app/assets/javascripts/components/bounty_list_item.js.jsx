@@ -17,6 +17,15 @@ var BountyListItem = React.createClass({
    */
   mixins: [ListItemMixin],
 
+  componentDidMount: function() {
+    if (this.refs.tooltip) {
+      $(this.refs.tooltip.getDOMNode()).tooltip({
+        container: 'body',
+        placement: 'top'
+      });
+    }
+  },
+
   componentDidUpdate: function(props, state) {
     if (this.state.position && !state.position) {
       document.addEventListener('mousemove', this.handleMouseMove)
@@ -112,7 +121,7 @@ var BountyListItem = React.createClass({
                 {this.renderTitle()}
               </div>
               <div className="clearfix h6 mt0 mb0 gray-3 mxn1">
-                <div className="left px1">
+                <div className="left px1" ref="tooltip" data-toggle="tooltip" title={"Coins represent the ownership awarded for this bounty"} data-placement="top">
                   <AppCoins n={this.props.bounty.earnable_coins_cache} />
                 </div>
                 <div className="left px1">
