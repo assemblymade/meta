@@ -11,6 +11,7 @@ const ProductSubsections = require('./product_subsections.js.jsx');
 const Routes = require('../../routes');
 const Screenshots = require('./screenshots.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
+const User = require('../user.js.jsx')
 const UserStore = require('../../stores/user_store');
 
 let ProductShow = React.createClass({
@@ -97,10 +98,14 @@ let ProductShow = React.createClass({
 
                   <div className="mb4">
                     <h6 className="gray-2 caps mt0 mb2">Core team ({product.core_team.length})</h6>
-                    <div className="clearfix mxn1 py2">
+                    <div className="clearfix mxn1">
                       {product.core_team.map(function(user) {
-                        return <a className="left block p1" key={user.id}>
-                          <Avatar user={user} size={36}/>
+                        return <div className="left p1" key={user.id} href={user.url}>
+                          <User user={user} />
+                        </div>
+                      })}
+                    </div>
+                  </div>
                         </a>
                       })}
                     </div>
