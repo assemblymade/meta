@@ -49,7 +49,18 @@ var Update = React.createClass({
   },
 
   render: function() {
-    var update = this.props.update;
+    const update = this.props.update
+    var footer
+
+    if (UserStore.getUser()) {
+      footer = <div className="card-footer px3 py2 clearfix">
+        <ul className="list-inline mt0 mb0 py1 right">
+          {this.renderArchiveButton()}
+          {this.renderSubscribeButton()}
+          {this.renderEditButton()}
+        </ul>
+      </div>
+    }
 
     return (
       <div>
@@ -60,14 +71,7 @@ var Update = React.createClass({
               body={update.markdown_body}
               labels={update.marks} />
         </div>
-
-        <div className="card-footer px3 py2 clearfix">
-          <ul className="list-inline mt0 mb0 py1 right">
-            {this.renderArchiveButton()}
-            {this.renderSubscribeButton()}
-            {this.renderEditButton()}
-          </ul>
-        </div>
+        {footer}
       </div>
     )
   },
