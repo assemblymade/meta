@@ -238,6 +238,8 @@ ASM::Application.routes.draw do
         resources :offers, only: [:create, :show]
       end
 
+      resources :updates, only: [:index]
+
       resources :news_feed_items, only: [:show, :create], path: 'updates', as: :updates
       resources :projects, only: [:create]
       resources :subscribers, only: [:create, :destroy]

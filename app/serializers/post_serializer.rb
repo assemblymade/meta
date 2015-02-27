@@ -2,6 +2,7 @@ class PostSerializer < ApplicationSerializer
   include MarkdownHelper
   include TruncateHtmlHelper
 
+  attributes :body, :summary
   attributes :markdown_body, :url, :summary, :title, :news_feed_item_id, :created_at
   attributes :comments_count, :hearts_count, :short_body
 
@@ -19,7 +20,18 @@ class PostSerializer < ApplicationSerializer
   end
 
   def markdown_body
-    product_markdown(product, object.body)
+    product_markdown(object.product, object.body)
+  end
+
+  def body
+    md = object.body
+    html = product_markdown(object.product, md)
+    text = Nokogiri::HTML(html).text
+    {
+      md:   object.body,
+      html: html,
+      text: text
+    }
   end
 
   def news_feed_item
@@ -31,15 +43,15 @@ class PostSerializer < ApplicationSerializer
   end
 
   def short_body
-    truncate_html(product_markdown(product, object.body), length: 200)
+    truncate_html(product_markdown(object.product, object.body), length: 200)
   end
 
   def url
-    product_post_path(product, object)
+    product_post_path(object.product, object)
   end
 
   def full_url
-    product_post_url(product, object)
+    product_post_url(object.product, object)
   end
 
   cached
