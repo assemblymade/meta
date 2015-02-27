@@ -4,7 +4,7 @@
   };p[i].q=p[i].q||[];n=l.createElement(o);g=l.getElementsByTagName(o)[0];n.async=1;
   n.src=w;g.parentNode.insertBefore(n,g)}}(window,document,"script","https://d1uxm17u44dmmr.cloudfront.net/1.0.0/asml.js","asml"));
 
-  asml('create', '<%= @product.asmlytics_public_key %>');
+  asml('create', '<%= @product.asmlytics_key %>');
   <%% if signed_in? %>
     asml('track', '<%%= current_user.email %>');
   <%% else %>

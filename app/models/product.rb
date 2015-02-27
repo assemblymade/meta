@@ -48,7 +48,7 @@ class Product < ActiveRecord::Base
   has_many :invites, as: :via
   has_many :markings, as: :markable
   has_many :marks, through: :markings
-  has_many :metrics
+  has_many :daily_metrics
   has_many :milestones
   has_many :news_feed_items
   has_many :news_feed_item_posts
@@ -131,6 +131,7 @@ class Product < ActiveRecord::Base
                     length: { maximum: 255 }
 
   before_create :generate_authentication_token
+  before_validation :generate_asmlytics_key, on: :create
 
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }, on: :create
@@ -188,10 +189,6 @@ class Product < ActiveRecord::Base
 
   def self.active_product_count
     joins(:activities).where('activities.created_at > ?', 30.days.ago).group('products.id').having('count(*) > 5').count.count
-  end
-
-  def asmlytics_public_key
-    Digest::SHA1.hexdigest(ENV['ASMLYTICS_SECRET'].to_s + self.id)
   end
 
   def news_feed_items_with_mark(mark_name)
@@ -538,6 +535,10 @@ class Product < ActiveRecord::Base
       self.authentication_token = Devise.friendly_token
       break authentication_token unless Product.find_by(authentication_token: authentication_token)
     end
+  end
+
+  def generate_asmlytics_key
+    self.asmlytics_key = Digest::SHA1.hexdigest(ENV['ASMLYTICS_SECRET'].to_s + SecureRandom.uuid)
   end
 
   def product

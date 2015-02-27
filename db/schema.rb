@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217234413) do
+ActiveRecord::Schema.define(version: 20150227000741) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,19 @@ ActiveRecord::Schema.define(version: 20150217234413) do
     t.integer  "count"
     t.datetime "created_at"
   end
+
+  create_table "daily_metrics", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.uuid     "product_id",        null: false
+    t.date     "date",              null: false
+    t.integer  "uniques",           null: false
+    t.integer  "visits",            null: false
+    t.integer  "registered_visits", null: false
+    t.integer  "total_accounts",    null: false
+  end
+
+  add_index "daily_metrics", ["product_id"], name: "index_daily_metrics_on_product_id", using: :btree
 
   create_table "deeds", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "user_id"
@@ -690,8 +703,10 @@ ActiveRecord::Schema.define(version: 20150217234413) do
     t.integer  "wips_count",                                    default: 0,    null: false
     t.datetime "deleted_at"
     t.json     "subsections"
+    t.text     "asmlytics_key"
   end
 
+  add_index "products", ["asmlytics_key"], name: "index_products_on_asmlytics_key", unique: true, using: :btree
   add_index "products", ["authentication_token"], name: "index_products_on_authentication_token", unique: true, using: :btree
   add_index "products", ["deleted_at"], name: "index_products_on_deleted_at", using: :btree
   add_index "products", ["profitable_at"], name: "index_products_on_profitable_at", using: :btree
@@ -1179,6 +1194,7 @@ ActiveRecord::Schema.define(version: 20150217234413) do
     t.datetime "created_at"
   end
 
+  add_foreign_key "daily_metrics", "products"
   add_foreign_key "markings", "marks"
   add_foreign_key "news_feed_item_comments", "news_feed_items"
   add_foreign_key "screenshots", "assets"

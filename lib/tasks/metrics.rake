@@ -8,7 +8,7 @@ namespace :metrics do
         original = Activity.where.not(type: Activities::Follow).where("created_at < ?", number_of_weeks.weeks.ago).count + Heart.where("created_at < ?", number_of_weeks.weeks.ago).count
         result = (((current.to_f / original.to_f) ** (1 / number_of_weeks.to_f)) - 1).to_f
         puts "#{number_of_weeks}: #{(result.to_f * 100).round(2)} w/w growth"
-      end      
+      end
     end
 
     task :monthly_influence => :environment do
@@ -19,9 +19,9 @@ namespace :metrics do
         original = Activity.where.not(type: Activities::Follow).where("created_at < ?", number_of_months.months.ago - 1.day).count + Heart.where("created_at < ?", number_of_months.months.ago - 1.day).count
         result = (((current.to_f / original.to_f) ** (1 / number_of_months.to_f)) - 1).to_f
         puts "#{number_of_months}: #{(result.to_f * 100).round(2)} m/m growth"
-      end      
+      end
     end
-    
+
     task :weekly_signups => :environment  do
       (1..52).each do |number_of_weeks|
         current  = User.where("created_at < ?", 1.day.ago).count
@@ -29,9 +29,9 @@ namespace :metrics do
         result = (((current.to_f / original.to_f) ** (1 / number_of_weeks.to_f)) - 1).to_f
         puts "#{number_of_weeks}: #{(result.to_f * 100).round(2)} w/w user growth"
       end
-    end    
+    end
   end
-  
+
   namespace :asm do
     def active_user(type, user, at)
       puts "#{type} #{at.iso8601} – #{user.username}"

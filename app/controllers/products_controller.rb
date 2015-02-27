@@ -91,24 +91,6 @@ class ProductsController < ProductController
     set_product
   end
 
-  # The old show page
-  def old
-    return redirect_to(about_url) if @product.meta?
-    @user_metrics = UserMetricsSummary.new(@product, Date.today - 1.day)
-
-    page_views = TimedSet.new($redis, "#{@product.id}:show")
-
-    if page_views.add(request.remote_ip)
-      Product.increment_counter(:view_count, @product.id)
-      page_views.drop_older_than(5.minutes)
-    end
-
-    respond_to do |format|
-      format.html { render 'show' }
-      format.json { render json: @product }
-    end
-  end
-
   def edit
     authorize! :update, @product
     @upgrade_stylesheet = true
@@ -154,11 +136,6 @@ class ProductsController < ProductController
   def unfollow
     @product.unwatch!(current_user)
     render nothing: true, :status => :ok
-  end
-
-  def metrics
-    raise 'Mixpanel not configured in ENV' if ENV['MIXPANEL_API_KEY'].blank? || ENV['MIXPANEL_API_SECRET'].blank? || ENV['MIXPANEL_CONVERSION_FUNNEL_ID'].blank?
-    @user_metrics = UserMetricsExpanded.new(@product)
   end
 
   def launch
