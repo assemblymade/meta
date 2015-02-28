@@ -1,7 +1,7 @@
 class TasksController < WipsController
   wrap_parameters format: [:json]
 
-  after_filter -> { current_user.update(coin_callout_viewed_at: Time.now) },
+  after_filter -> { current_user.update(coin_callout_viewed_at: Time.now) if current_user },
     only: :index
 
   def index
