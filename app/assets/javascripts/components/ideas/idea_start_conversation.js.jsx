@@ -157,7 +157,7 @@ let IdeaStartConversation = React.createClass({
       return (
         <div className="inline-block mt0 m1">
           <span className="mr2" style={{ color: '#eb0000' }}><Icon icon="warning" /></span>
-          <span className="gray-2">Oops! That doesn't look like a question.</span>
+          <span className="gray-2">Opps, that doesn't look like a question. It needs to end with a question mark.</span>
         </div>
       );
     }
