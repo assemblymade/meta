@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302003313) do
+ActiveRecord::Schema.define(version: 20150303025006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -705,6 +705,7 @@ ActiveRecord::Schema.define(version: 20150302003313) do
     t.datetime "deleted_at"
     t.json     "subsections"
     t.text     "asmlytics_key"
+    t.integer  "asmlytics_untracked_accounts",                  default: 0,    null: false
   end
 
   add_index "products", ["asmlytics_key"], name: "index_products_on_asmlytics_key", unique: true, using: :btree
