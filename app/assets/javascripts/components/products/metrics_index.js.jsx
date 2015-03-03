@@ -1,3 +1,4 @@
+const Chart = require('../ui/chart.js.jsx');
 const MetricsActions = require('../../actions/product_metrics_actions.js');
 const MetricsStore = require('../../stores/product_metrics_store.js');
 const ProductHeader = require('./product_header.js.jsx');
@@ -22,12 +23,85 @@ var MetricsIndex = React.createClass({
 
           <Tile>
             <div className="p4" style={{minHeight: 400}}>
-              {this.state.metrics ? <MetricsChart data={this.state.metrics} /> : <Spinner />}
+              {this.state.metrics ? this.renderCharts() : <Spinner />}
             </div>
           </Tile>
         </div>
       </div>
     </div>
+  },
+
+  renderCharts() {
+    return <div>
+      <Chart id="visitors" options={this.visitorChartOptions()} />
+      <Chart id="accounts" options={this.accountChartOptions()} />
+    </div>
+  },
+
+  visitorChartOptions() {
+    return {
+      bindto: '#visitors',
+      axis: {
+        x: { type: 'timeseries' }
+      },
+      color: {
+        pattern: ['#0ECEFF', '#b8f1ff']
+      },
+      data: {
+        json: this.state.metrics,
+        keys: {
+          x: 'date',
+          value: ['uniques', 'visits'],
+        },
+        names: {
+          uniques: 'Unique Visitors',
+          visits: 'Total Visits'
+        },
+        regions: {
+          uniques: [this.incompleteRegion()],
+          visits: [this.incompleteRegion()],
+        },
+        types: {
+          uniques: 'area',
+          visits: 'area'
+        }
+      }
+    }
+  },
+
+  accountChartOptions() {
+    return {
+      bindto: '#accounts',
+      axis: {
+        x: { type: 'timeseries' }
+      },
+      color: {
+        pattern: ['#81B325']
+      },
+      data: {
+        json: this.state.metrics,
+        keys: {
+          x: 'date',
+          value: ['total_accounts'],
+        },
+        names: {
+          total_accounts: 'Total Accounts'
+        },
+        regions: {
+          total_accounts: [this.incompleteRegion()],
+        },
+        types: {
+          total_accounts: 'area'
+        }
+      }
+    }
+  },
+
+  incompleteRegion() {
+    return {
+      start: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+      style: 'dashed'
+    }
   },
 
   componentDidMount() {
@@ -42,53 +116,6 @@ var MetricsIndex = React.createClass({
   _onChange() {
     this.setState({metrics: MetricsStore.getAll()})
   }
-})
-
-var MetricsChart = React.createClass({
-  render() {
-    return <div id="metrics" />
-  },
-
-  componentDidMount() {
-    this.renderChart()
-  },
-
-  renderChart() {
-    var incomplete = {
-      start: moment().subtract(1, 'days').format('YYYY-MM-DD'),
-      style: 'dashed'
-    }
-
-    c3.generate({
-      bindto: '#metrics',
-      axis: {
-        x: { type: 'timeseries' }
-      },
-      color: {
-        pattern: ['#0ECEFF', '#b8f1ff']
-      },
-      data: {
-        json: this.props.data,
-        keys: {
-          x: 'date',
-          value: ['uniques', 'visits'],
-        },
-        names: {
-          uniques: 'Unique Visitors',
-          visits: 'Total Visits'
-        },
-        regions: {
-          uniques: [incomplete],
-          visits: [incomplete],
-        },
-        types: {
-          uniques: 'area',
-          visits: 'area'
-        }
-      }
-    });
-  }
-
 })
 
 module.exports = MetricsIndex
