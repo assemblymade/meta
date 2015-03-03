@@ -73,16 +73,31 @@ let NewIdeaForm = React.createClass({
   onNextClick(e) {
     e.preventDefault();
 
-    let idea = {
-      name: this.state.ideaName,
-      body: this.state.ideaBody,
-      founder_preference: this.state.isFounder
-    };
+    if (_.isEmpty(this.props.initialIdea)) {
+      let idea = {
+        name: this.state.ideaName,
+        body: this.state.ideaBody,
+        founder_preference: this.state.isFounder
+      };
 
-    IdeaActionCreators.submitIdeaClicked(idea);
+      IdeaActionCreators.submitIdeaClicked(idea);
+    } else {
+      let slug = this.props.initialIdea.slug;
+
+      let idea = {
+        body: this.state.ideaBody,
+        id: slug,
+        name: this.state.ideaName,
+        founder_preference: this.state.isFounder
+      };
+
+      IdeaActionCreators.updateIdea(idea);
+    }
   },
 
   render() {
+    let idea = this.props.initialIdea;
+
     return (
       <form>
         <div className="form-group mb3">
@@ -102,9 +117,11 @@ let NewIdeaForm = React.createClass({
           </p>
 
           <NewComment canContainWork={false}
+              commentId={idea.news_feed_item && idea.news_feed_item.id}
               dropzoneInnerText={false}
               hideAvatar={true}
               hideButtons={true}
+              initialText={this.state.ideaBody}
               placeholder={''}
               thread={IDEA_BODY_ID}
               url="/ideas" />
@@ -114,7 +131,7 @@ let NewIdeaForm = React.createClass({
         <div className="clearfix mt3">
           <div className="right ml4">
             <Button type="primary" action={this.isValidIdea() && this.onNextClick}>
-              Next
+              {_.isEmpty(idea) ? 'Next' : 'Update'}
             </Button>
           </div>
 

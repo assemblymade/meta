@@ -13,7 +13,6 @@ let ProductBounties = React.createClass({
   mixins: [React.addons.PureRenderMixin],
 
   propTypes: {
-    navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object

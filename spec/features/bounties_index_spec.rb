@@ -12,7 +12,6 @@ describe 'showing all bounties' do
     Task.make!(title: 'Add some tests', product: product).tap{|t| NewsFeedItem.create_with_target(t) }
 
     visit product_wips_path(product)
-
     expect(page).to have_text('Design a new logo')
     expect(page).to have_text('Add some tests')
   end

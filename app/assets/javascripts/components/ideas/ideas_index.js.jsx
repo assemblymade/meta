@@ -8,7 +8,6 @@ const IdeasStore = require('../../stores/ideas_store');
 const IdeaTile = require('./idea_tile.js.jsx');
 const Jumbotron = require('../ui/jumbotron.js.jsx');
 const Nav = require('../ui/nav.js.jsx');
-const NewIdeaModal = require('./new_idea_modal.js.jsx');
 const page = require('page');
 const Pagination = require('../pagination/pagination.js.jsx');
 const UserStore = require('../../stores/user_store');

@@ -16,7 +16,6 @@ const UserStore = require('../../stores/user_store');
 
 let IdeaStartConversation = React.createClass({
   propTypes: {
-    navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object

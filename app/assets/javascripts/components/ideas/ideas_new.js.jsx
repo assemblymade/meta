@@ -3,12 +3,11 @@
 const Drawer = require('../ui/drawer.js.jsx');
 const IdeaContainer = require('./idea_container.js.jsx');
 const Tile = require('../ui/tile.js.jsx')
-const NewIdeaForm = require('./new_idea_form.js.jsx');
+const IdeaForm = require('./idea_form.js.jsx');
 const Icon = require('../ui/icon.js.jsx')
 
 let IdeasNew = React.createClass({
   propTypes: {
-    navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object
@@ -52,7 +51,7 @@ let IdeasNew = React.createClass({
                   <Icon icon="lightbulb-o" />
                 </div>
 
-                <NewIdeaForm />
+                <IdeaForm />
               </div>
             </Tile>
           </div>
