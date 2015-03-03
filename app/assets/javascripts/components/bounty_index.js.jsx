@@ -138,11 +138,25 @@ var BountyIndex = React.createClass({
         <div className="row">
           <div className="col-xs-12">
             <Callout>
-              <div className="overflow-hidden" style={{ padding: '1.5rem 2rem', height: '84px' }}>
-                <strong>Coins determine your ownership of a product.</strong> You'll
-                notice each bounty below is assigned a coin value.  Complete
-                the bounty and you'll be awarded those coins which represent
-                your ownership. <a href="/guides/platform#earning-coins">Learn more</a>
+              <div className="sm-show">
+                <div style={{ padding: '1.5rem 2rem' }}>
+                  <strong>Coins determine your ownership of a product.</strong>
+                  {' '}
+                  <span>
+                    You'll notice each bounty below is assigned a coin value.
+                    Complete the bounty and you'll be awarded those coins which
+                    represent your ownership.
+                  </span>
+                  {' '}
+                  <a href="/guides/platform#earning-coins">Learn more</a>
+                </div>
+              </div>
+              <div className="sm-hide">
+                <div style={{ padding: '1.5rem 2rem' }}>
+                  <strong>Coins determine your ownership.</strong>
+                  {' '}
+                  <a href="/guides/platform#earning-coins">Learn more</a>
+                </div>
               </div>
             </Callout>
           </div>
