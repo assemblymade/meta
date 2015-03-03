@@ -54,6 +54,11 @@ var MetricsChart = React.createClass({
   },
 
   renderChart() {
+    var incomplete = {
+      start: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+      style: 'dashed'
+    }
+
     c3.generate({
       bindto: '#metrics',
       axis: {
@@ -73,8 +78,8 @@ var MetricsChart = React.createClass({
           visits: 'Total Visits'
         },
         regions: {
-          uniques: [{start: moment().format('YYYY-MM-DD'), style: 'dashed'}],
-          visits: [{start: moment().format('YYYY-MM-DD'), style: 'dashed'}],
+          uniques: [incomplete],
+          visits: [incomplete],
         },
         types: {
           uniques: 'area',
