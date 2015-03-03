@@ -87,7 +87,7 @@ let IdeaStartConversation = React.createClass({
       <IdeaContainer showRelatedIdeas={false}>
         <div className="clearfix mt2 mb1">
           <div className="left ml4">
-            <h5 className="mb0 mt0">Asking a first question gets things going.</h5>
+            <h5 className="mb0 mt0">Get the conversation going by asking the community a question.</h5>
           </div>
 
           <div className="right px4">
@@ -110,11 +110,11 @@ let IdeaStartConversation = React.createClass({
           <div className="form-group px4 mb0">
             <div className="py3 h6 gray-2">
               <p>
-                Examples:
+                Example questions you can ask the community:
               </p>
               <ol>
-                <li>What's the best name for the product?</li>
-                <li>What competing products are out there?</li>
+                <li>What's a good name for this?</li>
+                <li>Does anyone know if there are competing products?</li>
                 <li>What would you change about the idea?</li>
               </ol>
             </div>

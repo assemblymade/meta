@@ -88,7 +88,7 @@ let NewIdeaForm = React.createClass({
         <div className="form-group mb3">
           <label className="control-label">What's the quick pitch?</label>
 
-          <p className="mb2 h6 gray-2">If you had 30 seconds to describe your product to a friend, what would you say? Use simple, direct words.</p>
+          <p className="mb2 h6 gray-2">If you had 5 words to describe your product to a friend, what would you say? Small words are best and small words when old are best of all.</p>
           <CharacterLimitedInput limit={60}
               value={this.state.ideaName}
               onChange={this.handleIdeaNameChange}
@@ -96,9 +96,9 @@ let NewIdeaForm = React.createClass({
         </div>
 
         <div className="form-group mb3">
-          <label className="control-label">Fill in the details</label>
+          <label className="control-label">How would it work?</label>
           <p className="mb2 h6 gray-2">
-            How did you come up with the idea? What makes it great? Describe your vision, the problem it's solving and your advantage over the competition.
+            How did you come up with the idea? What does it do? What makes it great? Describe your vision and the problem it's solving.
           </p>
 
           <NewComment canContainWork={false}
@@ -119,7 +119,7 @@ let NewIdeaForm = React.createClass({
           </div>
 
           <p className="overflow-hidden h6 gray-2">
-            You're not commiting to building this idea, however you will be in control if you do decide to build it. You can always remove your idea from Assembly. <a href="mailto:austin.smith@assembly.com" target="_blank">More questions?</a>
+            When you share this on Assembly you're not committed to building this idea, however you will be in control if you do decide to build it here. You can always remove your idea from Assembly. <a href="mailto:austin.smith@assembly.com" target="_blank">More questions?</a>
           </p>
         </div>
 
