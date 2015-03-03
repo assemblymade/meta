@@ -57,10 +57,11 @@ var ChatInput = React.createClass({
   handleSomeoneTyping: function(msg) {
     var usernames = Set(this.state.typingUsernames)
     if (msg.add) {
-      usernames.add(msg.add)
+      usernames = usernames.add(msg.add)
     } else {
-      usernames.delete(msg.remove)
+      usernames = usernames.delete(msg.remove)
     }
+
     this.setState({typingUsernames: usernames.toJS()})
   },
 
