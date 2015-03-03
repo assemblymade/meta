@@ -110,7 +110,7 @@ let IdeaStartConversation = React.createClass({
           <div className="form-group px4 mb0">
             <div className="py3 h6 gray-2">
               <p>
-                Example questions you can ask the community:
+                Here are some example questions you could ask the community:
               </p>
               <ol>
                 <li>What's a good name for this?</li>
@@ -143,7 +143,7 @@ let IdeaStartConversation = React.createClass({
                     this.state.question.length > 0 &&
                     this.onPostQuestionClick
               }>
-                <span className="title">Get started</span>
+                <span className="title">Done! Let's get started</span>
               </Button>
             </div>
           </div>
