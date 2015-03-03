@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227165449) do
+ActiveRecord::Schema.define(version: 20150302003313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(version: 20150227165449) do
     t.integer  "total_accounts",    null: false
   end
 
+  add_index "daily_metrics", ["product_id", "date"], name: "index_daily_metrics_on_product_id_and_date", unique: true, using: :btree
   add_index "daily_metrics", ["product_id"], name: "index_daily_metrics_on_product_id", using: :btree
 
   create_table "deeds", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -1102,6 +1103,20 @@ ActiveRecord::Schema.define(version: 20150227165449) do
   add_index "watchings", ["user_id", "watchable_id"], name: "index_watchings_on_user_id_and_watchable_id", unique: true, using: :btree
   add_index "watchings", ["watchable_id", "watchable_type"], name: "index_watchings_on_watchable_id_and_watchable_type", using: :btree
 
+  create_table "weekly_metrics", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.uuid     "product_id",        null: false
+    t.date     "date",              null: false
+    t.integer  "uniques",           null: false
+    t.integer  "visits",            null: false
+    t.integer  "registered_visits", null: false
+    t.integer  "total_accounts",    null: false
+  end
+
+  add_index "weekly_metrics", ["product_id", "date"], name: "index_weekly_metrics_on_product_id_and_date", unique: true, using: :btree
+  add_index "weekly_metrics", ["product_id"], name: "index_weekly_metrics_on_product_id", using: :btree
+
   create_table "whiteboard_assets", id: :uuid, force: :cascade do |t|
     t.uuid     "event_id",               null: false
     t.string   "image_url",  limit: 255, null: false
@@ -1201,4 +1216,5 @@ ActiveRecord::Schema.define(version: 20150227165449) do
   add_foreign_key "screenshots", "assets"
   add_foreign_key "showcase_entries", "products"
   add_foreign_key "showcase_entries", "showcases"
+  add_foreign_key "weekly_metrics", "products"
 end

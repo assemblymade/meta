@@ -70,6 +70,7 @@ class Product < ActiveRecord::Base
   has_many :votes, as: :voteable
   has_many :watchers, through: :watchings, source: :user
   has_many :watchings, as: :watchable
+  has_many :weekly_metrics
   has_many :wip_activities, through: :wips, source: :activities
   has_many :wips
   has_many :work

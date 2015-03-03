@@ -3,8 +3,30 @@ class UpdateProductMetrics
   sidekiq_options queue: 'analytics'
 
   def perform
-    visits.group_by{|v| v['date']}.each do |date, visits|
-      totals = total_accounts(date)
+    grouped_metrics('day') do |product, date, totals, v|
+      product.daily_metrics.find_or_initialize_by(date: date) do |m|
+        m.uniques = v['uniques'].to_i
+        m.visits = v['visits'].to_i
+        m.registered_visits = v['registered_visits'].to_i
+        m.total_accounts = totals['registered_users'].to_i
+        m.save!
+      end
+    end
+
+    grouped_metrics('week') do |product, date, totals, v|
+      product.weekly_metrics.find_or_initialize_by(date: date) do |m|
+        m.uniques = v['uniques'].to_i
+        m.visits = v['visits'].to_i
+        m.registered_visits = v['registered_visits'].to_i
+        m.total_accounts = totals['registered_users'].to_i
+        m.save!
+      end
+    end
+  end
+
+  def grouped_metrics(grouping, &blk)
+    visits(grouping).group_by{|v| v['date']}.each do |date, visits|
+      totals = total_accounts(grouping, date)
 
       visits.each do |v|
         product = Product.find_by(asmlytics_key: v['app_id'])
@@ -20,23 +42,16 @@ class UpdateProductMetrics
         end
 
         Rails.logger.info "#{date} #{t} #{v}"
-
-        product.daily_metrics.find_or_initialize_by(date: date) do |m|
-          m.uniques = v['uniques'].to_i
-          m.visits = v['visits'].to_i
-          m.registered_visits = v['registered_visits'].to_i
-          m.total_accounts = t['registered_users'].to_i
-          m.save!
-        end
+        blk.call(product, date, t, v)
       end
     end
   end
 
-  def visits
+  def visits(grouping)
     pg.exec(%Q{
       SELECT
           app_id,
-          DATE_TRUNC('day', collector_tstamp) as "date",
+          DATE_TRUNC('#{grouping}', collector_tstamp) as "date",
           COUNT(distinct(domain_userid)) as "uniques",
           COUNT(distinct(domain_userid || '-' || domain_sessionidx)) as "visits",
           COUNT(distinct(user_id)) as "registered_visits"
@@ -47,13 +62,13 @@ class UpdateProductMetrics
       }).to_a
   end
 
-  def total_accounts(at_date)
+  def total_accounts(grouping, at_date)
     pg.exec(%Q{
       SELECT
         app_id,
         COUNT(distinct(user_id)) as "registered_users"
       FROM "atomic".events
-      WHERE DATE_TRUNC('day', collector_tstamp) < '#{at_date}'
+      WHERE DATE_TRUNC('#{grouping}', collector_tstamp) <= '#{at_date}'
       GROUP BY 1
       ORDER BY 1;
     })

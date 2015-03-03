@@ -17,6 +17,7 @@ module ApplicationHelper
   def client_side_route?
     bounties_index_route? ||
     bounty_show_route? ||
+    metrics_routes? ||
     new_post_route? ||
     posts_index_route? ||
     post_show_route? ||
@@ -32,6 +33,10 @@ module ApplicationHelper
   def bounty_show_route?
     controller_name == 'tasks' &&
       action_name == 'show'
+  end
+
+  def metrics_routes?
+    controller_name == 'metrics'
   end
 
   def new_post_route?

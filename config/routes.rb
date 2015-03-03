@@ -370,7 +370,12 @@ ASM::Application.routes.draw do
 
     resources :contracts, only: [:index, :create, :update, :destroy]
     resources :domains, only: [:create]
-    resources :metrics, only: [:index]
+    resources :metrics, only: [:index] do
+      get :snippet, on: :collection
+      get :daily, on: :collection
+      get :weekly, on: :collection
+    end
+
     resources :governance, only: [:index, :create, :edit, :show]
     resources :proposals, only: [:index, :create, :edit, :update, :destroy, :show]
     resources :resources, only: [:index]

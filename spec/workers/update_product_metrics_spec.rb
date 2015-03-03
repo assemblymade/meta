@@ -8,7 +8,7 @@ describe UpdateProductMetrics do
     it 'records metrics' do
       u = UpdateProductMetrics.new
 
-      expect(u).to receive(:visits) do
+      allow(u).to receive(:visits) do
         [{
           "app_id" => product.asmlytics_key,
           "date"=>"2015-02-26 00:00:00",
@@ -18,7 +18,7 @@ describe UpdateProductMetrics do
         }]
       end
 
-      expect(u).to receive(:total_accounts) do
+      allow(u).to receive(:total_accounts) do
         [{
           "app_id" => product.asmlytics_key,
           "date" => Date.parse("2015-02-26"),

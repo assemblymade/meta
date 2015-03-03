@@ -83,9 +83,7 @@ function _blacklist() {
 
 function _callAndDispatch(component, context, callback) {
   $.getJSON(context.canonicalPath, { cache: false }).
-  always(() => {
-    NProgress.done();
-  }).
+  always(NProgress.done).
   fail((jqXhr, _, errorString) => {
     switch (jqXhr.status) {
       case 401:
@@ -99,7 +97,7 @@ function _callAndDispatch(component, context, callback) {
     }
   }).
   done(callback).
-  done((data) => {
+  done(data => {
     TrackEngagement.track(context.canonicalPath, context);
 
     Dispatcher.dispatch({

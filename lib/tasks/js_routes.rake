@@ -48,6 +48,7 @@ end
 
 ROUTES = [
   'award_product_wip',
+  'daily_product_metrics',
   'discover',
   'discussion_comment',
   'discussion_comments',
@@ -85,7 +86,9 @@ ROUTES = [
   'product_wips',
   'product',
   'readraptor',
-  'user'
+  'snippet_product_metrics',
+  'user',
+  'weekly_product_metrics'
 ]
 
 def routes

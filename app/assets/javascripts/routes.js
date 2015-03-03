@@ -512,6 +512,57 @@ exports.product_tips_path = function(options){
   }
 }
 
+exports.snippet_product_metrics_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/metrics/snippet?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/metrics/snippet'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/metrics/snippet'
+  }
+}
+
+exports.daily_product_metrics_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/metrics/daily?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/metrics/daily'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/metrics/daily'
+  }
+}
+
+exports.weekly_product_metrics_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/metrics/weekly?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/metrics/weekly'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/metrics/weekly'
+  }
+}
+
 exports.product_metrics_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -647,3 +698,4 @@ exports.product_path = function(options){
     return '/' + params.id + ''
   }
 }
+

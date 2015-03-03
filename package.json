@@ -7,7 +7,7 @@
     "lint": "node_modules/.bin/jsxhint app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx",
     "postinstall": "npm run bundle",
     "bundle": "node_modules/.bin/browserify -t [ 6to5ify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx app/assets/javascripts/d3/*.js -o app/assets/javascripts/components.js",
-    "watch": "node_modules/.bin/watchify -t [ 6to5ify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx app/assets/javascripts/d3/*.js -o app/assets/javascripts/components.js -v"
+    "watch": "node_modules/.bin/refreshify -t [ 6to5ify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx app/assets/javascripts/d3/*.js -o app/assets/javascripts/components.js -v"
   },
   "repository": {
     "type": "git",
@@ -53,6 +53,7 @@
   "devDependencies": {
     "jest-cli": "^0.1.18",
     "react-tools": "^0.12.2",
+    "refreshify": "0.0.0",
     "watchify": "^1.0.1"
   },
   "engines": {
