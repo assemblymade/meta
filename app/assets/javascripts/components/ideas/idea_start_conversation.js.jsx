@@ -86,7 +86,7 @@ let IdeaStartConversation = React.createClass({
       <IdeaContainer showRelatedIdeas={false}>
         <div className="clearfix mt2 mb1">
           <div className="left ml4">
-            <h5 className="mb0 mt0">Get the conversation going by asking the community a question.</h5>
+            <h5 className="mb0 mt0">Shape the idea with help from the community. Start by asking a question to kick things off.</h5>
           </div>
 
           <div className="right px4">
