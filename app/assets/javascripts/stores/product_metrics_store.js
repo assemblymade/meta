@@ -22,6 +22,10 @@ class ProductMetricsStore extends Store {
   }
 
   getAll() {
+    if (metrics.size == 1) {
+      // 1 length metrics breaks the chart :(
+      return Immutable.List()
+    }
     return metrics
   }
 }
