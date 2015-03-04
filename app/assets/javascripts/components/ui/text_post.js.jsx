@@ -1,10 +1,12 @@
-var Markdown = require('../markdown.js.jsx')
-var Label = require('./label.js.jsx')
-var AvatarWithUsername = require('./avatar_with_username.js.jsx')
-var SingleLineList = require('./single_line_list.js.jsx')
+import _ from 'underscore'
+import moment from 'moment'
+import Markdown from '../markdown.js.jsx'
+import Label from './label.js.jsx'
+import AvatarWithUsername from './avatar_with_username.js.jsx'
+import SingleLineList from './single_line_list.js.jsx'
+import User from './../user.js.jsx'
 
-module.exports = React.createClass({
-  displayName: 'TextPost',
+const TextPost = React.createClass({
 
   propTypes: {
     author: React.PropTypes.object.isRequired,
@@ -40,8 +42,10 @@ module.exports = React.createClass({
 
     return (
       <div className="visible-hover-wrapper">
-        <div className="h6 mb3">
-          <AvatarWithUsername user={this.props.author} size={18} />
+        <div className="clearfix mb3">
+          <div className="left mr1">
+            <User user={this.props.author} />
+          </div>
           {' '}
           <span className="gray-2 visible-hover">posted {moment(this.props.timestamp).fromNow()}</span>
         </div>
@@ -49,10 +53,12 @@ module.exports = React.createClass({
         <h2 className="mt0 mb2" style={{ lineHeight: '36px' }}>
           {this.props.title}
         </h2>
-        
+
         {labels}
         {body}
       </div>
     )
   }
 })
+
+export default TextPost
