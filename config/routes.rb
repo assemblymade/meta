@@ -371,7 +371,6 @@ ASM::Application.routes.draw do
     resources :contracts, only: [:index, :create, :update, :destroy]
     resources :domains, only: [:create]
     resources :metrics, only: [:index] do
-      get :snippet, on: :collection
       get :daily, on: :collection
       get :weekly, on: :collection
     end
