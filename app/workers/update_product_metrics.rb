@@ -4,23 +4,23 @@ class UpdateProductMetrics
 
   def perform
     grouped_metrics('day') do |product, date, totals, v|
-      product.daily_metrics.find_or_initialize_by(date: date) do |m|
-        m.uniques = v['uniques'].to_i
-        m.visits = v['visits'].to_i
-        m.registered_visits = v['registered_visits'].to_i
-        m.total_accounts = totals['registered_users'].to_i
-        m.save!
-      end
+      m = product.daily_metrics.find_or_initialize_by(date: date)
+      m.update!(
+        uniques: v['uniques'].to_i,
+        visits: v['visits'].to_i,
+        registered_visits: v['registered_visits'].to_i,
+        total_accounts: totals['registered_users'].to_i
+      )
     end
 
     grouped_metrics('week') do |product, date, totals, v|
-      product.weekly_metrics.find_or_initialize_by(date: date) do |m|
-        m.uniques = v['uniques'].to_i
-        m.visits = v['visits'].to_i
-        m.registered_visits = v['registered_visits'].to_i
-        m.total_accounts = totals['registered_users'].to_i
-        m.save!
-      end
+      m = product.weekly_metrics.find_or_initialize_by(date: date)
+      m.update!(
+        uniques: v['uniques'].to_i,
+        visits: v['visits'].to_i,
+        registered_visits: v['registered_visits'].to_i,
+        total_accounts: totals['registered_users'].to_i
+      )
     end
   end
 
