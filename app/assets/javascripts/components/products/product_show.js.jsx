@@ -3,7 +3,6 @@
 const Avatar = require('../ui/avatar.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
 const IntroductionForm = require('./introduction_form.js.jsx');
-const MetricsBadge = require('./metrics_badge.js.jsx');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductImportantLinks = require('./product_important_links.js.jsx');
 const ProductScreenshotPlaceholder = require('./product_screenshot_placeholder.js.jsx');
@@ -137,7 +136,6 @@ let ProductShow = React.createClass({
                       })}
                     </div>
                   </div>
-
                 </div>
 
               </Tile>
@@ -155,9 +153,6 @@ let ProductShow = React.createClass({
 
                 <div className="border-bottom">
                   {this.renderMostActiveUsers()}
-                </div>
-                <div className="border-bottom">
-                  <MetricsBadge product={product} />
                 </div>
 
                 <a href="/help" className="block px3 py2 center">

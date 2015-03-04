@@ -4,22 +4,6 @@ class MetricsController < ProductController
   def index
     find_product!
 
-    if @product.weekly_metrics.empty?
-      redirect_to snippet_product_metrics_path(@product)
-    else
-      respond_to do |format|
-        format.html
-        format.json do
-          render json: @product
-        end
-      end
-    end
-  end
-
-  def snippet
-    find_product!
-    authorize! :update, @product
-
     snippet = render_to_string(partial: 'metrics/snippet', layout: false, formats: 'html')
 
     respond_to do |format|

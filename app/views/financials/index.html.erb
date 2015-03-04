@@ -2,6 +2,21 @@
 <% activate_nav! :financials %>
 <% activate_nav! :financial_overview %>
 
+<div class="clearfix py3">
+  <ul class="new-nav new-nav--horizontal">
+    <li class="new-nav-item">
+      <a href="<%= product_metrics_path(@product) %>">
+        Performance Metrics
+      </a>
+    </li>
+    <li class="new-nav-item new-nav-item--active">
+      <a href="<%= product_financials_path(@product) %>">
+        Financials
+      </a>
+    </li>
+  </ul>
+</div>
+
 <% if @reports.empty? %>
   <div style="position:relative;min-height:510px;">
     <%= image_tag 'financials-blankslate.png', class: 'img-responsive', style: 'position:absolute' %>
