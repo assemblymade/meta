@@ -156,22 +156,6 @@ let IdeaShow = React.createClass({
               <div className="mb3">
                 <Tile>
                   <div className="p3">
-                    <div className="clearfix mb3">
-                      <div className="left center mr3">
-                        <div className="h1 yellow center">
-                          <Icon icon="lightbulb-o" />
-                        </div>
-                        <div className="h3 bold">
-                          #{idea.rank}
-                        </div>
-                        <div className="h6 gray-2">
-                          of {idea.rank_total}
-                        </div>
-                      </div>
-                      <p className="overflow-hidden gray-2 mb0">
-                        This idea is on it’s way to being fast-tracked. Every Wednesday the most loved idea is selected to become a product and is built out by the community.
-                      </p>
-                    </div>
 
                     <Heart size="button" heartable_id={nfi.id} heartable_type="NewsFeedItem" />
                   </div>
