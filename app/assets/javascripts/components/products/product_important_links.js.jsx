@@ -1,6 +1,7 @@
 'use strict';
 
 const Icon = require('../ui/icon.js.jsx');
+const MetricsLink = require('./metrics_link.js.jsx')
 const Routes = require('../../routes')
 
 let ProductImportantLinks = React.createClass({
@@ -80,12 +81,7 @@ let ProductImportantLinks = React.createClass({
           Financials
         </a>
 
-        <a className="block py2 hidden" href={Routes.product_metrics_path({product_id: slug })}>
-          <span className="mr3 gray-2">
-            <Icon icon="line-chart" />
-          </span>
-          Metrics
-        </a>
+        <MetricsLink product={product} />
 
       </div>
     );

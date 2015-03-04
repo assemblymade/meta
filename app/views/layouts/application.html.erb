@@ -15,6 +15,7 @@
     <meta name="read-raptor-url" content='<%= ENV["READRAPTOR_URL"] %>'>
     <meta name="firesize-url" content='<%= ENV["FIRESIZE_URL"] %>'>
     <meta name="es-url" content='<%= File.join(root_url, '_es') %>'>
+    <meta name="assets-url" content='<%= image_path('/') %>'>
 
     <% if signed_in? %>
       <meta name="user-username" content="<%= current_user.username %>" >
