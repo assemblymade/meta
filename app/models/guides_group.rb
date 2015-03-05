@@ -2,7 +2,7 @@ class GuidesGroup < StaticContentGroup
   GROUPS = [
     ['platform',    'The Assembly Platform'],
     ['getting-started',    'Getting Started'],
-    ['building-products',    'Building Products'],
+    ['accepting-payments',    'Accepting Payments'],
     ['project-management', 'Project Management'],
     ['starting-ios', 'Starting an iOS app'],
     ['transferring-ios', 'Transferring an iOS app'],
