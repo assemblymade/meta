@@ -120,7 +120,7 @@ let IdeaShow = React.createClass({
     return (
       <div>
 
-        <div className="subnav bg-white py3 md-show lg-show">
+        <div className="subnav bg-white py3 md-show lg-show mb3">
           <div className="container clearfix">
             <div className="left">
               <h4 className="mt2 mb2">
@@ -136,12 +136,6 @@ let IdeaShow = React.createClass({
         </div>
 
         <div className="container">
-
-          <div className="py3">
-            <a href="/ideas" className="h6 bold gray-2">
-              <Icon icon="chevron-left" /> All ideas
-            </a>
-          </div>
 
           <div className="clearfix mxn2">
             <div className="col col-8 px2">

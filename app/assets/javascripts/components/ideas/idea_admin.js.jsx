@@ -1,13 +1,12 @@
 'use strict';
 
 const Button = require('../ui/button.js.jsx');
-const IdeaContainer = require('./idea_container.js.jsx');
 const IdeaAdminActionCreators = require('../../actions/idea_admin_action_creators.js');
 const IdeaAdminStore = require('../../stores/idea_admin_store');
 const IdeaStore = require('../../stores/idea_store');
 const TagList = require('../tag_list.js.jsx');
 
-let IdeaAdmin = React.createClass({
+const IdeaAdmin = React.createClass({
   propTypes: {
     navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
@@ -124,7 +123,7 @@ let IdeaAdmin = React.createClass({
     let idea = this.state.idea;
 
     return (
-      <IdeaContainer showRelatedIdeas={false}>
+      <div className="container">
         <div className="px4 py2">
           <h5>Topics</h5>
           {this.renderTopics()}
@@ -145,7 +144,7 @@ let IdeaAdmin = React.createClass({
           <h5>Suggested tags</h5>
           <TagList tags={window.app.suggestedTags()} destination={false} url={idea.url}  />
         </div>
-      </IdeaContainer>
+      </div>
     );
   },
 
