@@ -6,7 +6,7 @@
 
   asml('create', '<%= @product.asmlytics_key %>');
   <%% if signed_in? %>
-    asml('track', '<%%= current_user.email %>');
+    asml('track', '<%%= Digest::MD5.hexdigest(current_user.email) %>');
   <%% else %>
     asml('track');
   <%% end %>
