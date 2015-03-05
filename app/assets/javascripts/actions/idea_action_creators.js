@@ -4,10 +4,6 @@ var Routes = require('../routes');
 var page = require('page');
 
 class IdeaActionCreators {
-  showEditIdea(idea) {
-    page(idea.path + '/edit');
-  }
-
   submitFirstQuestionClicked(idea) {
     page(idea.path);
   }

@@ -50,12 +50,6 @@ let IdeaStartConversation = React.createClass({
     });
   },
 
-  onBackClick(e) {
-    e.preventDefault();
-
-    IdeaActionCreators.showEditIdea(this.state.idea);
-  },
-
   onIdeaChange() {
     this.setState(this.getInitialState());
   },
@@ -88,69 +82,67 @@ let IdeaStartConversation = React.createClass({
           <div className="col-8 mx-auto">
             <Tile>
 
-              <div className="clearfix mt2 mb1">
-                <div className="left ml4">
-                  <h5 className="mb0 mt0">Shape the idea with help from the community. Start by asking a question to kick things off.</h5>
+              <div className="p4">
+
+                <div className="mb4 h1 yellow center">
+                  <Icon icon="lightbulb-o" />
                 </div>
 
-                <div className="right px4">
-                  <small className="mt2">
-                    <a href="javascript:void(0);" onClick={this.handleHowItWorksClick}>
-                      How it works{' '}
-                      <span style={{ color: '#fe8100' }}>
-                        <Icon icon="question-circle" />
-                      </span>
-                    </a>
-                  </small>
+                <div className="clearfix mb1">
+                  <h5 className="mt0 mb2">Shape the idea with help from the community. Start by asking a question to kick things off.</h5>
+
+                  <a className="h6" href="javascript:void(0);" onClick={this.handleHowItWorksClick}>
+                    How it works
+                  </a>
                 </div>
-              </div>
 
-              <form>
-                <Drawer open={this.state.isDrawerOpen}>
-                  <IdeaHowItWorks />
-                </Drawer>
+                <form>
+                  <Drawer open={this.state.isDrawerOpen}>
+                    <IdeaHowItWorks />
+                  </Drawer>
 
-                <div className="form-group px4 mb0">
-                  <div className="py3 h6 gray-2">
-                    <p>
-                      Here are some example questions you could ask the community:
-                    </p>
-                    <ol>
-                      <li>What's a good name for this?</li>
-                      <li>Does anyone know if there are competing products?</li>
-                      <li>What would you change about the idea?</li>
-                    </ol>
+                  <div className="mb0">
+                    <div className="py3 h6 gray-2">
+                      <p>
+                        Here are some example questions you could ask the community:
+                      </p>
+                      <ol>
+                        <li>What's a good name for this?</li>
+                        <li>Does anyone know if there are competing products?</li>
+                        <li>What would you change about the idea?</li>
+                      </ol>
+                    </div>
+                    <NewComment canContainWork={false}
+                        dropzoneInnerText={false}
+                        hideAvatar={true}
+                        hideButtons={true}
+                        placeholder={placeholder}
+                        thread={item.id}
+                        url={url}
+                        user={UserStore.getUser()} />
+                    {this.renderQuestionWarning()}
                   </div>
-                  <NewComment canContainWork={false}
-                      dropzoneInnerText={false}
-                      hideAvatar={true}
-                      hideButtons={true}
-                      placeholder={placeholder}
-                      thread={item.id}
-                      url={url}
-                      user={UserStore.getUser()} />
-                  {this.renderQuestionWarning()}
-                </div>
 
-                <div className="clearfix px4 mb3">
-                  <div className="left mt1">
-                    <a href="javscript:void(0);" onClick={this.onBackClick}>
+                  <div className="clearfix">
+                    <a className="left py1 gray-2" href={idea.path + '/edit'}>
                       <Icon icon="chevron-left" /> Edit your idea
                     </a>
-                  </div>
 
-                  <div className="right">
-                    <Button type="primary"
-                        action={
-                          !this.state.showWarning &&
-                          this.state.question.length > 0 &&
-                          this.onPostQuestionClick
-                    }>
-                      <span className="title">Done! Let's get started</span>
-                    </Button>
+                    <div className="right">
+                      <Button type="primary"
+                          action={
+                            !this.state.showWarning &&
+                            this.state.question.length > 0 &&
+                            this.onPostQuestionClick
+                      }>
+                        <span className="title">Done! Let's get started</span>
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
+
+              </div>
+
             </Tile>
           </div>
         </div>
