@@ -32,10 +32,6 @@ class DiscussionsController < WipsController
       )
 
       track_params = WipAnalyticsSerializer.new(@wip, scope: current_user).as_json.merge(engagement: 'created')
-      if !current_user.staff?
-        AsmMetrics.product_enhancement
-        AsmMetrics.active_user(current_user)
-      end
     end
 
     respond_with @wip, location: wip_path(@wip)

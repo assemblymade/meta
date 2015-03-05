@@ -156,11 +156,6 @@ class ProductsController < ProductController
   def create_product_with_params
     product = current_user.products.create(product_params)
     if product.valid?
-      if !current_user.staff?
-        track_event 'product.created', ProductAnalyticsSerializer.new(product).as_json
-        AsmMetrics.active_user(current_user)
-      end
-
       product.team_memberships.create!(user: current_user, is_core: true)
 
       product.watch!(current_user)

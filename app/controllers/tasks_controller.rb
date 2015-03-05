@@ -101,11 +101,6 @@ class TasksController < WipsController
         target: @product,
         socket_id: params[:socket_id]
       )
-
-      if !current_user.staff?
-        AsmMetrics.product_enhancement
-        AsmMetrics.active_user(current_user)
-      end
     end
 
     # FIXME: Insert the bounty at the top of the current list (bounties or
@@ -179,12 +174,6 @@ class TasksController < WipsController
     assignee ||= current_user
 
     @allocation = @wip.start_work!(assignee)
-
-    if !assignee.staff?
-      AsmMetrics.product_enhancement
-      AsmMetrics.active_user(assignee)
-    end
-
     respond_with @wip, location: product_wip_path(@product, @wip)
   end
 
@@ -199,19 +188,16 @@ class TasksController < WipsController
   def deliverables
     @attachment = Attachment.find(params[:attachment_id])
     @wip.submit_design! @attachment, current_user
-    AsmMetrics.active_user(current_user) unless current_user.staff?
     respond_with @wip, location: product_wip_path(@product, @wip)
   end
 
   def copy_deliverables
     @wip.submit_copy! copy_params, current_user
-    AsmMetrics.active_user(current_user) unless current_user.staff?
     respond_with @wip, location: product_wip_path(@product, @wip)
   end
 
   def code_deliverables
     deliverable = @wip.submit_code! code_params, current_user
-    AsmMetrics.active_user(current_user) unless current_user.staff?
     respond_with deliverable, location: product_wip_path(@wip.product, @wip)
   end
 
