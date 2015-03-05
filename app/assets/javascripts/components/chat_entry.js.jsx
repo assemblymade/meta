@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function(){
   var AvatarLink = require('./avatar_link.js.jsx')

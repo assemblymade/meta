@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 (function() {
   var Lightbox = require('./lightbox.js.jsx')
   var SimpleBountyOffer = require('./simple_bounty_offer.js.jsx')

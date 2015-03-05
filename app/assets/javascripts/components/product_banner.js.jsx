@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var COOKIE_NAME = 'asm_banner';

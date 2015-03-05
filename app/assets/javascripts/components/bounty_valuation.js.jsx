@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var AppCoins = require('./app_coins.js.jsx')

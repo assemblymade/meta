@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 /**
  * Before using this component, consider that by reaching down into

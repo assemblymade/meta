@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var BountyPostingButton = React.createClass({

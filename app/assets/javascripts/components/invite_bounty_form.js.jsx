@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 var FormGroup = require('./form_group.js.jsx');
 (function() {

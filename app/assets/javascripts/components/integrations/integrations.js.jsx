@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var GoogleAnalyticsIntegration = require('./google_analytics/integration.js.jsx');

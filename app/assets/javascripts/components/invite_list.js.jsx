@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 

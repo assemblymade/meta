@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var CreateBounty = require('./create_bounty.js.jsx');

@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var BountyOffer = React.createClass({

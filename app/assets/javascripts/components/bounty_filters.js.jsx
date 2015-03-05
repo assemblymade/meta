@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var UserFilter = require ('./user_filter.js.jsx')

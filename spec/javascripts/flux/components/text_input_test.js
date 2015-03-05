@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 describe('TextInput', function() {
   var TextInput;

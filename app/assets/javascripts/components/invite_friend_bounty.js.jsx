@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 var InviteBountyForm = require('./invite_bounty_form.js.jsx');
 var Lightbox = require('./lightbox.js.jsx');

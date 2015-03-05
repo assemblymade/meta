@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 describe('WelcomeBanner', function() {
   Dispatcher = require(pathToFile('dispatcher'));

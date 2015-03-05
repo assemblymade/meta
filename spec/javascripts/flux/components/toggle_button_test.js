@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 describe('ToggleButton', function() {
   var ToggleButton;

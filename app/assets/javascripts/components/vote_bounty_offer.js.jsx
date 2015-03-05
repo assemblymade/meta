@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var VoteBountyOffer = React.createClass({

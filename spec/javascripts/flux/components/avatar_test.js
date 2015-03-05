@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 jest.dontMock(pathToFile('components/ui/avatar.js.jsx'));
 jest.dontMock(pathToFile('components/ui/vignette.js.jsx'));

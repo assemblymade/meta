@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var ProductState = React.createClass({

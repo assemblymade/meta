@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var TaggedInput = React.createClass({

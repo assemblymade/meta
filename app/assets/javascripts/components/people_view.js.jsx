@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 (function() {
   var PeopleStore = require('../stores/people_store');

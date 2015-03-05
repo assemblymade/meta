@@ -1,4 +1,4 @@
-/** @jsx React.DOM */
+
 
 describe('TagList', function() {
   var Dispatcher = require(pathToFile('dispatcher'));
