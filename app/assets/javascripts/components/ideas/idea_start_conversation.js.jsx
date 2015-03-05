@@ -12,7 +12,7 @@ const NewComment = require('../news_feed/new_comment.js.jsx');
 const NewCommentStore = require('../../stores/new_comment_store');
 const Routes = require('../../routes');
 const UserStore = require('../../stores/user_store');
-import Tile from '../ui/tile.js.jsx'
+const Tile = require('../ui/tile.js.jsx');
 
 let IdeaStartConversation = React.createClass({
   propTypes: {

@@ -1,10 +1,10 @@
-import _ from 'underscore'
-import moment from 'moment'
-import Markdown from '../markdown.js.jsx'
-import Label from './label.js.jsx'
-import AvatarWithUsername from './avatar_with_username.js.jsx'
-import SingleLineList from './single_line_list.js.jsx'
-import User from './../user.js.jsx'
+const _ = require('underscore')
+const moment  = require('moment')
+const Markdown  = require('../markdown.js.jsx')
+const Label = require('./label.js.jsx')
+const AvatarWithUsername  = require( './avatar_with_username.js.jsx')
+const SingleLineList  = require( './single_line_list.js.jsx')
+const User  = require( './../user.js.jsx')
 
 const TextPost = React.createClass({
 
@@ -61,4 +61,4 @@ const TextPost = React.createClass({
   }
 })
 
-export default TextPost
+module.exports = TextPost
