@@ -61,12 +61,7 @@ class IdeasController < ProductController
   end
 
   def new
-    respond_with({
-      related_ideas: ActiveModel::ArraySerializer.new(
-        Idea.take(2),
-        each_serializer: IdeaSerializer
-      )
-    })
+    respond_with({})
   end
 
   def show

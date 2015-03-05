@@ -1,6 +1,5 @@
 jest.dontMock(appFile('components/ideas/idea_container.js.jsx'));
 jest.dontMock(appFile('components/ui/tile.js.jsx'));
-jest.dontMock(appFile('stores/related_ideas_store.js'));
 
 describe('IdeaContainer', function() {
   global.Dispatcher = require(appFile('dispatcher'));

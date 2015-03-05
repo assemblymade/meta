@@ -1,7 +1,6 @@
 'use strict';
 
 const Icon = require('../ui/icon.js.jsx');
-const RelatedIdeas = require('./related_ideas.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 
 let IdeaContainer = React.createClass({
@@ -50,10 +49,6 @@ let IdeaContainer = React.createClass({
             <Tile>
               {this.props.children}
             </Tile>
-          </div>
-
-          <div className={rightColumnClasses}>
-            <RelatedIdeas />
           </div>
         </div>
       </div>

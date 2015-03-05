@@ -5,10 +5,6 @@ const Dispatcher = require('../dispatcher');
 
 let IdeasHandlers = {
   showCreateIdea(data) {
-    Dispatcher.dispatch({
-      type: ActionTypes.RELATED_IDEAS_RECEIVE,
-      relatedIdeas: data.related_ideas
-    });
   },
 
   showEditIdea(idea) {
@@ -78,7 +74,6 @@ let IdeasHandlers = {
   showIdea(data) {
     let heartables = data.heartables;
     let idea = data.idea;
-    let relatedIdeas = data.related_ideas;
     let userHearts = data.user_hearts;
 
     Dispatcher.dispatch({
@@ -97,11 +92,6 @@ let IdeasHandlers = {
     Dispatcher.dispatch({
       type: ActionTypes.LOVE_RECEIVE_USER_HEARTS,
       userHearts: userHearts
-    });
-
-    Dispatcher.dispatch({
-      type: ActionTypes.RELATED_IDEAS_RECEIVE,
-      relatedIdeas: relatedIdeas
     });
   },
 

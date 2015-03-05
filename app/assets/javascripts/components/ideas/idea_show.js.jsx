@@ -18,7 +18,6 @@ const moment = require('moment');
 const NewCommentActionCreators = require('../../actions/new_comment_action_creators');
 const page = require('page');
 const ProgressBar = require('../ui/progress_bar.js.jsx');
-const RelatedIdeas = require('./related_ideas.js.jsx');
 const SvgIcon = require('../ui/svg_icon.js.jsx');
 const TextPost = require('../ui/text_post.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
@@ -187,10 +186,6 @@ let IdeaShow = React.createClass({
 
                 </Tile>
               </div>
-
-              <h6 className="mt3 mb3 gray-2">Related ideas</h6>
-
-              <RelatedIdeas />
             </div>
           </div>
         </div>
