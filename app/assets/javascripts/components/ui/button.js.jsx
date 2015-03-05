@@ -24,11 +24,11 @@ var Button = React.createClass({
     var action = this.props.action
     var cs = React.addons.classSet({
       'button': true,
-      'button-default': this.props.type === 'default',
-      'button-primary': this.props.type === 'primary',
-      'button-is-disabled': !this.props.action,
+      'button--default': this.props.type === 'default',
+      'button--primary': this.props.type === 'primary',
+      'button--disabled': !this.props.action,
       'active': this.props.active,
-      'button-block': this.props.block
+      'button--block': this.props.block
     })
 
     if (_.isString(action)) {

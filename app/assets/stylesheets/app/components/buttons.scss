@@ -301,7 +301,7 @@ button, .button {
   text-align: center;
 }
 
-.button-default {
+.button--default {
   color: $blue;
   background-color: white;
   box-shadow: inset 0 0 0 1px rgba(black, .1),
@@ -318,7 +318,7 @@ button, .button {
   }
 }
 
-.button-primary {
+.button--primary {
   color: white;
   text-shadow: 0 1px 0 rgba(black, .1);
   background: $green linear-gradient(transparent, rgba(black, .05));
@@ -333,17 +333,17 @@ button, .button {
   }
 }
 
-.button-is-disabled,
-.button-is-disabled:hover {
-  border-color: $gray-4;
-  background: $gray-5;
-  color: $gray-1;
+.button--disabled,
+.button--disabled:hover {
+  background: white;
+  color: $gray-4;
   text-shadow: none;
   cursor: default;
+  box-shadow: inset 0 0 0 1px rgba(black, .05);
 }
 
-.button-block,
-button.button-block {
+.button--block,
+button.button--block {
   display: block;
   width: 100%;
 }
