@@ -13,6 +13,12 @@ class TipMailer < BaseMailer
     @user = @tip.to
     @via = @tip.via
 
+    if @via.is_a? Activities::GitPush
+      # no template for this, let's just skip it
+      mail.perform_deliveries = false
+      return
+    end
+
     # TODO: we'll fix this when there is a dedicated page for the tip/activity
     # to link people to
     @url = case @via.class.base_class.to_s
