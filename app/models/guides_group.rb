@@ -11,7 +11,7 @@ class GuidesGroup < StaticContentGroup
     ['starting-web', 'Starting a Web app'],
     ['transferring-web', 'Transferring a Web app'],
     ['educate', 'Educating People about your Product'],
-    ['ownership', 'Managing Ownership... wisely']
+    ['ownership', 'Managing Ownership...wisely']
   ]
 
   def self.all
