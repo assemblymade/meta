@@ -87,6 +87,7 @@ ROUTES = [
   'product',
   'readraptor',
   'user',
+  'snippet_product_metrics',
   'weekly_product_metrics'
 ]
 

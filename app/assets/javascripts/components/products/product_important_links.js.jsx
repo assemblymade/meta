@@ -80,9 +80,6 @@ let ProductImportantLinks = React.createClass({
           </span>
           Financials
         </a>
-
-        <MetricsLink product={product} />
-
       </div>
     );
   },

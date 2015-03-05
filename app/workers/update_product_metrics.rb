@@ -22,6 +22,10 @@ class UpdateProductMetrics
         total_accounts: totals['registered_users'].to_i
       )
     end
+
+    grouped_total_visitors do |product, total|
+      product.update!(total_visitors: total)
+    end
   end
 
   def grouped_metrics(grouping, &blk)
@@ -29,20 +33,24 @@ class UpdateProductMetrics
       totals = total_accounts(grouping, date)
 
       visits.each do |v|
-        product = Product.find_by(asmlytics_key: v['app_id'])
-        if product.nil?
-          Rails.logger.info("asmlytics missing_product=#{v['app_id']}")
-          next
-        end
+        if product = find_product(v['app_id'])
+          t = totals.find{|t| t['app_id'] == v['app_id'] }
+          if t.nil?
+            Rails.logger.info("asmlytics missing_totals=#{v['app_id']}")
+            next
+          end
 
-        t = totals.find{|t| t['app_id'] == v['app_id'] }
-        if t.nil?
-          Rails.logger.info("asmlytics missing_totals=#{v['app_id']}")
-          next
+          Rails.logger.info "#{date} #{t} #{v}"
+          blk.call(product, date, t, v)
         end
+      end
+    end
+  end
 
-        Rails.logger.info "#{date} #{t} #{v}"
-        blk.call(product, date, t, v)
+  def grouped_total_visitors(&blk)
+    total_visitors.each do |r|
+      if product = find_product(r['app_id'])
+        blk.call(product, r['total'].to_i)
       end
     end
   end
@@ -72,6 +80,20 @@ class UpdateProductMetrics
       GROUP BY 1
       ORDER BY 1;
     })
+  end
+
+  def total_visitors
+    pg.exec(%Q{
+      SELECT COUNT(DISTINCT(domain_userid)) as total, app_id FROM "atomic".events GROUP BY app_id;
+    }).to_a
+  end
+
+  def find_product(app_id)
+    Product.find_by(asmlytics_key: app_id).tap do |product|
+      if product.nil?
+        Rails.logger.info("asmlytics missing_product=#{app_id}")
+      end
+    end
   end
 
   def pg

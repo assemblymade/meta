@@ -145,6 +145,10 @@ class ApplicationController < ActionController::Base
     render(text: 'Not Found', status: 404)
   end
 
+  def authenticate_staff!
+    redirect_to(new_user_session_path) unless current_user.try(:staff?)
+  end
+
 
   helper_method :log_trial_choose, :log_trial_complete
 
@@ -165,5 +169,6 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
 
 end

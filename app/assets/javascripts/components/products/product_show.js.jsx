@@ -3,6 +3,7 @@
 const Avatar = require('../ui/avatar.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
 const IntroductionForm = require('./introduction_form.js.jsx');
+const MetricsBadge = require('./metrics_badge.js.jsx');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductImportantLinks = require('./product_important_links.js.jsx');
 const ProductScreenshotPlaceholder = require('./product_screenshot_placeholder.js.jsx');
@@ -149,6 +150,10 @@ let ProductShow = React.createClass({
                     <h5 className="mt0 mb1">Build {product.name} with us!</h5>
                     {this.renderIntroductionForm()}
                   </div>
+                </div>
+
+                <div className="border-bottom">
+                  <MetricsBadge />
                 </div>
 
                 <div className="border-bottom">

@@ -26,6 +26,14 @@ describe UpdateProductMetrics do
         }]
       end
 
+      allow(u).to receive(:total_visitors) do
+        [{
+          "app_id" => product.asmlytics_key,
+          "total" => "98567"
+        }]
+      end
+
+
       u.perform
 
       metric = product.daily_metrics.first
@@ -36,6 +44,8 @@ describe UpdateProductMetrics do
       expect(metric.visits).to eq(2049)
       expect(metric.registered_visits).to eq(409)
       expect(metric.total_accounts).to eq(5489)
+
+      expect(product.reload.total_visitors).to eq(98567)
     end
   end
 end

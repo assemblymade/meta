@@ -373,6 +373,7 @@ ASM::Application.routes.draw do
     resources :metrics, only: [:index] do
       get :daily, on: :collection
       get :weekly, on: :collection
+      get :snippet, on: :collection
     end
 
     resources :governance, only: [:index, :create, :edit, :show]
