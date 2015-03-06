@@ -238,7 +238,9 @@ ASM::Application.routes.draw do
         resources :offers, only: [:create, :show]
       end
 
-      resources :updates, only: [:index]
+      resources :updates, only: [:index] do
+        get :paged, on: :collection
+      end
 
       resources :news_feed_items, only: [:show, :create], path: 'updates', as: :updates
       resources :projects, only: [:create]
@@ -381,7 +383,7 @@ ASM::Application.routes.draw do
     resources :resources, only: [:index]
 
     resources :posts do
-      post :preview, on: :collection
+      post :paged, on: :collection
     end
     resources :status_messages, only: [:create]
 

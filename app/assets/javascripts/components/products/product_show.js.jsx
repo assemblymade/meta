@@ -30,9 +30,10 @@ let ProductShow = React.createClass({
 
     ProductStore.addChangeListener(this.onProductChange);
 
-    $.getJSON(`/api/products/${this.state.product.slug}/updates.json`, function(data) {
+    $.getJSON(`/api/products/${this.state.product.slug}/updates/paged.json`, function(data) {
       this.setState({
-        updates: data
+        updates: data.posts,
+        updateCount: data.meta.count
       })
     }.bind(this))
   },
@@ -119,7 +120,7 @@ let ProductShow = React.createClass({
                   <div className="mb4">
                     <div className="mb2">
                       <a href={`/${product.slug}/activity`} className="right">More</a>
-                      <h6 className="gray-2 caps mt0 mb0">Updates ({this.state.updates.length})
+                      <h6 className="gray-2 caps mt0 mb0">Updates ({this.state.updateCount})
                       </h6>
                     </div>
 
