@@ -22,7 +22,7 @@ module.exports = React.createClass({
       return this.renderEmptyState()
     }
 
-    if (this.state.totalVisitors < 100) {
+    if (this.state.totalVisitors < 1000) {
       return <div />
     }
 
@@ -48,10 +48,10 @@ module.exports = React.createClass({
       return i
     }
     if (i < 10000) {
-      return `${parseFloat((i/1000).toFixed(1))}k`
+      return `${parseFloat((i/1000).toFixed(1))}K`
     }
     if (i < 1000000) {
-      return `${parseFloat((i/1000).toFixed(0))}k`
+      return `${parseFloat((i/1000).toFixed(0))}K`
     }
     return `${parseFloat((i/1000000).toFixed(1))}M`
   }
