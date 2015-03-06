@@ -64,16 +64,10 @@ let IdeasIndex = React.createClass({
         <div className="subnav bg-white py3 md-show lg-show mb3">
           <div className="container clearfix">
             <div className="left">
-<<<<<<< HEAD
-              <h4 className="mt2 mb2">
-                Turn ideas into great products with people around the world
-              </h4>
-=======
               <h3 className="mt2 mb2">
                 What inspires you?
               </h3>
               <h4 className="gray-2">The ideas with the most hearts will be built by the community.</h4>
->>>>>>> 02d54fa... copy and design changes
             </div>
             <div className="center right py1">
               <Button type="primary" action={function() { page('/ideas/new'); }}>
