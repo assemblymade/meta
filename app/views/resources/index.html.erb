@@ -86,7 +86,7 @@
 -->
       <div class="panel panel-default">
         <div class="panel-heading">
-          <% if current_user && @product.core_team?(current_user) %>
+          <% if can? :update, @product %>
             <h3 class="panel-title">
               <button class="btn btn-default btn-xs pull-right">Add integration</button>
               Integrations
@@ -98,7 +98,7 @@
         </div>
         <% integration = Integration.find_by(product: @product, provider: 'google') %>
         <%= react_component('Integrations', {
-          editable: current_user && @product.core_team?(current_user),
+          editable: can?(:update, @product),
           product: @product,
           google: {
             logo: 'https://developers.google.com/analytics/images/terms/google-analytics-logo.png',
