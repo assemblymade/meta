@@ -73,6 +73,4 @@ if (dataTag) {
   })
 }
 
-
-module.exports = _peopleStore;
-window.PeopleStore = _peopleStore;
+module.exports = window.PeopleStore = _peopleStore;

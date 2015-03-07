@@ -12,14 +12,11 @@ var PeopleActionCreators = require('../actions/people_action_creators')
 module.exports = React.createClass({
   propTypes: {
     username: React.PropTypes.string,
-    searchPosition: React.PropTypes.string
   },
 
   render: function() {
     return <div id="comment" style={{"position":"relative"}} onKeyDown={this.handleKeyDown}>
       {this.shouldShowUserList() ? <UserPicker
-        position={this.props.searchPosition}
-        offset={this.props.coords}
         users={this.state.users}
         highlightIndex={this.state.highlightIndex}
         onUserSelected={this.handleUserSelected} /> : null}
