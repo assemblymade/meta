@@ -37,6 +37,7 @@ class Product < ActiveRecord::Base
   has_many :contract_holders
   has_many :core_team, through: :core_team_memberships, source: :user
   has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
+  has_many :daily_metrics
   has_many :discussions
   has_many :domains
   has_many :event_activities, through: :events, source: :activities
@@ -48,8 +49,8 @@ class Product < ActiveRecord::Base
   has_many :invites, as: :via
   has_many :markings, as: :markable
   has_many :marks, through: :markings
-  has_many :daily_metrics
   has_many :milestones
+  has_many :monthly_metrics
   has_many :news_feed_items
   has_many :news_feed_item_posts
   has_many :pitch_week_applications

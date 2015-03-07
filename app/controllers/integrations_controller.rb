@@ -18,8 +18,8 @@ class IntegrationsController < ProductController
     else
       tokens = integration.new.call(:token, params[:code])
 
-      @integration = Integration.create!(
-        product: @product,
+      @integration = Integration.find_or_initialize_by(product: @product)
+      @integration.update!(
         access_token: tokens['access_token'],
         refresh_token: tokens['refresh_token'],
         token_type: tokens['token_type'],
