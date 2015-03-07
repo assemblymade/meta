@@ -48,7 +48,6 @@ class FetchGoogleAnalytics
       accounts.find do |a|
         result = client.execute(analytics.management.webproperties.list, accountId: a.id)
         property = result.data.items.count == 1 ? result.data.items.first : result.data.items.find{|o| o.name == i.config['property_name'] }
-        puts "property #{property.try(:name)}"
         if property
           account = a
         end
@@ -65,7 +64,7 @@ class FetchGoogleAnalytics
         raise "not found (profile:#{i.config['profile_name']}) #{result.data.items.map(&:name)}"
       end
 
-      Rails.logger.info "integration=#{i.id} product=#{i.product.slug} config=#{i.config.inspect} account=#{} property=#{property.name}"
+      Rails.logger.info "integration=#{i.id} product=#{i.product.slug} config=#{i.config.inspect} account=#{account.name} property=#{property.name}"
 
       profile
     end
