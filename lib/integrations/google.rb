@@ -23,7 +23,8 @@ module Integrations
         redirect_uri: ENV['GOOGLE_REDIRECT_URI'],
         scope: 'https://www.googleapis.com/auth/analytics.readonly',
         state: product.authentication_token,
-        access_type: 'offline'
+        access_type: 'offline',
+        approval_prompt: 'force'
       }.to_query
     end
 
