@@ -14,7 +14,7 @@ module Api
         @users = users.
           where('last_request_at > ?', 7.days.ago).
           order(last_request_at: :desc).
-          limit(30)
+          limit(100)
         respond_with(@users)
       end
     end
