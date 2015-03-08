@@ -1,6 +1,8 @@
 require 'google/api_client'
 
 class FetchGoogleAnalytics
+  include Sidekiq::Worker
+  
   attr_reader :i
 
   def perform(integration_id)

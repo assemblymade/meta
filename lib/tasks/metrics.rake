@@ -306,4 +306,24 @@ namespace :metrics do
     puts csv
   end
 
+  task :monthly_uniques_csv => :environment do
+    tracked_products = Product.joins(:monthly_metrics).group('products.id').to_a
+
+    require 'csv'
+    csv = CSV.generate do |csv|
+      csv << (["Month", "Total Uniques"] + tracked_products.map(&:name))
+      MonthlyMetric.unscoped.order(:date).group_by(&:date).each do |date, metrics|
+        row = [date.strftime("%Y-%m"), metrics.map(&:ga_uniques).reduce(:+)]
+        row += tracked_products.map{|p| metrics.find{|m| m.product_id == p.id }.try(:ga_uniques) || 0 }
+        csv << row
+      end
+    end
+    pp_csv(csv)
+    puts csv
+  end
+
+  def pp_csv(csv)
+    cols = csv.split("\n").first.split(",")
+    $stderr.puts csv.split("\n").each{|row| puts row.split(',').map.with_index{|col, i| col.ljust([cols[i].size, 7].max + 2) }.join }
+  end
 end
