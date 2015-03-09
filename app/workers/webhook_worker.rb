@@ -1,8 +1,6 @@
 class WebhookWorker
   include Sidekiq::Worker
 
-  private
-
   def post(url, payload = {})
     request :post, url, payload
   end

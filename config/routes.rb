@@ -224,6 +224,8 @@ ASM::Application.routes.draw do
       resources :users, only: [:index], module: :chat, path: 'online'
     end
 
+    post '/sb' => 'slack_bridge#receive'
+
     resources :products, only: [] do
       get :info
       get :workers
