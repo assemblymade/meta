@@ -2,7 +2,7 @@ require 'google/api_client'
 
 class FetchGoogleAnalytics
   include Sidekiq::Worker
-  
+
   attr_reader :i
 
   def perform(integration_id)
@@ -27,7 +27,7 @@ class FetchGoogleAnalytics
         'end-date' => DateTime.now.strftime("%Y-%m-%d"),
         'ids' => "ga:#{profile.id}",
         'dimensions' => "ga:year,ga:month",
-        'metrics' => "ga:visits",
+        'metrics' => "ga:users",
         'sort' => "ga:year,ga:month"
       }
     )
