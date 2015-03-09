@@ -1,6 +1,3 @@
-// This dispatcher modifies some of the ideas in Facebook's template:
-// https://github.com/facebook/flux/blob/master/src/Dispatcher.js
-
 var FluxDispatcher = require('flux').Dispatcher;
 
 class AppDispatcher extends FluxDispatcher {
