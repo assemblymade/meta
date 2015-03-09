@@ -76,7 +76,7 @@ let EditingProductSubsection = React.createClass({
         ProductSubsectionsStore.getSubsections()
       ).set(title, body);
 
-      if (this.props.initialTitle) {
+      if (this.props.initialTitle && this.props.initialTitle !== title) {
         subsections = subsections.delete(this.props.initialTitle);
       }
 
