@@ -17,7 +17,6 @@ const UserStore = require('../../stores/user_store');
 
 let ProductShow = React.createClass({
   propTypes: {
-    navigate: React.PropTypes.func.isRequired,
     params: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.object
@@ -125,17 +124,7 @@ let ProductShow = React.createClass({
                     </div>
 
                     <div className="mxn2">
-                      {_.last(this.state.updates, 3).map(function(update) {
-                        return <a className="block clearfix p2 rounded bg-gray-6-hover" href={update.url} key={update.id}>
-                          <div className="right mt1 ml2">
-                            <Avatar user={update.user} size={24} />
-                          </div>
-                          <div className="overflow-hidden">
-                            <h5 className="black mt0 mb0">{update.title}</h5>
-                            <p className="gray-2 mb0">{truncate(update.body.text, 140)}</p>
-                          </div>
-                        </a>
-                      })}
+                      {this.renderUpdates()}
                     </div>
                   </div>
                 </div>
@@ -256,6 +245,22 @@ let ProductShow = React.createClass({
         <Markdown content={product.lead} normalize={true} />
       </div>
     );
+  },
+
+  renderUpdates() {
+    return _.last(this.state.updates, 3).map(function(update) {
+      if (update.body) {
+        return <a className="block clearfix p2 rounded bg-gray-6-hover" href={update.url} key={update.id}>
+          <div className="right mt1 ml2">
+            <Avatar user={update.user} size={24} />
+          </div>
+          <div className="overflow-hidden">
+            <h5 className="black mt0 mb0">{update.title}</h5>
+            <p className="gray-2 mb0">{truncate(update.body.text, 140)}</p>
+          </div>
+        </a>
+      }
+    });
   }
 });
 
