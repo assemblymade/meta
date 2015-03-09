@@ -17,6 +17,7 @@ module Api
       user = User.find_by(username: user[:slack_handle]) if user.nil?
       user = User.find_by(name: user[:full_name]) if user.nil?
       # fall back to kernel if still not found
+      render json: "error", status: 500 and return if user.nil?
 
       @chat_room = ChatRoom.includes(:wip).find_by!(slug: product_slug)
       @chat_room.with_lock do
