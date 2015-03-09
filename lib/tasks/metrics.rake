@@ -324,6 +324,6 @@ namespace :metrics do
 
   def pp_csv(csv)
     cols = csv.split("\n").first.split(",")
-    $stderr.puts csv.split("\n").each{|row| puts row.split(',').map.with_index{|col, i| col.ljust([cols[i].size, 7].max + 2) }.join }
+    csv.split("\n").each{|row| $stderr.puts row.split(',').map.with_index{|col, i| col.ljust([cols[i].size, 7].max + 2) }.join }
   end
 end
