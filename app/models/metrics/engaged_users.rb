@@ -14,6 +14,10 @@ module Metrics
       @metrics = result['data']['values'][ENGAGED_AUTHED_USERS]
     end
 
+    def name
+      "Active Users (% of total)"
+    end
+
     def between(start_at, end_at)
       engaged_users = @metrics.find do |date, _|
         delta = start_at.to_date - Date.parse(date)
