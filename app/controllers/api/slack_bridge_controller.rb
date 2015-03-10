@@ -88,7 +88,7 @@ module Api
 
         timestamp = auth[:timestamp]
         prehash = "#{timestamp}#{body}"
-        secret = Base64.decode64("ENV['SLACKPIPE_SECRET']")
+        secret = Base64.decode64(ENV['SLACKPIPE_SECRET'])
         hash = OpenSSL::HMAC.digest('sha256', secret, prehash)
         signature = Base64.encode64(hash)
 

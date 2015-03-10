@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20150310015640) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
-  enable_extension "uuid-ossp"
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pg_stat_statements"
+  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
