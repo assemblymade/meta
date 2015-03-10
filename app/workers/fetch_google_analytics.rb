@@ -12,14 +12,14 @@ class FetchGoogleAnalytics
 
     monthly_metrics.each do |year, month, visits|
       date = Date.parse([year, month, 1].join('-'))
-      m = i.product.monthly_metrics.find_or_initialize_by(date: date)
+      m = i.product.monthly_metrics('ga:visits').find_or_initialize_by(date: date)
       m.update!(
-        ga_uniques: visits.to_i,
+        ga_uniques: visits.to_i
       )
     end
   end
 
-  def monthly_metrics
+  def monthly_metrics(metrics)
     result = client.execute(
       api_method: analytics.data.ga.get,
       parameters: {
@@ -27,7 +27,7 @@ class FetchGoogleAnalytics
         'end-date' => DateTime.now.strftime("%Y-%m-%d"),
         'ids' => "ga:#{profile.id}",
         'dimensions' => "ga:year,ga:month",
-        'metrics' => "ga:users",
+        'metrics' => metrics.join(','),
         'sort' => "ga:year,ga:month"
       }
     )

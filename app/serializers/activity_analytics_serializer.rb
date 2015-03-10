@@ -22,4 +22,3 @@ class ActivityAnalyticsSerializer < ActiveModel::Serializer
     "#{verb}.#{verb_subject}"
   end
 end
-

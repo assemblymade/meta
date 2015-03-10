@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150307012550) do
+ActiveRecord::Schema.define(version: 20150310015640) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "hstore"
-  enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
+  enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -718,6 +718,7 @@ ActiveRecord::Schema.define(version: 20150307012550) do
     t.json     "subsections"
     t.text     "asmlytics_key"
     t.integer  "total_visitors",                                default: 0,    null: false
+    t.text     "analytics_category"
   end
 
   add_index "products", ["asmlytics_key"], name: "index_products_on_asmlytics_key", unique: true, using: :btree
