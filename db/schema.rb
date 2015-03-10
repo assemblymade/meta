@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310015640) do
+ActiveRecord::Schema.define(version: 20150310212204) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "plpgsql"
   enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
 
@@ -1047,6 +1047,7 @@ ActiveRecord::Schema.define(version: 20150310015640) do
     t.datetime "flagged_at"
     t.datetime "showcase_banner_dismissed_at"
     t.datetime "coin_callout_viewed_at"
+    t.integer  "hearts_received",                               default: 0,       null: false
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

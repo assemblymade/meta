@@ -32,6 +32,12 @@ var UserStore = _.extend(Object.create(Store), {
     }
   },
 
+  getUsername: function() {
+    if (_currentUser) {
+      return _currentUser.username
+    }
+  },
+
   isSignedIn: function() {
     return _currentUser !== null
   },

@@ -1,7 +1,7 @@
 class UserSerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :avatar_url, :bio, :last_online, :staff, :url, :full_url,
+  attributes :avatar_url, :bio, :hearts_received, :last_online, :staff, :url, :full_url,
     :username, :dismiss_showcase_banner_url, :showcase_banner_dismissed_at,
     :coin_callout_viewed_at
 

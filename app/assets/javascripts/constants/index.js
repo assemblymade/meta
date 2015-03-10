@@ -147,6 +147,8 @@ var CONSTANTS = {
 
     DISCUSSION_RECEIVE: null,
 
+    HEART_RECEIVED: null,
+
     IDEA_RECEIVE: null,
     IDEA_UPDATED: null,
 

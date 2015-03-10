@@ -131,7 +131,6 @@ ASM::Application.routes.draw do
 
   # heartables
   post 'heartables/love', as: :love
-  post 'heartables/unlove', as: :unlove
   get  'heartables/hearts'
   get  'heartables/:heartable_id/lovers', controller: :heartables, action: :lovers, as: :heartables_lovers
 
