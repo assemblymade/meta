@@ -23,6 +23,13 @@ class HeartablesController < ApplicationController
         @heart.product.try(:id)
       )
 
+      TrackHeartReceived.perform_async(
+        heartable.user.id,
+        @heart.created_at.to_i,
+        @heart.heartable.try(:target).try(:class).try(:name) || @heart.heartable_type,
+        @heart.product.try(:id)
+      )
+
       render json: {
         heartable_id: @heart.heartable_id,
         heartable_type: @heart.heartable_type,
@@ -37,7 +44,7 @@ class HeartablesController < ApplicationController
     @heart = Heart.find_by(heartable_id: heart_params[:id], user: current_user)
     if @heart
       @heart.heartable.try(:unhearted, @heart) if @heart.destroy
-    
+
       render json: {
         heartable_id: @heart.heartable_id,
         heartable_type: @heart.heartable_type,
