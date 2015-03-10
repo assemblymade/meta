@@ -1,7 +1,8 @@
 class SlackpipePayload
   def self.deploy!(body={})
     timestamp = Time.now.to_i
-    prehash = "#{timestamp}#{body[:message].to_json}"
+    payload = Hash[body[:message].sort_by(&:first)].to_json
+    prehash = "#{timestamp}#{payload}"
     secret = Base64.decode64(ENV['SLACKPIPE_SECRET'])
     hash = OpenSSL::HMAC.digest('sha256', secret, prehash)
     signature = Base64.encode64(hash)

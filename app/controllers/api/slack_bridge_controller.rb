@@ -84,11 +84,11 @@ module Api
       def verify_auth
         auth = params.delete(:auth)
         payload = params[:data]
-        body = payload.to_json
+        body = Hash[payload.sort_by(&:first)].to_json
 
         timestamp = auth[:timestamp]
         prehash = "#{timestamp}#{body}"
-        secret = Base64.decode64(ENV['SLACKPIPE_SECRET'])
+        secret = Base64.decode64("ENV['SLACKPIPE_SECRET']")
         hash = OpenSSL::HMAC.digest('sha256', secret, prehash)
         signature = Base64.encode64(hash)
 
