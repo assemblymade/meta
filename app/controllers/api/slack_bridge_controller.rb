@@ -86,13 +86,13 @@ module Api
         payload = params[:data]
 
         body = payload.to_json
-        timestamp = Time.now.to_i
+        timestamp = auth[:timestamp]
         prehash = "#{timestamp}#{body}"
         secret = Base64.decode64(ENV['SLACKPIPE_SECRET'])
         hash = OpenSSL::HMAC.digest('sha256', secret, prehash)
         signature = Base64.encode64(hash)
 
-        if auth.nil? || (Time.now.to_i - auth[:timestamp] > 30) || signature != auth[:signature]
+        if auth.nil? || ((Time.now.to_i - auth[:timestamp].to_i) > 30) || signature != auth[:signature]
           render json: {error: 'invalid auth'}, status: 401 and return
         end
       end
