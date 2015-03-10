@@ -30,6 +30,10 @@ class HeartablesController < ApplicationController
         @heart.product.try(:id)
       )
 
+      PusherWorker.new.perform(heartable.user.pusher_channel, 'HEART_RECEIVED', {
+          heartsCount: (heartable.user.hearts_received + 1),
+        }, socket_id: params[:socket_id])
+
       render json: {
         heartable_id: @heart.heartable_id,
         heartable_type: @heart.heartable_type,
@@ -37,21 +41,6 @@ class HeartablesController < ApplicationController
       }
     else
       render status: :unprocessable_entity, json: @heart.errors
-    end
-  end
-
-  def unlove
-    @heart = Heart.find_by(heartable_id: heart_params[:id], user: current_user)
-    if @heart
-      @heart.heartable.try(:unhearted, @heart) if @heart.destroy
-
-      render json: {
-        heartable_id: @heart.heartable_id,
-        heartable_type: @heart.heartable_type,
-        hearts_count: @heart.heartable.hearts_count
-      }
-    else
-      render status: 404, json: {"error" => "not found"}
     end
   end
 

@@ -117,9 +117,7 @@ var Heart = React.createClass({
 
   handleClick: function() {
     if (UserStore.isSignedIn()) {
-      if (this.state.user_heart) {
-        LoveActionCreators.clickUnlove(this.props.heartable_type, this.props.heartable_id)
-      } else {
+      if (!this.state.user_heart) {
         LoveActionCreators.clickLove(this.props.heartable_type, this.props.heartable_id)
       }
     } else {

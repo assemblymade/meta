@@ -20,7 +20,6 @@ var DropdownNotificationsToggler = React.createClass({
 
   componentDidMount: function() {
     StoryStore.addChangeListener(this._onChange);
-    StoryActions.fetchStories()
   },
 
   componentWillUnmount: function() {

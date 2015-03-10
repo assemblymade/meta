@@ -17,21 +17,6 @@ module.exports = {
     })
   },
 
-  clickUnlove: function(heartable_type, heartable_id) {
-    Dispatcher.dispatch({
-      type: ActionTypes.LOVE_UNCLICKED,
-      heartable_type: heartable_type,
-      heartable_id: heartable_id
-    })
-
-    $.ajax({
-      url: '/heartables/unlove',
-      type: 'POST',
-      dataType: 'json',
-      data: { type: heartable_type, id: heartable_id }
-    })
-  },
-
   retrieveAllHearts: function(heartable_id) {
     $.ajax({
       url: '/heartables/hearts',
