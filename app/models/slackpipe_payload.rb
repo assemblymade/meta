@@ -1,4 +1,4 @@
-def SlackpipePayload
+class SlackpipePayload
   def self.deploy!(body={})
     timestamp = Time.now.to_i
     prehash = "#{timestamp}#{body[:message].to_json}"
