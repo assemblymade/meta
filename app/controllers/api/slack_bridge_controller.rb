@@ -4,18 +4,15 @@ module Api
 
     def receive
       # only allow messages with whitelisted subtypes
-
-      message = params[:data][:message]
-      user = params[:data][:user]
       product_slug = params[:data][:product]
 
-      body = message[:msg_text]
+      body = params[:data][:message]
 
       product = Product.find_by!(slug: product_slug)
       
-      user = User.find_by(email: user[:email])
-      user = User.find_by(username: user[:slack_handle]) if user.nil?
-      user = User.find_by(name: user[:full_name]) if user.nil?
+      user = User.find_by(email: params[:data][:user_email])
+      user = User.find_by(username: params[:data][:user_username]) if user.nil?
+      user = User.find_by(name: params[:data][:user_full_name]) if user.nil?
       # fall back to kernel if still not found
       render json: "error", status: 500 and return if user.nil?
 
