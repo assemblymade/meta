@@ -8,7 +8,9 @@ class Idea < ActiveRecord::Base
 
   belongs_to :product
   belongs_to :user
+  belongs_to :stage
 
+  has_many :checklist_items
   has_many :markings, as: :markable
   has_many :marks, through: :markings
   has_one :news_feed_item, foreign_key: 'target_id'
@@ -22,9 +24,11 @@ class Idea < ActiveRecord::Base
   validate :idea_and_product_have_same_user
 
   before_validation :set_tilting_threshold!, on: :create
+  before_validation :set_stage, on: :create
 
   after_commit :ensure_news_feed_item, on: :create
   after_commit :update_news_feed_item, on: :update
+  after_commit :create_checklist_items, on: :create
 
   default_scope -> { where(deleted_at: nil) }
 
@@ -81,7 +85,10 @@ class Idea < ActiveRecord::Base
 
   def self.create_with_discussion(user, idea_params)
     idea = transaction do
+      puts "RIGHT HERE"
+      puts idea_params
       idea = user.ideas.create(idea_params)
+
       idea.push_to_news_feed
       idea
     end
@@ -273,6 +280,17 @@ class Idea < ActiveRecord::Base
 
   def tweet_creation
     Tweeter.new.tweet_idea(self)
+  end
+
+  def set_stage
+    idea_stage = Stage.find_by(name: "Idea")
+    self.stage = idea_stage
+  end
+
+  def create_checklist_items
+    self.stage.checklist_types.each do |a|
+      ChecklistItem.create!({checklist_type: a, idea: self, state: "unfulfilled"})
+    end
   end
 
 end

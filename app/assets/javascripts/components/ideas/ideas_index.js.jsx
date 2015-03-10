@@ -62,8 +62,8 @@ let IdeasIndex = React.createClass({
     return (
       <main role="main  bg-white">
         <Jumbotron>
-          <h1 className="mt0 mb3 center white">Create What You've Wanted to Exist.</h1>
-          <h1 className="mt0 mb3 center white">And Own it.</h1>
+          <h1 className="center white">Create What You've Wanted to Exist.</h1>
+          <h1 className="center white">And Own it.</h1>
           <div className="center">
             <h4 className="white">We're building distributed businesses</h4>
             {this.renderProgress()}
@@ -105,36 +105,43 @@ let IdeasIndex = React.createClass({
         <li>
           <div className="step active">1</div>
           <div className="body">
-            <a href="/create"><strong>Share your idea</strong></a>
-            <div className="gray-2">Any really good web or mobile app idea works.</div>
+            <a href="/create"><strong>Idea</strong></a>
+            <div className="gray-2">Every great company begins as an Idea.</div>
           </div>
         </li>
         <li>
           <div className="step">2</div>
           <div className="body">
-            <strong>Build a team</strong>
-            <div className="gray-2">Work together here in your own online space.</div>
+            <strong>Recruit</strong>
+            <div className="gray-2">Find the partners who can help make it real.</div>
           </div>
         </li>
         <li>
         <div className="step">3</div>
         <div className="body">
-          <strong>Ship it</strong>
-          <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
+          <strong>Get Started</strong>
+          <div className="gray-2">Lay the groundwork for a thriving project.</div>
         </div>
       </li>
       <li>
         <div className="step">4</div>
         <div className="body">
-          <strong>Share its success</strong>
-          <div className="gray-2">We make sure everyone who helped gets paid.</div>
+          <strong>Build an MVP</strong>
+          <div className="gray-2">Build a minimum viable product.  Create something beautiful.</div>
         </div>
       </li>
       <li>
         <div className="step">5</div>
         <div className="body">
-          <strong>Grow it</strong>
-          <div className="gray-2">Let’s scale it to the moon together.</div>
+          <strong>Launch</strong>
+          <div className="gray-2">Tell the world about what you've built.</div>
+        </div>
+      </li>
+      <li>
+        <div className="step">6</div>
+        <div className="body">
+          <strong>Grow</strong>
+          <div className="gray-2">Take your product to the next level.  Iterate, improve, and grow.  The world is your oyster</div>
         </div>
       </li>
       <li className="overlay"></li>
