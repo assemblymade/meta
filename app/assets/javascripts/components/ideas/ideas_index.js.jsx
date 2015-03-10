@@ -61,11 +61,13 @@ let IdeasIndex = React.createClass({
 
     return (
       <main role="main  bg-white">
-
         <Jumbotron>
-          <h1 className="mt0 mb3 center white">The fast lane for bringing ideas to life</h1>
+          <h1 className="mt0 mb3 center white">Create What You've Wanted to Exist.</h1>
+          <h1 className="mt0 mb3 center white">And Own it.</h1>
           <div className="center">
-            <Button action="/ideas/new">Submit your idea</Button>
+            <h4 className="white">We're building distributed businesses</h4>
+            {this.renderProgress()}
+            <Button action="/ideas/new">Start with an idea</Button>
           </div>
         </Jumbotron>
 
@@ -94,6 +96,51 @@ let IdeasIndex = React.createClass({
         </section>
       </main>
     );
+  },
+
+  renderProgress() {
+    return (
+      <ul className="list list-steps hidden-xs hidden-sm">
+        <li className="overlay"></li>
+        <li>
+          <div className="step active">1</div>
+          <div className="body">
+            <a href="/create"><strong>Share your idea</strong></a>
+            <div className="gray-2">Any really good web or mobile app idea works.</div>
+          </div>
+        </li>
+        <li>
+          <div className="step">2</div>
+          <div className="body">
+            <strong>Build a team</strong>
+            <div className="gray-2">Work together here in your own online space.</div>
+          </div>
+        </li>
+        <li>
+        <div className="step">3</div>
+        <div className="body">
+          <strong>Ship it</strong>
+          <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
+        </div>
+      </li>
+      <li>
+        <div className="step">4</div>
+        <div className="body">
+          <strong>Share its success</strong>
+          <div className="gray-2">We make sure everyone who helped gets paid.</div>
+        </div>
+      </li>
+      <li>
+        <div className="step">5</div>
+        <div className="body">
+          <strong>Grow it</strong>
+          <div className="gray-2">Let’s scale it to the moon together.</div>
+        </div>
+      </li>
+      <li className="overlay"></li>
+    </ul>
+
+    )
   },
 
   renderHeader() {
