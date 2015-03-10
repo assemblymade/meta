@@ -47,14 +47,15 @@ module Api
             )
           end
 
-          SlackpipeWorker.perform_async({
-            message: {
-              product: @chat_room.slug,
-              text: body,
-              user_handle: "#{current_user.username} (asm)",
-              user_avatar: current_user.avatar.url.to_s
-            }
-          })
+          SlackpipeWorker.perform_async(
+            SlackpipePayload.prepare({
+              message: {
+                product: @chat_room.slug,
+                text: body,
+                user_handle: "#{current_user.username} (asm)",
+                user_avatar: current_user.avatar.url.to_s
+              }
+            }))
         end
 
         respond_to do |format|

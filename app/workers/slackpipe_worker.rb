@@ -7,6 +7,6 @@ class SlackpipeWorker < WebhookWorker
     # signature = Base64.encode64(hash)
     # SlackpipePayload.prepare(body)
 
-    post ENV['SLACKPIPE_URL'], SlackpipePayload.prepare(body)
+    post ENV['SLACKPIPE_URL'], body
   end
 end
