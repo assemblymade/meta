@@ -93,7 +93,7 @@ module Api
         signature = Base64.encode64(hash)
 
         if auth.nil? || ((Time.now.to_i - auth[:timestamp].to_i) > 30) || signature != auth[:signature]
-          render json: {error: 'invalid auth'}, status: 401 and return
+          render json: {error: "prehash: #{prehash} time: #{((Time.now.to_i - auth[:timestamp].to_i) > 30)} sig: #{signature != auth[:signature]}"}, status: 401 and return
         end
       end
   end
