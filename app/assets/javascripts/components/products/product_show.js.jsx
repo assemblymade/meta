@@ -248,7 +248,7 @@ let ProductShow = React.createClass({
   },
 
   renderUpdates() {
-    return _.last(this.state.updates, 3).map(function(update) {
+    return _.first(this.state.updates, 3).map(function(update) {
       if (update.body) {
         return <a className="block clearfix p2 rounded bg-gray-6-hover" href={update.url} key={update.id}>
           <div className="right mt1 ml2">
