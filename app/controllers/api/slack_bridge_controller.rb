@@ -84,16 +84,17 @@ module Api
       def verify_auth
         auth = params.delete(:auth)
         payload = params[:data]
-
-        body = payload.to_json
+        puts "#{payload}"
+        body = payload
+        puts "#{body.to_json}"
         timestamp = auth[:timestamp]
-        prehash = "#{timestamp}#{body}"
+        prehash = "#{timestamp}#{body.to_json}"
         secret = Base64.decode64(ENV['SLACKPIPE_SECRET'])
         hash = OpenSSL::HMAC.digest('sha256', secret, prehash)
         signature = Base64.encode64(hash)
 
         if auth.nil? || ((Time.now.to_i - auth[:timestamp].to_i) > 30) || signature != auth[:signature]
-          render json: {error: "prehash: #{prehash} time: #{((Time.now.to_i - auth[:timestamp].to_i) > 30)} sig: #{signature != auth[:signature]}"}, status: 401 and return
+          render json: {error: "prehash: #{prehash} \n\n time: #{((Time.now.to_i - auth[:timestamp].to_i) > 30)} \n\n sig: #{signature != auth[:signature]}"}, status: 401 and return
         end
       end
   end
