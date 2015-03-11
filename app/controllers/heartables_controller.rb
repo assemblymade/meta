@@ -30,7 +30,7 @@ class HeartablesController < ApplicationController
         @heart.product.try(:id)
       )
 
-      PusherWorker.new.perform(heartable.user.pusher_channel, 'HEART_RECEIVED', {
+      PusherWorker.perform_async(heartable.user.pusher_channel, 'HEART_RECEIVED', {
           heartsCount: (heartable.user.hearts_received + 1),
         }, socket_id: params[:socket_id])
 
