@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310203730) do
+ActiveRecord::Schema.define(version: 20150310212204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "uuid-ossp"
@@ -1072,6 +1072,7 @@ ActiveRecord::Schema.define(version: 20150310203730) do
     t.datetime "showcase_banner_dismissed_at"
     t.uuid     "leader_position_id"
     t.datetime "coin_callout_viewed_at"
+    t.integer  "hearts_received",                               default: 0,       null: false
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
