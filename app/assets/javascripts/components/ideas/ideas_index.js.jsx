@@ -60,14 +60,16 @@ let IdeasIndex = React.createClass({
     }
 
     return (
-      <main role="main  bg-white">
+      <main role="main bg-white">
         <Jumbotron>
-          <h1 className="center white">Create What You've Wanted to Exist.</h1>
-          <h1 className="center white">And Own it.</h1>
-          <div className="center">
-            <h4 className="white">We're building distributed businesses</h4>
-            {this.renderProgress()}
-            <Button action="/ideas/new">Start with an idea</Button>
+          <div className="pitch pt0 pb2">
+            <h1 className="mt0 mb3 center white">What do you wish existed?</h1>
+            <h3 className="center white">Build distributed businesses with the Assembly community of <br />
+          creatives, designers, and developers</h3>
+          </div>
+          <div className="center mt2 white">
+            <p>Submit your idea or vote for ones you like</p>
+            <a href="/ideas/new" className="btn btn-success btn-lg">Submit your idea</a>
           </div>
         </Jumbotron>
 
@@ -77,7 +79,6 @@ let IdeasIndex = React.createClass({
 
               <div className="py4">
                 <Nav>
-
                   <Nav.Item label="Trending" href="/ideas?sort=trending" />
                   <Nav.Item label="New" href="/ideas?sort=newness" />
                   {this.renderMyIdeas()}

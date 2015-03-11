@@ -24,6 +24,7 @@ const Tile = require('../ui/tile.js.jsx');
 const UserStore = require('../../stores/user_store');
 const Checklist = require('../checklist.js.jsx');
 const ChecklistStore = require('../../stores/checklist_store.js')
+const ProductStateIndicator = require('../product_state_indicator.js.jsx');
 
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
@@ -130,18 +131,9 @@ let IdeaShow = React.createClass({
     return (
       <div>
 
-        <div className="subnav bg-white py3 md-show lg-show mb3">
-          <div className="container clearfix">
-            <div className="left">
-              <h4 className="mt2 mb2">
-                Turn ideas into great products with people around the world
-              </h4>
-            </div>
-            <div className="right py1">
-              <Button action={function() { page('/ideas/new'); }}>
-                Start your product idea
-              </Button>
-            </div>
+        <div className="subnav bg-white md-show lg-show mb3">
+          <div className="container clearfix center">
+            <ProductStateIndicator />
           </div>
         </div>
 
@@ -157,7 +149,39 @@ let IdeaShow = React.createClass({
             <div className="col col-4 px2">
 
               <div className="mb3">
-                <Checklist entity_type={"Idea"} checklistItems={this.state.checklistItems} />
+                <Tile>
+                  <ProductStateIndicator />
+
+                  <div className="p3">
+                    <Heart size="button" heartable_id={nfi.id} heartable_type="NewsFeedItem" />
+                  </div>
+
+                  <Drawer open={this.state.heart.user_heart}>
+                    <div className="p3 bg-gray-6 border-top border-gray-5">
+                      <div className="h6 center gray-2">
+                        Spread this idea to help it become reality
+                      </div>
+
+                      <ul className="h3 list-reset clearfix mxn1 mb0">
+                        <li className="left p1">
+                          <a className="gray-3 gray-2-hover bold clickable" onClick={this.handleTwitterClick}>
+                            <Icon icon="twitter" />
+                          </a>
+                        </li>
+                        <li className="left p1">
+                          <a className="gray-3 gray-2-hover bold" href="#" onClick={this.handleFacebookClick}><Icon icon="facebook" /></a>
+                        </li>
+                        <li className="left p1">
+                          <a className="gray-3 gray-2-hover bold" href={this.mailToLink()}>
+                            <Icon icon="envelope" />
+                          </a>
+                        </li>
+                      </ul>
+
+                    </div>
+                  </Drawer>
+
+                </Tile>
               </div>
             </div>
           </div>
