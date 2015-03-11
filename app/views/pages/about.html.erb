@@ -447,33 +447,6 @@
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </section>
 
-
-  <!-- The Team -->
-
-  <div class="bg-gray-6 py4">
-    <div class="container">
-      <h2 class="center">The Team</h2>
-      <div class="sm-col-8 mx-auto">
-        <div class="clearfix mxn3">
-          <% AssemblyTeam.all.shuffle.each do |user| %>
-            <div class="col col-6 sm-col-3 center p3">
-              <a href="<%= user_url(user) %>">
-                <div class="mx-auto mb2" style="width:96px">
-                  <%= react_component 'Avatar', user: AvatarSerializer.new(user), size: 96 %>
-                </div>
-                <span class="black bold"><%= user.username %></span>
-              </a>
-
-              <a href="https://twitter.com/<%= user.twitter_nickname %>">
-                <%= react_component 'Icon', icon: 'twitter' %>
-              </a>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <section class="_hero hero-about-bottom"> <!-- .hero namespace is being used by legacy code. refactor -->
     <div class="main">
       <div class="container">
