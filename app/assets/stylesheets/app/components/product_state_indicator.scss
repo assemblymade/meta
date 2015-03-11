@@ -6,10 +6,13 @@
   }
   .indicator-container li {
     list-style-type: none;
-    color: white;
+    color: $gray-4;
+    font-weight: bold;
     width: 16.5%;
+    font-size: 13px;
     float: left;
     position: relative;
+    text-align: center;
   }
   .indicator-container li:before {
     content: '.';
@@ -17,8 +20,8 @@
     line-height: 12px;
     display: block;
     font-size: 10px;
-    color: $gray-6;
-    background: $gray-6;
+    color: $gray-4;
+    background: $gray-4;
     border-radius: 6px;
     margin: 4px auto 5px auto;
     z-index:2;
@@ -28,7 +31,7 @@
     content: '';
     width: 100%;
     height: 2px;
-    background: $gray-6;
+    background: $gray-4;
     position: absolute;
     left: -50%;
     top: 9px;
