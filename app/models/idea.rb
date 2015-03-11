@@ -24,9 +24,9 @@ class Idea < ActiveRecord::Base
   validate :idea_and_product_have_same_user
 
   before_validation :set_tilting_threshold!, on: :create
+  before_validation :set_stage, on: :create
 
   after_commit :ensure_news_feed_item, on: :create
-  after_commit :set_stage, on: :create
   after_commit :update_news_feed_item, on: :update
 
   default_scope -> { where(deleted_at: nil) }
@@ -282,7 +282,7 @@ class Idea < ActiveRecord::Base
   end
 
   def set_stage
-    self.update!(stage: Stage.find_by(name: "Idea"))
+    self.stage = Stage.find_by(name: "Idea")
   end
 
 end

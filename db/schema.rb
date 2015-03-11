@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310212204) do
+ActiveRecord::Schema.define(version: 20150311211134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "uuid-ossp"
@@ -358,6 +358,7 @@ ActiveRecord::Schema.define(version: 20150310212204) do
     t.text     "categories",                     default: [],                                 array: true
     t.datetime "deleted_at"
     t.datetime "last_tweeted_at"
+    t.uuid     "stage_id"
   end
 
   add_index "ideas", ["deleted_at"], name: "index_ideas_on_deleted_at", using: :btree

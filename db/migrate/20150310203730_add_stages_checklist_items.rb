@@ -25,7 +25,5 @@ class AddStagesChecklistItems < ActiveRecord::Migration
     add_column :products, :stage_id, :uuid
     add_index :products, :stage_id
 
-    add_column :idea, :stage_id, :uuid
-
   end
 end
