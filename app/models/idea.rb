@@ -28,6 +28,7 @@ class Idea < ActiveRecord::Base
 
   after_commit :ensure_news_feed_item, on: :create
   after_commit :update_news_feed_item, on: :update
+  after_commit :create_checklist_items, on: :create
 
   default_scope -> { where(deleted_at: nil) }
 
@@ -282,7 +283,14 @@ class Idea < ActiveRecord::Base
   end
 
   def set_stage
-    self.stage = Stage.find_by(name: "Idea")
+    idea_stage = Stage.find_by(name: "Idea")
+    self.stage = idea_stage
+  end
+
+  def create_checklist_items
+    self.stage.checklist_types.each do |a|
+      ChecklistItem.create!({checklist_type: a, idea: self, state: "unfulfilled"})
+    end
   end
 
 end

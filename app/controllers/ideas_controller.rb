@@ -64,6 +64,12 @@ class IdeasController < ProductController
     respond_with({})
   end
 
+  def checklistitems
+    puts params
+    @idea = Idea.find_by(name: params[:idea_id])
+    render json: @idea.checklist_items.map{|a| {state: a.state, type: a.checklist_type.name, description: a.checklist_type.description}}
+  end
+
   def show
     find_idea!
 
@@ -162,9 +168,6 @@ class IdeasController < ProductController
 
   def filter_params
     params.permit([:filter, :mark, :sort, :topic, :user])
-  end
-
-  def checklistitems
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311211134) do
+ActiveRecord::Schema.define(version: 20150311223309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "uuid-ossp"
@@ -130,11 +130,13 @@ ActiveRecord::Schema.define(version: 20150311211134) do
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
 
   create_table "checklist_items", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.string   "state"
     t.uuid     "user_id"
     t.uuid     "product_id"
+    t.uuid     "checklist_type_id"
+    t.uuid     "idea_id"
   end
 
   create_table "checklist_types", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|

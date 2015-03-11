@@ -6,7 +6,6 @@ class AddStagesChecklistItems < ActiveRecord::Migration
       t.string :state
       t.uuid :user_id
       t.uuid :product_id
-      t.uuid :idea_id
     end
 
     create_table :stages, id: :uuid do |t|
