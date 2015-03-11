@@ -9,14 +9,20 @@ module Api
       body = params[:data][:message]
 
       product = Product.find_by!(slug: product_slug)
-      
+
+      chat_room_slug = product_slug
+
+      if product_slug == 'meta'
+        chat_room_slug = 'general'
+      end
+
       user = User.find_by(email: params[:data][:user_email])
       user = User.find_by(username: params[:data][:user_username]) if user.nil?
       user = User.find_by(name: params[:data][:user_full_name]) if user.nil?
       # fall back to kernel if still not found
       render json: "error", status: 500 and return if user.nil?
 
-      @chat_room = ChatRoom.includes(:wip).find_by!(slug: product_slug)
+      @chat_room = ChatRoom.includes(:wip).find_by!(slug: chat_room_slug)
       @chat_room.with_lock do
         @event = Event::Comment.create(
           user: user,

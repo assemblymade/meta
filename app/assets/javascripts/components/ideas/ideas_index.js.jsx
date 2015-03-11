@@ -77,7 +77,6 @@ let IdeasIndex = React.createClass({
 
               <div className="py4">
                 <Nav>
-
                   <Nav.Item label="Trending" href="/ideas?sort=trending" />
                   <Nav.Item label="New" href="/ideas?sort=newness" />
                   {this.renderMyIdeas()}
