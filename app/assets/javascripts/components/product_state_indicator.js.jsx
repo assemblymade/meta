@@ -2,8 +2,36 @@
 
 var ProductStateIndicator = React.createClass({
 
+  propTypes: {
+    stages: React.PropTypes.array.isRequired,
+    labeled: React.PropTypes.bool,
+    activeStage: React.PropTypes.number
+  },
+
   getDefaultProps: function() {
-    return
+    return {
+      stages: [
+        'stage 1',
+        'stage 2',
+        'stage 3',
+        'stage 4',
+        'stage 5',
+        'stage 6'
+      ],
+      labeled: false,
+      activeStage: 0
+    }
+  },
+
+  renderStages: function() {
+    var activeStage = this.props.activeStage
+    var stages = this.props.stages.map(function(stage, index) {
+      var active = index < activeStage ? 'active' : ''
+      return (
+        <li className={active}>{stage}</li>
+      )
+    });
+    return stages
   },
 
   render: function() {
@@ -17,12 +45,7 @@ var ProductStateIndicator = React.createClass({
         </div>
         <div className="col-sm-12">
           <ul className="indicator-container mb3">
-            <li className="active"></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            {this.renderStages()}
           </ul>
         </div>
       </div>
