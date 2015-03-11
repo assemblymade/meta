@@ -66,7 +66,7 @@
 
 .list-steps {
   height: 0;
-  margin-top: 150px;
+  margin-top: 100px;
   padding-left: 0;
   border: 1px dashed $gray-6;
   position: relative;
@@ -74,7 +74,7 @@
 
   > li {
     float: left;
-    height: 70px;
+    height: 50px;
     list-style-type: none;
     position: relative;
     text-align: center;
@@ -102,7 +102,7 @@
     }
 
     > .body {
-      margin-top: -130px;
+      margin-top: -75px;
       width: 100%
 
       strong {

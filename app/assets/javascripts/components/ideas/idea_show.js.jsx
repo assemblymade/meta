@@ -22,6 +22,7 @@ const SvgIcon = require('../ui/svg_icon.js.jsx');
 const TextPost = require('../ui/text_post.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const UserStore = require('../../stores/user_store');
+const ProductStateIndicator = require('../product_state_indicator.js.jsx');
 
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
@@ -120,18 +121,9 @@ let IdeaShow = React.createClass({
     return (
       <div>
 
-        <div className="subnav bg-white py3 md-show lg-show mb3">
-          <div className="container clearfix">
-            <div className="left">
-              <h4 className="mt2 mb2">
-                Turn ideas into great products with people around the world
-              </h4>
-            </div>
-            <div className="right py1">
-              <Button action={function() { page('/ideas/new'); }}>
-                Start your product idea
-              </Button>
-            </div>
+        <div className="subnav bg-white md-show lg-show mb3">
+          <div className="container clearfix center">
+            <ProductStateIndicator />
           </div>
         </div>
 
@@ -148,8 +140,9 @@ let IdeaShow = React.createClass({
 
               <div className="mb3">
                 <Tile>
-                  <div className="p3">
+                  <ProductStateIndicator />
 
+                  <div className="p3">
                     <Heart size="button" heartable_id={nfi.id} heartable_type="NewsFeedItem" />
                   </div>
 
