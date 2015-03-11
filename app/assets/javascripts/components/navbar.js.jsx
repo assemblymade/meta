@@ -45,10 +45,6 @@ var Navbar = React.createClass({
           <TitleNotificationsCount />
         </li>
 
-        <li className="left sm-show px1">
-          <HeartsReceived />
-        </li>
-
         {this.state.showStories && this.renderChatNotifications()}
         {this.state.showStories && this.renderStories()}
 
