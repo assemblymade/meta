@@ -7,7 +7,7 @@ class ChatRoomsController < ApplicationController
       format.html { redirect_to chat_room_path('general') }
       format.json {
         @rooms = (
-          [ChatRoom.general] +
+          ChatRoom.where(product_id: nil) +
           ChatRoom.where(product_id: current_user.followed_product_ids).includes(:product).order(:slug)
         ).compact
 
