@@ -62,8 +62,8 @@ let IdeasIndex = React.createClass({
     return (
       <main role="main  bg-white">
         <Jumbotron>
-          <h1 className="mt0 mb3 center white">Create What You've Wanted to Exist.</h1>
-          <h1 className="mt0 mb3 center white">And Own it.</h1>
+          <h1 className="center white">Create What You've Wanted to Exist.</h1>
+          <h1 className="center white">And Own it.</h1>
           <div className="center">
             <h4 className="white">We're building distributed businesses</h4>
             {this.renderProgress()}

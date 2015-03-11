@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310015640) do
+ActiveRecord::Schema.define(version: 20150310203730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "uuid-ossp"
@@ -128,6 +128,20 @@ ActiveRecord::Schema.define(version: 20150310015640) do
   end
 
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
+
+  create_table "checklist_items", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "state"
+    t.uuid     "user_id"
+    t.uuid     "product_id"
+  end
+
+  create_table "checklist_types", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.uuid   "stage_id"
+  end
 
   create_table "choices", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.float    "value"
@@ -720,6 +734,7 @@ ActiveRecord::Schema.define(version: 20150310015640) do
     t.text     "asmlytics_key"
     t.integer  "total_visitors",                                default: 0,    null: false
     t.text     "analytics_category"
+    t.uuid     "stage_id"
   end
 
   add_index "products", ["asmlytics_key"], name: "index_products_on_asmlytics_key", unique: true, using: :btree
@@ -728,6 +743,7 @@ ActiveRecord::Schema.define(version: 20150310015640) do
   add_index "products", ["profitable_at"], name: "index_products_on_profitable_at", using: :btree
   add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
+  add_index "products", ["stage_id"], name: "index_products_on_stage_id", using: :btree
   add_index "products", ["started_team_building_at"], name: "index_products_on_started_team_building_at", using: :btree
   add_index "products", ["state"], name: "index_products_on_state", using: :btree
 
@@ -789,6 +805,13 @@ ActiveRecord::Schema.define(version: 20150310015640) do
   end
 
   add_index "showcases", ["ended_at"], name: "index_showcases_on_ended_at", using: :btree
+
+  create_table "stages", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "description"
+  end
 
   create_table "status_messages", id: :uuid, force: :cascade do |t|
     t.uuid     "product_id",             null: false

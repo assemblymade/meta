@@ -22,6 +22,7 @@ const SvgIcon = require('../ui/svg_icon.js.jsx');
 const TextPost = require('../ui/text_post.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const UserStore = require('../../stores/user_store');
+const Checklist = require('../checklist.js.jsx');
 
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
@@ -147,38 +148,7 @@ let IdeaShow = React.createClass({
             <div className="col col-4 px2">
 
               <div className="mb3">
-                <Tile>
-                  <div className="p3">
-
-                    <Heart size="button" heartable_id={nfi.id} heartable_type="NewsFeedItem" />
-                  </div>
-
-                  <Drawer open={this.state.heart.user_heart}>
-                    <div className="p3 bg-gray-6 border-top border-gray-5">
-                      <div className="h6 center gray-2">
-                        Spread this idea to help it become reality
-                      </div>
-
-                      <ul className="h3 list-reset clearfix mxn1 mb0">
-                        <li className="left p1">
-                          <a className="gray-3 gray-2-hover bold clickable" onClick={this.handleTwitterClick}>
-                            <Icon icon="twitter" />
-                          </a>
-                        </li>
-                        <li className="left p1">
-                          <a className="gray-3 gray-2-hover bold" href="#" onClick={this.handleFacebookClick}><Icon icon="facebook" /></a>
-                        </li>
-                        <li className="left p1">
-                          <a className="gray-3 gray-2-hover bold" href={this.mailToLink()}>
-                            <Icon icon="envelope" />
-                          </a>
-                        </li>
-                      </ul>
-
-                    </div>
-                  </Drawer>
-
-                </Tile>
+                <Checklist checklistItems={[{name: 'do something', progressText: '1/3 stuff done'}, {name: 'other stuff', state: 'passed'}]} />
               </div>
             </div>
           </div>
