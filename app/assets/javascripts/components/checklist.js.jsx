@@ -4,7 +4,8 @@ const Button = require('./ui/button.js.jsx');
 var Checklist = React.createClass({
 
   propTypes: {
-    checklistItems: React.PropTypes.array
+    checklistItems: React.PropTypes.array,
+    entity_type: React.PropTypes.string
   },
 
   renderChecklistItems: function() {

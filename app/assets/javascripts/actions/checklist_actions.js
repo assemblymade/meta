@@ -4,11 +4,11 @@ var routes = require('../routes');
 
 var ChecklistActions = {
 
-  fetchChecklists: function(product) {
+  fetchIdeaChecklists: function(idea) {
     var options = {}
 
     $.ajax({
-      url: "/"+product.name+"/checklist",
+      url: "/ideas/"+idea.name+"/checklistitems",
       type: 'GET',
       dataType: 'json',
       success: function(data) {

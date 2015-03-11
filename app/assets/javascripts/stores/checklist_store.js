@@ -5,10 +5,7 @@ var StoryActions = require('../actions/story_actions')
 var UserStore = require('./user_store')
 
 var _dispatchToken,
-    _more = true,
-    _stories = null
-
-var _readStateReadAt = null
+    _checklists
 
 class ChecklistStore extends Store {
   constructor() {
@@ -17,16 +14,16 @@ class ChecklistStore extends Store {
     _dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {
         case ActionTypes.CHECKLIST_CHANGE:
-          ChecklistActions.fetchChecklists()
+          ChecklistActions.fetchIdeaChecklists(action.idea_name)
           this.emitChange()
       }
     })
   }
 
   getChecklistItems() {
-    return _more
+    return _checklists
   }
 
 }
 
-module.exports = new ChecklistStore()
+module.exports = new ChecklistStore;
