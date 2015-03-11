@@ -163,4 +163,8 @@ class IdeasController < ProductController
   def filter_params
     params.permit([:filter, :mark, :sort, :topic, :user])
   end
+
+  def checklistitems
+  end
+
 end
