@@ -814,6 +814,7 @@ ActiveRecord::Schema.define(version: 20150311223309) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
+    t.integer  "order"
   end
 
   create_table "status_messages", id: :uuid, force: :cascade do |t|
