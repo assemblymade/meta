@@ -22,8 +22,8 @@ class Tweeter
       product: product)
       .with_cents.group(:wallet_id).sum(:cents)
       .sort_by{|a, b| -b}
-      .take(12).map{|a, b| User.find_by(id: a)}
-      .select{|a| a}.map{|a| a.username}.sample(n)
+      .take(15).map{|a, b| User.find_by(id: a)}
+      .select{|a| a}.map{|a| a.twitter_nickname}.select{|a| a}.sample(n)
 
     participants = participants + random_owners
     participants.uniq
