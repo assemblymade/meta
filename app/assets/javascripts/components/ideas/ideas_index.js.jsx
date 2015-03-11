@@ -68,8 +68,8 @@ let IdeasIndex = React.createClass({
           creatives, designers, and developers</h3>
           </div>
           <div className="center mt2 white">
-            <p>Submit your idea or vote for ones you like</p>
             <a href="/ideas/new" className="btn btn-success btn-lg">Submit your idea</a>
+            <p className="mt2"><a href="/start" className="white">Learn more</a></p>
           </div>
         </Jumbotron>
 
