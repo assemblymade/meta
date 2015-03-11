@@ -95,6 +95,16 @@ class UsersController < ApplicationController
     render nothing: true, status: 204
   end
 
+  def heart_stories
+    set_user
+    query = HeartStoriesQuery.new(@user, params)
+
+    render json: {
+      stories: ActiveModel::ArraySerializer.new(query.stories, each_serializer: HeartStorySerializer),
+      users: ActiveModel::ArraySerializer.new(User.find(query.hearter_ids))
+    }
+  end
+
   def search
     users = User.by_partial_match(params[:query]).order(:name)
     suggestions = users.map do |user|

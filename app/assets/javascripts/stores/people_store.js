@@ -7,7 +7,7 @@ var _people = {};
 var _store = Object.create(Store);
 var _peopleStore = _.extend(_store, {
   destroy: function() {
-    Dispatcher.remove(dispatchIndex);
+    Dispatcher.remove(dispatchToken);
   },
 
   // TODO: remove this, stores shouldn't have setters
@@ -23,6 +23,10 @@ var _peopleStore = _.extend(_store, {
 
   getPeople: function() {
     return _.values(_people);
+  },
+
+  getById: function(id) {
+    return _people[id]
   },
 
   getPerson: function(username) {
@@ -44,7 +48,7 @@ var _peopleStore = _.extend(_store, {
   }
 });
 
-_store.dispatchIndex = Dispatcher.register(function(payload) {
+_store.dispatchToken = Dispatcher.register(function(payload) {
   var action = payload.action;
   var data = payload.data;
 
@@ -54,6 +58,13 @@ _store.dispatchIndex = Dispatcher.register(function(payload) {
   switch(payload.type) {
     case ActionTypes.PEOPLE_RECEIVE:
       _(payload.people).each(function(user){
+        _people[user.id] = user
+      })
+      _peopleStore.emitChange();
+      break;
+
+    case ActionTypes.HEARTS_STORIES_RECEIVE:
+      _(payload.users).each(user => {
         _people[user.id] = user
       })
       _peopleStore.emitChange();

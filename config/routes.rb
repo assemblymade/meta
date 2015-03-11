@@ -106,6 +106,7 @@ ASM::Application.routes.draw do
 
     resources :users, only: [:show, :update] do
       patch :flag, on: :member
+      get :heart_stories, on: :member
       patch :unflag, on: :member
       patch :delete_account, on: :member
     end

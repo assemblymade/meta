@@ -11,7 +11,7 @@ var Store = require('./store');
     }
   });
 
-  _store.dispatchIndex = Dispatcher.register(function(payload) {
+  _store.dispatchToken = Dispatcher.register(function(payload) {
     var action = payload.action;
     var data = payload.data;
 

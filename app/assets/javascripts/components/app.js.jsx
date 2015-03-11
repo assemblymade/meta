@@ -5,6 +5,9 @@ var AppIcon = require('./app_icon.js.jsx')
 var Tile = require('./ui/tile.js.jsx')
 var Label = require('./ui/label.js.jsx')
 
+// root level components
+window.UserProfile = require('./user/user_profile.js.jsx')
+
 var App = React.createClass({
 
   propTypes: {

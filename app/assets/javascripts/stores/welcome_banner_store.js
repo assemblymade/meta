@@ -7,7 +7,7 @@ var _store = Object.create(Store);
 var WelcomeBannerStore = _.extend(_store, {
 });
 
-WelcomeBannerStore.dispatchIndex = Dispatcher.register(function(payload) {
+WelcomeBannerStore.dispatchToken = Dispatcher.register(function(payload) {
   var action = payload.action;
   var data = payload.data;
 

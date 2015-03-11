@@ -53,6 +53,10 @@ en:
           other: '%{name}'
           owner: '%{name}'
 
+        news_feed_item_comment:
+          other: '%{body}'
+          owner: '%{body}'
+
         post:
           other: '%{title}'
           owner: '%{title}'
