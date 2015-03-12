@@ -59,9 +59,13 @@ let ProductSubsections = React.createClass({
         }
 
         renderedSubsections.push(
-          <div className="clearfix py1" key={leftHeading + '-' + i}>
-            {renderedLeft}
-            {renderedRight}
+          <div className="clearfix mxn2 mb3" key={leftHeading + '-' + i}>
+            <div className="col col-6 px2">
+              {renderedLeft}
+            </div>
+            <div className="col col-6 px2">
+              {renderedRight}
+            </div>
           </div>
         );
       }
