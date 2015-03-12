@@ -239,7 +239,7 @@ var ChatNotifications = React.createClass({
       );
     }
 
-    return <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />;
+    return <NotificationsList data={this.sortByLastReadAt(this.state.data)} />;
   },
 
   storedAckChanged: function() {
