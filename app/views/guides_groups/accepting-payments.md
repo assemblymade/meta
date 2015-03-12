@@ -1,5 +1,5 @@
 
-#### Assembly Payments / Stripe
+## Assembly Payments / Stripe
 
 Assembly has built a proxy through Stripe that allows your product to collect
 revenue from customers. Using Assembly payments makes it easy for Assembly to

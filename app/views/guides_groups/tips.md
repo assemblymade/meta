@@ -73,8 +73,6 @@ regular updates to it. Here are a few pertinent things to include:
 - Vision: Where is this product going? Has that changed?
 - Monetization: How will you make money?
 
-<!— Circle back on this # Marketing wip # Monetizing wip —>
-
 # Etiquette
 
 If you want to work on a bounty, first see if it looks like anyone else has
