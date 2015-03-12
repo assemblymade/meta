@@ -61,23 +61,29 @@ let IdeasIndex = React.createClass({
 
     return (
       <main role="main  bg-white">
-        <Jumbotron>
-          <div className="pitch pt0 pb2">
-            <h1 className="mt0 mb3 center white">What do you wish existed?</h1>
-            <h3 className="center white">Build distributed businesses with the Assembly community of <br />
-          creatives, designers, and developers</h3>
+
+        <div className="subnav bg-white py3 md-show lg-show mb3">
+          <div className="container clearfix">
+            <div className="left">
+              <h3 className="mt2 mb2">
+                Make something you've always wanted.
+              </h3>
+              <h4>Start with an idea.  Find collaborators.  Build something real.</h4>
+            </div>
+            <div className="right py1">
+              <Button action={function() { page('/ideas/new'); }}>
+                Start your product idea
+              </Button>
+              <p className="mt2"><a href="/start">Learn more</a></p>
+            </div>
           </div>
-          <div className="center mt2 white">
-            <a href="/ideas/new" className="btn btn-success btn-lg">Submit your idea</a>
-            <p className="mt2"><a href="/start" className="white">Learn more</a></p>
-          </div>
-        </Jumbotron>
+        </div>
 
         <section className="tile-grid tile-grid-ideas" key="ideas-grid">
           <div className="container">
             <div className="header">
 
-              <div className="py4">
+              <div className="py3">
                 <Nav>
                   <Nav.Item label="Trending" href="/ideas?sort=trending" />
                   <Nav.Item label="New" href="/ideas?sort=newness" />
