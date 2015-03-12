@@ -27,12 +27,12 @@ var Checklist = React.createClass({
 
   renderChecklistItems: function() {
     return (
-      _.map(this.props.checklistItems, function(checklistItem) {
-        if (checklistItem.state === "passed") {
+      _.map(this.state.checklistItems, function(item) {
+        if (item.state === "passed") {
           return (
             <li>
               <span className="fa green fa-check-square-o" />
-              <span className="ml2">{checklistItem.name}</span>
+              <span className="ml2">{item.type}</span>
             </li>
           )
         }
@@ -40,12 +40,11 @@ var Checklist = React.createClass({
           return (
             <li>
               <span><input type="checkbox"/></span>
-              <span className="ml2">{checklistItem.name}</span>
-              <small className="gray-4 ml2">{checklistItem.progressText}</small>
+              <span className="ml2">{item.type}</span>
+              <small className="gray-4 ml2">{item.description}</small>
             </li>
           )
         }
-
       })
     )
   },
@@ -55,7 +54,6 @@ var Checklist = React.createClass({
       <Tile>
         <h4 className="center">Move Your Idea Forward</h4>
         <div className="p3">
-            {this.state.checklistItems}
            <ul style={{listStyle: 'none'}}>
             {this.renderChecklistItems()}
            </ul>
