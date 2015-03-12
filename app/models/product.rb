@@ -21,6 +21,9 @@ class Product < ActiveRecord::Base
 
   attr_encryptor :wallet_private_key, :key => ENV["PRODUCT_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
 
+  before_validation :set_stage, on: :create
+  after_commit :create_checklist_items, on: :create
+
   belongs_to :user
   belongs_to :evaluator, class_name: 'User'
   belongs_to :main_thread, class_name: 'Discussion'
@@ -469,6 +472,17 @@ class Product < ActiveRecord::Base
 
   def to_param
     slug || id
+  end
+
+  def set_stage
+    product_stage = Stage.find_by(order: 2)
+    self.stage = product_stage
+  end
+
+  def create_checklist_items
+    self.stage.checklist_types.each do |a|
+      ChecklistItem.create!({checklist_type: a, product: self, state: "unfulfilled"})
+    end
   end
 
   # following

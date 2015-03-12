@@ -27,6 +27,10 @@ class ProductsController < ProductController
     render layout: 'application'
   end
 
+  def checklistitem
+    
+  end
+
   def create
     if idea_id = params[:product][:idea_id]
       @idea = Idea.find(idea_id)
