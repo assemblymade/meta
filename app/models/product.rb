@@ -142,7 +142,7 @@ class Product < ActiveRecord::Base
 
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }, on: :create
-  after_commit -> { assign_stage }, on: :create
+  after_commit -> { set_stage }, on: :create
 
   after_update :update_elasticsearch
 
@@ -477,6 +477,16 @@ class Product < ActiveRecord::Base
   def set_stage
     product_stage = Stage.find_by(order: 2)
     self.stage = product_stage
+  end
+
+  def advance_stage
+    if self.stage
+      n = self.stage.order
+      if n < 6
+        product_stage = Stage.find_by(order: n+1)
+        self.update!({stage: product_stage})
+      end
+    end
   end
 
   def create_checklist_items

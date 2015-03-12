@@ -35,12 +35,32 @@ var Checklist = React.createClass({
     }
   },
 
+  sendUpdate: function(editable_type, path) {
+    console.log("HEYTHERE")
+    var data = {};
+    data[editable_type] = React.findDOMNode(this.refs.edited_data).value;
+    $.ajax({
+      url: path,
+      method: 'PATCH',
+      data:  data,
+      success: function() {
+        window.location.reload(true)
+      },
+      error: function(jqxhr, status) {
+        console.error(status);
+      }
+    })
+  },
+
   renderInputForm: function(item, index) {
     if (this.state.openListItem === index) {
       return (
         <div>
           <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
-          <form><input action={this.props.entity.path + "/update"} method="PATCH" name="name" type="text"></input></form>
+          <form action={this.props.entity.path} method="PATCH">
+            <input name={item.editable_type} type="text" ref="edited_data" />
+          </form>
+          <Button action={this.sendUpdate.bind(null, item.editable_type, this.props.entity.path)}>{item.editable_type}</Button>
         </div>
       )
     }
@@ -62,8 +82,9 @@ var Checklist = React.createClass({
               { item.editable ? this.renderInputForm(item, index) :
                 <span className="ml2">{item.title}</span>
               }
-
-              <small className="gray-4 ml2">{item.smalltext}</small>
+              <span>
+                <small className="gray-4 ml4">{item.smalltext}</small>
+              </span>
             </li>
           )
         }
@@ -71,13 +92,31 @@ var Checklist = React.createClass({
           return (
             <li>
               <span className="fa gray fa-square-o" type="checkbox" />
-              <span className="ml2">{item.title}</span>
+              { item.editable ? this.renderInputForm(item, index) :
+                <span className="ml2">{item.title}</span>
+              }
               <small className="gray-4 ml2">{item.smalltext}</small>
             </li>
           )
         }
       }.bind(this))
     )
+  },
+
+  nextStage: function() {
+    var data = {};
+    var path = this.props.entity.path;
+    $.ajax({
+      url: path,
+      method: 'PATCH',
+      data: data,
+      success: function() {
+        window.location.reload(true)
+      },
+      error: function(jqxhr, status) {
+        console.error(status);
+      }
+    });
   },
 
   render: function() {
@@ -91,7 +130,10 @@ var Checklist = React.createClass({
         </div>
 
         <div className="center mb2">
-          <Button>Progress to Recruitment</Button>
+          <Button action={ function () {
+              window.location = '/create?pitch=' + this.props.entity.tentative_name + '&idea_id=' + this.props.entity.id + '&name=' + 'test';
+            }.bind(this)
+          }>Progress to Recruitment</Button>
         </div>
 
       </Tile>

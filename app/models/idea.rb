@@ -86,7 +86,6 @@ class Idea < ActiveRecord::Base
 
   def self.create_with_discussion(user, idea_params)
     idea = transaction do
-      puts "RIGHT HERE"
       puts idea_params
       idea = user.ideas.create(idea_params)
 
@@ -188,9 +187,15 @@ class Idea < ActiveRecord::Base
 
     name = {}
     name['title'] = "Pick a Name"
-    name['smalltext'] = self.name
-    name['state'] = true
+    if self.tentative_name
+      name['smalltext'] = self.tentative_name
+      name['state'] = true
+    else
+      name['state'] = false
+      name['smalltext'] = "Unnamed"
+    end
     name['editable'] = true
+    name['editable_type'] = 'name'
     checklists.append(name)
 
     comments = {}
@@ -317,6 +322,10 @@ class Idea < ActiveRecord::Base
   def set_stage
     idea_stage = Stage.find_by(name: "Idea")
     self.stage = idea_stage
+  end
+
+  def advance_stage
+    #make this a product...
   end
 
   def create_checklist_items
