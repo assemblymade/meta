@@ -199,7 +199,7 @@ class Idea < ActiveRecord::Base
     checklists.append(name)
 
     comments = {}
-    comments['title'] = "Get Some Feedback"
+    comments['title'] = "Get Feedback"
     comment_n = self.comments.count
     comments['state'] = comment_n >= COMMENT_MINIMUM
     comments['smalltext'] = comment_n.to_s + " comments"
