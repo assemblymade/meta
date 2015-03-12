@@ -100,7 +100,8 @@ class UsersController < ApplicationController
     query = HeartStoriesQuery.new(@user, params)
 
     render json: {
-      stories: ActiveModel::ArraySerializer.new(query.stories, each_serializer: HeartStorySerializer),
+      nfis: ActiveModel::ArraySerializer.new(query.nfis, each_serializer: HeartNFISerializer),
+      comments: ActiveModel::ArraySerializer.new(query.comments, each_serializer: HeartCommentSerializer),
       users: ActiveModel::ArraySerializer.new(User.find(query.hearter_ids))
     }
   end

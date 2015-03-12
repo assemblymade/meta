@@ -26,7 +26,7 @@ class HeartsReceivedStore extends Store {
 
         case ActionTypes.HEARTS_STORIES_RECEIVE:
           Dispatcher.waitFor([PeopleStore.dispatchToken])
-          stories = action.stories
+          stories = _.sortBy(action.nfis.concat(action.comments), s => -moment(s.last_hearted_at).unix())
           this.emitChange()
           break
       }
