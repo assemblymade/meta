@@ -35,6 +35,7 @@ var Checklist = React.createClass({
     }
   },
 
+<<<<<<< HEAD
   sendUpdate: function(editable_type, path) {
     console.log("HEYTHERE")
     console.log(editable_type)
@@ -42,6 +43,11 @@ var Checklist = React.createClass({
     var data = {};
     console.log(React.findDOMNode(this.refs.edited_data))
     data[editable_type] = React.findDOMNode(this.refs.edited_data).value;
+=======
+  sendUpdate: function(editable_type, path, value) {
+    var data = {};
+    data[editable_type] = this.refs.editedData.getDOMNode().value;
+>>>>>>> 11dba0a... textinput value
     $.ajax({
       url: path,
       method: 'PATCH',
@@ -60,8 +66,13 @@ var Checklist = React.createClass({
       return (
         <div>
           <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
+<<<<<<< HEAD
           <form action={this.props.entity.path}>
             <input name={item.editable_type} type="text" ref="edited_data" />
+=======
+          <form action={this.props.entity.path} method="PATCH">
+            <input name={item.editable_type} type="text" ref="editedData" />
+>>>>>>> 11dba0a... textinput value
           </form>
           <Button action={this.sendUpdate.bind(null, item.editable_type, this.props.entity.path)}>{item.editable_type}</Button>
         </div>
