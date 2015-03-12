@@ -4,16 +4,16 @@ var routes = require('../routes');
 
 var ChecklistActions = {
 
-  fetchIdeaChecklists: function(idea) {
+  fetchIdeaChecklists: function(idea_id) {
     var options = {}
 
     $.ajax({
-      url: "/ideas/"+idea.name+"/checklistitems",
+      url: "/ideas/"+idea_id+"/checklistitems",
       type: 'GET',
       dataType: 'json',
       success: function(data) {
         Dispatcher.dispatch({
-          type: ActionTypes.CHECKLIST_CHANGE,
+          type: ActionTypes.CHECKLIST_ITEMS_RECEIVE,
           checklists: data
         })
       }

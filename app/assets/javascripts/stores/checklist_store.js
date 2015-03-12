@@ -1,26 +1,26 @@
-var ActionTypes = require('../constants').ActionTypes;
-var Dispatcher = require('../dispatcher');
-var Store = require('./es6_store')
-var StoryActions = require('../actions/story_actions')
-var UserStore = require('./user_store')
+'use strict';
 
-var _dispatchToken,
-    _checklists
+const ActionTypes = require('../constants').ActionTypes;
+const Dispatcher = require('../dispatcher');
+const Store = require('./es6_store')
+
+var _checklists;
 
 class ChecklistStore extends Store {
   constructor() {
     super()
 
-    _dispatchToken = Dispatcher.register((action) => {
+    this.dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {
-        case ActionTypes.CHECKLIST_CHANGE:
-          ChecklistActions.fetchIdeaChecklists(action.idea_name)
+        case ActionTypes.CHECKLIST_ITEMS_RECEIVE:
+          _checklists = action.checklists
           this.emitChange()
+          break
       }
     })
   }
 
-  getChecklistItems() {
+  fetchChecklistItems(){
     return _checklists
   }
 

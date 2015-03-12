@@ -23,7 +23,6 @@ const TextPost = require('../ui/text_post.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const UserStore = require('../../stores/user_store');
 const Checklist = require('../checklist.js.jsx');
-const ChecklistStore = require('../../stores/checklist_store.js')
 const ProductStateIndicator = require('../product_state_indicator.js.jsx');
 
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
@@ -47,7 +46,6 @@ let IdeaShow = React.createClass({
 
     IdeaStore.addChangeListener(this.onIdeaChange)
     LoveStore.addChangeListener(this.onLoveChange)
-    ChecklistStore.addChangeListener(this.onChecklistChange)
   },
 
   componentWillUnmount() {
@@ -60,8 +58,7 @@ let IdeaShow = React.createClass({
       idea: IdeaStore.getIdea(),
       isSocialDrawerOpen: false,
       isHowItWorksDrawerOpen: false,
-      heart: {},
-      checklistItems: ChecklistStore.getChecklistItems(idea)
+      heart: {}
     };
   },
 
@@ -94,12 +91,6 @@ let IdeaShow = React.createClass({
     this.setState({
       idea: IdeaStore.getIdea()
     });
-  },
-
-  onChecklistChange() {
-    this.setState({
-      checklistItems: ChecklistStore.getChecklistItems()
-    })
   },
 
   onLoveChange: function() {
@@ -149,7 +140,7 @@ let IdeaShow = React.createClass({
             <div className="col col-4 px2">
 
               <div className="mb3">
-                <Checklist entity_type={"Idea"} checklistItems={this.state.checklistItems} />
+                <Checklist entity_type={"Idea"} entity_id={idea.id} />
                 <Tile>
                   <ProductStateIndicator />
 
@@ -183,7 +174,6 @@ let IdeaShow = React.createClass({
                   </Drawer>
 
                 </Tile>
->>>>>>> 85e5e9e03573b216ad5cf52c5ecabee9411509b7
               </div>
             </div>
           </div>
