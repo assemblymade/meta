@@ -15,9 +15,9 @@ The Core Team consists of a product's leaders.  They have certain
 responsibilities, like guiding a product’s vision, managing quality control,
 keeping the momentum up, and crafting the roadmap.  The Core Team also has
 certain privileges, like the ability to award bounties, collaborator privileges
-on GitHub, and the ability to create tip contracts.  g Originally, each Core
+on GitHub, and the ability to create tip contracts. Each Core
 Team starts out as just the person who initially created the idea. That person
-can add anyone to the Core Team at any time.  To remove someone from the Core
+can add anyone to the Core Team at any time.  To involuntarily remove someone from the Core
 Team, there must be a vote.
 
 # Ownership
@@ -31,9 +31,10 @@ href="#coins">App Coins</a>.  Each product has its own coin.  So for example,
 Coderwall has one kind of App Coin and Buckets has another.  Users earn
 ownership by accumulating coins in different products.  
 
-User's app coins are recorded on the Bitcoin Blockchain as <a
-href="#the-blockchain">Colored Coins</a>.  This renders them trustless and
-ineffaceable.
+This ownership entitles users to royalties when a product earns profits, based on percentage of ownership. Also, ownership percentages can play a role in votes for product decision-making.
+
+Users’ app coins are recorded on the Bitcoin Blockchain as <a
+href="#the-blockchain">Colored Coins</a>.  This renders them trustless and permanent.
 
 # Earning coins
 
@@ -77,8 +78,10 @@ time:
 # Managing coins
 
 Coins come in several forms.  Each product has its own coin.  A new product is
-initialized with 10 million unvested coins.  An unvested coin is a coin that
-has been created and is held by the product itself, ie not by a person.  It has
+initialized with 10 million unvested coins.  
+
+An unvested coin is a coin that
+has been created and is held by the product itself, not by a person.  It has
 not yet been allocated to a user.  Thus it does not play a part in the relative
 percentage ownership commanded by users.  
 
@@ -87,18 +90,18 @@ fully in play and give full ownership rights.  Unvested coins become vested
 upon the awarding of a bounty.  Vested coins must come out of the available
 pool of unvested coins.
 
-We introduced vested vs unvested coins to introduce predictability in the total
+We introduced vested/unvested coins to introduce predictability in the total
 supply of coins for a product.  Coins can only be awarded to users if they
 already existed as unvested coins.  The unvested coin number can be increased
 by a majority vote of product owners.  But an increase in the coin supply, aka,
 a dilution of current owners, should be a major decision made with maximal
 community input.  
 
-If you are an owner, you can rest assured that your coins can only be diluted
+If you are a partner, you can rest assured that your coins can only be diluted
 in a controlled, predictable process.  Coins cannot be created endlessly
 through bounties you might not keep track of.  Expansion of the coin supply is
 a comparatively rare event in which your feedback will be solicited.  This is a
-measure to protect owners; particularly if a product is exceptionally valuable
+measure to protect the community; particularly if a product is exceptionally valuable
 in financial terms, we want to maximally protect stakeholders from unexpected,
 unpredictable dilution.
 
@@ -106,7 +109,7 @@ For all practical purposes, such as the allocation of revenue, or exercising
 product governance rights, a user's ownership is calculated as his percentage
 of vested coins, not the total number of coins.  So, for example, if a product
 has 10,000,000 total coins, but only 4,000,000 are vested, a user with
-1,000,000 coins effectively owns 25% of the product.  He will receive 25% of
+1,000,000 coins effectively owns 25% of the product.  She will receive 25% of
 profits and have a 25% say in governance-related decisions.  Only vested coins
 count towards profit disbursements and product management decisions.
 
@@ -128,7 +131,7 @@ to users by <a href="#core-team">Core Team</a> members.
 <a href="#bounties">Bounties</a> aren't the only way to earn app coins on
 Assembly.  There are a few other ways to earn ownership in a product.
 
-* Found a product.  You can allocate yourself coins in products you create or
+* Create a product.  You can allocate yourself coins in products you create or
   migrate to Assembly.
 
 * Receive a tip.  Users can tip each other app coins that they already own.
@@ -142,7 +145,7 @@ Assembly.  There are a few other ways to earn ownership in a product.
 # The Blockchain
 
 Assembly has put its <a href="#coins">App Coins</a> on the Blockchain.
-Products that have been greenlit, or are profitable, have their ownership
+Each Product’s ownership
 distributions inscribed on the Bitcoin Blockchain.
 
 App Coins on the Blockchain exist as 'Colored Coins'.  This means they are

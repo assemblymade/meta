@@ -1,17 +1,18 @@
 class GuidesGroup < StaticContentGroup
   GROUPS = [
-    ['platform',    'The Assembly Platform'],
-    ['getting-started',    'Getting Started'],
-    ['accepting-payments',    'Accepting Payments'],
-    ['project-management', 'Project Management'],
+    ['platform',    'The Assembly platform'],
+    ['getting-started',    'Getting started'],
+    ['building-products',    'Building products'],
+    ['accepting-payments',    'Accepting payments'],
+    ['project-management', 'Project management'],
+    ['leading', 'Leading a product'],
     ['starting-ios', 'Starting an iOS app'],
     ['transferring-ios', 'Transferring an iOS app'],
     ['starting-android', 'Starting an Android app'],
     ['transferring-android', 'Transferring an Android app'],
     ['starting-web', 'Starting a Web app'],
     ['transferring-web', 'Transferring a Web app'],
-    ['educate', 'Educating People about your Product'],
-    ['ownership', 'Managing Ownership...wisely']
+    ['ownership', 'Managing Ownership']
   ]
 
   def self.all
