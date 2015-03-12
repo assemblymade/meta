@@ -122,9 +122,18 @@ let IdeaShow = React.createClass({
     return (
       <div>
 
-        <div className="subnav bg-white md-show lg-show mb3">
-          <div className="container clearfix center">
-            <ProductStateIndicator activeStage={1} />
+        <div className="subnav bg-white py3 md-show lg-show mb3">
+          <div className="container clearfix">
+            <div className="left">
+              <h4 className="mt2 mb2">
+                Turn ideas into great products with people around the world
+              </h4>
+            </div>
+            <div className="right py1">
+              <Button action={function() { page('/ideas/new'); }}>
+                Start your product idea
+              </Button>
+            </div>
           </div>
         </div>
 
