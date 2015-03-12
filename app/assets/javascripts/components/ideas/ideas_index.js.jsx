@@ -61,7 +61,6 @@ let IdeasIndex = React.createClass({
 
     return (
       <main role="main  bg-white">
-
         <div className="subnav bg-white py3 md-show lg-show mb3">
           <div className="container clearfix">
             <div className="left">
