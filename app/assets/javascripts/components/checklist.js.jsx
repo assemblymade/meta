@@ -7,12 +7,12 @@ var Checklist = React.createClass({
 
   propTypes: {
     entity_type: React.PropTypes.string,
-    entity_id: React.PropTypes.string.isRequired
+    entity: React.PropTypes.object.isRequired
   },
 
   componentDidMount: function() {
     ChecklistStore.addChangeListener(this.getStateFromStore);
-    this.fetchInitialChecklistItems(this.props.entity_id);
+    this.fetchInitialChecklistItems(this.props.entity.id);
   },
 
   componentWillUnmount: function() {
@@ -21,31 +21,62 @@ var Checklist = React.createClass({
 
   getInitialState: function() {
     return {
-      checklistItems: ChecklistStore.fetchChecklistItems()
+      checklistItems: ChecklistStore.fetchChecklistItems(),
+      openListItem: -1
     };
   },
 
+  setOpenItem: function(index) {
+    if (this.state.openListItem === index) {
+      this.setState({openListItem: -1})
+    }
+    else {
+      this.setState({openListItem: index});
+    }
+  },
+
+  renderInputForm: function(item, index) {
+    if (this.state.openListItem === index) {
+      return (
+        <div>
+          <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
+          <form><input action={this.props.entity.path + "/update"} method="PATCH" name="name" type="text"></input></form>
+        </div>
+      )
+    }
+    else {
+      return (
+        <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
+      )
+    }
+  },
+
   renderChecklistItems: function() {
+    console.log(this.state.checklistItems)
     return (
-      _.map(this.state.checklistItems, function(item) {
-        if (item.state === "passed") {
+      _.map(this.state.checklistItems, function(item, index) {
+        if (item.state) {
           return (
             <li>
               <span className="fa green fa-check-square-o" />
-              <span className="ml2">{item.type}</span>
+              { item.editable ? this.renderInputForm(item, index) :
+                <span className="ml2">{item.title}</span>
+              }
+
+              <small className="gray-4 ml2">{item.smalltext}</small>
             </li>
           )
         }
         else {
           return (
             <li>
-              <span><input type="checkbox"/></span>
-              <span className="ml2">{item.type}</span>
-              <small className="gray-4 ml2">{item.description}</small>
+              <span className="fa gray fa-square-o" type="checkbox" />
+              <span className="ml2">{item.title}</span>
+              <small className="gray-4 ml2">{item.smalltext}</small>
             </li>
           )
         }
-      })
+      }.bind(this))
     )
   },
 

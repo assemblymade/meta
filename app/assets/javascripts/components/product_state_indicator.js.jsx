@@ -11,12 +11,12 @@ var ProductStateIndicator = React.createClass({
   getDefaultProps: function() {
     return {
       stages: [
-        'stage 1',
-        'stage 2',
-        'stage 3',
-        'stage 4',
-        'stage 5',
-        'stage 6'
+        'Idea',
+        'Recruitment',
+        'Setup',
+        'MVP',
+        'Launch',
+        'Grow'
       ],
       labeled: true,
       activeStage: 0

@@ -46,6 +46,7 @@ class Idea < ActiveRecord::Base
 
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
   DEFAULT_TILTING_THRESHOLD = 10
+  COMMENT_MINIMUM = 5
   EPOCH_START = Time.new(2013, 6, 6)
 
   CATEGORY_NAMES = [
@@ -170,6 +171,37 @@ class Idea < ActiveRecord::Base
 
   def unhearted(heart)
     decrement_score(heart)
+  end
+
+  def checklist_state
+    checklists = []
+    hearts = {}
+    hearts['title'] = "Get Some Love"
+    hearts['editable'] = false
+    hearts['state'] = self.love >= DEFAULT_TILTING_THRESHOLD
+    if hearts['state']
+      hearts['smalltext'] = self.love.to_s + " hearts"
+    else
+      hearts['smalltext'] = self.love.to_s + " / "+DEFAULT_TILTING_THRESHOLD.to_s+" hearts"
+    end
+    checklists.append(hearts)
+
+    name = {}
+    name['title'] = "Pick a Name"
+    name['smalltext'] = self.name
+    name['state'] = true
+    name['editable'] = true
+    checklists.append(name)
+
+    comments = {}
+    comments['title'] = "Get Some Feedback"
+    comment_n = self.comments.count
+    comments['state'] = comment_n >= COMMENT_MINIMUM
+    comments['smalltext'] = comment_n.to_s + " comments"
+    comments['editable'] = false
+    checklists.append(comments)
+
+    checklists
   end
 
   def add_score

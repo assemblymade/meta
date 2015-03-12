@@ -124,7 +124,7 @@ let IdeaShow = React.createClass({
 
         <div className="subnav bg-white md-show lg-show mb3">
           <div className="container clearfix center">
-            <ProductStateIndicator />
+            <ProductStateIndicator activeStage={1} />
           </div>
         </div>
 
@@ -140,9 +140,9 @@ let IdeaShow = React.createClass({
             <div className="col col-4 px2">
 
               <div className="mb3">
-                <Checklist entity_type={"Idea"} entity_id={idea.id} />
+                <Checklist entity_type={"Idea"} entity={idea} />
                 <Tile>
-                  <ProductStateIndicator />
+                  <ProductStateIndicator labeled={false} activeStage={1} />
 
                   <div className="p3">
                     <Heart size="button" heartable_id={nfi.id} heartable_type="NewsFeedItem" />

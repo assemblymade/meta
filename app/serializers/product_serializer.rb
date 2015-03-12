@@ -15,7 +15,11 @@ class ProductSerializer < ApplicationSerializer
   end
 
   def active_stage
-    object.stage.order
+    if object.stage
+      object.stage.order
+    else
+      -1
+    end
   end
 
   def lead

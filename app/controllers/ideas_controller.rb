@@ -66,8 +66,7 @@ class IdeasController < ProductController
 
   def checklistitems
     @idea = Idea.find(params[:idea_id])
-
-    render json: @idea.checklist_items.map{|a| {state: a.state, type: a.checklist_type.name, description: a.checklist_type.description}}
+    render json: @idea.checklist_state
   end
 
   def show

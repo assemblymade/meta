@@ -23,7 +23,7 @@ class Ability
     end
 
     can [:update], Idea do |idea|
-      (idea.user_id == current_user.id)
+      idea.user_id == current_user.id
     end
 
     # NewsFeedItems
