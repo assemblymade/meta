@@ -1,21 +1,38 @@
 const Tile = require('./ui/tile.js.jsx');
 const Button = require('./ui/button.js.jsx');
+const ChecklistStore = require('../stores/checklist_store');
+const ChecklistActions = require('../actions/checklist_actions');
 
 var Checklist = React.createClass({
 
   propTypes: {
-    checklistItems: React.PropTypes.array,
-    entity_type: React.PropTypes.string
+    entity_type: React.PropTypes.string,
+    entity_id: React.PropTypes.string.isRequired
+  },
+
+  componentDidMount: function() {
+    ChecklistStore.addChangeListener(this.getStateFromStore);
+    this.fetchInitialChecklistItems(this.props.entity_id);
+  },
+
+  componentWillUnmount: function() {
+    ChecklistStore.removeChangeListener(this.getStateFromStore);
+  },
+
+  getInitialState: function() {
+    return {
+      checklistItems: ChecklistStore.fetchChecklistItems()
+    };
   },
 
   renderChecklistItems: function() {
     return (
-      _.map(this.props.checklistItems, function(checklistItem) {
-        if (checklistItem.state === "passed") {
+      _.map(this.state.checklistItems, function(item) {
+        if (item.state === "passed") {
           return (
             <li>
               <span className="fa green fa-check-square-o" />
-              <span className="ml2">{checklistItem.name}</span>
+              <span className="ml2">{item.type}</span>
             </li>
           )
         }
@@ -23,12 +40,11 @@ var Checklist = React.createClass({
           return (
             <li>
               <span><input type="checkbox"/></span>
-              <span className="ml2">{checklistItem.name}</span>
-              <small className="gray-4 ml2">{checklistItem.progressText}</small>
+              <span className="ml2">{item.type}</span>
+              <small className="gray-4 ml2">{item.description}</small>
             </li>
           )
         }
-
       })
     )
   },
@@ -49,7 +65,18 @@ var Checklist = React.createClass({
 
       </Tile>
     )
-  }
+  },
+
+  fetchInitialChecklistItems: function(entity_id) {
+    ChecklistActions.fetchIdeaChecklists(entity_id)
+  },
+
+  getStateFromStore: function() {
+    this.setState({
+      checklistItems: ChecklistStore.fetchChecklistItems()
+    });
+  },
+
 })
 
 module.exports = Checklist
