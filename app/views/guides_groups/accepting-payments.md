@@ -1,4 +1,3 @@
-# Accepting payments
 
 #### Assembly Payments / Stripe
 
@@ -12,3 +11,5 @@ Check out the [Assembly payments
 repo](https://github.com/asm-products/payments) and README for instructions on
 how to integrate Assembly payments with your app.
 https://github.com/asm-products/payments
+
+If your product can’t collect revenue through Stripe, please contact support@assembly.com.
