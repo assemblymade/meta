@@ -49,7 +49,7 @@ module Api
 
           SlackpipePayload.deploy!({
             message: {
-              product: @chat_room.slug,
+              chat_room: @chat_room.slug,
               text: body,
               user_handle: "#{current_user.username} (asm)",
               user_avatar: current_user.avatar.url.to_s
