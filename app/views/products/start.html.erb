@@ -3,26 +3,12 @@
 
 <!-- TODO Deprecate. Pages now use gray bg. (chrislloyd) -->
 <style>body { background-color: white !important; }</style>
+<%= render 'shared/navbar' %>
 
-<div class="masthead" style="background: linear-gradient(160deg, rgba(255, 232, 80, .8), rgba(26, 88, 131, .85) 70%), url(<%= image_url 'faces.jpg' %>); min-height: 500px; padding-top: 0">
-  <%= render 'shared/navbar' %>
-
-  <div class="container center py3">
-    <div class="masthead-title">
-      <h1 style="line-height: 1.1">What do you wish existed?</h1>
-      <h3 style="line-height: 1.1; padding: 30px 0">
-        Bring ideas to life with the Assembly community of <br>
-        creatives, designers, and developers
-      </h3>
-      <a class="btn btn-success btn-xl" href="<%= new_idea_path %>" style="margin: 30px 0; box-shadow: 0 0 0 3px rgba(0, 0, 0, .1)">
-        Submit Your Idea
-      </a>
-    </div>
-  </div>
-</div><!-- .masthead -->
 
 <div class="container center">
-  <h2 class="center">Ideas to products</h2>
+  <h1 class="center">Turn your idea into a business</h1>
+  <h3 class="center">Build a distributed business with a global community of developers, designers, writers, and others.  Earn ownership over the things you help build.</h3>
 
   <div class="row">
     <div class="col-xs-2 col-xs-offset-5">
@@ -36,32 +22,39 @@
       <div class="step active">1</div>
       <div class="body">
         <a href="<%= new_idea_path %>"><strong>Share your idea</strong></a>
-        <div class="gray-2">Every great product begins with an idea</div>
+        <div class="gray-2">Every great product begins with an idea.</div>
       </div>
     </li>
     <li>
       <div class="step">2</div>
       <div class="body">
         <strong>Recruit a team</strong>
-        <div class="gray-2">Work with talented people from all over the world</div>
+        <div class="gray-2">Work with talented people from all over the world.</div>
       </div>
     </li>
     <li>
       <div class="step">3</div>
+      <div class="body">
+        <strong>Start Building</strong>
+        <div class="gray-2">Lay the foundation for a winning product.</div>
+      </div>
+    </li>
+    <li>
+      <div class="step">4</div>
       <div class="body">
         <strong>Build an MVP</strong>
         <div class="gray-2">Iterate, get feedback, and find early adopters</div>
       </div>
     </li>
     <li>
-      <div class="step">4</div>
+      <div class="step">5</div>
       <div class="body">
         <strong>Launch</strong>
         <div class="gray-2">Make a big splash with the help of the community</div>
       </div>
     </li>
     <li>
-      <div class="step">5</div>
+      <div class="step">6</div>
       <div class="body">
         <strong>Grow</strong>
         <div class="gray-2">Scale it to the moon</div>
@@ -83,7 +76,7 @@
         </li>
         <li class="p2">
           <strong>Build an MVP</strong>
-          <div class="gray-2">Iterate, get feedback, and find early adopters</div>
+          <div class="gray-2">Build something beautiful.</div>
         </li>
         <li class="p2">
           <strong>Launch</strong>
@@ -97,37 +90,21 @@
     </div>
   </div>
 
-  <div class="row visible-xs">
-    <div class="col-xs-12">
-      <ol class="list text-large">
-        <li class="p2">
-          <a href="<%= new_idea_path %>"><strong>Share your idea</strong></a>
-          <div class="gray-2">Every great product begins with an idea</div>
-        </li>
-        <li class="p2">
-          <strong>Recruit a team</strong>
-          <div class="gray-2">Work with talented people and distribute ownership</div>
-        </li>
-        <li class="p2">
-          <strong>Build an MVP</strong>
-          <div class="gray-2">Iterate, get feedback, and find early adopters</div>
-        </li>
-        <li class="p2">
-          <strong>Launch</strong>
-          <div class="gray-2">Make a big splash with the help of the community</div>
-        </li>
-        <li class="p2">
-          <strong>Grow</strong>
-          <div class="gray-2">Scale it to the moon</div>
-        </li>
-      </ol>
+
+
+
+
+  <div class="text-large center" style="padding: 60px 30px; font-size: 20px">
+    <a class="btn btn-success btn-xl" href="<%= new_idea_path %>" style="margin: 30px 0; box-shadow: 0 0 0 3px rgba(0, 0, 0, .1)">
+      Submit Your Idea
+    </a>
+    <div class="visible-xs mt3"></div>
+    <div class="mb3">
+      Already have a product and want to migrate it to Assembly?
+      <a href="mailto:assembly@helpful.io" data-helpful="assembly">Contact Us</a>
     </div>
+
   </div>
-
-  <a class="btn btn-success btn-large mb4" href="<%= new_idea_path %>">
-    Submit Your Idea
-  </a>
-
 
 </div>
 
@@ -471,11 +448,11 @@
       <a href="<%= new_idea_path %>" class="btn btn-success btn-lg">Submit your Idea</a>
 
       <div class="visible-xs mt3"></div>
-
       <div class="pull-right mb3">
         Already have a product and want to migrate it to Assembly?
         <a href="mailto:assembly@helpful.io" data-helpful="assembly">Contact Us</a>
       </div>
+
     </div>
   </div>
 </div>
