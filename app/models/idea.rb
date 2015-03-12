@@ -195,7 +195,8 @@ class Idea < ActiveRecord::Base
       name['smalltext'] = "Unnamed"
     end
     name['editable'] = true
-    name['editable_type'] = 'name'
+    name['editable_type'] = 'tentative_name'
+    name['editable_button_text'] = "Name it"
     checklists.append(name)
 
     comments = {}
