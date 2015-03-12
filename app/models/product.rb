@@ -21,9 +21,6 @@ class Product < ActiveRecord::Base
 
   attr_encryptor :wallet_private_key, :key => ENV["PRODUCT_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
 
-  before_validation :set_stage, on: :create
-  after_commit :create_checklist_items, on: :create
-
   belongs_to :user
   belongs_to :evaluator, class_name: 'User'
   belongs_to :main_thread, class_name: 'Discussion'
@@ -142,7 +139,6 @@ class Product < ActiveRecord::Base
 
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }, on: :create
-  after_commit -> { set_stage }, on: :create
 
   after_update :update_elasticsearch
 
@@ -474,11 +470,6 @@ class Product < ActiveRecord::Base
     slug || id
   end
 
-  def set_stage
-    product_stage = Stage.find_by(order: 2)
-    self.stage = product_stage
-  end
-
   def advance_stage
     if self.stage
       n = self.stage.order
@@ -486,12 +477,6 @@ class Product < ActiveRecord::Base
         product_stage = Stage.find_by(order: n+1)
         self.update!({stage: product_stage})
       end
-    end
-  end
-
-  def create_checklist_items
-    self.stage.checklist_types.each do |a|
-      ChecklistItem.create!({checklist_type: a, product: self, state: "unfulfilled"})
     end
   end
 

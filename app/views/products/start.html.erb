@@ -7,9 +7,7 @@
 
 
 <div class="container center">
-  <h1 class="center">Turn your idea into a business</h1>
-  <h3 class="center">Build a distributed business with a global community of developers, designers, writers, and others.  Earn ownership over the things you help build.</h3>
-
+  <h1 class="center">Turn your idea into a great product with people around the world</h1>
   <div class="row">
     <div class="col-xs-2 col-xs-offset-5">
       <hr>
@@ -28,36 +26,22 @@
     <li>
       <div class="step">2</div>
       <div class="body">
-        <strong>Recruit a team</strong>
-        <div class="gray-2">Work with talented people from all over the world.</div>
+        <strong>Find Collaborators</strong>
+        <div class="gray-2">Assemble a founding team.  Own what you make.</div>
       </div>
     </li>
     <li>
       <div class="step">3</div>
       <div class="body">
-        <strong>Start Building</strong>
-        <div class="gray-2">Lay the foundation for a winning product.</div>
+        <strong>Build a Product</strong>
+        <div class="gray-2">Create something beautiful with the help of the community.</div>
       </div>
     </li>
     <li>
       <div class="step">4</div>
       <div class="body">
-        <strong>Build an MVP</strong>
-        <div class="gray-2">Iterate, get feedback, and find early adopters</div>
-      </div>
-    </li>
-    <li>
-      <div class="step">5</div>
-      <div class="body">
-        <strong>Launch</strong>
-        <div class="gray-2">Make a big splash with the help of the community</div>
-      </div>
-    </li>
-    <li>
-      <div class="step">6</div>
-      <div class="body">
-        <strong>Grow</strong>
-        <div class="gray-2">Scale it to the moon</div>
+        <strong>Launch it</strong>
+        <div class="gray-2">Grow a real business from what you've built.</div>
       </div>
     </li>
     <li class="overlay"></li>
@@ -95,7 +79,7 @@
 
 
   <div class="text-large center" style="padding: 60px 30px; font-size: 20px">
-    <a class="btn btn-success btn-xl" href="<%= new_idea_path %>" style="margin: 30px 0; box-shadow: 0 0 0 3px rgba(0, 0, 0, .1)">
+    <a class="btn btn-success btn-lg" href="<%= new_idea_path %>" style="margin: 30px 0; box-shadow: 0 0 0 2px rgba(0, 0, 0, .1)">
       Submit Your Idea
     </a>
     <div class="visible-xs mt3"></div>
@@ -134,7 +118,7 @@
 
 <hr style="margin-top: 0">
 
-<div class="container-fluid" style="background: #fff url(<%= image_url 'section-gradient.png' %>) no-repeat center bottom">
+<div class="container-fluid" style="background: #fff no-repeat center bottom">
   <div class="container" style="padding-bottom: 80px">
 
 
@@ -146,47 +130,16 @@
     </div> -->
 
     <div class="row">
-      <div class="col-xs-12 col-sm-6 col-sm-push-6">
-        <!-- <hr> -->
-
-        <h2 style="font-size: 32px">Never build alone again</h2>
-        <p class="large gray-2">
-          You just found a global community of nice people who love what they do. We’re product designers, engineers,
-          writers, and others building product, together. We believe 1 + 1 is greater then 2 and enjoy bringing each other’s
-          ideas to life.
-        </p>
-
-        <hr style="margin-top: 30px; margin-bottom: 40px">
-
-        <h2 style="font-size: 32px">Skip the boring stuff</h2>
-        <p class="large gray-2">
-          If thinking about LLCs and C-Corps don’t get you out of bed, rest assured you found like minded friends.
-          All the finances, legal, and accounting are handled so you can focus on your product. There’s no need to incorporate,
-          setup bank accounts, find accountants, hire lawyers or think about HR &dash; phew! It’s simple. For every month where there is revenue, we’ll pay the bills and split the proceeds with all those involved.
-        </p>
-
-        <hr style="margin-top: 30px; margin-bottom: 40px">
-
-        <h2 style="font-size: 32px">Learn something new</h2>
-        <p class="large gray-2">
-          Each product is developed completely in the open, from vision to execution.
-          Jump in and tackle a/b testing  new copy, work on pricing for a SaaS product, track down bugs,
-          contact press or whatever adventure you choose. Even if you’re just looking to write code,
-          you’ll be exposed to new people and ideas along the way.
-        </p>
-
-      </div>
-
-      <div class="col-xs-12 col-sm-6 col-sm-pull-6 center">
+      <div class="col-xs-12 col-sm-12 center">
         <!-- <hr> -->
 
         <!-- <h2 style="font-size: 32px; font-weight: lighter">And you wondered what the community thinks?</h2> -->
 
         <div class="row">
-          <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+          <div class="col-xs-6 col-sm-6">
             <div>
               <div style="margin: 35px 0 20px 0">
-                <div class="avatar-comment" style="background: linear-gradient(160deg, rgba(254, 234, 115, .5), rgba(30, 89, 129, .5)), url('<%= Avatar.url_from_email(User.find_by(username: 'davidkaneda').email.downcase, 170) %>')"></div>
+                <div class="avatar-comment" style="background: url('<%= Avatar.url_from_email(User.find_by(username: 'davidkaneda').email.downcase, 170) %>')"></div>
               </div>
               <em class="gray-2" style="font-size: 18px; line-height: 1.2">Assembly has been fantastic for providing a new venue to collaborate on <a href="<%= product_path(Product.find_by(slug: 'buckets')) %>">Buckets</a>. I love the variety of contributions we receive and overall being able to share our product’s development so openly!</em>
               <br>
@@ -197,9 +150,13 @@
               </div>
             </div>
 
+
+          </div>
+
+          <div class="col-xs-6 col-sm-6">
             <div>
               <div style="margin: 35px 0 20px 0">
-                <div class="avatar-comment" style="background: linear-gradient(160deg, rgba(254, 234, 115, .5), rgba(30, 89, 129, .5)), url('<%= Avatar.url_from_email(User.find_by(username: 'chexee').email.downcase, 170) %>')"></div>
+                <div class="avatar-comment" style="background: url('<%= Avatar.url_from_email(User.find_by(username: 'chexee').email.downcase, 170) %>')"></div>
               </div>
               <em class="gray-2" style="font-size: 18px; line-height: 1.2">I choose what to work on and when I work on it. For each product, the idea, direction, and vision are all driven by the people who make it. That’s a really powerful idea.</em>
               <br>
@@ -210,6 +167,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>

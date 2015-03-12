@@ -121,7 +121,6 @@ let IdeaShow = React.createClass({
 
     return (
       <div>
-
         <div className="subnav bg-white py3 md-show lg-show mb3">
           <div className="container clearfix">
             <div className="left">
@@ -156,8 +155,6 @@ let IdeaShow = React.createClass({
                   </div>
                 </Tile>
                 <Tile>
-
-
 
                   <Drawer open={this.state.heart.user_heart}>
                     <div className="p3 bg-gray-6 border-top border-gray-5">

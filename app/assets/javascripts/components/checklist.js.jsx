@@ -2,6 +2,7 @@ const Tile = require('./ui/tile.js.jsx');
 const Button = require('./ui/button.js.jsx');
 const ChecklistStore = require('../stores/checklist_store');
 const ChecklistActions = require('../actions/checklist_actions');
+const UserStore = require('../stores/user_store');
 
 var Checklist = React.createClass({
 
@@ -35,19 +36,12 @@ var Checklist = React.createClass({
     }
   },
 
-<<<<<<< HEAD
-  sendUpdate: function(editable_type, path) {
-    console.log("HEYTHERE")
-    console.log(editable_type)
-    console.log(path)
-    var data = {};
-    console.log(React.findDOMNode(this.refs.edited_data))
-    data[editable_type] = React.findDOMNode(this.refs.edited_data).value;
-=======
-  sendUpdate: function(editable_type, path, value) {
-    var data = {};
-    data[editable_type] = this.refs.editedData.getDOMNode().value;
->>>>>>> 11dba0a... textinput value
+sendUpdate: function(editable_type, path) {
+    var data = {
+      idea: {
+      }
+    };
+    data['idea'][editable_type] = this.refs.editedData.getDOMNode().value
     $.ajax({
       url: path,
       method: 'PATCH',
@@ -64,41 +58,55 @@ var Checklist = React.createClass({
   renderInputForm: function(item, index) {
     if (this.state.openListItem === index) {
       return (
-        <div>
+        <div style={{display:"inline"}}>
           <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
-<<<<<<< HEAD
-          <form action={this.props.entity.path}>
-            <input name={item.editable_type} type="text" ref="edited_data" />
-=======
-          <form action={this.props.entity.path} method="PATCH">
-            <input name={item.editable_type} type="text" ref="editedData" />
->>>>>>> 11dba0a... textinput value
-          </form>
-          <Button action={this.sendUpdate.bind(null, item.editable_type, this.props.entity.path)}>{item.editable_type}</Button>
+
+          <input name={item.editable_type} type="text" ref="editedData" />
+          <Button action={this.sendUpdate.bind(null, item.editable_type, this.props.entity.path)}>{item.editable_button_text}</Button>
         </div>
       )
     }
     else {
       return (
-        <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
+        <div style={{display:"inline"}}>
+          <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
+        </div>
       )
     }
   },
 
+  renderProgressButton: function() {
+    var currentUser = UserStore.getUser();
+    var isOwner = (currentUser.id === this.props.entity.user.id)
+    if (currentUser && currentUser.staff && isOwner) {
+      return (
+        <div className="center mb2">
+          <Button action={ function () {
+              window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
+            }.bind(this)
+          }>Make it a Product</Button>
+        </div>
+
+      )
+    }
+
+  },
+
   renderChecklistItems: function() {
     console.log(this.state.checklistItems)
+    var currentUser = UserStore.getUser();
+    var isOwner = (currentUser.id === this.props.entity.user.id)
     return (
       _.map(this.state.checklistItems, function(item, index) {
         if (item.state) {
           return (
             <li>
               <span className="fa green fa-check-square-o" />
-              { item.editable ? this.renderInputForm(item, index) :
+              { item.editable && isOwner ? this.renderInputForm(item, index) :
                 <span className="ml2">{item.title}</span>
               }
-              <span>
-                <small className="gray-4 ml4">{item.smalltext}</small>
-              </span>
+              <br/>
+              <small className="gray-4 ml2">{item.smalltext}</small>
             </li>
           )
         }
@@ -107,9 +115,12 @@ var Checklist = React.createClass({
             <li>
               <span className="fa gray fa-square-o" type="checkbox" />
               { item.editable ? this.renderInputForm(item, index) :
-                <span className="ml2">{item.title}</span>
+                <span className="ml2">{item.title}
+                </span>
               }
+              <br/>
               <small className="gray-4 ml2">{item.smalltext}</small>
+
             </li>
           )
         }
@@ -142,14 +153,7 @@ var Checklist = React.createClass({
             {this.renderChecklistItems()}
            </ul>
         </div>
-
-        <div className="center mb2">
-          <Button action={ function () {
-              window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
-            }.bind(this)
-          }>Progress to Recruitment</Button>
-        </div>
-
+        {this.renderProgressButton()}
       </Tile>
     )
   },

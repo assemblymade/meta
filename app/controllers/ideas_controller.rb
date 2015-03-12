@@ -159,9 +159,11 @@ class IdeasController < ProductController
       :body,
       :flagged_at,
       :founder_preference,
+      :tentative_name,
       :topics => [],
       :categories => [],
-      :mark_names => []
+      :mark_names => [],
+
     ])
   end
 

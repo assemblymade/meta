@@ -10,7 +10,6 @@ class Idea < ActiveRecord::Base
   belongs_to :user
   belongs_to :stage
 
-  has_many :checklist_items
   has_many :markings, as: :markable
   has_many :marks, through: :markings
   has_one :news_feed_item, foreign_key: 'target_id'
@@ -24,11 +23,10 @@ class Idea < ActiveRecord::Base
   validate :idea_and_product_have_same_user
 
   before_validation :set_tilting_threshold!, on: :create
-  before_validation :set_stage, on: :create
+  after_commit :set_stage, on: :create
 
   after_commit :ensure_news_feed_item, on: :create
   after_commit :update_news_feed_item, on: :update
-  after_commit :create_checklist_items, on: :create
 
   default_scope -> { where(deleted_at: nil) }
 
@@ -195,7 +193,8 @@ class Idea < ActiveRecord::Base
       name['smalltext'] = "Unnamed"
     end
     name['editable'] = true
-    name['editable_type'] = 'name'
+    name['editable_type'] = 'tentative_name'
+    name['editable_button_text'] = "Name it"
     checklists.append(name)
 
     comments = {}
