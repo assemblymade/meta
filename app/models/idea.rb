@@ -46,6 +46,7 @@ class Idea < ActiveRecord::Base
 
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
   DEFAULT_TILTING_THRESHOLD = 10
+  COMMENT_MINIMUM = 5
   EPOCH_START = Time.new(2013, 6, 6)
 
   CATEGORY_NAMES = [
@@ -85,7 +86,6 @@ class Idea < ActiveRecord::Base
 
   def self.create_with_discussion(user, idea_params)
     idea = transaction do
-      puts "RIGHT HERE"
       puts idea_params
       idea = user.ideas.create(idea_params)
 
@@ -170,6 +170,43 @@ class Idea < ActiveRecord::Base
 
   def unhearted(heart)
     decrement_score(heart)
+  end
+
+  def checklist_state
+    checklists = []
+    hearts = {}
+    hearts['title'] = "Get Some Love"
+    hearts['editable'] = false
+    hearts['state'] = self.love >= DEFAULT_TILTING_THRESHOLD
+    if hearts['state']
+      hearts['smalltext'] = self.love.to_s + " hearts"
+    else
+      hearts['smalltext'] = self.love.to_s + " / "+DEFAULT_TILTING_THRESHOLD.to_s+" hearts"
+    end
+    checklists.append(hearts)
+
+    name = {}
+    name['title'] = "Pick a Name"
+    if self.tentative_name
+      name['smalltext'] = self.tentative_name
+      name['state'] = true
+    else
+      name['state'] = false
+      name['smalltext'] = "Unnamed"
+    end
+    name['editable'] = true
+    name['editable_type'] = 'name'
+    checklists.append(name)
+
+    comments = {}
+    comments['title'] = "Get Some Feedback"
+    comment_n = self.comments.count
+    comments['state'] = comment_n >= COMMENT_MINIMUM
+    comments['smalltext'] = comment_n.to_s + " comments"
+    comments['editable'] = false
+    checklists.append(comments)
+
+    checklists
   end
 
   def add_score
@@ -285,6 +322,10 @@ class Idea < ActiveRecord::Base
   def set_stage
     idea_stage = Stage.find_by(name: "Idea")
     self.stage = idea_stage
+  end
+
+  def advance_stage
+    #make this a product...
   end
 
   def create_checklist_items

@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311223309) do
+ActiveRecord::Schema.define(version: 20150312205251) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "uuid-ossp"
   enable_extension "plpgsql"
   enable_extension "hstore"
   enable_extension "pg_stat_statements"
-  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -361,6 +361,7 @@ ActiveRecord::Schema.define(version: 20150311223309) do
     t.datetime "deleted_at"
     t.datetime "last_tweeted_at"
     t.uuid     "stage_id"
+    t.string   "tentative_name"
   end
 
   add_index "ideas", ["deleted_at"], name: "index_ideas_on_deleted_at", using: :btree
@@ -411,9 +412,10 @@ ActiveRecord::Schema.define(version: 20150311223309) do
   create_table "leader_positions", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "leader_type"
     t.integer  "rank"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.uuid     "user_id"
+    t.string   "leader_category"
   end
 
   create_table "mark_clusters", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -1073,7 +1075,9 @@ ActiveRecord::Schema.define(version: 20150311223309) do
     t.uuid     "user_cluster_id"
     t.datetime "flagged_at"
     t.datetime "showcase_banner_dismissed_at"
+    t.uuid     "leader_position_id"
     t.datetime "coin_callout_viewed_at"
+    t.integer  "hearts_received",                               default: 0,       null: false
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

@@ -122,9 +122,18 @@ let IdeaShow = React.createClass({
     return (
       <div>
 
-        <div className="subnav bg-white md-show lg-show mb3">
-          <div className="container clearfix center">
-            <ProductStateIndicator />
+        <div className="subnav bg-white py3 md-show lg-show mb3">
+          <div className="container clearfix">
+            <div className="left">
+              <h4 className="mt2 mb2">
+                Turn ideas into great products with people around the world
+              </h4>
+            </div>
+            <div className="right py1">
+              <Button action={function() { page('/ideas/new'); }}>
+                Start your product idea
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -140,14 +149,11 @@ let IdeaShow = React.createClass({
             <div className="col col-4 px2">
 
               <div className="mb3">
-                <Checklist entity_type={"Idea"} entity_id={idea.id} />
-
+                <Checklist entity_type={"Idea"} entity={idea} />
                 <Tile>
-                  <ProductStateIndicator />
+                  
+                  <ProductStateIndicator labeled={false} activeStage={1} />
 
-                  <div className="p3">
-                    <Heart size="button" heartable_id={nfi.id} heartable_type="NewsFeedItem" />
-                  </div>
 
                   <Drawer open={this.state.heart.user_heart}>
                     <div className="p3 bg-gray-6 border-top border-gray-5">
