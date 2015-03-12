@@ -22,7 +22,7 @@ class Product < ActiveRecord::Base
   attr_encryptor :wallet_private_key, :key => ENV["PRODUCT_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
 
   before_validation :set_stage, on: :create
-  after_commit :create_checklist_items, on: :create
+  #after_commit :create_checklist_items, on: :create
 
   belongs_to :user
   belongs_to :evaluator, class_name: 'User'

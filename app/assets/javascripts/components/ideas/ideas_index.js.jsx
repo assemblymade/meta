@@ -65,12 +65,12 @@ let IdeasIndex = React.createClass({
           <div className="container clearfix">
             <div className="left">
               <h3 className="mt2 mb2">
-                Make something you've always wanted.
+                What inspires you?
               </h3>
-              <h4>Start with an idea.  Find collaborators.  Build something real.</h4>
+              <h4 className="gray-2">The ideas with the most hearts will be built by the community.</h4>
             </div>
-            <div className="right py1">
-              <Button action={function() { page('/ideas/new'); }}>
+            <div className="center right py1">
+              <Button type="primary" action={function() { page('/ideas/new'); }}>
                 Start your product idea
               </Button>
               <p className="mt2"><a href="/start">Learn more</a></p>

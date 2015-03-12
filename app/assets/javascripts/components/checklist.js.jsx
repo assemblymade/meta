@@ -57,18 +57,19 @@ sendUpdate: function(editable_type, path) {
   renderInputForm: function(item, index) {
     if (this.state.openListItem === index) {
       return (
-        <div>
+        <div style={{display:"inline"}}>
           <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
-          <form action={this.props.entity.path} method="PATCH">
-            <input name={item.editable_type} type="text" ref="editedData" />
-          </form>
+
+          <input name={item.editable_type} type="text" ref="editedData" />
           <Button action={this.sendUpdate.bind(null, item.editable_type, this.props.entity.path)}>{item.editable_button_text}</Button>
         </div>
       )
     }
     else {
       return (
-        <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
+        <div style={{display:"inline"}}>
+          <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
+        </div>
       )
     }
   },
@@ -84,9 +85,8 @@ sendUpdate: function(editable_type, path) {
               { item.editable ? this.renderInputForm(item, index) :
                 <span className="ml2">{item.title}</span>
               }
-              <span>
-                <small className="gray-4 ml4">{item.smalltext}</small>
-              </span>
+              <br/>
+              <small className="gray-4 ml2">{item.smalltext}</small>
             </li>
           )
         }
@@ -95,9 +95,12 @@ sendUpdate: function(editable_type, path) {
             <li>
               <span className="fa gray fa-square-o" type="checkbox" />
               { item.editable ? this.renderInputForm(item, index) :
-                <span className="ml2">{item.title}</span>
+                <span className="ml2">{item.title}
+                </span>
               }
+              <br/>
               <small className="gray-4 ml2">{item.smalltext}</small>
+
             </li>
           )
         }
