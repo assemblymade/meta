@@ -151,11 +151,9 @@ let IdeaShow = React.createClass({
               <div className="mb3">
                 <Checklist entity_type={"Idea"} entity={idea} />
                 <Tile>
+                  
                   <ProductStateIndicator labeled={false} activeStage={1} />
 
-                  <div className="p3">
-                    <Heart size="button" heartable_id={nfi.id} heartable_type="NewsFeedItem" />
-                  </div>
 
                   <Drawer open={this.state.heart.user_heart}>
                     <div className="p3 bg-gray-6 border-top border-gray-5">
