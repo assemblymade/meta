@@ -31,7 +31,7 @@ var ProductStateIndicator = React.createClass({
         stage = ''
       }
       return (
-        <li className={active}>{stage}</li>
+        <li className={active} key={index}>{stage}</li>
       )
     }.bind(this));
     return stages
