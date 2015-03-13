@@ -84,11 +84,19 @@ sendUpdate: function(editable_type, path) {
           <Button action={ function () {
               window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
             }.bind(this)
-          }>Make it a Product</Button>
+          }>Start Recruiting</Button>
         </div>
 
       )
     }
+    else
+      {
+        return (
+          <div className="center mb2">
+            <Button>Start Recruiting</Button>
+          </div>
+        )
+      }
 
   },
 
@@ -102,11 +110,11 @@ sendUpdate: function(editable_type, path) {
           return (
             <li>
               <span className="fa green fa-check-square-o" />
-              { item.editable && isOwner ? this.renderInputForm(item, index) :
+              { item.editable && isOwner ? <span>{this.renderInputForm(item, index)}<span className="ml2 fa fa-pencil"></span></span> :
                 <span className="ml2">{item.title}</span>
               }
               <br/>
-              <small className="gray-4 ml2">{item.smalltext}</small>
+              <small className="gray-2 ml2">{item.smalltext}</small>
             </li>
           )
         }
@@ -119,7 +127,7 @@ sendUpdate: function(editable_type, path) {
                 </span>
               }
               <br/>
-              <small className="gray-4 ml2">{item.smalltext}</small>
+              <small className="gray-2 ml2">{item.smalltext}</small>
 
             </li>
           )
@@ -145,9 +153,13 @@ sendUpdate: function(editable_type, path) {
   },
 
   render: function() {
+    var currentUser = UserStore.getUser();
+    var isOwner = (currentUser.id === this.props.entity.user.id)
     return (
       <Tile>
-        <h4 className="center">Move Your Idea Forward</h4>
+        <h4 className="center">
+          { isOwner ? "Move your idea forward" : "Move this idea forward" }
+        </h4>
         <div className="p3">
            <ul style={{listStyle: 'none'}}>
             {this.renderChecklistItems()}

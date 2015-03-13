@@ -173,7 +173,7 @@ class Idea < ActiveRecord::Base
   def checklist_state
     checklists = []
     hearts = {}
-    hearts['title'] = "Get Some Love"
+    hearts['title'] = "Get some love"
     hearts['editable'] = false
     hearts['state'] = self.love >= DEFAULT_TILTING_THRESHOLD
     if hearts['state']
@@ -184,7 +184,7 @@ class Idea < ActiveRecord::Base
     checklists.append(hearts)
 
     name = {}
-    name['title'] = "Pick a Name"
+    name['title'] = "Pick a name"
     if self.tentative_name
       name['smalltext'] = self.tentative_name
       name['state'] = true
@@ -198,7 +198,7 @@ class Idea < ActiveRecord::Base
     checklists.append(name)
 
     comments = {}
-    comments['title'] = "Get Feedback"
+    comments['title'] = "Get feedback"
     comment_n = self.comments.count
     comments['state'] = comment_n >= COMMENT_MINIMUM
     comments['smalltext'] = comment_n.to_s + " comments"
