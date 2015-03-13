@@ -145,9 +145,8 @@ let IdeaShow = React.createClass({
               </Discussion>
             </div>
 
-            <div className="col col-4 px2 mb3">
+            <div className="col col-4 px2">
 
-              <div className="">
               <div className="mb3">
                 <Checklist entity_type={"Idea"} entity={idea} />
                 <Tile>
@@ -181,8 +180,8 @@ let IdeaShow = React.createClass({
 
                     </div>
                   </Drawer>
-                </Tile>
 
+                </Tile>
               </div>
             </div>
           </div>
