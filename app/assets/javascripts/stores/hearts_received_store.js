@@ -3,7 +3,7 @@
 const ActionTypes = require('../constants').ActionTypes
 const Dispatcher = require('../dispatcher')
 const Store = require('./es6_store')
-const PeopltStore = require('./people_store')
+const PeopleStore = require('./people_store')
 const UserStore = require('./user_store')
 
 var heartsCount = null
@@ -35,6 +35,13 @@ class HeartsReceivedStore extends Store {
 
   getHeartsCount() {
     return heartsCount
+  }
+
+  getHeartCountForDay(date) {
+    let formatted = moment(date).format('YYDDD')
+    return _(stories).
+      filter(s => moment(s.last_hearted_at).format('YYDDD') == formatted).
+      reduce((count, s) => count + s.users.count, 0)
   }
 
   getStories() {

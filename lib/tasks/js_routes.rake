@@ -48,6 +48,7 @@ end
 
 ROUTES = [
   'award_product_wip',
+  'awarded_bounties_user',
   'daily_product_metrics',
   'discover',
   'discussion_comment',

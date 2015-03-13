@@ -106,6 +106,19 @@ class UsersController < ApplicationController
     }
   end
 
+  def awarded_bounties
+    set_user
+    query = AwardedBountiesQuery.new(@user, params)
+
+    balances = TransactionLogEntry.product_balances(@user)
+
+    render json: {
+      awards: json_array(query.awards),
+      coins: balances,
+      totals: TransactionLogEntry.where(product_id: balances.keys).group(:product_id).sum(:cents)
+    }
+  end
+
   def search
     users = User.by_partial_match(params[:query]).order(:name)
     suggestions = users.map do |user|

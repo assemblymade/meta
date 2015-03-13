@@ -105,6 +105,7 @@ ASM::Application.routes.draw do
     post   '/users/confirmation' => 'users/confirmations#create'
 
     resources :users, only: [:show, :update] do
+      get :awarded_bounties, on: :member
       patch :flag, on: :member
       get :heart_stories, on: :member
       patch :unflag, on: :member

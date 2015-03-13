@@ -121,6 +121,7 @@ var CONSTANTS = {
 
     BOUNTY_WORK_SUBMITTED: null,
 
+    AWARDS_RECEIVE: null,
     BOUNTIES_REQUEST: null,
     BOUNTIES_RECEIVE: null,
     BOUNTIES_REORDER: null,

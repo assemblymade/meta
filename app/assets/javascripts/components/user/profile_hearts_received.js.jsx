@@ -30,10 +30,22 @@ module.exports = React.createClass({
       let newDate = moment(s.last_hearted_at).format('dddd, MMMM Do')
       if (date != newDate) {
         date = newDate
-        heading = <div className="px2 pt2">{newDate}</div>
+        heading = <div className="px2 pt3 pb1">
+          <div className="right">
+            <span className="gray-2">{this.getHeartCount(s.last_hearted_at)} </span>
+            <span className="red">
+              <Icon icon="heart" />
+            </span>
+          </div>
+
+          <span className="mr1">
+            <Icon icon="calendar" />
+          </span>
+          {newDate}
+        </div>
       }
 
-      return <div>{heading}{this.renderStory(s, true)}</div>
+      return <div>{heading}{this.renderStory(s, heading != null)}</div>
     })
 
     return <div>{stories}</div>
@@ -70,7 +82,7 @@ module.exports = React.createClass({
   },
 
   renderHearter(user) {
-    return <div className="left" style={{marginLeft:-30, paddingRight: 6}}>
+    return <div className="left" style={{marginLeft:-30, marginTop:-2, paddingRight: 6}}>
       <Avatar user={user} size={28} />
     </div>
   },
@@ -89,6 +101,10 @@ module.exports = React.createClass({
 
   componentWillUnmount() {
     HeartsReceivedStore.removeChangeListener(this._onChange)
+  },
+
+  getHeartCount(date) {
+    return HeartsReceivedStore.getHeartCountForDay(date)
   },
 
   getStateFromStores() {
