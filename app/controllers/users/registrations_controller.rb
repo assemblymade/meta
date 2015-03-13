@@ -53,6 +53,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def track_ab_goal
+    finished('discover_homepage')
     finished('signup_conversion_from_focus_homepage')
   end
 

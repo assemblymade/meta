@@ -1,6 +1,9 @@
 .jumbotron {
   background-color: $gray-5;
-  background-image: url(image-path('ideas/ideas-header-bg.jpg'));
+  background: linear-gradient(
+    160deg,
+    rgba(255, 232, 80, .8),
+    rgba(26, 88, 131, .85) 70%);
   background-size: cover;
   background-repeat: none;
   background-position: 50%;

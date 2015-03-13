@@ -1,118 +1,20 @@
 <% title 'Built together' %>
 <%= track_engaged 'home' %>
-<% provide(:description, "A new way for people around the world to collectively build, launch, and grow startups. We call it crowd-founding.") %>
+<% provide(:description, "A new way for people around the world to collectively build, launch, and grow startups") %>
 
-<div style="min-height: 100%; margin-bottom: -235px">
-  <div class="masthead" style="background-image:url(<%= image_url 'pretty-people-working.jpg' %>)">
-    <div class="masthead-gradient"></div>
+<%= render 'shared/navbar' %>
 
-    <div class="navbar navbar-static-top masthead-navbar">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="<%= root_path %>">
-            Assembly
-          </a>
-        </div>
+<% showcase = @showcases.find {|s| s.slug == params[:showcase]} %>
 
-        <div class="navbar-right">
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="<%= new_user_session_path %>">
-                Log in
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div><!-- .navbar -->
+<%= react_component 'HomePage',
+      search: params[:search],
+      filter: params[:filter] || 'trending',
+      page: [params[:page].to_i, 1].max,
+      topic: params[:topic],
+      showcase: (showcase.nil? ? nil : ShowcaseSerializer.new(showcase) ),
+      total_pages: @total_pages,
+      topics: @topics,
+      showcases: @showcases.map {|s| ShowcaseSerializer.new(s) }
+%>
 
-    <div class="container center">
-      <h1 class="masthead-title" style="font-size:48px">Build, launch, and grow a product<br>with talented people around the world.</h1>
-      <a class="play-button" href="#" data-toggle="modal" data-target="#video-modal">
-        <%= image_tag 'play.png' %>
-      </a>
-    </div>
-  </div><!-- .masthead -->
-
-  <div class="modal fade" id="video-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="embed-responsive embed-responsive-16by9">
-          <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/102253176?api=1" width="100%" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://f.vimeocdn.com/js/froogaloop2.min.js"></script>
-
-  <% content_for :javascript do %>
-    <script>
-      modal = $('#video-modal');
-      player = $f(modal.find('iframe')[0]);
-
-      modal.on('shown.bs.modal', function() {
-        player.addEvent('ready', function() {
-          player.api('play');
-        });
-      });
-      modal.on('hide.bs.modal', function() {
-        player.addEvent('ready', function() {
-          player.api('pause');
-        });
-      });
-    </script>
-  <% end %>
-
-  <div class="container">
-    <div class="clearfix">
-      <div class="col-6 mx-auto">
-        <p class="large">
-          <strong>Work together.</strong>
-          Products on Assembly aren't like traditional companies. They don't have investors, shareholders, or even employees. Instead, a global community creates and owns them, together.
-        </p>
-
-        <p class="large">
-          <strong>Focus on what you like.</strong>
-          The entire process is a collaborative effort, including vision, development, design and marketing. Anyone can make a contribution, and all contributions are rewarded with an ownership stake.
-        </p>
-
-        <p class="large">
-          <strong>Keep your share.</strong>
-          Everyone participates in the success of the products they help create. Each product has App Coins, which you earn by contributing work. When that product earns money, you get your share of the profits.
-        </p>
-
-        <br>
-
-        <div class="clearfix">
-          <div class="col-8 mx-auto">
-            <a class="btn btn-primary btn-block btn-lg" href="<%= new_user_registration_path %>">
-              Get started
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div style="height: 235px"></div>
-</div>
-
-<div style="height: 235px">
-  <br>
-  <hr>
-  <br>
-
-  <p class="center gray-2 text-large" style="margin-bottom:48px">
-    Just have a question? <a href="mailto:assembly@helpful.io" data-helpful="assembly">Ask away!</a>
-    <script src="https://assets.helpful.io/assets/widget.js"></script>
-  </p>
-
-  <ul class="list-inline well center" style="border: none; margin-bottom: 0">
-    <li><a class="gray-2" href="<%= about_path %>">About</a></li>
-    <li><a class="gray-2" href="http://blog.assembly.com">Blog</a></li>
-    <li><a class="gray-2" href="<%= faq_path %>">FAQs</a></li>
-    <li><a class="gray-2" href="<%= tos_path %>">Terms</a></li>
-    <li><a class="gray-2" href="mailto:assembly@helpful.io">Contact Us</a></li>
-  </ul>
-</div>
+<%= render 'shared/footer' %>
