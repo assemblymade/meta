@@ -59,9 +59,12 @@ sendUpdate: function(editable_type, path) {
     if (this.state.openListItem === index) {
       return (
         <div style={{display:"inline"}}>
-          <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
+          <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title} 
+            <span className="fa fa-remove ml1 gray-2" />
+          </span>
 
-          <input name={item.editable_type} type="text" ref="editedData" />
+          <input className="col-xs-12" name={item.editable_type} type="text" ref="editedData" />
+          <br />
           <Button action={this.sendUpdate.bind(null, item.editable_type, this.props.entity.path)}>{item.editable_button_text}</Button>
         </div>
       )
@@ -69,7 +72,9 @@ sendUpdate: function(editable_type, path) {
     else {
       return (
         <div style={{display:"inline"}}>
-          <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}</span>
+          <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}
+            <span className="fa fa-pencil-square-o ml1 gray-2" />
+          </span>
         </div>
       )
     }
@@ -80,16 +85,18 @@ sendUpdate: function(editable_type, path) {
     var isOwner = (currentUser.id === this.props.entity.user.id)
     if (currentUser && currentUser.staff && isOwner) {
       return (
-        <div className="center mb2">
-          <Button action={ function () {
+        <div>
+          <hr />
+          <Button type="primary" block="true" action={ function () {
               window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
             }.bind(this)
-          }>Make it a Product</Button>
+          }>
+            <Icon icon="lock" fw="true" />
+            Setup ownership
+          </Button>
         </div>
-
       )
     }
-
   },
 
   renderChecklistItems: function() {
@@ -100,27 +107,31 @@ sendUpdate: function(editable_type, path) {
       _.map(this.state.checklistItems, function(item, index) {
         if (item.state) {
           return (
-            <li>
-              <span className="fa green fa-check-square-o" />
+            <li className="py1">
+              <div className="left mr2 green">
+                <Icon icon="check" fw={true} />
+              </div>
               { item.editable && isOwner ? this.renderInputForm(item, index) :
-                <span className="ml2">{item.title}</span>
+                <span className="ml2">
+                  {item.title}<br />
+                  <small className="gray-2 ml4">{item.smalltext}</small>
+                </span>
               }
-              <br/>
-              <small className="gray-4 ml2">{item.smalltext}</small>
             </li>
           )
         }
         else {
           return (
-            <li>
-              <span className="fa gray fa-square-o" type="checkbox" />
-              { item.editable ? this.renderInputForm(item, index) :
-                <span className="ml2">{item.title}
+            <li className="py1">
+              <div className="left mr2 gray-2">
+                <Icon icon="minus" fw={true} />
+              </div>
+              { item.editable && isOwner ? this.renderInputForm(item, index) :
+                <span className="ml2">
+                  {item.title}<br />
+                  <small className="gray-2 ml4">{item.smalltext}</small>
                 </span>
               }
-              <br/>
-              <small className="gray-4 ml2">{item.smalltext}</small>
-
             </li>
           )
         }
@@ -146,15 +157,14 @@ sendUpdate: function(editable_type, path) {
 
   render: function() {
     return (
-      <Tile>
-        <h4 className="center">Move Your Idea Forward</h4>
-        <div className="p3">
-           <ul style={{listStyle: 'none'}}>
+      <div>
+        <div className="p3 pb0">
+          <ol className="list-reset">
             {this.renderChecklistItems()}
-           </ul>
+          </ol>
         </div>
         {this.renderProgressButton()}
-      </Tile>
+      </div>
     )
   },
 
