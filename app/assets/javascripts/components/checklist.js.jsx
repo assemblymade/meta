@@ -76,7 +76,7 @@ sendUpdate: function(editable_type, path) {
   },
 
   renderProgressButton: function() {
-    let currentUser = UserStore.getUser();
+    var currentUser = UserStore.getUser();
     var isOwner = (currentUser.id === this.props.entity.user.id)
     if (currentUser && currentUser.staff && isOwner) {
       return (
@@ -94,7 +94,7 @@ sendUpdate: function(editable_type, path) {
 
   renderChecklistItems: function() {
     console.log(this.state.checklistItems)
-    let currentUser = UserStore.getUser();
+    var currentUser = UserStore.getUser();
     var isOwner = (currentUser.id === this.props.entity.user.id)
     return (
       _.map(this.state.checklistItems, function(item, index) {
