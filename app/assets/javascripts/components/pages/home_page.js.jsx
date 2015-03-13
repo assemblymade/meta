@@ -1,15 +1,15 @@
-var App = require('./app.js.jsx')
-var AppsActionCreators = require('../actions/apps_action_creators');
-var AppsStore = require('../stores/apps_store')
-var ButtonDropdown = require('./ui/button_dropdown.js.jsx')
-var DropdownMenu = require('./ui/dropdown_menu.js.jsx')
-var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
-var Icon = require('./ui/icon.js.jsx')
-var Jumbotron = require('./ui/jumbotron.js.jsx')
-var Nav = require('./ui/nav.js.jsx')
-var PaginationLinks = require('./pagination_links.js.jsx')
-var ProductSearch = require('./product_search.js.jsx')
-var Spinner = require('./spinner.js.jsx')
+var App = require('../app.js.jsx')
+var AppsActionCreators = require('../../actions/apps_action_creators');
+var AppsStore = require('../../stores/apps_store')
+var ButtonDropdown = require('../ui/button_dropdown.js.jsx')
+var DropdownMenu = require('../ui/dropdown_menu.js.jsx')
+var DropdownMixin = require('../../mixins/dropdown_mixin.js.jsx')
+var Icon = require('../ui/icon.js.jsx')
+var Jumbotron = require('../ui/jumbotron.js.jsx')
+var Nav = require('../ui/nav.js.jsx')
+var PaginationLinks = require('../pagination_links.js.jsx')
+var ProductSearch = require('../product_search.js.jsx')
+var Spinner = require('../spinner.js.jsx')
 var Url = require('url')
 
 var filters = [
@@ -32,7 +32,7 @@ _.mixin({
   }
 });
 
-var Apps = React.createClass({
+var HomePage = React.createClass({
   mixins: [DropdownMixin],
 
   propTypes: {
@@ -51,15 +51,35 @@ var Apps = React.createClass({
     var showcase = this.props.showcase
 
     if (!showcase) {
-      header = <Jumbotron bg="ideas/ideas-header-bg-lg.jpg">
-        <div className="container px2" style={{paddingTop: '8rem', paddingBottom: '8rem'}}>
-          <div className="center white">
-            <h1 className="mt0 mb2">Find a product you&#39;d like to work on,</h1>
-            {/*<h1 className="mt0 mb2">Find great products, created together</h1>*/}
-            <h3 className="regular mt0 mb0">or <a className="underline white white-hover" href="/start">start your own</a> that others can work on with you.</h3>
+      header = <div>
+        <Jumbotron>
+          <div className="container px2 center white" style={{paddingTop: '8rem', paddingBottom: '8rem'}}>
+            <h1 className="mt0 mb2">Turn ideas into great software products</h1>
+            <h2 className="regular mt0 mb0">with people around the world.</h2>
           </div>
-        </div>
-      </Jumbotron>
+
+          <div className="bg-darken-2 white py4">
+            <div className="container">
+              <div className="clearfix mxn2">
+                <div className="sm-col sm-col-4 px2 mb3 sm-mb0">
+                  <h4 className="mt0">Discover a community</h4>
+                  <p className="lighten-4 mb0">We're a friendly group of people from around the world interested in building products. Say &ldquo;hi&rdquo; and introduce yourself!</p>
+                </div>
+
+                <div className="sm-col sm-col-4 px2 mb3 sm-mb0">
+                  <h4 className="mt0">Learn new skills</h4>
+                  <p className="lighten-4 mb0">Try new technologies or learn from other experienced people. You're free to try anything you'd like.</p>
+                </div>
+
+                <div className="sm-col sm-col-4 px2">
+                  <h4 className="mt0">Share the success</h4>
+                  <p className="lighten-4 mb0">Each product is <i>community-owned</i>. This means that each month, you get a share of the product's profit.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Jumbotron>
+      </div>
     } else {
       header = <div className="container py3 px4 bg-white white rounded mt4" style={{background: showcase.background}}>
         <h5 className="mt0 mb0 caps white" style={{color: 'rgba(255,255,255,.6)'}}>Trending</h5>
@@ -199,4 +219,4 @@ var Apps = React.createClass({
 
 })
 
-module.exports = window.Apps = Apps
+module.exports = window.HomePage = HomePage

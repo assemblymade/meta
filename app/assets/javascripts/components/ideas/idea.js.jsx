@@ -39,7 +39,6 @@ let Idea = React.createClass({
         </span>
         <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
         {this.renderAdminRow()}
-        {this.renderProductRow()}
       </div>
     )
   },

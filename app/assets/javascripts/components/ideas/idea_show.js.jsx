@@ -145,7 +145,9 @@ let IdeaShow = React.createClass({
               </Discussion>
             </div>
 
-            <div className="col col-4 px2">
+            <div className="col col-4 px2 mb3">
+
+              <div className="">
 
               <div className="mb3">
                 <Checklist entity_type={"Idea"} entity={idea} />
@@ -155,7 +157,6 @@ let IdeaShow = React.createClass({
                   </div>
                 </Tile>
                 <Tile>
-
                   <Drawer open={this.state.heart.user_heart}>
                     <div className="p3 bg-gray-6 border-top border-gray-5">
                       <div className="h6 center gray-2">
@@ -180,13 +181,14 @@ let IdeaShow = React.createClass({
 
                     </div>
                   </Drawer>
-
                 </Tile>
+
               </div>
             </div>
           </div>
         </div>
 
+      </div>
       </div>
     );
   },

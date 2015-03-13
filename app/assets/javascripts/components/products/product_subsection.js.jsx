@@ -68,7 +68,7 @@ let ProductSubsection = React.createClass({
     }
 
     return (
-      <div className="col col-6 hover-toggle-wrapper" style={{ paddingRight: '4rem' }}>
+      <div className="hover-toggle-wrapper">
         <div className="clearfix">
           <div className="right">
             <div className="clearfix">

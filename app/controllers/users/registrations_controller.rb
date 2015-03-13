@@ -41,7 +41,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def sign_up_params
-    params.require(:user).permit(:email, :username, :extra_data, :facebook_uid, :location, :name, :password, :password_confirmation, :follow_product, :avatar_url)
+    params.require(:user).permit(
+      :email,
+      :username,
+      :extra_data,
+      :facebook_uid,
+      :location,
+      :name,
+      :password,
+      :password_confirmation,
+      :follow_product,
+      :avatar_url
+    )
   end
 
   def account_update_params
@@ -53,6 +64,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def track_ab_goal
+    finished('discover_homepage')
     finished('signup_conversion_from_focus_homepage')
   end
 

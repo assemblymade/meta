@@ -92,6 +92,6 @@
       <script src="https://assets.signupsumo.com/signups.js" data-token="<%= ENV['SIGNUP_SUMO_TOKEN'] %>" data-auto="false"></script>
       <script>SignupSumo.send(<%= current_user.email.to_json.html_safe %>)</script>
     <% end %>
-
+    <%= react_component 'SignupModal' %>
   </body>
 </html>

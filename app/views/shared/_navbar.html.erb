@@ -76,21 +76,47 @@
               destroyUserSessionPath: destroy_user_session_path
             }.to_json %>"></div>
       <% else %>
-        <div class="navbar-right">
-          <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">
-            Sign up
-          </a>
-        </div>
+        <% if ab_test('product_homepage') == 'focus' %>
+          <div class="navbar-right">
+            <a id="signup-button" class="button button--primary px2 mt1" href="<%= new_user_registration_path %>">
+              Sign up
+            </a>
+          </div>
 
-        <div class="navbar-right">
-          <ul class="nav nav-tabs navbar-nav">
-            <li>
-              <a href="<%= new_user_session_path %>">
-                Log in
-              </a>
-            </li>
-          </ul>
-        </div>
+          <div class="navbar-right">
+            <ul class="nav nav-tabs navbar-nav">
+              <li>
+                <a href="<%= new_user_session_path %>">
+                  Log in
+                </a>
+              </li>
+            </ul>
+          </div>
+        <% else %>
+          <div class="navbar-right">
+            <ul class="list-reset mxn1">
+              <li class="left px1">
+                <a class="px2 py2 block gray-2 black-hover" href="<%= new_user_session_path %>">
+                  Log in
+                </a>
+              </li>
+              <li class="left px1 py1">
+                <a class="button button--primary px2" href="<%= new_product_path %>">
+                  Add your idea
+                </a>
+              </li>
+            </ul>
+          </div>
+        <% end %>
+        <script>
+          var signupElement = document.getElementById('signup-button');
+          signupElement.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            SignupActions.showModal();
+          });
+        </script>
       <% end %>
 
     </div>
