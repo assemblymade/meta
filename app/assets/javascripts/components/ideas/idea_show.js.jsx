@@ -145,10 +145,15 @@ let IdeaShow = React.createClass({
               </Discussion>
             </div>
 
-            <div className="col col-4 px2 mb3">
+            <div className="col col-4 px2">
 
-              <div className="">
-
+              <div className="mb3">
+                <Checklist entity_type={"Idea"} entity={idea} />
+                <Tile>
+                  <div className="mb4">
+                    <ProductStateIndicator labeled={false} activeStage={1} />
+                  </div>
+                </Tile>
                 <Tile>
                   <div className="p3">
                     <h6 className="mt0 caps gray-2">Next steps for this idea</h6>
@@ -187,9 +192,31 @@ let IdeaShow = React.createClass({
                       Setup ownership
                     </Button>
 
-                  </div>
-                </Tile>
+                  <Drawer open={this.state.heart.user_heart}>
+                    <div className="p3 bg-gray-6 border-top border-gray-5">
+                      <div className="h6 center gray-2">
+                        Spread this idea to help it become reality
+                      </div>
 
+                      <ul className="h3 list-reset clearfix mxn1 mb0">
+                        <li className="left p1">
+                          <a className="gray-3 gray-2-hover bold clickable" onClick={this.handleTwitterClick}>
+                            <Icon icon="twitter" />
+                          </a>
+                        </li>
+                        <li className="left p1">
+                          <a className="gray-3 gray-2-hover bold" href="#" onClick={this.handleFacebookClick}><Icon icon="facebook" /></a>
+                        </li>
+                        <li className="left p1">
+                          <a className="gray-3 gray-2-hover bold" href={this.mailToLink()}>
+                            <Icon icon="envelope" />
+                          </a>
+                        </li>
+                      </ul>
+
+                    </div>
+                  </Drawer>
+                </Tile>
               </div>
             </div>
           </div>
