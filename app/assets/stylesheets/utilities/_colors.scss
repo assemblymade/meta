@@ -12,7 +12,17 @@ $colors: (
   "blue":       $blue,
   "red":        $red,
   "yellow":     $yellow,
-  "orange":     $orange
+  "orange":     $orange,
+
+  "darken-1": $darken-1,
+  "darken-2": $darken-2,
+  "darken-3": $darken-3,
+  "darken-4": $darken-4,
+
+  "lighten-1": $lighten-1,
+  "lighten-2": $lighten-2,
+  "lighten-3": $lighten-3,
+  "lighten-4": $lighten-4,
 );
 
 @each $color, $value in $colors {

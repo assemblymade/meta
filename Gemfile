@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-source 'https://rails-assets.org'
 
 ruby '2.2.0'
 
@@ -59,23 +58,6 @@ gem 'premailer-rails'
 gem 'rack-cors'
 gem 'rack-proxy'
 gem 'rails', '4.2.0'
-gem 'rails-assets-backbone',            '1.0.0'
-gem 'rails-assets-dropzone',            '3.9.0'
-gem 'rails-assets-es5-shim',            '4.0.3'
-gem 'rails-assets-ink',                 '1.0.5'
-gem 'rails-assets-jquery-autosize',     '1.18.9'
-gem 'rails-assets-jquery-cookie',       '1.4.0'
-gem 'rails-assets-jquery-textcomplete', '0.2.6'
-gem 'rails-assets-marked',              '0.3.2'
-gem 'rails-assets-moment',              '2.5.0'
-gem 'rails-assets-normalize-css',       '2.1.3'
-gem 'rails-assets-notify.js',           '1.2.0'
-gem 'rails-assets-nprogress',           '0.1.6'
-gem 'rails-assets-numeral',             '1.5.3'
-gem 'rails-assets-jquery-timeago'
-gem 'rails-assets-jquery.inview',       '1.0.0'
-gem 'rails-assets-underscore',          '1.7.0'
-gem 'rails_stdout_logging', group: [:development, :production]
 gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 gem 'redcarpet'
 gem 'redis'
@@ -93,6 +75,26 @@ gem 'warden', "~> 1.2.3"
 gem 'workflow'
 gem 'zeroclipboard-rails'
 gem 'fast-stemmer'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-backbone',            '1.0.0'
+  gem 'rails-assets-dropzone',            '3.9.0'
+  gem 'rails-assets-es5-shim',            '4.0.3'
+  gem 'rails-assets-ink',                 '1.0.5'
+  gem 'rails-assets-jquery-autosize',     '1.18.9'
+  gem 'rails-assets-jquery-cookie',       '1.4.0'
+  gem 'rails-assets-jquery-textcomplete', '0.2.6'
+  gem 'rails-assets-marked',              '0.3.2'
+  gem 'rails-assets-moment',              '2.5.0'
+  gem 'rails-assets-normalize-css',       '2.1.3'
+  gem 'rails-assets-notify.js',           '1.2.0'
+  gem 'rails-assets-nprogress',           '0.1.6'
+  gem 'rails-assets-numeral',             '1.5.3'
+  gem 'rails-assets-jquery-timeago'
+  gem 'rails-assets-jquery.inview',       '1.0.0'
+  gem 'rails-assets-underscore',          '1.7.0'
+  gem 'rails_stdout_logging', group: [:development, :production]
+end
 
 group :development, :test do
   gem 'active_record_query_trace'
