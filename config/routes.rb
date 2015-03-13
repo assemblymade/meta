@@ -266,6 +266,7 @@ ASM::Application.routes.draw do
   get '/activities/:id' => 'activity#show'
 
   get '/interests/:interest' => 'global_interests#toggle', as: :global_interests
+  get '/hello/:id' => 'hellos#show', as: :hello_user
 
   # custom oauth :(
   get '/integrations/:provider/token' => 'integrations#token'

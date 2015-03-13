@@ -69,6 +69,10 @@ en:
           other: "%{title} #%{number} "
           owner: "%{title} #%{number}"
 
+        user:
+          other: "@%{username} joined the Assembly community"
+          owner: "@%{username} joined the Assembly community"
+
         wip:
           other: "%{title} #%{number}"
           owner: "%{title} #%{number}"

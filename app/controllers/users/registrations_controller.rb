@@ -7,6 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   after_action :track_signup,          only: [:create]
   after_action :track_ab_goal,         only: [:create]
   after_action :claim_invite,          only: [:create]
+  after_action :create_signup_nfi,     only: [:create]
 
   def create
     build_resource(sign_up_params.select{|k,v| v.present? })
@@ -66,6 +67,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def track_ab_goal
     finished('discover_homepage')
     finished('signup_conversion_from_focus_homepage')
+  end
+
+  def create_signup_nfi
+    nfi = NewsFeedItem.create_with_target(current_user)
+    if kernel = User.kernel
+      nfi.hearts.create(
+        user: kernel
+      )
+    end
   end
 
 end

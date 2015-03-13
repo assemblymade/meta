@@ -45,9 +45,13 @@ var Navbar = React.createClass({
           <TitleNotificationsCount />
         </li>
 
-        {this.renderChatNotifications()}
-        {this.renderStories()}
+        <li className="left sm-show px1">
+          <HeartsReceived />
+        </li>
 
+        {this.state.showStories && this.renderChatNotifications()}
+        {this.state.showStories && this.renderStories()}
+        
         <li className="left dropdown hidden-xs">
           <a className="block dropdown-toggle px1" style={divStyle} key="navbar dropdown" onClick={this.toggleDropdown} href="javascript:;">
             <Avatar user={appUser} size={27} />
