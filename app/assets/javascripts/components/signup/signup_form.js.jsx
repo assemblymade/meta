@@ -6,6 +6,8 @@ const SignupActions = require('../../actions/signup_actions');
 const SignupFormStore = require('../../stores/signup_form_store');
 const Spinner = require('../spinner.js.jsx');
 
+const ENTER_KEY = 13;
+
 const SignupForm = React.createClass({
   componentDidMount() {
     SignupFormStore.addChangeListener(this.updateFormState);
@@ -32,6 +34,13 @@ const SignupForm = React.createClass({
     };
 
     return handler;
+  },
+
+  handleKeyPress(e) {
+    if (e.which === ENTER_KEY) {
+      e.preventDefault();
+      this.signUp();
+    }
   },
 
   logIn(e) {
@@ -192,6 +201,7 @@ const SignupForm = React.createClass({
             className="form-control input-lg mr1"
             placeholder="jane@example.com"
             name="email"
+            onKeyPress={this.handleKeyPress}
             value={email}
             onChange={this.handleChange('email')} />
       </div>
@@ -209,6 +219,7 @@ const SignupForm = React.createClass({
             autoComplete={false}
             className="form-control input-lg mr1"
             name="password"
+            onKeyPress={this.handleKeyPress}
             value={password}
             onChange={this.handleChange('password')} />
         <p className="help-block">
@@ -229,6 +240,7 @@ const SignupForm = React.createClass({
             className="form-control input-lg mr1"
             placeholder="jane"
             name="username"
+            onKeyPress={this.handleKeyPress}
             value={username}
             onChange={this.handleChange('username')} />
       </div>
