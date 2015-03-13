@@ -6,7 +6,7 @@ var Button = React.createClass({
       React.PropTypes.func,
       React.PropTypes.string
     ]),
-    type:   React.PropTypes.oneOf(['default', 'primary']),
+    type:   React.PropTypes.oneOf(['default', 'primary', 'facebook']),
     block:  React.PropTypes.bool,
     active: React.PropTypes.bool
   },
@@ -27,6 +27,7 @@ var Button = React.createClass({
       'button--default': this.props.type === 'default',
       'button--primary': this.props.type === 'primary',
       'button--disabled': !this.props.action,
+      'btn-facebook': this.props.type === 'facebook',
       'active': this.props.active,
       'button--block': this.props.block
     })
