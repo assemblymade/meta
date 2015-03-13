@@ -24,6 +24,7 @@ const Tile = require('../ui/tile.js.jsx');
 const UserStore = require('../../stores/user_store');
 const Checklist = require('../checklist.js.jsx');
 const ProductStateIndicator = require('../product_state_indicator.js.jsx');
+const ProductStateWidget = require('../product_state_widget.js.jsx');
 
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
@@ -146,14 +147,8 @@ let IdeaShow = React.createClass({
             </div>
 
             <div className="col col-4 px2">
-
+              <ProductStateWidget entity={idea} />
               <div className="mb3">
-                <Checklist entity_type={"Idea"} entity={idea} />
-                <Tile>
-                  <div className="mb4">
-                    <ProductStateIndicator labeled={false} activeStage={1} />
-                  </div>
-                </Tile>
                 <Tile>
                   <div className="p3">
                     <h6 className="mt0 caps gray-2">Next steps for this idea</h6>
