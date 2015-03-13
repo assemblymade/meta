@@ -38,7 +38,7 @@ function request(url, info, redirect) {
     success(response) {
       window.location = redirect;
     },
-    error(jqXhr, error, message) {
+    error: function(jqXhr, e, message) {
       let errors = jqXhr.responseJSON.errors;
 
       Dispatcher.dispatch({
