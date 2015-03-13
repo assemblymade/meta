@@ -6,7 +6,7 @@ class GuidesGroup < StaticContentGroup
     ['accepting-payments',  'Accepting payments'],
     ['getting-paid',  'Getting paid'],
     ['domains',  'Domains, hosting, and repos'],
-    ['ownership', 'Managing Ownership']
+    ['ownership', 'Managing Ownership'],
     ['starting-ios', 'Starting an iOS app'],
     ['transferring-ios', 'Transferring an iOS app'],
     ['starting-android', 'Starting an Android app'],
