@@ -1,72 +1,76 @@
 <% title 'Sign in' %>
 <%= track_engaged('session.new') %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
+<div class="bg-white" style="top:0;right:0;bottom:0;left:0;margin:auto;position:absolute">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
 
-      <div class="sheet">
-        <div class="sheet-body">
-          <div class="center">
-            <h1 class="omega">Welcome back to Assembly!</h1>
-            <p class="gray-2">
-              <a href="<%= new_user_registration_path %>">Don't have an account?</a>
-            </p>
+        <div class="sheet">
+          <div class="sheet-body">
+            <div class="center">
+              <h1 class="omega">Welcome back to Assembly!</h1>
+              <p class="gray-2">
+                <a href="<%= new_user_registration_path %>">Don't have an account?</a>
+              </p>
+            </div>
+
+            <br>
+
+            <%= form_for(resource, as: resource_name, url: new_user_session_path) do |f| %>
+
+              <a class="button btn-facebook button--block" href="<%= user_omniauth_authorize_path(:facebook) %>">
+                <span class="fa fa-facebook mr1"></span> Use Facebook
+              </a>
+
+              <fieldset class="hr-line">
+                <legend align="center">OR</legend>
+              </fieldset>
+
+              <% if flash[:notice].present? %>
+                <div class="alert alert-info" role="alert">
+                  <%= flash[:notice] %>
+                </div>
+              <% end %>
+
+              <% if flash[:alert].present? %>
+                <div class="alert alert-danger" role="alert">
+                  <%= flash[:alert] %>
+                </div>
+              <% end %>
+
+              <div class="form-group">
+                <%= f.label :login, 'Email or username', class: 'input-label' %>
+                <%= f.text_field :login, autofocus: true, class: 'form-control input-lg', placeholder: 'jane@example.com' %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :password, class: 'input-label' %>
+                <%= f.password_field :password, autocomplete: false, class: 'form-control input-lg' %>
+                <div class="help-block">
+                  <a href="<%= new_user_password_path %>">Forgot your password?</a>
+                </div>
+              </div>
+
+              <%= f.submit 'Log in', class: 'button button--primary button--block' %>
+
+              <div class="clearfix">
+                <div class="checkbox pull-left">
+                  <%= f.label :remember_me, class: 'input-label' do %>
+                    <%= f.check_box :remember_me, checked: true %>
+                    Remember me
+                  <% end %>
+                </div>
+
+                <div class="pull-right">
+
+                </div>
+              </div>
+            <% end %>
           </div>
-
-          <br>
-
-          <%= form_for(resource, as: resource_name, url: new_user_session_path) do |f| %>
-
-            <a class="btn btn-facebook btn-block btn-lg" href="<%= user_omniauth_authorize_path(:facebook) %>">Log in using Facebook</a>
-
-            <fieldset class="hr-line">
-              <legend align="center">OR</legend>
-            </fieldset>
-
-            <% if flash[:notice].present? %>
-              <div class="alert alert-info" role="alert">
-                <%= flash[:notice] %>
-              </div>
-            <% end %>
-
-            <% if flash[:alert].present? %>
-              <div class="alert alert-danger" role="alert">
-                <%= flash[:alert] %>
-              </div>
-            <% end %>
-
-            <div class="form-group">
-              <%= f.label :login, 'Email or username', class: 'input-label' %>
-              <%= f.text_field :login, autofocus: true, class: 'form-control input-lg', placeholder: 'jane@example.com' %>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :password, class: 'input-label' %>
-              <%= f.password_field :password, autocomplete: false, class: 'form-control input-lg' %>
-              <div class="help-block">
-                <a href="<%= new_user_password_path %>">Forgot your password?</a>
-              </div>
-            </div>
-
-            <%= f.submit 'Log in', class: 'btn btn-primary btn-block btn-lg' %>
-
-            <div class="clearfix">
-              <div class="checkbox pull-left">
-                <%= f.label :remember_me, class: 'input-label' do %>
-                  <%= f.check_box :remember_me, checked: true %>
-                  Remember me
-                <% end %>
-              </div>
-
-              <div class="pull-right">
-
-              </div>
-            </div>
-          <% end %>
         </div>
-      </div>
 
+      </div>
     </div>
   </div>
 </div>

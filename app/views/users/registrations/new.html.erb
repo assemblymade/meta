@@ -1,20 +1,17 @@
 <% title 'Create an account', 'It takes less than a minute' %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="sheet">
-        <div class="sheet-body">
-
-          <div class="center">
-            <h1 class="omega">Join Assembly</h1>
-            <p>Woo! Glad you're joining the community. Just fill in some details for your new account below and you can jump right in.</p>
-            <p class="gray-2">
-              <a href="<%= new_user_session_path %>">Already a member? Sign in.</a>
-            </p>
-          </div>
-
-          <br>
+<div class="bg-white" style="top:0;right:0;bottom:0;left:0;margin:auto;position:absolute">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="shee">
+          <div class="sheet-body">
+            <div class="center">
+              <img class="py4" src="<%= image_path('logo.min.png') %>" />
+              <p class="gray-2">
+                Sign in to Assembly or create an account below.
+              </p>
+            </div>
 
           <%= form_for(resource, as: resource_name, url: new_user_registration_path) do |f| %>
 
@@ -26,13 +23,17 @@
             <%= hidden_field_tag 'user[follow_product]' %>
 
             <% if f.object.facebook_uid.blank? %>
-              <div class="center">
-                <a class="btn btn-facebook btn-lg" href="<%= user_omniauth_authorize_path(:facebook) %>">Supersonic sign up with Facebook</a>
+              <div class="center py2">
+                <a class="button btn-facebook block" href="<%= user_omniauth_authorize_path(:facebook) %>">
+                  <span class="fa fa-facebook mr1"></span> Use Facebook
+                </a>
               </div>
 
-              <fieldset class="hr-line">
-                <legend align="center">OR</legend>
-              </fieldset>
+              <div class="center py2">
+                <button id="show-email-form" class="button button--default button--block">
+                  <span class="fa fa-envelope-o mr1"></span> Use email
+                </button>
+              </div>
 
             <% else %>
               <div class="well">
@@ -49,44 +50,46 @@
               </div>
             <% end %>
 
-            <div class="form-group <%= 'has-error' if f.object.errors[:username].any? %>">
-              <% if f.object.errors[:username].any? %>
-                <p class="help-block pull-right">
-                  <%= f.object.errors[:username].to_sentence %>
+            <div id="email-form" class="display-none">
+              <div class="form-group <%= 'has-error' if f.object.errors[:username].any? %>">
+                <% if f.object.errors[:username].any? %>
+                  <p class="help-block pull-right">
+                    <%= f.object.errors[:username].to_sentence %>
+                  </p>
+                <% end %>
+
+                <%= f.label :username, 'Username', class: 'control-label' %>
+                <%= f.text_field :username, class: 'form-control input-lg', placeholder: 'jane' %>
+              </div>
+
+              <div class="form-group <%= 'has-error' if f.object.errors[:email].any? %>">
+                <% if f.object.errors[:email].any? %>
+                  <p class="help-block pull-right">
+                    <%= f.object.errors[:email].to_sentence %>
+                  </p>
+                <% end %>
+
+                <%= f.label :email, class: 'control-label' %>
+                <%= f.text_field :email, class: 'form-control input-lg', placeholder: 'jane@example.com' %>
+              </div>
+
+              <div class="form-group <%= 'has-error' if f.object.errors[:password].any? %>">
+                <% if f.object.errors[:password].any? %>
+                  <p class="help-block pull-right">
+                    <%= f.object.errors[:password].to_sentence %>
+                  </p>
+                <% end %>
+
+                <%= f.label :password, class: 'control-label' %>
+                <%= f.password_field :password, autocomplete: false, class: 'form-control input-lg' %>
+                <p class="help-block">
+                  8 characters minimum. You're smart, choose a good one.
                 </p>
-              <% end %>
+              </div>
 
-              <%= f.label :username, 'Username', class: 'control-label' %>
-              <%= f.text_field :username, class: 'form-control input-lg', placeholder: 'jane' %>
-            </div>
-
-            <div class="form-group <%= 'has-error' if f.object.errors[:email].any? %>">
-              <% if f.object.errors[:email].any? %>
-                <p class="help-block pull-right">
-                  <%= f.object.errors[:email].to_sentence %>
-                </p>
-              <% end %>
-
-              <%= f.label :email, class: 'control-label' %>
-              <%= f.text_field :email, class: 'form-control input-lg', placeholder: 'jane@example.com' %>
-            </div>
-
-            <div class="form-group <%= 'has-error' if f.object.errors[:password].any? %>">
-              <% if f.object.errors[:password].any? %>
-                <p class="help-block pull-right">
-                  <%= f.object.errors[:password].to_sentence %>
-                </p>
-              <% end %>
-
-              <%= f.label :password, class: 'control-label' %>
-              <%= f.password_field :password, autocomplete: false, class: 'form-control input-lg' %>
-              <p class="help-block">
-                8 characters minimum. You're smart, choose a good one.
-              </p>
-            </div>
-
-            <div class="center">
-              <button class="btn btn-default btn-lg" type="submit"><span class="green">Join Assembly</span></button>
+              <div class="center">
+                <button class="button button--primary button--block" type="submit">Join Assembly</button>
+              </div>
             </div>
 
           <% end %>
@@ -100,3 +103,12 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.getElementById('show-email-form').addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    document.getElementById('email-form').className = "";
+  });
+</script>

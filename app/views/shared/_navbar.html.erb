@@ -78,7 +78,7 @@
       <% else %>
         <% if ab_test('product_homepage') == 'focus' %>
           <div class="navbar-right">
-            <a class="btn btn-success navbar-btn" href="<%= new_user_registration_path %>">
+            <a id="signup-button" class="button button--primary px2 mt1" href="<%= new_user_registration_path %>">
               Sign up
             </a>
           </div>
@@ -108,6 +108,15 @@
             </ul>
           </div>
         <% end %>
+        <script>
+          var signupElement = document.getElementById('signup-button');
+          signupElement.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            SignupActions.showModal();
+          });
+        </script>
       <% end %>
 
     </div>

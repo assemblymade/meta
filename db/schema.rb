@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20150312205251) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "uuid-ossp"
-  enable_extension "hstore"
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pg_stat_statements"
+  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -412,10 +412,9 @@ ActiveRecord::Schema.define(version: 20150312205251) do
   create_table "leader_positions", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "leader_type"
     t.integer  "rank"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.uuid     "user_id"
-    t.string   "leader_category"
   end
 
   create_table "mark_clusters", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -815,7 +814,6 @@ ActiveRecord::Schema.define(version: 20150312205251) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
-    t.integer  "order"
   end
 
   create_table "status_messages", id: :uuid, force: :cascade do |t|
@@ -1075,7 +1073,6 @@ ActiveRecord::Schema.define(version: 20150312205251) do
     t.uuid     "user_cluster_id"
     t.datetime "flagged_at"
     t.datetime "showcase_banner_dismissed_at"
-    t.uuid     "leader_position_id"
     t.datetime "coin_callout_viewed_at"
     t.integer  "hearts_received",                               default: 0,       null: false
   end
