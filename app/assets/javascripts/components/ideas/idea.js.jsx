@@ -94,7 +94,7 @@ let Idea = React.createClass({
             <div className="overflow-hidden py1">
               {this.hasEnoughHearts() ?
                 'Are you ready to start building this idea?' :
-                'Psst! Get five hearts to jumpstart this idea.'}
+                'Psst! Get ten hearts to jumpstart this idea.'}
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ const Tile = require('./ui/tile.js.jsx');
 const Button = require('./ui/button.js.jsx');
 const ChecklistStore = require('../stores/checklist_store');
 const ChecklistActions = require('../actions/checklist_actions');
+const UserStore = require('../stores/user_store');
 
 var Checklist = React.createClass({
 
@@ -74,15 +75,34 @@ sendUpdate: function(editable_type, path) {
     }
   },
 
+  renderProgressButton: function() {
+    let currentUser = UserStore.getUser();
+    var isOwner = (currentUser.id === this.props.entity.user.id)
+    if (currentUser && currentUser.staff && isOwner) {
+      return (
+        <div className="center mb2">
+          <Button action={ function () {
+              window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
+            }.bind(this)
+          }>Make it a Product</Button>
+        </div>
+
+      )
+    }
+
+  },
+
   renderChecklistItems: function() {
     console.log(this.state.checklistItems)
+    let currentUser = UserStore.getUser();
+    var isOwner = (currentUser.id === this.props.entity.user.id)
     return (
       _.map(this.state.checklistItems, function(item, index) {
         if (item.state) {
           return (
             <li>
               <span className="fa green fa-check-square-o" />
-              { item.editable ? this.renderInputForm(item, index) :
+              { item.editable && isOwner ? this.renderInputForm(item, index) :
                 <span className="ml2">{item.title}</span>
               }
               <br/>
@@ -133,14 +153,7 @@ sendUpdate: function(editable_type, path) {
             {this.renderChecklistItems()}
            </ul>
         </div>
-
-        <div className="center mb2">
-          <Button action={ function () {
-              window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
-            }.bind(this)
-          }>Progress to Recruitment</Button>
-        </div>
-
+        {this.renderProgressButton()}
       </Tile>
     )
   },
