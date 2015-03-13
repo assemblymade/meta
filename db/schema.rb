@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20150312205251) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-  enable_extension "hstore"
-  enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
+  enable_extension "hstore"
+  enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -360,7 +360,6 @@ ActiveRecord::Schema.define(version: 20150312205251) do
     t.text     "categories",                     default: [],                                 array: true
     t.datetime "deleted_at"
     t.datetime "last_tweeted_at"
-    t.uuid     "stage_id"
     t.string   "tentative_name"
   end
 
@@ -814,6 +813,7 @@ ActiveRecord::Schema.define(version: 20150312205251) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
+    t.integer  "order"
   end
 
   create_table "status_messages", id: :uuid, force: :cascade do |t|
@@ -1252,12 +1252,10 @@ ActiveRecord::Schema.define(version: 20150312205251) do
     t.datetime "created_at"
   end
 
-  add_foreign_key "daily_metrics", "products"
   add_foreign_key "markings", "marks"
   add_foreign_key "monthly_metrics", "products"
   add_foreign_key "news_feed_item_comments", "news_feed_items"
   add_foreign_key "screenshots", "assets"
   add_foreign_key "showcase_entries", "products"
   add_foreign_key "showcase_entries", "showcases"
-  add_foreign_key "weekly_metrics", "products"
 end

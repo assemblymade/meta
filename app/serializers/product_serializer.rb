@@ -4,7 +4,7 @@ class ProductSerializer < ApplicationSerializer
   attributes :url, :wips_url, :people_url, :is_member, :subsections
   attributes :name, :pitch, :slug, :quality, :average_bounty, :logo_url, :total_visitors
   attributes :can_update, :try_url, :wips_count, :partners_count, :lead
-  attributes :top_marks, :homepage_url, :screenshots, :description, :description_html, :active_stage
+  attributes :top_marks, :homepage_url, :screenshots, :description, :description_html
 
   has_many :most_active_contributors, serializer: UserSerializer
 
@@ -12,14 +12,6 @@ class ProductSerializer < ApplicationSerializer
 
   def description_html
     product_markdown(object, description)
-  end
-
-  def active_stage
-    if object.stage
-      object.stage.order
-    else
-      -1
-    end
   end
 
   def lead

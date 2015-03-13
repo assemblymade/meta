@@ -126,7 +126,7 @@ let IdeaShow = React.createClass({
           <div className="container clearfix">
             <div className="left">
               <h4 className="mt2 mb2">
-                Turn an idea into a real business with people around the world
+                Turn an idea into a real product with people around the world
               </h4>
             </div>
             <div className="right py1">

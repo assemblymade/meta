@@ -24,7 +24,6 @@ class Product < ActiveRecord::Base
   belongs_to :user
   belongs_to :evaluator, class_name: 'User'
   belongs_to :main_thread, class_name: 'Discussion'
-  belongs_to :stage
   belongs_to :logo, class_name: 'Asset', foreign_key: 'logo_id'
 
   has_one :product_trend
@@ -62,7 +61,6 @@ class Product < ActiveRecord::Base
   has_many :showcase_entries
   has_many :showcases, through: :showcase_entries
   has_many :status_messages
-  has_many :checklist_items
 
   has_many :stream_events
   has_many :subscribers
@@ -468,16 +466,6 @@ class Product < ActiveRecord::Base
 
   def to_param
     slug || id
-  end
-
-  def advance_stage
-    if self.stage
-      n = self.stage.order
-      if n < 6
-        product_stage = Stage.find_by(order: n+1)
-        self.update!({stage: product_stage})
-      end
-    end
   end
 
   # following

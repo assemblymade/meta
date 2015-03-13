@@ -92,7 +92,7 @@ sendUpdate: function(editable_type, path) {
             }.bind(this)
           }>
             <Icon icon="lock" fw="true" />
-            Setup ownership
+            Create a product
           </Button>
         </div>
       )
@@ -156,9 +156,14 @@ sendUpdate: function(editable_type, path) {
   },
 
   render: function() {
+    var currentUser = UserStore.getUser();
+    var isOwner = (currentUser.id === this.props.entity.user.id)
     return (
       <div>
         <div className="p3 pb0">
+          <h4 className="center">
+            { isOwner ? "Move your idea forward" : "Move this idea forward" }
+          </h4>
           <ol className="list-reset">
             {this.renderChecklistItems()}
           </ol>

@@ -8,7 +8,6 @@ class Idea < ActiveRecord::Base
 
   belongs_to :product
   belongs_to :user
-  belongs_to :stage
 
   has_many :markings, as: :markable
   has_many :marks, through: :markings
@@ -23,7 +22,6 @@ class Idea < ActiveRecord::Base
   validate :idea_and_product_have_same_user
 
   before_validation :set_tilting_threshold!, on: :create
-  after_commit :set_stage, on: :create
 
   after_commit :ensure_news_feed_item, on: :create
   after_commit :update_news_feed_item, on: :update
@@ -173,7 +171,7 @@ class Idea < ActiveRecord::Base
   def checklist_state
     checklists = []
     hearts = {}
-    hearts['title'] = "Get Some Love"
+    hearts['title'] = "Get some love"
     hearts['editable'] = false
     hearts['state'] = self.love >= DEFAULT_TILTING_THRESHOLD
     if hearts['state']
@@ -184,7 +182,7 @@ class Idea < ActiveRecord::Base
     checklists.append(hearts)
 
     name = {}
-    name['title'] = "Pick a Name"
+    name['title'] = "Pick a name"
     if self.tentative_name
       name['smalltext'] = self.tentative_name
       name['state'] = true
@@ -198,7 +196,7 @@ class Idea < ActiveRecord::Base
     checklists.append(name)
 
     comments = {}
-    comments['title'] = "Get Feedback"
+    comments['title'] = "Get feedback"
     comment_n = self.comments.count
     comments['state'] = comment_n >= COMMENT_MINIMUM
     comments['smalltext'] = comment_n.to_s + " comments"
@@ -316,21 +314,6 @@ class Idea < ActiveRecord::Base
 
   def tweet_creation
     Tweeter.new.tweet_idea(self)
-  end
-
-  def set_stage
-    idea_stage = Stage.find_by(name: "Idea")
-    self.stage = idea_stage
-  end
-
-  def advance_stage
-    #make this a product...
-  end
-
-  def create_checklist_items
-    self.stage.checklist_types.each do |a|
-      ChecklistItem.create!({checklist_type: a, idea: self, state: "unfulfilled"})
-    end
   end
 
 end
