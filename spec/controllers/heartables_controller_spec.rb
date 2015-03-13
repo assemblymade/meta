@@ -28,14 +28,4 @@ describe HeartablesController do
       "heartable_id" => ["has already been taken"]
     })
   end
-
-  it 'can be unloved' do
-    heart = news_feed_item.hearts.create!(user_id: user.id)
-
-    post :unlove,
-      type: NewsFeedItem.to_s,
-      id: news_feed_item.id
-
-    expect(response.status).to eq(200)
-  end
 end

@@ -12,7 +12,7 @@ var N = CONSTANTS.CHAT_NOTIFICATIONS;
 var NotificationsList = React.createClass({
   render: function() {
     var productNodes = this.props.data.map(function(entry){
-      var label = entry.product_name ? entry.product_name : 'Community Chat';
+      var label = entry.product_name ? entry.product_name : `#${entry.label}`;
       var badge = null;
 
       if (entry.updated > entry.last_read_at) {
@@ -239,7 +239,7 @@ var ChatNotifications = React.createClass({
       );
     }
 
-    return <NotificationsList data={_.first(this.sortByLastReadAt(this.state.data), 7)} />;
+    return <NotificationsList data={this.sortByLastReadAt(this.state.data)} />;
   },
 
   storedAckChanged: function() {

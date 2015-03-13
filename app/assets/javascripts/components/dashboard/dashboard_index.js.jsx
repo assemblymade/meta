@@ -15,7 +15,6 @@ const page = require('page')
 const ProductsStore = require('../../stores/products_store.js')
 const UserBountiesStore = require('../../stores/user_bounties_store.js')
 const UserStore = require('../../stores/user_store.js')
-const ShowcaseBanner = require('../showcase_banner.js.jsx')
 const Spinner = require('../spinner.js.jsx')
 const SvgIcon = require('../ui/svg_icon.js.jsx')
 const Tile = require('../ui/tile.js.jsx')
@@ -420,7 +419,6 @@ let DashboardIndex = React.createClass({
   },
 
   render: function() {
-    let banner = this.renderBanner()
     let nav = this.renderNav()
     let newsFeedItems = this.renderNewsFeedItems()
     let product = this.renderProduct()
@@ -428,7 +426,6 @@ let DashboardIndex = React.createClass({
 
     return (
       <div>
-        {banner}
         <div className="container clearfix mt1">
           <div className="mxn2">
             <div className="md-col md-col-2 px2">

@@ -5,13 +5,20 @@ var DropdownMenu = require('./ui/dropdown_menu.js.jsx')
 var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
 var DropdownNotifications = require('./dropdown_notifications.js.jsx');
 var DropdownNotificationsToggler = require('./dropdown_notifications_toggler.js.jsx');
+var HeartsReceived = require('./user/hearts_received.js.jsx')
+var StoryActions = require('../actions/story_actions')
+var StoryStore = require('../stores/story_store');
 var TitleNotificationsCount = require('./title_notifications_count.js.jsx');
 var UserStore = require('../stores/user_store');
 
 var Navbar = React.createClass({
   mixins: [DropdownMixin],
 
-  render: function() {
+  getInitialState() {
+    return this.getStateFromStores()
+  },
+
+  render() {
     var appUser = UserStore.getUser();
     var divStyle = {
       padding: '11px 0 10px 7px'
@@ -38,28 +45,8 @@ var Navbar = React.createClass({
           <TitleNotificationsCount />
         </li>
 
-        <li className="left sm-show px1">
-          <ChatNotificationsToggler
-            icon="comments"
-            href='#notifications'
-            label='Chat' />
-
-          <ChatNotifications
-              url={this.props.chatPath}
-              username={appUser.username} />
-        </li>
-
-        <li className="left sm-show px1">
-          <DropdownNotificationsToggler
-              icon="bell"
-              href='#stories'
-              label='Notifications' />
-
-          <DropdownNotifications
-              url={this.props.notificationsPath}
-              username={appUser.username}
-              editUserPath={this.props.editUserPath} />
-        </li>
+        {this.renderChatNotifications()}
+        {this.renderStories()}
 
         <li className="left dropdown hidden-xs">
           <a className="block dropdown-toggle px1" style={divStyle} key="navbar dropdown" onClick={this.toggleDropdown} href="javascript:;">
@@ -70,6 +57,53 @@ var Navbar = React.createClass({
         </li>
       </ul>
     )
+  },
+
+  renderChatNotifications() {
+    return <li className="left sm-show px1">
+      <ChatNotificationsToggler
+        icon="comments"
+        href='#notifications'
+        label='Chat' />
+
+      <ChatNotifications
+          url={this.props.chatPath}
+          username={UserStore.getUser().username} />
+    </li>
+  },
+
+  renderStories() {
+    return <li className="left sm-show px1">
+      <DropdownNotificationsToggler
+          icon="bell"
+          href='#stories'
+          label='Notifications' />
+
+      <DropdownNotifications
+          url={this.props.notificationsPath}
+          username={UserStore.getUser().username}
+          editUserPath={this.props.editUserPath} />
+    </li>
+  },
+
+  componentDidMount() {
+    StoryStore.addChangeListener(this._onChange)
+    StoryActions.fetchStories()
+  },
+
+  componentWillUnmount() {
+    StoryStore.removeChangeListener(this._onChange)
+  },
+
+  _onChange() {
+    this.setState(this.getStateFromStores())
+  },
+
+  getStateFromStores() {
+    let stories = StoryStore.getStories()
+    return {
+      showStories: (stories && stories.length > 0)
+    }
   }
 
 })

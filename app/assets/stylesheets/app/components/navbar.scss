@@ -99,3 +99,15 @@ a[data-label="brand"] {
   border-bottom: 1px solid $brand-divider;
   margin-bottom: 0;
 }
+
+@include keyframes(pulse) {
+  0% { transform: scale3d(1, 1, 1); }
+  25% { transform: scale3d(1.4, 1.4, 1.4); }
+  50% { transform: scale3d(1, 1, 1); }
+  75% { transform: scale3d(1.4, 1.4, 1.4); }
+  100% { transform: scale3d(1, 1, 1); }
+}
+
+.pulse {
+  @include animation('pulse 0.3s');
+}

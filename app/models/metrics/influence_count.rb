@@ -1,5 +1,9 @@
 module Metrics
   class InfluenceCount < KPI
+    def name
+      "Total Influence"
+    end
+    
     def between(start_at, end_at)
       # mixpanel only gives us the most recent N days, weeks, or months worth of events.
       weeks = ((Time.now - start_at) / 1.week).ceil

@@ -6,8 +6,8 @@ module Metrics
     end
 
     def name
-      filter_description = @filter.nil? ? "Total" : "(#{@filter})"
-      [super, filter_description].join(' ')
+      filter_description = @filter.nil? ? "across all products" : "(#{@filter})"
+      ["Uniques", filter_description].join(' ')
     end
 
     def between(start_at, end_at)

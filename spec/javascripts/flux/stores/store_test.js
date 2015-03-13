@@ -1,7 +1,14 @@
 jest.dontMock(pathToFile('stores/store'));
 
 describe('Store', function() {
-  var EventEmitter = require('events').EventEmitter;
+  var events = require('events')
+
+  // console.log(events)
+
+  var EventEmitter = events.EventEmitter;
+
+  console.log(EventEmitter.prototype.emit)
+
   var Store = require(pathToFile('stores/store'));
 
   it('instantiates a new store that has EventEmitter\'s prototype', function() {

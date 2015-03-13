@@ -2,8 +2,8 @@
 
 #### What hosting provider should I use?
 
-Assembly can currently cover paid hosting costs for products that use Heroku.
-To get started with this process, email assembly@helpful.io to transfer
+Assembly can often cover paid hosting costs for products that use Heroku.
+To get started with this process, email support@assembly.com to transfer
 ownership of your Heroku app.  You are free to use other platforms, such as
 AWS, DigitalOcean, Google App Engine, or others. However, we do not yet support
 paying for these providers.
@@ -26,7 +26,7 @@ with an authorization code to initialize the transfer.
 Assembly holds domains on behalf of the respective products to which they
 belong. All products on Assembly must transfer ownership of their domains
 within 90 days of joining the platform. Products that have not transfered their
-domains within this time frame will be removed from the platform.
+domains within this timeframe will be removed from the platform.
 
 # Version Control
 
@@ -34,10 +34,10 @@ domains within this time frame will be removed from the platform.
 
 Each Assembly product has an associated Github repo under the [asm-products
 organization](https://github.com/asm-products/). Any users on your product's
-core team will have write access as long as their Github account is linked on
+Core Team will have write access as long as their Github account is linked on
 Assembly.
 
 #### Adding or removing contributors
 
-Please email assembly@helpful.io if you need to grant write access to non-core
+Please email support@assembly.com if you need to grant write access to non-core
 users or remove write access.
