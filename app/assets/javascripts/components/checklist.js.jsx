@@ -59,7 +59,7 @@ sendUpdate: function(editable_type, path) {
     if (this.state.openListItem === index) {
       return (
         <div style={{display:"inline"}}>
-          <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title} 
+          <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}
             <span className="fa fa-remove ml1 gray-2" />
           </span>
 
@@ -90,13 +90,19 @@ sendUpdate: function(editable_type, path) {
           <Button type="primary" block="true" action={ function () {
               window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
             }.bind(this)
-          }>
-            <Icon icon="lock" fw="true" />
-            Setup ownership
-          </Button>
+
+          }>Start Recruiting</Button>
         </div>
       )
     }
+    else
+      {
+        return (
+          <div className="center mb2">
+            <Button>Start Recruiting</Button>
+          </div>
+        )
+      }
   },
 
   renderChecklistItems: function() {
@@ -107,16 +113,13 @@ sendUpdate: function(editable_type, path) {
       _.map(this.state.checklistItems, function(item, index) {
         if (item.state) {
           return (
-            <li className="py1">
-              <div className="left mr2 green">
-                <Icon icon="check" fw={true} />
-              </div>
-              { item.editable && isOwner ? this.renderInputForm(item, index) :
-                <span className="ml2">
-                  {item.title}<br />
-                  <small className="gray-2 ml4">{item.smalltext}</small>
-                </span>
+            <li>
+              <span className="fa green fa-check-square-o" />
+              { item.editable && isOwner ? <span>{this.renderInputForm(item, index)}<span className="ml2 fa fa-pencil"></span></span> :
+                <span className="ml2">{item.title}</span>
               }
+              <br/>
+              <small className="gray-2 ml2">{item.smalltext}</small>
             </li>
           )
         }
@@ -132,6 +135,8 @@ sendUpdate: function(editable_type, path) {
                   <small className="gray-2 ml4">{item.smalltext}</small>
                 </span>
               }
+              <br/>
+              <small className="gray-2 ml2">{item.smalltext}</small>
             </li>
           )
         }
@@ -156,10 +161,15 @@ sendUpdate: function(editable_type, path) {
   },
 
   render: function() {
+    var currentUser = UserStore.getUser();
+    var isOwner = (currentUser.id === this.props.entity.user.id)
     return (
-      <div>
-        <div className="p3 pb0">
-          <ol className="list-reset">
+      <Tile>
+        <h4 className="center">
+          { isOwner ? "Move your idea forward" : "Move this idea forward" }
+        </h4>
+        <div className="p3">
+           <ul style={{listStyle: 'none'}}>
             {this.renderChecklistItems()}
           </ol>
         </div>
