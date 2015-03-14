@@ -63,6 +63,10 @@ let ProductShow = React.createClass({
     let slug = product.slug;
     let user = UserStore.getUser();
 
+    let seeHowAssemblyWorksLink = <a href="/help" className="block px3 py2 center border-top">
+      See how Assembly works
+    </a>
+
     return (
       <div>
         <ProductHeader />
@@ -116,25 +120,18 @@ let ProductShow = React.createClass({
             <div className="md-col md-col-4 px3">
               <div className="mb3">
                 <Tile>
-                  {this.renderCommunityBuiltNotice()}
-                  <div className="border-bottom">
-                    <div className="p3">
-                      <h5 className="mt0 mb1">Build {product.name} with us!</h5>
-                      {this.renderIntroductionForm()}
-                    </div>
+                  <div className="p3">
+                    <h5 className="mt0 mb1">Build {product.name} with us!</h5>
+                    {this.renderIntroductionForm()}
                   </div>
 
-                  <div className="border-bottom">
-                    <MetricsBadge />
-                  </div>
+                  <MetricsBadge />
 
-                  <div className="border-bottom">
-                    {this.renderMostActiveUsers()}
-                  </div>
+                  {this.renderMostActiveUsers()}
 
-                  <a href="/help" className="block px3 py2 center">
-                    See how Assembly works
-                  </a>
+                  {
+                    (!UserStore.isSignedIn()) ? seeHowAssemblyWorksLink : null
+                  }
                 </Tile>
               </div>
 
@@ -145,20 +142,6 @@ let ProductShow = React.createClass({
         </div>
       </div>
     );
-  },
-
-  renderCommunityBuiltNotice() {
-    let product = this.state.product;
-
-    if (product.community_built) {
-      return (
-        <div className="border-bottom">
-          <div className="px3 py2">
-            <span className="gray-1">Verified community-built</span>
-          </div>
-        </div>
-      );
-    }
   },
 
   renderEditButton() {
@@ -205,7 +188,7 @@ let ProductShow = React.createClass({
     });
 
     return (
-      <div className="px3 py2">
+      <div className="px3 py2 border-top">
         <h5 className="mt0 mb2">Most active members</h5>
         <div className="clearfix">
           {renderedContributors}

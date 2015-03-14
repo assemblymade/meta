@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
   renderEmptyState() {
     if (ProductStore.isCoreTeam(UserStore.getUser())) {
-      return <div className="px3 py2">
+      return <div className="px3 py2 border-top">
         <span className="yellow"><Icon icon="exclamation-triangle" /> </span>
         <a href={Routes.snippet_product_metrics_path({product_id: this.state.product.slug})} className="gray-1 text-stealth-link">Set up metric collection</a>
       </div>
