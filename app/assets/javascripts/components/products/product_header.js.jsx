@@ -160,9 +160,9 @@ const ProductHeader = React.createClass({
 
   renderTags() {
     let product = this.state.product;
-    let marks = product.top_marks;
+    let marks = product.labels || [];
 
-    return marks && marks.slice(0, 3).map((mark, i) => {
+    return marks && marks.map((mark, i) => {
       return (
         <li key={mark + '-header-' + i}>
           <Label name={mark} />
