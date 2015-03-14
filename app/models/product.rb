@@ -249,7 +249,6 @@ class Product < ActiveRecord::Base
       greenlit_at: nil,
       profitable_at: nil
     )
-
   end
 
   def on_team_building_entry(prev_state, event, *args)
