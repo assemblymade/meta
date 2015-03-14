@@ -62,25 +62,6 @@ let ProductShow = React.createClass({
     let product = this.state.product;
     let slug = product.slug;
     let user = UserStore.getUser();
-    let leftColumnClasses = React.addons.classSet({
-      'mb2': true,
-      'px3': true,
-      'sm-col': true,
-      'sm-col-8': true,
-      'sm-mb0': true
-    });
-
-    let rightColumnClasses = React.addons.classSet({
-      'md-col': true,
-      'md-col-4': true,
-      'px3': true
-    });
-
-    let style = {
-      importantLinks: {
-        borderColor: '#dbdee3'
-      }
-    };
 
     return (
       <div>
@@ -90,7 +71,7 @@ let ProductShow = React.createClass({
           {this.renderEditButton()}
 
           <div className="clearfix mxn3">
-            <div className={leftColumnClasses}>
+            <div className="sm-col sm-col-8 px3 mb2 sm-mb0">
               <Tile>
 
                 <Screenshots key="product-screenshots" />
@@ -132,28 +113,30 @@ let ProductShow = React.createClass({
               </Tile>
             </div>
 
-            <div className={rightColumnClasses}>
-              <Tile>
-                {this.renderCommunityBuiltNotice()}
-                <div className="border-bottom">
-                  <div className="p3">
-                    <h5 className="mt0 mb1">Build {product.name} with us!</h5>
-                    {this.renderIntroductionForm()}
+            <div className="md-col md-col-4 px3">
+              <div className="mb3">
+                <Tile>
+                  {this.renderCommunityBuiltNotice()}
+                  <div className="border-bottom">
+                    <div className="p3">
+                      <h5 className="mt0 mb1">Build {product.name} with us!</h5>
+                      {this.renderIntroductionForm()}
+                    </div>
                   </div>
-                </div>
 
-                <div className="border-bottom">
-                  <MetricsBadge />
-                </div>
+                  <div className="border-bottom">
+                    <MetricsBadge />
+                  </div>
 
-                <div className="border-bottom">
-                  {this.renderMostActiveUsers()}
-                </div>
+                  <div className="border-bottom">
+                    {this.renderMostActiveUsers()}
+                  </div>
 
-                <a href="/help" className="block px3 py2 center">
-                  See how Assembly works
-                </a>
-              </Tile>
+                  <a href="/help" className="block px3 py2 center">
+                    See how Assembly works
+                  </a>
+                </Tile>
+              </div>
 
               <ProductImportantLinks product={product} />
 

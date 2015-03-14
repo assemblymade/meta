@@ -175,9 +175,9 @@ var BountyIndex = React.createClass({
     return (
       <div>
         {callout}
-        <div className="clearfix mxn2">
+        <div className="clearfix mxn3">
 
-          <div className="sm-col-right sm-col-4 px2">
+          <div className="sm-col-right sm-col-4 px3">
             <div className="mb3">
               <Tile>
                 <div className="p3">
@@ -213,7 +213,7 @@ var BountyIndex = React.createClass({
             </div>
           </div>
 
-          <div className="sm-col sm-col-8 px2">
+          <div className="sm-col sm-col-8 px3">
             <BountyFilter {...bountyFilterProps}
                 value={this.state.value}
                 onValueChange={this.handleValueChange}
