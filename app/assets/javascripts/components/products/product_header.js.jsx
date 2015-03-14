@@ -5,14 +5,17 @@ const Button = require('../ui/button.js.jsx');
 const CreateProductItem = require('../create_product_item.js.jsx');
 const CreateProductItemStore = require('../../stores/create_product_item_store');
 const Icon = require('../ui/icon.js.jsx');
+const Nav = require('../ui/nav.js.jsx');
 const page = require('page');
 const ProductFollowers = require('../product_followers.js.jsx');
 const ProductHeaderStore = require('../../stores/product_header_store');
 const ProductStore = require('../../stores/product_store');
 const Routes = require('../../routes');
 const url = require('url');
+const UserStore = require('../../stores/user_store')
+const Label = require('../ui/label.js.jsx')
 
-let ProductHeader = React.createClass({
+const ProductHeader = React.createClass({
   componentDidMount() {
     CreateProductItemStore.addChangeListener(this.onActiveMenuItemChange);
     ProductHeaderStore.addChangeListener(this.onProductHeaderChange);
@@ -34,10 +37,7 @@ let ProductHeader = React.createClass({
   },
 
   isActive(tabName) {
-    return React.addons.classSet({
-      mr3: true,
-      active: this.state.activeTab === tabName
-    });
+    return this.state.activeTab === tabName
   },
 
   onActiveMenuItemChange() {
@@ -65,10 +65,10 @@ let ProductHeader = React.createClass({
       return null;
     }
 
-    let navStyle = {
-      paddingLeft: '0 !important',
-      paddingRight: '0 !important'
-    };
+    let createBountyButton = null
+    if (UserStore.isSignedIn()) {
+      // createBountyButton =
+    }
 
     return (
       <div className="bg-white shadow-light">
@@ -105,33 +105,24 @@ let ProductHeader = React.createClass({
 
         <div className="container">
           <div className="clearfix">
-            <div className="left px1">
-              <ul className="nav nav-tabs">
-                <li className={this.isActive('overview')}>
-                  <a style={navStyle} href={product.url}>Overview</a>
-                </li>
 
-                <li className={this.isActive('activity')}>
-                  <a style={navStyle} href={product.url + '/activity'}>Activity</a>
-                </li>
-
-                <li className={this.isActive('bounties')}>
-                  <a style={navStyle} href={product.url + '/bounties'}>Bounties</a>
-                </li>
-
-                <li>
-                  <a style={navStyle} href={product.url + '/chat'}>Chat</a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="clearfix">
+            <div className="sm-right">
               <div className="center sm-right-align py1">
                 <span className="h6 mr3">
                   <ProductFollowers product_id={product.id} />
                 </span>
+
                 <CreateProductItem product={product} activeMenuItem={this.state.activeMenuItem} />
               </div>
+            </div>
+
+            <div className="sm-left">
+              <Nav type="tabs">
+                <Nav.Item active={this.isActive('overview')} href={product.url} label="Overview" />
+                <Nav.Item active={this.isActive('activity')} href={product.url + '/activity'} label="Activity" />
+                <Nav.Item active={this.isActive('bounties')} href={product.url + '/bounties'} label="Bounties" />
+                <Nav.Item href={product.url + '/chat'} label="Chat" />
+              </Nav>
             </div>
           </div>
         </div>
@@ -173,8 +164,8 @@ let ProductHeader = React.createClass({
 
     return marks && marks.slice(0, 3).map((mark, i) => {
       return (
-        <li className="gray-2" key={mark + '-header-' + i}>
-          <small>#{mark.toUpperCase()}</small>
+        <li key={mark + '-header-' + i}>
+          <Label name={mark} />
         </li>
       );
     });
