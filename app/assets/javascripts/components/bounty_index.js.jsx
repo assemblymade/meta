@@ -1,4 +1,6 @@
-var Accordion = require('./accordion.js.jsx')
+const Tile = require('./ui/tile.js.jsx')
+const Label = require('./ui/label.js.jsx')
+var Accordion = require('./ui/accordion.js.jsx')
 var BountiesStore = require('../stores/bounties_store.js')
 var BountyActionCreators = require('../actions/bounty_action_creators.js')
 var BountyFilter = require('./bounty_filter.js.jsx')
@@ -89,15 +91,21 @@ var BountyIndex = React.createClass({
   },
 
   renderTags: function() {
-    return this.props.tags.map(function(tag, i) {
+    let tags = this.props.tags.map(function(tag, i) {
       return (
-        <li className="mb1 lh0_9" key={tag + '-' + i}>
-          <a href="#" className="pill-hover block py1 px3" onClick={this.addTag(tag)}>
-            <span className="fs1 fw-500 caps">#{tag}</span>
+        <li key={tag + '-' + i}>
+          <a href="#" onClick={this.addTag(tag)}>
+            <Label name={tag} />
           </a>
         </li>
       )
     }.bind(this)).toJS();
+
+    return <Accordion title="Tags">
+      <ul className="list-reset">
+        {tags}
+      </ul>
+    </Accordion>
   },
 
   renderAssets: function() {
@@ -106,7 +114,7 @@ var BountyIndex = React.createClass({
     var assets_url = product.url+'/assets'
 
     return (
-      <div className="clearfix">
+      <div className="clearfix mxn1">
         {assets.map(function(asset, i) {
           if (['jpg', 'png', 'gif'].indexOf(asset.attachment.extension) < 0) {
             return null
@@ -135,8 +143,8 @@ var BountyIndex = React.createClass({
 
     if (this.state.user && !this.state.user.coin_callout_viewed_at) {
       callout = (
-        <div className="row">
-          <div className="col-xs-12">
+        <div className="clearfix mxn2">
+          <div className="col col-12">
             <Callout>
               <div className="sm-show">
                 <div style={{ padding: '1.5rem 2rem' }}>
@@ -167,47 +175,45 @@ var BountyIndex = React.createClass({
     return (
       <div>
         {callout}
-        <div className="row">
-          <div className="col-xs-12 col-sm-4 r768_float-right">
-            <span className="col-sm-11 col-sm-push-1 p0">
-              <div className="bg-white rounded shadow pt3 pr3 pb4 pl3 mb2" style={{paddingLeft: '1.75rem'}}>
-                <div className="block h5 mt0 mb1 bold">
-                  Getting Started with Bounties
-                </div>
-                <div className="h6 m0 gray-1">
-                  A bounty is the community asking for help on {product.name}.
-                  Find one that you would like to do and jump right in.
-                  <br/><br/>
-                  Ping <a href={product.people_url}>@core</a> in our chat room if you have any questions.
-                </div>
+        <div className="clearfix mxn2">
 
-                <div className="center mt2 border-top">
-                  <div className="mt2">
-                    <Button type="default" action={function() { window.open('chat', '_blank'); }}>
-                      Jump into chat
-                    </Button>
+          <div className="sm-col-right sm-col-4 px2">
+            <div className="mb3">
+              <Tile>
+                <div className="p3">
+                  <div className="block h5 mt0 mb1 bold">
+                    Getting Started with Bounties
+                  </div>
+                  <div className="h6 m0 gray-1">
+                    A bounty is the community asking for help on {product.name}.
+                    Find one that you would like to do and jump right in.
+                    <br/><br/>
+                    Ping <a href={product.people_url}>@core</a> in our chat room if you have any questions.
+                  </div>
+
+                  <div className="center mt2 border-top">
+                    <div className="mt2">
+                      <Button type="default" action={function() { window.open('chat', '_blank'); }}>
+                        Jump into chat
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-xs-6 col-sm-12">
-                <div className="pb1"> {/*Tags*/}
-                  <Accordion title="Tags">
-                    <ul className="list-reset mxn2">
-                      {this.renderTags()}
-                    </ul>
-                  </Accordion>
-                </div>
-              </div>
-              <div className="col-xs-6 col-sm-12">
-                <div className="mb1"> {/*Assets*/}
-                  <Accordion title="Assets" >
-                    {this.renderAssets()}
-                  </Accordion>
-                </div>
-              </div>
-            </span>
+              </Tile>
+            </div>
+
+            <div className="mb3">
+              {this.renderTags()}
+            </div>
+
+            <div className="mb3">
+              <Accordion title="Assets" >
+                {this.renderAssets()}
+              </Accordion>
+            </div>
           </div>
-          <div className="col-xs-12 col-sm-8 r768_pr0">
+
+          <div className="sm-col sm-col-8 px2">
             <BountyFilter {...bountyFilterProps}
                 value={this.state.value}
                 onValueChange={this.handleValueChange}

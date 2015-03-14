@@ -1,6 +1,6 @@
 'use strict';
 
-const Accordion = require('../accordion.js.jsx');
+const Accordion = require('../ui/accordion.js.jsx');
 const BountyMarksStore = require('../../stores/bounty_marks_store');
 const Button = require('../ui/button.js.jsx');
 const Immutable = require('immutable');

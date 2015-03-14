@@ -1,4 +1,4 @@
-var Accordion = require('../accordion.js.jsx');
+var Accordion = require('../ui/accordion.js.jsx');
 var Button = require('../ui/button.js.jsx');
 var PostActionCreators = require('../../actions/post_action_creators');
 var PostList = require('./post_list.js.jsx');
