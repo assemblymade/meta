@@ -83,15 +83,22 @@ sendUpdate: function(editable_type, path) {
   renderProgressButton: function() {
     var currentUser = UserStore.getUser();
     var isOwner = (currentUser.id === this.props.entity.user.id)
-    if (currentUser && currentUser.staff && isOwner) {
+    if (this.props.locked) {
+      var buttonAction = null
+    } else {
+      var buttonAction = function () {
+          window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
+        }.bind(this)
+    }
+
+    if (currentUser && (currentUser.staff || isOwner)) {
       return (
         <div>
           <hr />
-          <Button type="primary" block="true" action={ function () {
-              window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
-            }.bind(this)
-
-          }>Start Recruiting</Button>
+          <Button type="primary" block="true" action={buttonAction}>
+            <Icon icon="lock" fw="true" />
+            {this.props.buttonText}
+          </Button>
         </div>
       )
     }
@@ -105,8 +112,40 @@ sendUpdate: function(editable_type, path) {
       }
   },
 
+  renderChecklistItemsNew: function() {
+    return (
+      _.map(this.props.checklistItems, function(item, index) {
+        if (item.complete && !this.props.locked) {
+          return (
+            <li className="py1">
+              <div className="left mr2 green">
+                <Icon icon="check" fw={true} />
+              </div>
+              <span className="ml2">
+                {item.name}<br />
+                <small className="gray-2 ml4">{item.subtext}</small>
+              </span>
+            </li>
+          )
+        }
+        else {
+          return (
+            <li className="py1">
+              <div className="left mr2 gray-2">
+                <Icon icon={this.props.locked ? 'lock' : 'minus'} fw={true} />
+              </div>
+              <span className="ml2">
+                {item.name}<br />
+                <small className="gray-2 ml4">{item.subtext}</small>
+              </span>
+            </li>
+          )
+        }
+      }.bind(this))
+    )
+  },
+
   renderChecklistItems: function() {
-    console.log(this.state.checklistItems)
     var currentUser = UserStore.getUser();
     var isOwner = (currentUser.id === this.props.entity.user.id)
     return (
@@ -164,13 +203,13 @@ sendUpdate: function(editable_type, path) {
     var currentUser = UserStore.getUser();
     var isOwner = (currentUser.id === this.props.entity.user.id)
     return (
-      <Tile>
-        <h4 className="center">
+      <div>
+        <h5 className="mt0 caps gray-1 center">
           { isOwner ? "Move your idea forward" : "Move this idea forward" }
-        </h4>
-        <div className="p3">
-           <ul style={{listStyle: 'none'}}>
-            {this.renderChecklistItems()}
+        </h5>
+        <div className="p3 py0">
+          <ol className="list-reset">
+            {this.renderChecklistItemsNew()}
           </ol>
         </div>
         {this.renderProgressButton()}
