@@ -11,12 +11,10 @@ let NewsFeed = React.createClass({
   mixins: [React.addons.PureRenderMixin, NewsFeedMixin],
   propTypes: {
     filterCounts: function(props, propName, componentName) {
-      if (!props.productPage && !props.filterCounts) {
+      if (!props.filterCounts) {
         return new Error('Required prop `filterCounts` was not found.');
       }
     },
-
-    productPage: React.PropTypes.bool,
     url: React.PropTypes.string.isRequired
   },
 
@@ -96,25 +94,10 @@ let NewsFeed = React.createClass({
       disabled = true;
     }
 
-    if (this.props.productPage) {
-      let style = null
-
-      if (this.state.items.size) {
-        style = { marginTop: '-1rem' }
-      }
-
-      return <div>{this.renderItems()}</div>
-    }
-
     return (
       <div>
         {this.spinner()}
-
-        <div className="container">
-          <div className="clearfix mxn2">
-            {this.renderItems()}
-          </div>
-        </div>
+        {this.renderItems()}
       </div>
     )
   },
@@ -128,7 +111,6 @@ let NewsFeed = React.createClass({
   },
 
   renderItems: function() {
-    let productPage = this.props.productPage;
 
     return (this.state.items || List()).map(function(item) {
       let target = item.target;
@@ -138,20 +120,13 @@ let NewsFeed = React.createClass({
         return;
       }
 
-      if (target.type === 'team_membership' && !productPage) {
+      if (target.type === 'team_membership') {
         return null;
       }
 
-      let classes = React.addons.classSet({
-        'sm-col': !productPage,
-        'sm-col-6': !productPage,
-        px1: !productPage,
-        py1: productPage
-      });
-
       return (
-        <div className={classes} key={'news-feed-' + item.id}>
-          <NewsFeedItem {...item} productPage={productPage} />
+        <div className="mb2" key={'news-feed-' + item.id}>
+          <NewsFeedItem {...item} />
         </div>
       )
     }).toJS();
