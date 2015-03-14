@@ -15,6 +15,7 @@ let NewsFeed = React.createClass({
         return new Error('Required prop `filterCounts` was not found.');
       }
     },
+    productPage: React.PropTypes.bool,
     url: React.PropTypes.string.isRequired
   },
 
@@ -111,6 +112,7 @@ let NewsFeed = React.createClass({
   },
 
   renderItems: function() {
+    let productPage = this.props.productPage
 
     return (this.state.items || List()).map(function(item) {
       let target = item.target;
@@ -126,7 +128,7 @@ let NewsFeed = React.createClass({
 
       return (
         <div className="mb2" key={'news-feed-' + item.id}>
-          <NewsFeedItem {...item} />
+          <NewsFeedItem {...item} productPage={productPage} />
         </div>
       )
     }).toJS();
