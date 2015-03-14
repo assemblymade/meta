@@ -14,6 +14,11 @@
     position: relative;
     text-align: center;
   }
+
+  .indicator-container li:hover {
+    cursor:pointer;
+  }
+
   .indicator-container li:before {
     content: '.';
     width: 12px;
