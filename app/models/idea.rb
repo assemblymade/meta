@@ -41,8 +41,6 @@ class Idea < ActiveRecord::Base
   scope :with_topic, -> (topic) { where("? = ANY(topics)", topic) }
 
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
-  DEFAULT_TILTING_THRESHOLD = 10
-  COMMENT_MINIMUM = 5
   EPOCH_START = Time.new(2013, 6, 6)
 
   CATEGORY_NAMES = [
