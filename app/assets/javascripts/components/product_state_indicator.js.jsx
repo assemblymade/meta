@@ -25,13 +25,14 @@ var ProductStateIndicator = React.createClass({
 
   renderStages: function() {
     var activeStage = this.props.activeStage
+    var width = (100 / this.props.stages.length) + '%'
     var stages = this.props.stages.map(function(stage, index) {
-      var active = index < this.props.activeStage ? 'active' : ''
+      var active = index <= this.props.activeStage ? 'active' : ''
       if (!this.props.labeled) {
         stage = ''
       }
       return (
-        <li className={active} key={index}>{stage}</li>
+        <li className={active} key={index} style={{width: width}}>{stage}</li>
       )
     }.bind(this));
     return stages
@@ -41,7 +42,7 @@ var ProductStateIndicator = React.createClass({
     return (
       <div className="product-state-indicator">
         <div className="p2 pt3">
-          <div className="stateName center"><strong>Idea Stage</strong></div>
+          <div className="stateName center"><strong>{this.props.stages[this.props.activeStage]}</strong></div>
         </div>
         <div className="col-sm-12">
           <ul className="indicator-container mb3">
