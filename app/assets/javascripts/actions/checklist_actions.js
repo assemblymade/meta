@@ -4,20 +4,37 @@ var routes = require('../routes');
 
 var ChecklistActions = {
 
-  fetchIdeaChecklists: function(idea_id) {
+  fetchChecklists: function(entity) {
     var options = {}
+    console.log("SEE HERE", entity.type)
+    if(entity.type === "idea") {
+      $.ajax({
+        url: "/ideas/" + entity.id + "/checklistitems",
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          Dispatcher.dispatch({
+            type: ActionTypes.CHECKLIST_ITEMS_RECEIVE,
+            checklists: data
+          })
+        }
+      })
+    }
+    else {
+      $.ajax({
+        url: "/products/" + entity.id + "/checklistitems",
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          Dispatcher.dispatch({
+            type: ActionTypes.CHECKLIST_ITEMS_RECEIVE,
+            checklists: data
+          })
+        }
+      })
+    }
 
-    $.ajax({
-      url: "/ideas/"+idea_id+"/checklistitems",
-      type: 'GET',
-      dataType: 'json',
-      success: function(data) {
-        Dispatcher.dispatch({
-          type: ActionTypes.CHECKLIST_ITEMS_RECEIVE,
-          checklists: data
-        })
-      }
-    })
+
   }
 }
 

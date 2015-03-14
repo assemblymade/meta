@@ -11,15 +11,6 @@ var Checklist = React.createClass({
     entity: React.PropTypes.object.isRequired
   },
 
-  componentDidMount: function() {
-    ChecklistStore.addChangeListener(this.getStateFromStore);
-    this.fetchInitialChecklistItems(this.props.entity.id);
-  },
-
-  componentWillUnmount: function() {
-    ChecklistStore.removeChangeListener(this.getStateFromStore);
-  },
-
   getInitialState: function() {
     return {
       checklistItems: ChecklistStore.fetchChecklistItems(),
@@ -215,10 +206,6 @@ sendUpdate: function(editable_type, path) {
         {this.renderProgressButton()}
       </div>
     )
-  },
-
-  fetchInitialChecklistItems: function(entity_id) {
-    ChecklistActions.fetchIdeaChecklists(entity_id)
   },
 
   getStateFromStore: function() {

@@ -1,5 +1,6 @@
 'use strict';
-
+const ChecklistStore = require('../stores/checklist_store');
+const ChecklistActions = require('../actions/checklist_actions');
 const Button = require('./ui/button.js.jsx');
 const Tile = require('./ui/tile.js.jsx');
 const Checklist = require('./checklist.js.jsx');
@@ -8,52 +9,33 @@ const ProductStateIndicator = require('./product_state_indicator.js.jsx');
 var ProductStateWidget = React.createClass({
 
   propTypes: {
-    entity: React.PropTypes.object.isRequired,
-    stages: React.PropTypes.array.isRequired,
-    currentStage: React.PropTypes.number.isRequired
+    entity: React.PropTypes.object.isRequired
+  },
+
+  componentDidMount: function() {
+    ChecklistStore.addChangeListener(this.getStateFromStore);
+    ChecklistActions.fetchChecklists(this.props.entity)
+  },
+
+  componentWillUnmount: function() {
+    ChecklistStore.removeChangeListener(this.getStateFromStore);
+  },
+
+  getStateFromStore: function() {
+    var data = ChecklistStore.fetchChecklistItems();
+    this.setState({
+      checklist_data: data,
+      currentStage: data.current_stage,
+      activeStage: data.current_stage,
+      stages: data.stages
+    });
   },
 
   getInitialState: function() {
     return {
-      currentStage: this.props.currentStage,
-      activeStage: this.props.currentStage,
-      stages: [
-        { name: 'Idea',
-          buttonText: 'Start recruiting', 
-          items: [
-            {name: 'item 1', complete: true, subtext: 'item subtext'},
-            {name: 'item 2', complete: true, subtext: 'item subtext'},
-            {name: 'item 3', complete: false, subtext: 'item subtext'}
-        ]},
-        { name: 'Recruiting',
-          buttonText: 'Start building', 
-          items: [
-            {name: 'item 4', complete: false, subtext: 'item subtext'},
-            {name: 'item 5', complete: false, subtext: 'item subtext'},
-            {name: 'item 6', complete: false, subtext: 'item subtext'}
-        ]},
-        { name: 'Building',
-          buttonText: 'Proceed to launch',
-          items: [
-            {name: 'item 7', complete: false, subtext: 'item subtext'},
-            {name: 'item 8', complete: false, subtext: 'item subtext'},
-            {name: 'item 9', complete: false, subtext: 'item subtext'}
-        ]},
-        { name: 'Launching',
-          buttonText: 'Proceed to growing', 
-          items: [
-            {name: 'item 10', complete: false, subtext: 'item subtext'},
-            {name: 'item 11', complete: false, subtext: 'item subtext'},
-            {name: 'item 12', complete: false, subtext: 'item subtext'}
-        ]},
-        { name: 'Growing',
-          buttonText: '', 
-          items: [
-            {name: 'item 13', complete: false, subtext: 'item subtext'},
-            {name: 'item 14', complete: false, subtext: 'item subtext'},
-            {name: 'item 15', complete: false, subtext: 'item subtext'}
-        ]}
-      ]
+      currentStage: 0,
+      activeStage: 0,
+      stages: [{name: ''}]
     }
   },
 
@@ -107,4 +89,3 @@ var ProductStateWidget = React.createClass({
 })
 
 module.exports = ProductStateWidget
-
