@@ -1,0 +1,6 @@
+@each $prefix, $breakpoint in $breakpoints {
+  @media #{$breakpoint} {
+    .#{$prefix}-left { float: left }
+    .#{$prefix}-right { float: right }
+  }
+}
