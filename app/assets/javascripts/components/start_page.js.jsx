@@ -16,10 +16,10 @@ var StartPage = React.createClass({
   render: function() {
     var background = 'linear-gradient(160deg, rgba(255, 232, 80, .8), rgba(26, 88, 131, .85) 70%), url(' + this.props.mastheadUrl + ')';
     return (
-      <div>
-        <div className="masthead" style={{background: background, paddingTop: 0, minHeight: 500}}>
-          <div className="masthead-title">
-            <h1 className="center white mt4">Turn your idea into a great product with people around the world</h1>
+      <div className="mt0 mb3">
+        <div className="masthead" style={{background: background, paddingTop: 0}}>
+          <div className="masthead-title p4">
+            <h1 className="center white">Turn your idea into a great product with people around the world</h1>
           </div>
         </div>
 
