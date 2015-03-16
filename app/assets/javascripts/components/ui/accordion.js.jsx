@@ -1,3 +1,5 @@
+'use strict'
+
 const Icon = require('./icon.js.jsx')
 
 const Accordion = React.createClass({

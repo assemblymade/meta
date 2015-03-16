@@ -1,3 +1,5 @@
+'use strict'
+
 const Tile = require('./ui/tile.js.jsx')
 const Label = require('./ui/label.js.jsx')
 var Accordion = require('./ui/accordion.js.jsx')
