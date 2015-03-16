@@ -1,11 +1,11 @@
 class HeartNFISerializer < ApplicationSerializer
   attributes :description, :last_hearted_at, :product, :url, :users
 
-  # cached
-  #
-  # def cache_key
-  #   [object]
-  # end
+  cached
+
+  def cache_key
+    [object]
+  end
 
   def description
     text = Search::Sanitizer.new.sanitize(
@@ -41,7 +41,7 @@ class HeartNFISerializer < ApplicationSerializer
   def users
     {
       ids: object.hearts.pluck(:user_id).take(3),
-      count: object.hearts.count
+      count: object.hearts_count
     }
   end
 end

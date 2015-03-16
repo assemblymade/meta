@@ -18,6 +18,7 @@ class HeartStoriesQuery
 
   def nfis
     @nfis ||= NewsFeedItem.joins(:hearts).
+      includes(product: :assets).
       order('max(hearts.created_at) desc').
       group('news_feed_items.id').
       where(source_id: user.id).page(params[:page])
@@ -25,6 +26,7 @@ class HeartStoriesQuery
 
   def comments
     @comments ||= NewsFeedItemComment.joins(:hearts).
+      includes(news_feed_item: :hearts).
       order('max(hearts.created_at) desc').
       group('news_feed_item_comments.id').
       where(user_id: user.id).page(params[:page])

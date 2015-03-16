@@ -4,7 +4,7 @@ var HeartActions = require('../../actions/heart_actions')
 var HeartsReceivedStore = require('../../stores/hearts_received_store')
 var Icon = require('../ui/icon.js.jsx')
 var PeopleStore = require('../../stores/people_store')
-var Spinner = require('../ui/spinner.js.jsx')
+var Spinner = require('../spinner.js.jsx')
 var url = require('url')
 var UserStore = require('../../stores/user_store')
 

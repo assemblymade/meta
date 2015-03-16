@@ -5,7 +5,7 @@ var BountiesAwardedStore = require('../../stores/bounties_awarded_store')
 var Icon = require('../ui/icon.js.jsx')
 var OwnershipActions = require('../../actions/ownership_actions')
 var PeopleStore = require('../../stores/people_store')
-var Spinner = require('../ui/spinner.js.jsx')
+var Spinner = require('../spinner.js.jsx')
 var url = require('url')
 
 module.exports = React.createClass({
