@@ -9,3 +9,34 @@
     fill:$red;
   }
 }
+
+.heart-circle {
+  margin-top: -24px;
+  width:75px;
+  height:75px;
+  border-radius:75px;
+
+  .svg-icon {
+    padding-top: 24px;
+    width: 30px;
+  }
+}
+
+.heart-circle-green {
+  background-color: $green;
+
+  .svg-icon .path2 {
+    fill: $white;
+  }
+}
+
+.heart-circle-white {
+  background-color: #F7F7F7;
+  box-shadow: 0px 1px 1px 0px $brand-shadow-light;
+
+  .svg-icon {
+    .path1, .path2 {
+      fill: $red;
+    }
+  }
+}
