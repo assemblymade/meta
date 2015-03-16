@@ -89,11 +89,15 @@ class ChecklistHandler
   end
 
   def role_roster(entity)
-    checklistitem = {name: "Come up with a roles roster including at least 3 roles", editable: false, complete: false, subtext: "What roles will you need?  You can assign people later."}
+    checklistitem = {name: "Come up with a roles roster", editable: false, complete: false, subtext: "What roles will you need?  You can assign people later."}
   end
 
   def dev_env_guide(entity)
     checklistitem = {name: "Write a developer", editable: false, complete: false, subtext: ""}
+  end
+
+  def first_bounties(entity)
+    checklistitem = {name: "Write your first 4 bounties", editable: false, complete: false, subtext: "Layout first steps"}
   end
 
   def setup_checklists(entity)
@@ -102,10 +106,37 @@ class ChecklistHandler
     setup_checklist.append(role_roster(entity))
   end
 
+  def award_bounties(entity)
+    checklistitem = {name: "Award 10 bounties", editable: false, complete: false, subtext: "Award completed bounties."}
+  end
+
+  def launch(entity)
+    checklistitem = {name: "Officially Launch", editable: false, complete: false, subtext: "Go through Assembly Launch procedures!"}
+  end
+
   def build_checklists(entity)
+    build_checklist = []
+    build_checklist.append(award_bounties(entity))
+    build_checklist.append(launch(entity))
+  end
+
+  def monetization(entity)
+    checklistitem = {name: "Come up with a Monetization Strategy", editable: false, complete: false, subtext: "Write a post about monetization"}
+  end
+
+  def refine(entity)
+    checklistitem = {name: "Refine your product with more Bounties", editable: false, complete: false, subtext: "Write 20 more bounties to refine the product"}
+  end
+
+  def contributors(entity)
+    checklistitem = {name: "Get more contributors to up your game", editable: false, complete: false, subtext: "Get 15 more contributors to get more insight"}
   end
 
   def growth_checklists(entity)
+    growth_checklist = []
+    growth_checklist.append(monetization(entity))
+    growth_checklist.append(refine(entity))
+    growth_checklist.append(contributors(entity))
   end
 
   def checklist_info(entity, stage_number)
