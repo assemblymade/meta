@@ -4,10 +4,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   prepend_before_filter :authenticate_scope!, :only => [:edit_email]
   skip_before_action :validate_confirmed!, only: [:signup, :edit, :edit_email, :update]
 
-  after_action :track_signup,          only: [:create]
-  after_action :track_ab_goal,         only: [:create]
-  after_action :claim_invite,          only: [:create]
-  after_action :create_signup_nfi,     only: [:create]
+  after_action :track_signup,          only: [:create], if: :signed_in?
+  after_action :track_ab_goal,         only: [:create], if: :signed_in?
+  after_action :claim_invite,          only: [:create], if: :signed_in?
+  after_action :create_signup_nfi,     only: [:create], if: :signed_in?
 
   def create
     build_resource(sign_up_params.select{|k,v| v.present? })

@@ -21,7 +21,7 @@
           <div class="well well-sm small">
             <div><%= @user.email %></div>
             <div>last request
-              <%= time_ago_in_words(@user.last_request_at) %> ago</div>
+              <%= @user.last_request_at && time_ago_in_words(@user.last_request_at) %> ago</div>
             <div><%=link_to('Impersonate user', "/discover?auth_token=#{@user.authentication_token}")%></div>
             <div>
               <% if @user.flagged_at %>
