@@ -11,15 +11,6 @@ var Checklist = React.createClass({
     entity: React.PropTypes.object.isRequired
   },
 
-  componentDidMount: function() {
-    ChecklistStore.addChangeListener(this.getStateFromStore);
-    this.fetchInitialChecklistItems(this.props.entity.id);
-  },
-
-  componentWillUnmount: function() {
-    ChecklistStore.removeChangeListener(this.getStateFromStore);
-  },
-
   getInitialState: function() {
     return {
       checklistItems: ChecklistStore.fetchChecklistItems(),
@@ -59,7 +50,7 @@ sendUpdate: function(editable_type, path) {
     if (this.state.openListItem === index) {
       return (
         <div style={{display:"inline"}}>
-          <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title} 
+          <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}
             <span className="fa fa-remove ml1 gray-2" />
           </span>
 
@@ -208,10 +199,6 @@ sendUpdate: function(editable_type, path) {
         {this.renderProgressButton()}
       </div>
     )
-  },
-
-  fetchInitialChecklistItems: function(entity_id) {
-    ChecklistActions.fetchIdeaChecklists(entity_id)
   },
 
   getStateFromStore: function() {
