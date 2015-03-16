@@ -6,7 +6,6 @@ var ChecklistActions = {
 
   fetchChecklists: function(entity) {
     var options = {}
-    console.log("SEE HERE", entity.type)
     if(entity.type === "idea") {
       $.ajax({
         url: "/ideas/" + entity.id + "/checklistitems",

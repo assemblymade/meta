@@ -33,14 +33,12 @@ let Idea = React.createClass({
     let idea = this.props.idea
 
     return (
-      <div>
-        <div className="p3 pb0">
-          {this.renderHeader()}
-        </div>
-        <div className="p4 pt2">
-          <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
-          {this.renderAdminRow()}
-        </div>
+      <div className="p4">
+        <span className="right">
+          <Heart size="huge" heartable_id={idea.news_feed_item.id} heartable_type="NewsFeedItem" />
+        </span>
+        <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
+        {this.renderAdminRow()}
       </div>
     )
   },

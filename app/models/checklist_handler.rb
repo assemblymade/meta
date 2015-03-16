@@ -159,7 +159,7 @@ class ChecklistHandler
   def checklists(entity)
     result = {}
     checklist = []
-    s = stages = [["Idea", 0, "Build a Product"], ["Recruitment", 1, "Move to Setup"], ["Setup", 2, "Start Building"], ["Building", 3, "To the Moon"], ["Growth", 4, ""]]
+    s = stages = [["Idea", 0, "Build a Product"], ["Recruitment", 1, "Move to Setup"], ["Setup", 2, "Start Building"], ["Building", 3, "To the Moon"], ["Growth", 4, "Grow an Industrial Empire"]]
     s.each do |stage|
       stage_info = {name: stage[0], order: stage[1], items: checklist_info(entity, stage[1]), buttonText: stage[2]}
       checklist.append(stage_info)
