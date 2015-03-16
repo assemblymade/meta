@@ -1,3 +1,5 @@
+'use strict'
+
 var DropdownMixin = require('../../mixins/dropdown_mixin.js.jsx')
 var DropdownMenu = require('./dropdown_menu.js.jsx')
 var Icon = require('./icon.js.jsx')
@@ -74,22 +76,26 @@ var Nav = React.createClass({
   },
 
   propTypes: {
-    orientation: React.PropTypes.oneOf(['horizontal', 'stacked']).isRequired
+    orientation: React.PropTypes.oneOf(['horizontal', 'stacked']).isRequired,
+    type: React.PropTypes.oneOf(['tabs', 'pills'])
   },
 
   getDefaultProps: function() {
     return {
-      orientation: 'horizontal'
+      orientation: 'horizontal',
+      type: 'pills'
     }
   },
 
   render() {
-    var orientation = this.props.orientation
+    let {orientation, type} = this.props
 
-    var cs = React.addons.classSet({
-      'new-nav': true,
+    let cs = React.addons.classSet({
+      'new-nav list-reset': true,
       'new-nav--horizontal': orientation === 'horizontal',
       'new-nav--stacked': orientation === 'stacked',
+      'new-nav--pills': type === 'pills',
+      'new-nav--tabs': type === 'tabs'
     })
 
     return <ul className={cs}>{this.props.children}</ul>

@@ -62,25 +62,10 @@ let ProductShow = React.createClass({
     let product = this.state.product;
     let slug = product.slug;
     let user = UserStore.getUser();
-    let leftColumnClasses = React.addons.classSet({
-      'mb2': true,
-      'px3': true,
-      'sm-col': true,
-      'sm-col-8': true,
-      'sm-mb0': true
-    });
 
-    let rightColumnClasses = React.addons.classSet({
-      'md-col': true,
-      'md-col-4': true,
-      'px3': true
-    });
-
-    let style = {
-      importantLinks: {
-        borderColor: '#dbdee3'
-      }
-    };
+    let seeHowAssemblyWorksLink = <a href="/help" className="block px3 py2 center border-top">
+      See how Assembly works
+    </a>
 
     return (
       <div>
@@ -90,7 +75,7 @@ let ProductShow = React.createClass({
           {this.renderEditButton()}
 
           <div className="clearfix mxn3">
-            <div className={leftColumnClasses}>
+            <div className="sm-col sm-col-8 px3 mb2 sm-mb0">
               <Tile>
 
                 <Screenshots key="product-screenshots" />
@@ -132,28 +117,23 @@ let ProductShow = React.createClass({
               </Tile>
             </div>
 
-            <div className={rightColumnClasses}>
-              <Tile>
-                {this.renderCommunityBuiltNotice()}
-                <div className="border-bottom">
+            <div className="md-col md-col-4 px3">
+              <div className="mb3">
+                <Tile>
                   <div className="p3">
                     <h5 className="mt0 mb1">Build {product.name} with us!</h5>
                     {this.renderIntroductionForm()}
                   </div>
-                </div>
 
-                <div className="border-bottom">
                   <MetricsBadge />
-                </div>
 
-                <div className="border-bottom">
                   {this.renderMostActiveUsers()}
-                </div>
 
-                <a href="/help" className="block px3 py2 center">
-                  See how Assembly works
-                </a>
-              </Tile>
+                  {
+                    (!UserStore.isSignedIn()) ? seeHowAssemblyWorksLink : null
+                  }
+                </Tile>
+              </div>
 
               <ProductImportantLinks product={product} />
 
@@ -162,20 +142,6 @@ let ProductShow = React.createClass({
         </div>
       </div>
     );
-  },
-
-  renderCommunityBuiltNotice() {
-    let product = this.state.product;
-
-    if (product.community_built) {
-      return (
-        <div className="border-bottom">
-          <div className="px3 py2">
-            <span className="gray-1">Verified community-built</span>
-          </div>
-        </div>
-      );
-    }
   },
 
   renderEditButton() {
@@ -222,7 +188,7 @@ let ProductShow = React.createClass({
     });
 
     return (
-      <div className="px3 py2">
+      <div className="px3 py2 border-top">
         <h5 className="mt0 mb2">Most active members</h5>
         <div className="clearfix">
           {renderedContributors}

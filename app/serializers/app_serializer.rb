@@ -6,6 +6,8 @@ class AppSerializer < ApplicationSerializer
   end
 
   def search_tags
-    object.tags
+    l = Set.new(object.tags)
+    l.merge(object.marks.limit(4).map(&:name))
+    l
   end
 end

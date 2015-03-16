@@ -1,3 +1,7 @@
+.pill {
+  border-radius: 9999px;
+}
+
 @each $prefix, $breakpoint in $breakpoints {
   @media #{$breakpoint} {
     .#{$prefix}-rounded {
