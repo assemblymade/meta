@@ -78,10 +78,8 @@ var ProductStateWidget = React.createClass({
   },
 
   render: function() {
-    var activeChecklist = this.state.stages[this.state.activeStage]
-
+    var activeChecklist = this.state.stages[this.state.activeStage];
     var b = this.state.buttonTexts[this.state.activeStage];
-    console.log(b)
     return (
       <Tile>
         <div className="p3">

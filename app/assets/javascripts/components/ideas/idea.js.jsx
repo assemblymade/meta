@@ -35,7 +35,7 @@ let Idea = React.createClass({
     return (
       <div className="p4">
         <span className="right">
-          <Heart size="medium" heartable_id={idea.news_feed_item.id} heartable_type="NewsFeedItem" />
+          <Heart size="huge" heartable_id={idea.news_feed_item.id} heartable_type="NewsFeedItem" />
         </span>
         <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
         {this.renderAdminRow()}

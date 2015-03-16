@@ -12,7 +12,8 @@ var Heart = React.createClass({
     size: React.PropTypes.oneOf([
       'small',
       'medium',
-      'button'
+      'button',
+      'huge'
     ]),
     heartable_id: React.PropTypes.string.isRequired,
     heartable_type: React.PropTypes.string.isRequired
@@ -28,7 +29,8 @@ var Heart = React.createClass({
     var sizes = {
       'small': this.renderSmall,
       'medium': this.renderMedium,
-      'button': this.renderButton
+      'button': this.renderButton,
+      'huge': this.renderHuge
     }
     return sizes[this.props.size]()
   },
@@ -72,6 +74,43 @@ var Heart = React.createClass({
     var heartWithCount = <div>
       <div className={classes}>
         <SvgIcon type="heart" />
+      </div>
+      {count}
+    </div>
+
+    if (!UserStore.isSignedIn()) {
+      return heartWithCount
+    }
+
+    return (
+      <a className="inline-block valign-top fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
+        {heartWithCount}
+      </a>
+    );
+  },
+
+  renderHuge: function() {
+    var heartsCount = this.state.hearts_count || 0;
+    var classes = React.addons.classSet({
+      'huge-heart': true,
+      'action-icon': true,
+      'hover-red': UserStore.isSignedIn(),
+      gray: !this.state.user_heart,
+      'inline-block': true,
+      red: this.state.user_heart
+    });
+
+    var count = null
+
+    if (heartsCount > 0) {
+      count = (
+        <span className="h6 mt2 mb0 gray-2 ml1">{heartsCount}</span>
+      )
+    }
+
+    var heartWithCount = <div>
+      <div className={classes}>
+        <SvgIcon type="huge-heart" />
       </div>
       {count}
     </div>
