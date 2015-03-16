@@ -42,6 +42,7 @@ class Idea < ActiveRecord::Base
 
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
   EPOCH_START = Time.new(2013, 6, 6)
+  DEFAULT_TILTING_THRESHOLD = 10
 
   CATEGORY_NAMES = [
     "Ideas searching for names",
