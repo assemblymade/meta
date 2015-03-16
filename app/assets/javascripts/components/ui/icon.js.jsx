@@ -1,3 +1,5 @@
+'use strict';
+
 // TODO For webpack, requires font-awesome
 
 const CustomIcons = [
