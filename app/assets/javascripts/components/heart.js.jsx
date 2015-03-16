@@ -90,40 +90,23 @@ var Heart = React.createClass({
   },
 
   renderHuge: function() {
-    var heartsCount = this.state.hearts_count || 0;
-    var classes = React.addons.classSet({
-      'huge-heart': true,
-      'action-icon': true,
-      'hover-red': UserStore.isSignedIn(),
-      gray: !this.state.user_heart,
-      'inline-block': true,
-      red: this.state.user_heart
-    });
+    var heartsCount = this.state.hearts_count;
 
-    var count = null
-
-    if (heartsCount > 0) {
-      count = (
-        <span className="h6 mt2 mb0 gray-2 ml1">{heartsCount}</span>
-      )
+    if (heartsCount == null) {
+      return <div />
     }
 
-    var heartWithCount = <div>
-      <div className={classes}>
-        <SvgIcon type="huge-heart" />
-      </div>
-      {count}
-    </div>
-
+    var icon = <Icon icon="heart" verticalAlign={1} />
     if (!UserStore.isSignedIn()) {
-      return heartWithCount
+      return icon;
     }
 
+    var toggler = <IconToggler on={this.state.user_heart || false} icon={icon} action={this.handleClick} color="red" />
     return (
-      <a className="inline-block valign-top fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
-        {heartWithCount}
-      </a>
-    );
+      <div className="h1">
+        {toggler}
+      </div>
+    )
   },
 
   renderButton: function() {
