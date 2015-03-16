@@ -6,6 +6,7 @@ var Icon = require('../ui/icon.js.jsx')
 var PeopleStore = require('../../stores/people_store')
 var Spinner = require('../ui/spinner.js.jsx')
 var url = require('url')
+var UserStore = require('../../stores/user_store')
 
 module.exports = React.createClass({
   displayName: 'ProfileHeartsReceived',
@@ -19,7 +20,10 @@ module.exports = React.createClass({
       return <Spinner />
     }
 
-    return this.renderStories()
+    return <div>
+      {this.renderStories()}
+      {this.state.stories.length < 5 ? this.renderNewProfile() : null}
+    </div>
   },
 
   renderStories() {
@@ -30,7 +34,7 @@ module.exports = React.createClass({
       let newDate = moment(s.last_hearted_at).format('dddd, MMMM Do')
       if (date != newDate) {
         date = newDate
-        heading = <div className="px2 pt3 pb1">
+        heading = <div className="px2 pt3 pb1" key={date}>
           <div className="right">
             <span className="gray-2">{this.getHeartCount(s.last_hearted_at)} </span>
             <span className="red">
@@ -54,7 +58,7 @@ module.exports = React.createClass({
   renderStory(story, showBorder) {
     let hearters = story.users.ids.map(PeopleStore.getById)
 
-    return <div className={showBorder ? "border-top border-gray-5" : null}>
+    return <div className={showBorder ? "border-top border-gray-5" : null} key={story.id}>
       <a href={story.url}
           className="py2 block bg-gray-6-hover ellipsis relative"
           style={{paddingLeft: 54, paddingRight: 44}}>
@@ -81,8 +85,27 @@ module.exports = React.createClass({
     </div>
   },
 
+  renderNewProfile() {
+    if (this.props.user_id == UserStore.getUsername()) {
+      return <div>
+        <div className="center">
+          <h3>Oooh! Such a shiny new profile.</h3>
+          <img src="/assets/new_profile.gif" />
+        </div>
+
+        <p className="p2">
+          If it feels sparse right now, <strong>don&#39;t panic</strong>. It wont stay that way for long.
+          Get started by helping out <a href="/discover">products</a> or collaborate on <a href="/ideas">ideas</a>.
+          You&#39;ll earn hearts when others like your stuff. You can even earn ownership in a
+          product when you collect App Coins for finishing bounties.
+        </p>
+      </div>
+    }
+    return null
+  },
+
   renderHearter(user) {
-    return <div className="left" style={{marginLeft:-30, marginTop:-2, paddingRight: 6}}>
+    return <div className="left" style={{marginLeft:-30, marginTop:-2, paddingRight: 6}} key={user.id}>
       <Avatar user={user} size={28} />
     </div>
   },

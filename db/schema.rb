@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312231554) do
+ActiveRecord::Schema.define(version: 20150314000058) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
 
@@ -320,6 +320,7 @@ ActiveRecord::Schema.define(version: 20150312231554) do
     t.string   "heartable_type", limit: 255, null: false
     t.datetime "created_at",                 null: false
     t.datetime "sent_at"
+    t.uuid     "target_user_id"
   end
 
   add_index "hearts", ["sent_at"], name: "index_hearts_on_sent_at", using: :btree
@@ -1088,6 +1089,7 @@ ActiveRecord::Schema.define(version: 20150312231554) do
     t.datetime "showcase_banner_dismissed_at"
     t.datetime "coin_callout_viewed_at"
     t.integer  "hearts_received",                               default: 0,       null: false
+    t.datetime "last_hearted_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
