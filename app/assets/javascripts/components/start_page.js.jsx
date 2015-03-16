@@ -1,4 +1,4 @@
-var Accordion = require('./accordion.js.jsx');
+var Accordion = require('./ui/accordion.js.jsx');
 var Spinner = require('./spinner.js.jsx');
 var TextPost = require('./ui/text_post.js.jsx')
 var Tile = require('./ui/tile.js.jsx')
