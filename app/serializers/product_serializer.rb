@@ -4,7 +4,7 @@ class ProductSerializer < ApplicationSerializer
   attributes :url, :wips_url, :people_url, :is_member, :subsections
   attributes :name, :pitch, :slug, :quality, :average_bounty, :logo_url, :total_visitors
   attributes :can_update, :try_url, :wips_count, :partners_count, :lead
-  attributes :top_marks, :homepage_url, :screenshots, :description, :description_html
+  attributes :top_marks, :homepage_url, :screenshots, :description, :description_html, :labels
 
   has_many :most_active_contributors, serializer: UserSerializer
 
@@ -60,5 +60,11 @@ class ProductSerializer < ApplicationSerializer
 
   def top_marks
     object.marks.limit(4).map(&:name)
+  end
+
+  def labels
+    l = Set.new(object.tags)
+    l.merge(object.marks.limit(4).map(&:name))
+    l
   end
 end

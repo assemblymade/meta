@@ -1,18 +1,19 @@
-var App = require('./app.js.jsx')
-var AppsActionCreators = require('../actions/apps_action_creators');
-var AppsStore = require('../stores/apps_store')
-var ButtonDropdown = require('./ui/button_dropdown.js.jsx')
-var DropdownMenu = require('./ui/dropdown_menu.js.jsx')
-var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
-var Icon = require('./ui/icon.js.jsx')
-var Jumbotron = require('./ui/jumbotron.js.jsx')
-var Nav = require('./ui/nav.js.jsx')
-var PaginationLinks = require('./pagination_links.js.jsx')
-var ProductSearch = require('./product_search.js.jsx')
-var Spinner = require('./spinner.js.jsx')
-var Url = require('url')
+const App = require('./app.js.jsx')
+const AppsActionCreators = require('../actions/apps_action_creators');
+const AppsStore = require('../stores/apps_store')
+const ButtonDropdown = require('./ui/button_dropdown.js.jsx')
+const DropdownMenu = require('./ui/dropdown_menu.js.jsx')
+const DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
+const Icon = require('./ui/icon.js.jsx')
+const Jumbotron = require('./ui/jumbotron.js.jsx')
+const Nav = require('./ui/nav.js.jsx')
+const PaginationLinks = require('./pagination_links.js.jsx')
+const ProductSearch = require('./product_search.js.jsx')
+const Spinner = require('./spinner.js.jsx')
+const Url = require('url')
+const UserStore = require('../stores/user_store')
 
-var filters = [
+const filters = [
   ['trending', 'Trending'],
   ['live', 'Live'],
   ['new', 'New'],
@@ -32,7 +33,7 @@ _.mixin({
   }
 });
 
-var Apps = React.createClass({
+const Apps = React.createClass({
   mixins: [DropdownMixin],
 
   propTypes: {

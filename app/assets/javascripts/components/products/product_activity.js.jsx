@@ -1,6 +1,6 @@
 'use strict';
 
-const Accordion = require('../accordion.js.jsx');
+const Accordion = require('../ui/accordion.js.jsx');
 const BountyMarksStore = require('../../stores/bounty_marks_store');
 const Button = require('../ui/button.js.jsx');
 const Immutable = require('immutable');
@@ -20,7 +20,7 @@ const BOUNTY_TARGET_TYPE = 'wip';
 const INTRODUCTION_TARGET_TYPE = 'team_membership';
 const POST_TARGET_TYPE = 'post';
 
-let ProductActivity = React.createClass({
+const ProductActivity = React.createClass({
   mixins: [React.addons.PureRenderMixin],
 
   propTypes: {
@@ -84,19 +84,6 @@ let ProductActivity = React.createClass({
   render() {
     let product = this.state.product;
     let slug = product.slug;
-    let leftColumnClasses = React.addons.classSet({
-      'mb2': true,
-      'px3': true,
-      'sm-col': true,
-      'sm-col-8': true,
-      'sm-mb0': true
-    });
-
-    let rightColumnClasses = React.addons.classSet({
-      'md-col': true,
-      'md-col-4': true,
-      'px3': true
-    });
 
     return (
       <div>
@@ -104,37 +91,20 @@ let ProductActivity = React.createClass({
 
         <div className="container mt3">
           <div className="clearfix mxn3">
-            <div className={leftColumnClasses}>
+            <div className="sm-col sm-col-8 px3 mb2 sm-mb0">
               {this.renderNewsFeed()}
             </div>
 
-            <div className={rightColumnClasses}>
-              {this.renderIntroductionForm()}
-              <Accordion title="Activity Filters">
-                <ul className="list-reset mxn2">
-                  {this.renderPostFilters()}
-                </ul>
-              </Accordion>
+            <div className="md-col md-col-4 px3">
+              <div className="mb3">
+                {this.renderIntroductionForm()}
+              </div>
+              
+              {this.renderPostFilters()}
             </div>
           </div>
         </div>
       </div>
-    );
-  },
-
-  renderBountyFilters() {
-    let renderedTags = this.renderMarkFilters(
-      BOUNTY_TARGET_TYPE,
-      (this.state.bountyMarks || Immutable.List())
-    ) || [];
-
-
-    return (
-      <Accordion title="Bounty Tags">
-        <ul className="list-reset mxn2">
-          {renderedTags}
-        </ul>
-      </Accordion>
     );
   },
 
@@ -144,39 +114,35 @@ let ProductActivity = React.createClass({
 
     if (user && !product.is_member) {
       return (
-        <div className="mb2">
-          <Tile>
-            <div className="px3 py2">
-              <IntroductionForm product={product} />
-            </div>
-          </Tile>
-        </div>
+        <Tile>
+          <div className="px3 py2">
+            <IntroductionForm product={product} />
+          </div>
+        </Tile>
       );
     }
 
     return (
-      <div className="mb2">
-        <Tile>
-          <div className="p3">
-            <div className="block h5 mt0 mb1 bold">
-              Getting Started with Updates
-            </div>
-            <div className="h6 m0 gray-1">
-              Catch up on the latest {product.name} updates, milestones, and other announcements here.
-              <br/><br/>
-              Jump into chat and ping <a href={product.people_url}>@core</a> if you have any questions.
-            </div>
+      <Tile>
+        <div className="p3">
+          <div className="block h5 mt0 mb1 bold">
+            Getting Started with Updates
+          </div>
+          <div className="h6 m0 gray-1">
+            Catch up on the latest {product.name} updates, milestones, and other announcements here.
+            <br/><br/>
+            Jump into chat and ping <a href={product.people_url}>@core</a> if you have any questions.
+          </div>
 
-            <div className="center mt2 border-top">
-              <div className="mt2">
-                <Button type="default" action={function() { window.open('chat', '_blank'); }}>
-                  Jump into chat
-                </Button>
-              </div>
+          <div className="center mt2 border-top">
+            <div className="mt2">
+              <Button type="default" action={function() { window.open('chat', '_blank'); }}>
+                Jump into chat
+              </Button>
             </div>
           </div>
-        </Tile>
-      </div>
+        </div>
+      </Tile>
     );
   },
 
@@ -222,10 +188,31 @@ let ProductActivity = React.createClass({
   },
 
   renderPostFilters() {
-    let renderedTags = this.renderMarkFilters(
-      POST_TARGET_TYPE,
-      this.state.postMarks.sort()
-    ) || [];
+    let renderedTags = []
+    let filters = this.state.postMarks.sort()
+
+    if ((filters || Immutable.List()).size) {
+      let product = this.state.product;
+      renderedTags = filters.map((tag, i) => {
+        let href = Routes.product_activity_path({
+          params: {
+            product_id: product.slug
+          },
+          data: {
+            type: POST_TARGET_TYPE,
+            mark: tag
+          }
+        });
+
+        let tagName = tag[0].toUpperCase() + tag.substr(1) + ' posts'
+
+        return (
+          <li key={tag + '-' + i}>
+            <a className="block py1" href={href}>{tagName}</a>
+          </li>
+        );
+      }).toJS();
+    }
 
     let product = this.state.product;
 
@@ -240,10 +227,8 @@ let ProductActivity = React.createClass({
     });
 
     renderedTags.push(
-      <li className="mb1 lh0_9" key={'archived-posts-' + product.slug}>
-        <a href={archivedPostsHref} className="pill-hover block py1 px3">
-          <span className="fs1 fw-500 caps">archived posts</span>
-        </a>
+      <li key={'archived-posts-' + product.slug}>
+        <a className="block py1" href={archivedPostsHref}>Archived posts</a>
       </li>
     );
 
@@ -258,10 +243,8 @@ let ProductActivity = React.createClass({
     });
 
     renderedTags.push(
-      <li className="mb1 lh0_9" key={'bounties-' + product.slug}>
-        <a href={bountyHref} className="pill-hover block py1 px3">
-          <span className="fs1 fw-500 caps">bounties</span>
-        </a>
+      <li key={'bounties-' + product.slug}>
+        <a className="block py1" href={bountyHref}>Bounties</a>
       </li>
     );
 
@@ -275,14 +258,16 @@ let ProductActivity = React.createClass({
     });
 
     renderedTags.push(
-      <li className="mb1 lh0_9" key={'introductions-' + product.slug}>
-        <a href={introHref} className="pill-hover block py1 px3">
-          <span className="fs1 fw-500 caps">introductions</span>
-        </a>
+      <li key={'introductions-' + product.slug}>
+        <a className="block py1" href={introHref}>Introductions</a>
       </li>
     );
 
-    return renderedTags;
+    return <Accordion title="Filter activity">
+      <ul className="list-reset">
+        {renderedTags}
+      </ul>
+    </Accordion>
   }
 });
 

@@ -1,5 +1,6 @@
 'use strict';
 
+const Accordion = require('../ui/accordion.js.jsx')
 const Icon = require('../ui/icon.js.jsx');
 const MetricsLink = require('./metrics_link.js.jsx')
 const Routes = require('../../routes')
@@ -16,21 +17,17 @@ let ProductImportantLinks = React.createClass({
     let slug = product.slug;
 
     return (
-      <div>
-        <div className="border-bottom border-gray-5 mt3">
-          <h5>Important links</h5>
-        </div>
-
+      <Accordion title="Important links">
         {this.renderHomepageUrl()}
 
-        <a className="block border-bottom border-gray-5 py2" href={Routes.product_chat_path({ product_id: slug })}>
-          <span className="mr3 gray-2">
+        <a className="block py1" href={Routes.product_chat_path({ product_id: slug })}>
+          <span className="mr2 gray-2">
             <Icon icon="comments" />
           </span>
           Chat
         </a>
 
-        <a className="block border-bottom border-gray-5 py2" href={Routes.product_wips_path({
+        <a className="block py1" href={Routes.product_wips_path({
               params: {
                 product_id: slug
               },
@@ -39,13 +36,13 @@ let ProductImportantLinks = React.createClass({
                 tags: 'bug'
               }
             })}>
-          <span className="mr3 gray-2">
+          <span className="mr2 gray-2">
             <Icon icon="warning" />
           </span>
           File a bug
         </a>
 
-        <a className="block border-bottom border-gray-5 py2" href={Routes.product_posts_path({
+        <a className="block py1" href={Routes.product_posts_path({
             params: {
               product_id: slug
             },
@@ -54,33 +51,33 @@ let ProductImportantLinks = React.createClass({
               tags: 'question'
             }
         })}>
-          <span className="mr3 gray-2">
+          <span className="mr2 gray-2">
             <Icon icon="question-circle" />
           </span>
           Ask a question
         </a>
 
-        <a className="block border-bottom border-gray-5 py2" href={Routes.product_repos_path({ product_id: slug })}>
-          <span className="mr3 gray-2">
+        <a className="block py1" href={Routes.product_repos_path({ product_id: slug })}>
+          <span className="mr2 gray-2">
             <Icon icon="code" />
           </span>
           Source code
         </a>
 
-        <a className="block border-bottom border-gray-5 py2" href={Routes.product_assets_path({ product_id: slug })}>
-          <span className="mr3 gray-2">
+        <a className="block py1" href={Routes.product_assets_path({ product_id: slug })}>
+          <span className="mr2 gray-2">
             <Icon icon="photo" />
           </span>
           Assets
         </a>
 
-        <a className="block border-bottom border-gray-5 py2" href={Routes.product_financials_path({product_id: slug })}>
-          <span className="mr3 gray-2">
+        <a className="block py1" href={Routes.product_financials_path({product_id: slug })}>
+          <span className="mr2 gray-2">
             <Icon icon="bar-chart" />
           </span>
           Financials
         </a>
-      </div>
+      </Accordion>
     );
   },
 
@@ -89,8 +86,8 @@ let ProductImportantLinks = React.createClass({
 
     if (product.homepage_url) {
       return (
-        <a className="block border-bottom border-gray-5 py2"  href={product.homepage_url}>
-          <span className="mr3 gray-2">
+        <a className="block py1" href={product.homepage_url}>
+          <span className="mr2 gray-2">
             <Icon icon="home" />
           </span>
           Home
