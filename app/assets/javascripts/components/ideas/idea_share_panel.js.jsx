@@ -146,13 +146,11 @@ var IdeaSharePanel = React.createClass({
 
     return <div>
       <h5 className="mb1 mt1 gray-2">
-        We're almost there! Tell your friends to help this idea be
-        fast-tracked next Wednesday.
+        Share this idea to push it to the next level.
       </h5>
 
       <p className="gray-2">
-        Every Wednesday we fast-track the most loved ideas on Assembly.
-        That idea then spends the next week being built into a <abbr title="Minimum Viable Product">MVP</abbr> by the community.
+        Community support will make this idea real.
       </p>
     </div>
   },

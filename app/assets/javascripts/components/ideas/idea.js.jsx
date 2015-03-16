@@ -104,6 +104,8 @@ let Idea = React.createClass({
     var shareMessage = 'We need help with ' + idea.name + '! via @asm';
     return [
       <div className="clearfix mb2" key="heart-and-idea">
+        <h4 className="gray-2">The community builds what it loves.</h4>
+        <br/>
         <div className="left p2 mr1" onClick={this.handleHeartClick}>
           <Heart
             size="huge"
