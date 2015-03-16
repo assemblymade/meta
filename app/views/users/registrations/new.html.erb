@@ -50,7 +50,7 @@
               </div>
             <% end %>
 
-            <div id="email-form" class="display-none">
+            <div id="email-form" class="<%= 'display-none' if f.object.facebook_uid.blank? %>">
               <div class="form-group <%= 'has-error' if f.object.errors[:username].any? %>">
                 <% if f.object.errors[:username].any? %>
                   <p class="help-block pull-right">
