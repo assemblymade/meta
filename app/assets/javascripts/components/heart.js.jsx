@@ -90,24 +90,24 @@ var Heart = React.createClass({
   },
 
   renderHuge: function() {
-    var heartsCount = this.state.hearts_count;
+     var heartsCount = this.state.hearts_count;
+     // Dammit, JavaScript
+     if (heartsCount == null) {
+       return <div />
+     }
 
-    if (heartsCount == null) {
-      return <div />
-    }
+     if (!UserStore.isSignedIn()) {
+       return <div className={"heart-circle heart-circle-green"}>
+         <SvgIcon type="heart" />
+       </div>
+     }
 
-    var icon = <Icon icon="heart" verticalAlign={1} />
-    if (!UserStore.isSignedIn()) {
-      return icon;
-    }
-
-    var toggler = <IconToggler on={this.state.user_heart || false} icon={icon} action={this.handleClick} color="red" />
-    return (
-      <div className="h1">
-        {toggler}
-      </div>
-    )
-  },
+     return (
+       <div className={"pointer heart-circle heart-circle-" + (this.state.user_heart ? 'white' : 'green')} onClick={this.handleClick}>
+         <SvgIcon type="heart" />
+       </div>
+     );
+   },
 
   renderButton: function() {
     var heartsCount = this.state.hearts_count;
