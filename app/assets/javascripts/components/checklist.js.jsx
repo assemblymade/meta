@@ -117,14 +117,14 @@ sendUpdate: function(editable_type, path) {
       _.map(this.props.checklistItems, function(item, index) {
         if (item.complete && !this.props.locked) {
           return (
-            <li className="py1">
+            <li className="clearfix py1">
               <div className="left mr2 green">
                 <Icon icon="check" fw={true} />
               </div>
-              <span className="ml2">
-                {item.name}<br />
-                <small className="gray-2 ml4">{item.subtext}</small>
-              </span>
+              <div className="overflow-hidden">
+                {item.name}
+                <div className="gray-2">{item.subtext}</div>
+              </div>
             </li>
           )
         }
@@ -207,7 +207,7 @@ sendUpdate: function(editable_type, path) {
         <h5 className="mt0 caps gray-1 center">
           { isOwner ? "Move your idea forward" : "Move this idea forward" }
         </h5>
-        <div className="p3 py0">
+        <div>
           <ol className="list-reset">
             {this.renderChecklistItemsNew()}
           </ol>
