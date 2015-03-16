@@ -1,3 +1,5 @@
+'use strict'
+
 var DropdownMixin = require('../../mixins/dropdown_mixin.js.jsx')
 var DropdownMenu = require('./dropdown_menu.js.jsx')
 var Icon = require('./icon.js.jsx')

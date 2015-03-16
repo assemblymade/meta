@@ -1,3 +1,5 @@
+'use strict'
+
 var ActionTypes = require('../constants').ActionTypes;
 var allRoutes = require('../routes/routes');
 var Dispatcher = require('../dispatcher');
