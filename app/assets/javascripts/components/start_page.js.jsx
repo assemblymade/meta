@@ -19,7 +19,9 @@ var StartPage = React.createClass({
       <div className="mt0 mb3">
         <div className="masthead" style={{background: background, paddingTop: 0}}>
           <div className="masthead-title p4">
-            <h1 className="center white">Turn your idea into a great product with people around the world</h1>
+            <div className="clearfix">
+              <h1 className="col-8 mx-auto center white">Turn your idea into a great product with people around the world</h1>
+            </div>
           </div>
         </div>
 

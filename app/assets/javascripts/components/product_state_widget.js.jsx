@@ -27,7 +27,8 @@ var ProductStateWidget = React.createClass({
       checklist_data: data,
       currentStage: data.current_stage,
       activeStage: data.current_stage,
-      stages: data.stages
+      stages: data.stages,
+      buttonTexts: data.button_texts
     });
   },
 
@@ -35,7 +36,8 @@ var ProductStateWidget = React.createClass({
     return {
       currentStage: 0,
       activeStage: 0,
-      stages: [{name: ''}]
+      stages: [{name: ''}],
+      buttonTexts: ['']
     }
   },
 
@@ -76,12 +78,13 @@ var ProductStateWidget = React.createClass({
   },
 
   render: function() {
-    var activeChecklist = this.state.stages[this.state.activeStage]
+    var activeChecklist = this.state.stages[this.state.activeStage];
+    var b = this.state.buttonTexts[this.state.activeStage];
     return (
       <Tile>
         <div className="p3">
           {this.renderStages()}
-          <Checklist entity_type={"Idea"} entity={this.props.entity} checklistItems={activeChecklist.items} locked={this.state.activeStage > this.state.currentStage} buttonText={activeChecklist.buttonText} />
+          <Checklist entity_type={"Idea"} entity={this.props.entity} checklistItems={activeChecklist.items} locked={this.state.activeStage > this.state.currentStage} buttonText={b} />
         </div>
       </Tile>
     )

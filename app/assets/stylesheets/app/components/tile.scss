@@ -170,6 +170,23 @@ a.comment-count {
   }
 }
 
+.svg-icon-huge-heart {
+  width: 4.0rem;
+  //
+  .path1 {
+    fill:transparent;
+  }
+  .path2 {
+    fill:$gray-3;
+  }
+}
+
+.action-icon.red {
+  .svg-icon-huge-heart .path1, .svg-icon-huge-heart .path2 {
+    fill: $red;
+  }
+}
+
 .svg-icon-share {
   width: 1.9rem;
   fill:$gray-3;

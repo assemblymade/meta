@@ -12,7 +12,8 @@ var Heart = React.createClass({
     size: React.PropTypes.oneOf([
       'small',
       'medium',
-      'button'
+      'button',
+      'huge'
     ]),
     heartable_id: React.PropTypes.string.isRequired,
     heartable_type: React.PropTypes.string.isRequired
@@ -28,7 +29,8 @@ var Heart = React.createClass({
     var sizes = {
       'small': this.renderSmall,
       'medium': this.renderMedium,
-      'button': this.renderButton
+      'button': this.renderButton,
+      'huge': this.renderHuge
     }
     return sizes[this.props.size]()
   },
@@ -85,6 +87,26 @@ var Heart = React.createClass({
         {heartWithCount}
       </a>
     );
+  },
+
+  renderHuge: function() {
+    var heartsCount = this.state.hearts_count;
+
+    if (heartsCount == null) {
+      return <div />
+    }
+
+    var icon = <Icon icon="heart" verticalAlign={1} />
+    if (!UserStore.isSignedIn()) {
+      return icon;
+    }
+
+    var toggler = <IconToggler on={this.state.user_heart || false} icon={icon} action={this.handleClick} color="red" />
+    return (
+      <div className="h1">
+        {toggler}
+      </div>
+    )
   },
 
   renderButton: function() {

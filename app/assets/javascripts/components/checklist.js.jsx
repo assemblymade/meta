@@ -73,25 +73,27 @@ sendUpdate: function(editable_type, path) {
 
   renderProgressButton: function() {
     var currentUser = UserStore.getUser();
-    var isOwner = (currentUser.id === this.props.entity.user.id)
-    if (this.props.locked) {
-      var buttonAction = null
-    } else {
-      var buttonAction = function () {
-          window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
-        }.bind(this)
-    }
+    if(currentUser) {
+      var isOwner = (currentUser.id === this.props.entity.user.id)
+      if (this.props.locked) {
+        var buttonAction = null
+      } else {
+        var buttonAction = function () {
+            window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
+          }.bind(this)
+      }
 
-    if (currentUser && (currentUser.staff || isOwner)) {
-      return (
-        <div>
-          <hr />
-          <Button type="primary" block="true" action={buttonAction}>
-            <Icon icon="lock" fw="true" />
-            {this.props.buttonText}
-          </Button>
-        </div>
-      )
+      if (currentUser && (currentUser.staff || isOwner)) {
+        return (
+          <div>
+            <hr />
+            <Button type="primary" block="true" action={buttonAction}>
+              <Icon icon="lock" fw="true" />
+              {this.props.buttonText}
+            </Button>
+          </div>
+        )
+      }
     }
   },
 
@@ -113,14 +115,14 @@ sendUpdate: function(editable_type, path) {
         }
         else {
           return (
-            <li className="py1">
+            <li className="clearfix py1">
               <div className="left mr2 gray-2">
                 <Icon icon={this.props.locked ? 'lock' : 'minus'} fw={true} />
               </div>
-              <span className="ml2">
-                {item.name}<br />
-                <small className="gray-2 ml4">{item.subtext}</small>
-              </span>
+              <div className="overflow-hidden">
+                {item.name}
+                <div className="gray-2">{item.subtext}</div>
+              </div>
             </li>
           )
         }
@@ -185,12 +187,13 @@ sendUpdate: function(editable_type, path) {
 
   render: function() {
     var currentUser = UserStore.getUser();
-    var isOwner = (currentUser.id === this.props.entity.user.id)
     return (
       <div>
-        <h5 className="mt0 caps gray-1 center">
-          { isOwner ? "Move your idea forward" : "Move this idea forward" }
-        </h5>
+        <div className="p2 py0">
+          <h5 className="mt0 gray-1 center">
+            {this.props.buttonText}
+          </h5>
+        </div>
         <div>
           <ol className="list-reset">
             {this.renderChecklistItemsNew()}

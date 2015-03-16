@@ -106,7 +106,7 @@ let Idea = React.createClass({
       <div className="clearfix mb2" key="heart-and-idea">
         <div className="left p2 mr1" onClick={this.handleHeartClick}>
           <Heart
-            size="medium"
+            size="huge"
             heartable_id={idea.news_feed_item.id}
             heartable_type="NewsFeedItem" />
         </div>
