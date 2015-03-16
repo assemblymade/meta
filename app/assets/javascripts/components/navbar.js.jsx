@@ -49,9 +49,9 @@ var Navbar = React.createClass({
           <HeartsReceived />
         </li>
 
-        {this.state.showStories && this.renderChatNotifications()}
+        {this.state.showChat && this.renderChatNotifications()}
         {this.state.showStories && this.renderStories()}
-        
+
         <li className="left dropdown hidden-xs">
           <a className="block dropdown-toggle px1" style={divStyle} key="navbar dropdown" onClick={this.toggleDropdown} href="javascript:;">
             <Avatar user={appUser} size={27} />
@@ -106,7 +106,8 @@ var Navbar = React.createClass({
   getStateFromStores() {
     let stories = StoryStore.getStories()
     return {
-      showStories: (stories && stories.length > 0)
+      showStories: (stories && stories.length > 0),
+      showChat: moment(UserStore.getUser().created_at).add(2, 'minutes').isBefore(moment())
     }
   }
 
