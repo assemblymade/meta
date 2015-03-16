@@ -73,25 +73,27 @@ sendUpdate: function(editable_type, path) {
 
   renderProgressButton: function() {
     var currentUser = UserStore.getUser();
-    var isOwner = (currentUser.id === this.props.entity.user.id)
-    if (this.props.locked) {
-      var buttonAction = null
-    } else {
-      var buttonAction = function () {
-          window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
-        }.bind(this)
-    }
+    if(currentUser) {
+      var isOwner = (currentUser.id === this.props.entity.user.id)
+      if (this.props.locked) {
+        var buttonAction = null
+      } else {
+        var buttonAction = function () {
+            window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
+          }.bind(this)
+      }
 
-    if (currentUser && (currentUser.staff || isOwner)) {
-      return (
-        <div>
-          <hr />
-          <Button type="primary" block="true" action={buttonAction}>
-            <Icon icon="lock" fw="true" />
-            {this.props.buttonText}
-          </Button>
-        </div>
-      )
+      if (currentUser && (currentUser.staff || isOwner)) {
+        return (
+          <div>
+            <hr />
+            <Button type="primary" block="true" action={buttonAction}>
+              <Icon icon="lock" fw="true" />
+              {this.props.buttonText}
+            </Button>
+          </div>
+        )
+      }
     }
     else
       {
@@ -195,10 +197,7 @@ sendUpdate: function(editable_type, path) {
     var isOwner = (currentUser.id === this.props.entity.user.id)
     return (
       <div>
-        <h5 className="mt0 caps gray-1 center">
-          { isOwner ? "Move your idea forward" : "Move this idea forward" }
-        </h5>
-        <div>
+        <div className="p2 py0">
           <ol className="list-reset">
             {this.renderChecklistItemsNew()}
           </ol>
