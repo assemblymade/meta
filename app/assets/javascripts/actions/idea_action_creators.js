@@ -23,6 +23,8 @@ class IdeaActionCreators {
       success: function(newIdea) {
         page(newIdea.path + '/start-conversation');
 
+        _track("idea.creation")
+
         Dispatcher.dispatch({
           type: ActionTypes.IDEAS_NEW_IDEA_CREATED,
           idea: newIdea
@@ -62,6 +64,14 @@ class IdeaActionCreators {
       }
     });
   }
+}
+
+function _track(eventName) {
+  var user = window.app.currentUser();
+
+  window.analytics.track(eventName, {
+    user: (user ? user.attributes : {})
+  });
 }
 
 module.exports = new IdeaActionCreators()

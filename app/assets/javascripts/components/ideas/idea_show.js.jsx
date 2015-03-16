@@ -125,8 +125,8 @@ let IdeaShow = React.createClass({
         <div className="subnav bg-white py3 md-show lg-show mb3">
           <div className="container clearfix">
             <div className="left">
-              <h4 className="mt2 mb2">
-                Turn an idea into a real product with people around the world
+              <h4 className="mt1 mb1">
+                Propose something amazing.
               </h4>
             </div>
             <div className="right py1">
