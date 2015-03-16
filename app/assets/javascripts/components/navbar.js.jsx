@@ -6,6 +6,7 @@ var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
 var DropdownNotifications = require('./dropdown_notifications.js.jsx');
 var DropdownNotificationsToggler = require('./dropdown_notifications_toggler.js.jsx');
 var HeartsReceived = require('./user/hearts_received.js.jsx')
+var routes = require('../routes')
 var StoryActions = require('../actions/story_actions')
 var StoryStore = require('../stores/story_store');
 var TitleNotificationsCount = require('./title_notifications_count.js.jsx');
@@ -28,6 +29,10 @@ var Navbar = React.createClass({
     if (this.isDropdownOpen()) {
       userDropdownMenu = (
         <DropdownMenu position="right" key="user dropdown menu">
+          <DropdownMenu.Item label="Start a Product" icon="building" action={routes.start_idea_path()} />
+
+          <DropdownMenu.Divider />
+
           <DropdownMenu.Item label="Dashboard" icon="home" action={this.props.dashboardPath} />
           <DropdownMenu.Item label="Profile" icon="user" action={this.props.userPath} />
           <DropdownMenu.Item label="Settings" icon="cog" action={this.props.editUserPath} />

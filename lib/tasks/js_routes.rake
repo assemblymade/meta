@@ -88,6 +88,7 @@ ROUTES = [
   'product_wips',
   'product',
   'readraptor',
+  'start_idea',
   'user',
   'snippet_product_metrics',
   'weekly_product_metrics'
