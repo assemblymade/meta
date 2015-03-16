@@ -1,14 +1,6 @@
 jest.dontMock(pathToFile('stores/store'));
 
 describe('Store', function() {
-  var events = require('events')
-
-  // console.log(events)
-
-  var EventEmitter = events.EventEmitter;
-
-  console.log(EventEmitter.prototype.emit)
-
   var Store = require(pathToFile('stores/store'));
 
   it('instantiates a new store that has EventEmitter\'s prototype', function() {
@@ -20,33 +12,36 @@ describe('Store', function() {
 
   describe('emitChange()', function() {
     it('emits changes', function() {
+      Store.emit = jest.genMockFn();
       Store.emitChange();
 
-      expect(EventEmitter.prototype.emit).toBeCalled();
+      expect(Store.emit).toBeCalled();
     });
   });
 
   describe('addChangeListener()', function() {
     it('adds a change listener', function() {
-      var mock = jest.genMockFn();
+      Store.on = jest.genMockFn();
+      Store.addChangeListener(jest.genMockFn());
 
-      Store.addChangeListener(mock);
-
-      expect(EventEmitter.prototype.on).toBeCalled();
+      expect(Store.on).toBeCalled();
     });
   });
 
   describe('removeChangeListener', function() {
     it('removes a listener', function() {
-      var mock = jest.genMockFn();
+      var stub = jest.genMockFn();
 
-      Store.addChangeListener(mock);
+      Store.on = jest.genMockFn();
+      Store.removeListener = jest.genMockFn();
 
-      expect(EventEmitter.prototype.on).toBeCalled();
+      Store.addChangeListener(stub);
 
-      Store.removeChangeListener(mock);
+      expect(Store.on).toBeCalled();
 
-      expect(EventEmitter.prototype.removeListener).toBeCalled();
+      Store.removeChangeListener(stub);
+
+      expect(Store.removeListener).toBeCalled();
     });
   });
 });
