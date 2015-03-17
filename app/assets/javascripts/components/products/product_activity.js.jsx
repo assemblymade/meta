@@ -6,6 +6,7 @@ const Button = require('../ui/button.js.jsx');
 const Immutable = require('immutable');
 const IntroductionForm = require('./introduction_form.js.jsx');
 const NewsFeed = require('../news_feed/news_feed.js.jsx');
+const Label = require('../ui/label.js.jsx');
 const NewsFeedItemsStore = require('../../stores/news_feed_items_store');
 const PostMarksStore = require('../../stores/post_marks_store');
 const ProductHeader = require('./product_header.js.jsx');
@@ -99,8 +100,14 @@ const ProductActivity = React.createClass({
               <div className="mb3">
                 {this.renderIntroductionForm()}
               </div>
-              
-              {this.renderPostFilters()}
+
+              <div className="mb3">
+                {this.renderTypeFilters()}
+              </div>
+
+              <div className="mb3">
+                {this.renderTagFilters()}
+              </div>
             </div>
           </div>
         </div>
@@ -187,7 +194,7 @@ const ProductActivity = React.createClass({
     );
   },
 
-  renderPostFilters() {
+  renderTagFilters() {
     let renderedTags = []
     let filters = this.state.postMarks.sort()
 
@@ -204,15 +211,24 @@ const ProductActivity = React.createClass({
           }
         });
 
-        let tagName = tag[0].toUpperCase() + tag.substr(1) + ' posts'
-
         return (
           <li key={tag + '-' + i}>
-            <a className="block py1" href={href}>{tagName}</a>
+            <a className="block" href={href}><Label name={tag} /></a>
           </li>
         );
       }).toJS();
     }
+
+    return <Accordion title="Tags">
+      <ul className="list-reset">
+        {renderedTags}
+      </ul>
+    </Accordion>
+  },
+
+  renderTypeFilters() {
+    let renderedTags = []
+    let filters = this.state.postMarks.sort()
 
     let product = this.state.product;
 
@@ -263,7 +279,7 @@ const ProductActivity = React.createClass({
       </li>
     );
 
-    return <Accordion title="Filter activity">
+    return <Accordion title="Activity types">
       <ul className="list-reset">
         {renderedTags}
       </ul>
