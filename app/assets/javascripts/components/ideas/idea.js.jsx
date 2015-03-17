@@ -154,7 +154,6 @@ let Idea = React.createClass({
       )
     }
   },
-
   hasEnoughHearts() {
     let { idea } = this.props;
 

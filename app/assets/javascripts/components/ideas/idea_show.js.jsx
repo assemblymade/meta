@@ -147,7 +147,6 @@ let IdeaShow = React.createClass({
                 <Idea idea={idea} />
               </Discussion>
             </div>
-
             <div className="col col-4 px2">
               <ProductStateWidget entity={idea} />
               <div className="mb3 ">
@@ -156,6 +155,7 @@ let IdeaShow = React.createClass({
                     <IdeaSharePanel idea={idea} size="large" message={"asdas"} />
                   </div>
                 </Tile>
+
               </div>
             </div>
           </div>
