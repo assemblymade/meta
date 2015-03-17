@@ -1,6 +1,7 @@
 class Heart < ActiveRecord::Base
-  belongs_to :user
   belongs_to :heartable, polymorphic: true, counter_cache: true, touch: true
+  belongs_to :target_user, class_name: 'User'
+  belongs_to :user
 
   scope :unsent, -> { where(sent_at: nil) }
 
