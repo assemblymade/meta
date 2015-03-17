@@ -170,5 +170,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
+  def json_array(array, options={})
+    ActiveModel::ArraySerializer.new(array, options)
+  end
 end

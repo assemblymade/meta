@@ -14,7 +14,7 @@ class NewsFeedItemsStore extends Store {
   constructor() {
     super()
 
-    this.dispatchIndex = Dispatcher.register((action) => {
+    this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
         case ActionTypes.NEWS_FEED_ITEMS_RECEIVE:
           _items = List(action.news_feed_items)

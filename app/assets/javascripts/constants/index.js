@@ -121,6 +121,7 @@ var CONSTANTS = {
 
     BOUNTY_WORK_SUBMITTED: null,
 
+    AWARDS_RECEIVE: null,
     BOUNTIES_REQUEST: null,
     BOUNTIES_RECEIVE: null,
     BOUNTIES_REORDER: null,
@@ -147,7 +148,9 @@ var CONSTANTS = {
 
     DISCUSSION_RECEIVE: null,
 
+    HEARTS_ACKNOWLEDGED: null,
     HEART_RECEIVED: null,
+    HEARTS_STORIES_RECEIVE: null,
 
     IDEA_RECEIVE: null,
     IDEA_UPDATED: null,

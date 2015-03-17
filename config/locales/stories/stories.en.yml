@@ -53,6 +53,10 @@ en:
           other: '%{name}'
           owner: '%{name}'
 
+        news_feed_item_comment:
+          other: '%{body}'
+          owner: '%{body}'
+
         post:
           other: '%{title}'
           owner: '%{title}'
@@ -64,6 +68,10 @@ en:
         task:
           other: "%{title} #%{number} "
           owner: "%{title} #%{number}"
+
+        user:
+          other: "@%{username} joined the Assembly community"
+          owner: "@%{username} joined the Assembly community"
 
         wip:
           other: "%{title} #%{number}"

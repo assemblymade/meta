@@ -28,7 +28,7 @@ var Vignette = React.createClass({
       maxHeight: this.props.height
     }
 
-    return <div className={cs} style={size}>
+    return <div className={cs} style={_.extend(size, this.props.style)}>
       {this.props.children}
     </div>
   }

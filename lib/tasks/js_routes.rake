@@ -48,12 +48,14 @@ end
 
 ROUTES = [
   'award_product_wip',
+  'awarded_bounties_user',
   'daily_product_metrics',
   'discover',
   'discussion_comment',
   'discussion_comments',
   'edit_product',
   'heartables_lovers',
+  'heart_stories_user',
   'idea_mark',
   'idea',
   'ideas',
@@ -86,6 +88,7 @@ ROUTES = [
   'product_wips',
   'product',
   'readraptor',
+  'start_idea',
   'user',
   'snippet_product_metrics',
   'weekly_product_metrics'

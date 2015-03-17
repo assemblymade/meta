@@ -28,4 +28,11 @@ describe HeartablesController do
       "heartable_id" => ["has already been taken"]
     })
   end
+
+  it 'updates hearts cache on user' do
+    post :love, type: NewsFeedItem.to_s, id: news_feed_item.id
+
+    expect(news_feed_item.user.hearts_received).to eq(1)
+    expect(news_feed_item.user.last_hearted_at.to_i).to eq(assigns(:heart).created_at.to_i)
+  end
 end

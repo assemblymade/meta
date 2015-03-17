@@ -8,7 +8,7 @@ class ArchivedNewsFeedItemsStore extends Store {
   constructor() {
     super()
 
-    this.dispatchIndex = Dispatcher.register((action) => {
+    this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
         case ActionTypes.ARCHIVED_NEWS_FEED_ITEMS_RECEIVE:
           _archivedItems = action.items

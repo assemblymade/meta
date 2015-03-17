@@ -1,5 +1,6 @@
 'use strict'
 
+var HeartActions = require('../../actions/heart_actions')
 var HeartsReceivedStore = require('../../stores/hearts_received_store')
 var Routes = require('../../routes')
 var UserStore = require('../../stores/user_store')
@@ -13,12 +14,12 @@ module.exports = React.createClass({
 
   render() {
     return (
-      <a className="block py2" href={Routes.user_path({id: UserStore.getUsername()})}>
-        <div className="">
-          <span className="red" ref="heart">
+      <a className="block py2" href={Routes.user_path({id: UserStore.getUsername()})} onMouseEnter={this.handleHover}>
+        <div>
+          <span className="gray-1">{this.state.heartsCount} </span>
+          <span className={this.state.newHearts ? "red" : "gray-3"} ref="heart">
             <Icon icon="heart" />
           </span>
-          <span className="gray-1"> {this.state.heartsCount}</span>
         </div>
       </a>
     )
@@ -26,8 +27,13 @@ module.exports = React.createClass({
 
   getStateFromStore() {
     return {
-      heartsCount: HeartsReceivedStore.getHeartsCount()
+      heartsCount: HeartsReceivedStore.getHeartsCount(),
+      newHearts: HeartsReceivedStore.hasNewHearts()
     }
+  },
+
+  handleHover() {
+    HeartActions.acknowledge()
   },
 
   componentDidUpdate(props, state) {

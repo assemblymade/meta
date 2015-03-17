@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310212204) do
+ActiveRecord::Schema.define(version: 20150314000058) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
 
@@ -320,6 +320,7 @@ ActiveRecord::Schema.define(version: 20150310212204) do
     t.string   "heartable_type", limit: 255, null: false
     t.datetime "created_at",                 null: false
     t.datetime "sent_at"
+    t.uuid     "target_user_id"
   end
 
   add_index "hearts", ["sent_at"], name: "index_hearts_on_sent_at", using: :btree
@@ -550,46 +551,6 @@ ActiveRecord::Schema.define(version: 20150310212204) do
     t.datetime "updated_at"
     t.datetime "cancelled_at"
   end
-
-  create_table "oauth_access_grants", force: :cascade do |t|
-    t.uuid     "resource_owner_id", null: false
-    t.integer  "application_id",    null: false
-    t.string   "token",             null: false
-    t.integer  "expires_in",        null: false
-    t.text     "redirect_uri",      null: false
-    t.datetime "created_at",        null: false
-    t.datetime "revoked_at"
-    t.string   "scopes"
-  end
-
-  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
-
-  create_table "oauth_access_tokens", force: :cascade do |t|
-    t.uuid     "resource_owner_id"
-    t.integer  "application_id"
-    t.string   "token",             null: false
-    t.string   "refresh_token"
-    t.integer  "expires_in"
-    t.datetime "revoked_at"
-    t.datetime "created_at",        null: false
-    t.string   "scopes"
-  end
-
-  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
-  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
-  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
-
-  create_table "oauth_applications", force: :cascade do |t|
-    t.string   "name",                      null: false
-    t.string   "uid",                       null: false
-    t.string   "secret",                    null: false
-    t.text     "redirect_uri",              null: false
-    t.string   "scopes",       default: "", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
   create_table "offers", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "bounty_id",  null: false
@@ -1088,6 +1049,7 @@ ActiveRecord::Schema.define(version: 20150310212204) do
     t.datetime "showcase_banner_dismissed_at"
     t.datetime "coin_callout_viewed_at"
     t.integer  "hearts_received",                               default: 0,       null: false
+    t.datetime "last_hearted_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
