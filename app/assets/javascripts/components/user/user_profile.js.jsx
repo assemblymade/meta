@@ -17,8 +17,10 @@ module.exports = React.createClass({
     return <div>
       <div className="border-bottom border-gray-5 pb2">
         <ul className="nav nav-pills">
-          <li className={this.state.tab == 'hearts' ? 'active' : null}><a href="#hearts">Hearted Contributions</a></li>
-          <li className={this.state.tab == 'bounties' ? 'active' : null}><a href="#bounties">Awarded Bounties</a></li>
+          <li className={this.state.tab == 'hearts' ? 'active' : null}>
+            <a href="#hearts">Hearts</a></li>
+          <li className={this.state.tab == 'bounties' ? 'active' : null}>
+            <a href="#bounties">App Coins</a></li>
         </ul>
       </div>
 
