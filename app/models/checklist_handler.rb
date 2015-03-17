@@ -63,12 +63,8 @@ class ChecklistHandler
       end
     end
     checklistitem['complete'] = comments >= COMMENT_MINIMUM
-    if comments == 1
-      checklistitem['subtext'] = comments.to_s + " comment"
-    else
-      checklistitem['subtext'] = comments.to_s + " comments"
-    end
 
+    checklistitem['subtext'] = comments.to_s + " / " + COMMENT_MINIMUM.to_s + " comments"
     checklistitem
   end
 

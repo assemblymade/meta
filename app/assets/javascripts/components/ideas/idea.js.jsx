@@ -34,7 +34,7 @@ let Idea = React.createClass({
 
     return (
       <div>
-        <div className="py1 px4 mb3" style={{border: 'solid 5px aliceblue'}}>
+        <div className="py1 px4 mb3 border-bottom">
           {this.renderHeader()}
         </div>
         <div className="px4 py2">
