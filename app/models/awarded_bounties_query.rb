@@ -6,13 +6,13 @@ class AwardedBountiesQuery
     @params = params
   end
 
-    def awards
-      Award.unscoped.select('*').
-        joins(wip: :product).
-        from(Arel.sql("(#{ranked_bounties_query}) AS awards")).
-        where('bounty_count <= 5').
-        where.not(wips: {product_id: Product.private_ids}).
-        page(params[:page])
+  def awards
+    Award.unscoped.select('awards.*').
+      joins(wip: :product).
+      from(Arel.sql("(#{ranked_bounties_query}) AS awards")).
+      where('bounty_count <= 5').
+      where.not(wips: {product_id: Product.private_ids}).
+      page(params[:page]).per(50)
   end
 
   def ranked_bounties_query
