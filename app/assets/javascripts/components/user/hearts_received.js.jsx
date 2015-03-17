@@ -16,10 +16,10 @@ module.exports = React.createClass({
     return (
       <a className="block py2" href={Routes.user_path({id: UserStore.getUsername()})} onMouseEnter={this.handleHover}>
         <div>
+          <span className="gray-1">{this.state.heartsCount} </span>
           <span className={this.state.newHearts ? "red" : "gray-3"} ref="heart">
             <Icon icon="heart" />
           </span>
-          <span className="gray-1"> {this.state.heartsCount}</span>
         </div>
       </a>
     )

@@ -8,6 +8,8 @@ var Spinner = require('../spinner.js.jsx')
 var url = require('url')
 var UserStore = require('../../stores/user_store')
 
+var leftPadding = 54
+
 module.exports = React.createClass({
   displayName: 'ProfileHeartsReceived',
 
@@ -34,7 +36,7 @@ module.exports = React.createClass({
       let newDate = moment(s.last_hearted_at).format('dddd, MMMM Do')
       if (date != newDate) {
         date = newDate
-        heading = <div className="px2 pt3 pb1" key={date}>
+        heading = <div className="px2 pt4 pb1 gray-2" key={date}>
           <div className="right">
             <span className="gray-2">{this.getHeartCount(s.last_hearted_at)} </span>
             <span className="red">
@@ -42,7 +44,7 @@ module.exports = React.createClass({
             </span>
           </div>
 
-          <span className="mr1">
+          <span className="mr1 gray-3">
             <Icon icon="calendar" />
           </span>
           {newDate}
@@ -61,7 +63,7 @@ module.exports = React.createClass({
     return <div className={showBorder ? "border-top border-gray-5" : null} key={story.id}>
       <a href={story.url}
           className="py2 block bg-gray-6-hover ellipsis relative"
-          style={{paddingLeft: 54, paddingRight: 44}}>
+          style={{paddingLeft: leftPadding, paddingRight: 44}}>
 
         <div className="absolute" style={{right: 10}}>
           {story.product ?
@@ -74,7 +76,7 @@ module.exports = React.createClass({
         </div>
 
         {` ${hearters[hearters.length-1].username}`}
-        <span className="gray-1">
+        <span className="black">
           {story.users.count > 1 ?
             ` and ${story.users.count-1} other${story.users.count == 2 ? '' : 's'} ` : null}
           {' hearted '}
@@ -87,13 +89,11 @@ module.exports = React.createClass({
 
   renderNewProfile() {
     if (this.props.user_id == UserStore.getUsername()) {
-      return <div>
-        <div className="center">
-          <h3>Oooh! Such a shiny new profile.</h3>
-          <img src="/assets/new_profile.gif" />
-        </div>
+      return <div style={{paddingLeft: leftPadding}}>
+        <img src="/assets/new_profile.gif" />
 
-        <p className="p2">
+        <h3 className="mt1">Oooh! Such a shiny new profile.</h3>
+        <p>
           If it feels sparse right now, <strong>don&#39;t panic</strong>. It wont stay that way for long.
           Get started by helping out <a href="/discover">products</a> or collaborate on <a href="/ideas">ideas</a>.
           You&#39;ll earn hearts when others like your stuff. You can even earn ownership in a
@@ -112,7 +112,7 @@ module.exports = React.createClass({
 
   renderComment(comment) {
     return <span>
-      <span className="gray-1">the comment on </span>{comment.nfi.description}<br/>
+      <span className="black">the comment on </span>{comment.nfi.description}<br/>
       <span className="gray-2 italic">{comment.description}</span>
     </span>
   },

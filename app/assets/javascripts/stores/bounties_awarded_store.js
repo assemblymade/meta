@@ -6,6 +6,7 @@ const Store = require('./es6_store')
 const UserStore = require('./user_store')
 
 var awards = null
+var awardedBountiesCounts = null
 var coins = null
 var totals = null
 
@@ -19,6 +20,7 @@ class HeartsReceivedStore extends Store {
           awards = action.awards
           coins = action.coins
           totals = action.totals
+          awardedBountiesCounts = action.counts
           this.emitChange()
           break
       }
@@ -27,6 +29,10 @@ class HeartsReceivedStore extends Store {
 
   getAwards() {
     return awards
+  }
+
+  getAwardedBountiesCount(productId) {
+    return awardedBountiesCounts[productId]
   }
 
   getCoins(productId) {

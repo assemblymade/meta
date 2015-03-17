@@ -115,6 +115,7 @@ class UsersController < ApplicationController
     render json: {
       awards: json_array(query.awards),
       coins: balances,
+      counts: Award.where(winner: current_user).joins(:wip).group(:product_id).count,
       totals: TransactionLogEntry.where(product_id: balances.keys).group(:product_id).sum(:cents)
     }
   end

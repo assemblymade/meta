@@ -7,6 +7,7 @@ var OwnershipActions = require('../../actions/ownership_actions')
 var PeopleStore = require('../../stores/people_store')
 var Spinner = require('../spinner.js.jsx')
 var url = require('url')
+var UserStore = require('../../stores/user_store')
 
 module.exports = React.createClass({
   displayName: 'ProfileHeartsReceived',
@@ -20,6 +21,10 @@ module.exports = React.createClass({
       return <Spinner />
     }
 
+    if (this.state.awards.length == 0) {
+      return this.renderEmptyState()
+    }
+
     return this.renderBountiesAwarded()
   },
 
@@ -30,7 +35,7 @@ module.exports = React.createClass({
       var heading = null
       if (product == null || (a.bounty.product.id != product.id)) {
         product = a.bounty.product
-        heading = <div className="px2 pb2 pt3">
+        heading = <div className="px2 pb2 pt4">
           <div className="right">
             <AppCoins n={this.coins(product.id)} />
           </div>
@@ -42,6 +47,9 @@ module.exports = React.createClass({
             <AppIcon app={product} className="left" />
           </div>
           {product.name}
+          <span className="gray-2 ml2">
+            {pluralize(this.awardedBountiesCount(product.id), 'awarded bounty', 'awarded bounties')}
+          </span>
         </div>
       }
 
@@ -63,6 +71,20 @@ module.exports = React.createClass({
         {award.bounty.title}
       </a>
     </div>
+  },
+
+  renderEmptyState() {
+    if (this.props.user_id == UserStore.getUsername()) {
+      return <div className="m4 p3 bg-gray-6 center">
+        Get involved in <a href="/discover">products</a>, complete bounties and you&#39;ll
+        earn yourself app coins. App coins represent your ownership in products. <a href="/help/profits#profits-2">Learn more in the FAQ</a>
+      </div>
+    }
+    return <div />
+  },
+
+  awardedBountiesCount(product_id) {
+    return BountiesAwardedStore.getAwardedBountiesCount(product_id)
   },
 
   coins(product_id) {
@@ -93,3 +115,7 @@ module.exports = React.createClass({
     this.setState(this.getStateFromStores())
   }
 })
+
+function pluralize(count, singular, plural) {
+  return `${count} ${count == 1 ? singular : plural}`
+}
