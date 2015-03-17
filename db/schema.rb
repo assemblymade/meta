@@ -14,8 +14,9 @@
 ActiveRecord::Schema.define(version: 20150314000058) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "uuid-ossp"
+  enable_extension "plpgsql"
   enable_extension "pg_stat_statements"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -813,7 +814,6 @@ ActiveRecord::Schema.define(version: 20150314000058) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
-    t.integer  "order"
   end
 
   create_table "status_messages", id: :uuid, force: :cascade do |t|

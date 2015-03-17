@@ -26,48 +26,46 @@ var StartPage = React.createClass({
         </div>
 
         <div className="container center">
-
-
           <ul className="list list-steps hidden-xs hidden-sm">
             <li className="overlay" />
             <li>
               <div className="step active">1</div>
-              <div className="body">
+              <div className="body px1">
                 <strong>Submit your idea</strong>
                 <div className="gray-2">Every great product begins with an idea.</div>
               </div>
             </li>
             <li>
               <div className="step">2</div>
-              <div className="body">
+              <div className="body px1">
                 <strong>Find collaborators</strong>
                 <div className="gray-2">Assemble a founding team.  Own what you make.</div>
               </div>
             </li>
             <li>
               <div className="step">3</div>
-              <div className="body">
+              <div className="body px1">
                 <strong>Lay the foundation</strong>
                 <div className="gray-2">First steps to making something amazing.</div>
               </div>
             </li>
             <li>
               <div className="step">4</div>
-              <div className="body">
+              <div className="body px1">
                 <strong>Build a product</strong>
                 <div className="gray-2">Create something beautiful.</div>
               </div>
             </li>
             <li>
               <div className="step">5</div>
-              <div className="body">
+              <div className="body px1">
                 <strong>Grow</strong>
-                <div className="gray-2">Scale it to the moon.</div>
+                <div className="gray-2">Scale it to the moon. </div>
               </div>
             </li>
             <li className="overlay" />
           </ul>
-          <div className="row visible-sm">
+          <div className="row visible-sm visible-xs">
             <div className="col-xs-8 col-xs-offset-2">
               <ul className="list-reset text-large center">
                 <li className="p2">
@@ -121,8 +119,8 @@ var StartPage = React.createClass({
       <p class="gray-2">Over has been paid out to Assembly App Coin holders.</p>
     </div> */}
             <div className="col-xs-12 col-sm-4" style={{padding: '50px 40px'}}>
-              <h1 style={{fontSize: 80, lineHeight: 1, margin: 0}} />
-              <h2 className="mt0">{this.props.productsWorked} Products</h2>
+              <h1 style={{fontSize: 80, lineHeight: 1, margin: 0}}>{this.props.productsWorked}</h1>
+              <h2 className="mt0">Products</h2>
               <p className="gray-2">{this.props.productsStarted} products started on Assembly. <br />{this.props.productsWorked} products currently being built.</p>
             </div>
             <div className="col-xs-6 col-sm-2" />

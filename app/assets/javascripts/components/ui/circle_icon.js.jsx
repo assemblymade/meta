@@ -5,24 +5,24 @@ var CircleIcon = React.createClass({
     diameter: React.PropTypes.number,
     icon: React.PropTypes.string.isRequired,
     margin: React.PropTypes.number,
-    muted: React.PropTypes.bool
+    muted: React.PropTypes.bool,
+    color: React.PropTypes.string
   },
 
   getDefaultProps() {
     return {
       diameter: 25,
-      margin: 10,
-      muted: false
+      margin: 10
     };
   },
 
   render() {
-    var backgroundColor = _determineColor(this.props.icon, this.props.muted);
+    var backgroundColor = _determineColor(this.props.icon);
     var diameter = this.props.diameter;
     var style = {
       backgroundColor: backgroundColor,
       borderRadius: '100%',
-      color: '#fff',
+      color: color,
       display: 'inline-block',
       fontSize: 16,
       height: diameter,
@@ -40,19 +40,15 @@ var CircleIcon = React.createClass({
 
 module.exports = CircleIcon;
 
-function _determineColor(icon, muted) {
-  if (muted) {
-    return '#8B909A';
-  } else {
-    switch (icon) {
-      case 'facebook':
-        return '#3b5998';
-      case 'google-plus':
-        return '#d34836';
-      case 'twitter':
-        return '#4099ff';
-      default:
-        return '#333';
-    }
+function _determineColor(icon) {
+  switch (icon) {
+    case 'facebook':
+      return '#3b5998';
+    case 'google-plus':
+      return '#d34836';
+    case 'twitter':
+      return '#4099ff';
+    default:
+      return '#333';
   }
 }
