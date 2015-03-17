@@ -104,7 +104,8 @@ let Idea = React.createClass({
           </p>
         </div>
         <div className="overflow-hidden">
-          <h4 className="gray-2">The community builds what it loves.</h4>
+          <h3 className="gray-2">The community builds what it loves.</h3>
+          <h6 className="gray-2">It's better to have hearted and lost than never to have hearted at all</h6>
         </div>
       </div>
     ];

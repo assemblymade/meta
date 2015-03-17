@@ -74,7 +74,7 @@ class ChecklistHandler
   end
 
   def init_equity(entity)
-    checklistitem = {name: "Distribute Founder Equity", editable: false, complete: false, subtext: "Set up initial ownership"}
+    checklistitem = {name: "Distribute Founder Ownership", editable: false, complete: false, subtext: "Set up initial ownership"}
   end
 
   def recruit_checklists(entity)
