@@ -14,9 +14,9 @@
 
     message: function() {
       var len = this.props.usernames.length
-      if (len == 1) {
+      if (len === 1) {
         return <span><strong>{this.props.usernames[0]}</strong> is typing</span>
-      } else if (len == 2) {
+      } else if (len === 2) {
         return <span>
           <strong>{this.props.usernames[0]}</strong>&nbsp;and&nbsp;
           <strong>{this.props.usernames[1]}</strong>&nbsp;are typing
