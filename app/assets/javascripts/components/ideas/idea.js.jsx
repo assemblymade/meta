@@ -34,10 +34,10 @@ let Idea = React.createClass({
 
     return (
       <div>
-        <div className="p3 pb0">
+        <div className="py1 px4 mb2" style={{border: 'solid 5px aliceblue'}}>
           {this.renderHeader()}
         </div>
-        <div className="p4 pt2">
+        <div className="p4 py0">
           <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
           {this.renderAdminRow()}
         </div>
@@ -91,8 +91,8 @@ let Idea = React.createClass({
     var idea = this.props.idea;
     var shareMessage = 'We need help with ' + idea.name + '! via @asm';
     return (
-      <div className="clearfix border-bottom mb2">
-        <div className="right ml1 center">
+      <div className="clearfix">
+        <div className="right py3 center">
           <Heart
             size="huge"
             heartable_id={idea.news_feed_item.id}
@@ -105,6 +105,9 @@ let Idea = React.createClass({
         </div>
         <div className="overflow-hidden">
           <h4 className="gray-2">Heart this idea and the community will build it</h4>
+          <p className="h5 gray-2">
+            This is a product idea submitted to Assembly by <a className="gray-2" href={idea.user.url}>@{idea.user.username}</a>. If this product gets enough hearts, it will advance to the next stage of development.
+          </p>
         </div>
       </div>
       )
