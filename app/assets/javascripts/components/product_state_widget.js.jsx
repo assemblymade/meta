@@ -4,7 +4,6 @@ const ChecklistActions = require('../actions/checklist_actions');
 const Button = require('./ui/button.js.jsx');
 const Tile = require('./ui/tile.js.jsx');
 const Checklist = require('./checklist.js.jsx');
-const ProductStateIndicator = require('./product_state_indicator.js.jsx');
 
 var ProductStateWidget = React.createClass({
 

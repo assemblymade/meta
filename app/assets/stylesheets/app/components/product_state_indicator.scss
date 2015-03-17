@@ -42,7 +42,7 @@
     top: 9px;
   }
   .indicator-container li:first-child:after {
-    content: none; 
+    content: none;
   }
 
   .indicator-container li.active{
@@ -53,5 +53,14 @@
     background: #27AE60;
     color: #27AE60;
   }
-}
 
+  .indicator-container li.active-grey{
+    z-index:99;
+  }
+
+  .indicator-container li.active-grey:before,  .indicator-container li.active-grey:after{
+    background: #11AE60;
+    color: #11AE60;
+  }
+
+}

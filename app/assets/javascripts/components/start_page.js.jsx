@@ -33,29 +33,36 @@ var StartPage = React.createClass({
             <li>
               <div className="step active">1</div>
               <div className="body">
-                <strong>Share your idea</strong>
+                <strong>Submit your idea</strong>
                 <div className="gray-2">Every great product begins with an idea.</div>
               </div>
             </li>
             <li>
               <div className="step">2</div>
               <div className="body">
-                <strong>Find Collaborators</strong>
+                <strong>Find collaborators</strong>
                 <div className="gray-2">Assemble a founding team.  Own what you make.</div>
               </div>
             </li>
             <li>
               <div className="step">3</div>
               <div className="body">
-                <strong>Build a Product</strong>
-                <div className="gray-2">Create something beautiful with the help of the community.</div>
+                <strong>Lay the foundation</strong>
+                <div className="gray-2">First steps to making something amazing.</div>
               </div>
             </li>
             <li>
               <div className="step">4</div>
               <div className="body">
-                <strong>Launch it</strong>
-                <div className="gray-2">Grow a real business from what you've built.</div>
+                <strong>Build a product</strong>
+                <div className="gray-2">Create something beautiful.</div>
+              </div>
+            </li>
+            <li>
+              <div className="step">5</div>
+              <div className="body">
+                <strong>Grow</strong>
+                <div className="gray-2">Scale it to the moon.</div>
               </div>
             </li>
             <li className="overlay" />
@@ -64,7 +71,7 @@ var StartPage = React.createClass({
             <div className="col-xs-8 col-xs-offset-2">
               <ul className="list-reset text-large center">
                 <li className="p2">
-                  <strong>Share your idea</strong>
+                  <strong>Submit your idea</strong>
                   <div className="gray-2">Every great product begins with an idea</div>
                 </li>
                 <li className="p2">
@@ -72,12 +79,12 @@ var StartPage = React.createClass({
                   <div className="gray-2">Work with talented people and distribute ownership</div>
                 </li>
                 <li className="p2">
-                  <strong>Build an MVP</strong>
-                  <div className="gray-2">Build something beautiful.</div>
+                  <strong>Lay the foundation</strong>
+                  <div className="gray-2">First steps to making something amazing</div>
                 </li>
                 <li className="p2">
-                  <strong>Launch</strong>
-                  <div className="gray-2">Make a big splash with the help of the community</div>
+                  <strong>Build a product</strong>
+                  <div className="gray-2">Create something beautiful.</div>
                 </li>
                 <li className="p2">
                   <strong>Grow</strong>

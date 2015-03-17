@@ -38,8 +38,14 @@ class ChecklistHandler
     elsif entity.class.name == "Product"
       name = entity.name
     end
+    if !name
+      name = "Unnamed"
+    end
+
     checklistitem['subtext'] = name.to_s
     checklistitem['complete'] = ((name != "Unnamed") && (name != nil))
+    checklistitem['editable_button_text'] = "Set tentative name"
+    checklistitem['editable_type'] = "tentative_name"
     checklistitem
   end
 
@@ -57,15 +63,20 @@ class ChecklistHandler
       end
     end
     checklistitem['complete'] = comments >= COMMENT_MINIMUM
-    checklistitem['subtext'] = comments.to_s + " comments"
+    if comments == 1
+      checklistitem['subtext'] = comments.to_s + " comment"
+    else
+      checklistitem['subtext'] = comments.to_s + " comments"
+    end
+
     checklistitem
   end
 
   def idea_checklists(entity)
     idea_checklist = []
     idea_checklist.append(hearts_checklist(entity))
-    idea_checklist.append(pick_name_checklist(entity))
     idea_checklist.append(feedback_checklist(entity))
+    idea_checklist.append(pick_name_checklist(entity))
     return idea_checklist
   end
 

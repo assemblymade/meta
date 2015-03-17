@@ -23,7 +23,6 @@ const TextPost = require('../ui/text_post.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const UserStore = require('../../stores/user_store');
 const Checklist = require('../checklist.js.jsx');
-const ProductStateIndicator = require('../product_state_indicator.js.jsx');
 const ProductStateWidget = require('../product_state_widget.js.jsx');
 
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;

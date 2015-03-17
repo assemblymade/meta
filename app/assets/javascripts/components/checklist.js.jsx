@@ -54,7 +54,7 @@ sendUpdate: function(editable_type, path) {
             <span className="fa fa-remove ml1 gray-2" />
           </span>
 
-          <input className="col-xs-12" name={item.editable_type} type="text" ref="editedData" />
+          <input className="col-xs-12 py1" name={item.editable_type} type="text" ref="editedData" />
           <br />
           <Button action={this.sendUpdate.bind(null, item.editable_type, this.props.entity.path)}>{item.editable_button_text}</Button>
         </div>
@@ -87,7 +87,7 @@ sendUpdate: function(editable_type, path) {
         return (
           <div>
             <Button type="primary" block="true" action={buttonAction}>
-              <Icon icon="lock" fw="true" />
+              <Icon fw="true" />
               {this.props.buttonText}
             </Button>
           </div>
@@ -105,6 +105,8 @@ sendUpdate: function(editable_type, path) {
   },
 
   renderChecklistItemsNew: function() {
+    var currentUser = UserStore.getUser();
+    var isOwner = (currentUser.id === this.props.entity.user.id);
     return (
       _.map(this.props.checklistItems, function(item, index) {
         if (item.complete && !this.props.locked) {
@@ -115,6 +117,8 @@ sendUpdate: function(editable_type, path) {
               </div>
               <div className="overflow-hidden">
                 {item.name}
+                {item.editable && isOwner ? <span>{this.renderInputForm(item, index)}</span> : <span/>}
+                {item.editable && !isOwner ? <span className="ml1 gray-2 fa fa-lock"></span> : <span/> }
                 <div className="gray-2">{item.subtext}</div>
               </div>
             </li>
@@ -128,6 +132,8 @@ sendUpdate: function(editable_type, path) {
               </div>
               <div className="overflow-hidden">
                 {item.name}
+                {item.editable && isOwner ? <span>{this.renderInputForm(item, index)}</span> : <span/>}
+                {item.editable && !isOwner ? <span className="ml1 gray-2 fa fa-lock"></span> : <span/> }
                 <div className="gray-2">{item.subtext}</div>
               </div>
             </li>
