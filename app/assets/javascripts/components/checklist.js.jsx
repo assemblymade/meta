@@ -50,7 +50,7 @@ sendUpdate: function(editable_type, path) {
     if (this.state.openListItem === index) {
       return (
         <div style={{display:"inline"}}>
-          <span  onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}
+          <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}
             <span className="fa fa-remove ml1 gray-2" />
           </span>
 
@@ -64,7 +64,7 @@ sendUpdate: function(editable_type, path) {
       return (
         <div style={{display:"inline"}}>
           <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}
-            <span className="fa fa-pencil-square-o ml1 gray-2" />
+            <a>Edit</a>
           </span>
         </div>
       )
@@ -73,6 +73,7 @@ sendUpdate: function(editable_type, path) {
 
   renderProgressButton: function() {
     var currentUser = UserStore.getUser();
+    var complete = true
     if(currentUser) {
       var isOwner = (currentUser.id === this.props.entity.user.id)
       if (this.props.locked || !isOwner) {
@@ -83,7 +84,7 @@ sendUpdate: function(editable_type, path) {
           }.bind(this)
       }
 
-      if (currentUser && (currentUser.staff || isOwner)) {
+      if (currentUser && (currentUser.staff || isOwner) && complete ) {
         return (
           <div>
             <Button type="primary" block="true" action={buttonAction}>
@@ -118,7 +119,6 @@ sendUpdate: function(editable_type, path) {
               <div className="overflow-hidden">
                 {item.name}
                 {item.editable && isOwner ? <span>{this.renderInputForm(item, index)}</span> : <span/>}
-                {item.editable && !isOwner ? <span className="ml1 gray-2 fa fa-lock"></span> : <span/> }
                 <div className="gray-2">{item.subtext}</div>
               </div>
             </li>
@@ -133,7 +133,6 @@ sendUpdate: function(editable_type, path) {
               <div className="overflow-hidden">
                 {item.name}
                 {item.editable && isOwner ? <span>{this.renderInputForm(item, index)}</span> : <span/>}
-                {item.editable && !isOwner ? <span className="ml1 gray-2 fa fa-lock"></span> : <span/> }
                 <div className="gray-2">{item.subtext}</div>
               </div>
             </li>
