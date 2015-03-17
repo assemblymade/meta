@@ -86,7 +86,6 @@ sendUpdate: function(editable_type, path) {
       if (currentUser && (currentUser.staff || isOwner)) {
         return (
           <div>
-            <hr />
             <Button type="primary" block="true" action={buttonAction}>
               <Icon icon="lock" fw="true" />
               {this.props.buttonText}

@@ -37,7 +37,7 @@ var IdeaSharePanel = React.createClass({
         setTimeout(function() {
           self.setState({
             copyIcon: 'link',
-            copyText: self.shortUrl().substr(0, 35) + '...'
+            copyText: self.shortUrl().substr(0, 120) + '...'
           });
         }, 1500);
       });
@@ -54,7 +54,7 @@ var IdeaSharePanel = React.createClass({
   getInitialState() {
     return {
       copyIcon: 'link',
-      copyText: this.shortUrl().substr(0, 30) + '...',
+      copyText: this.shortUrl().substr(0, 120) + '...',
       shortUrl: this.shortUrl()
     };
   },
@@ -107,7 +107,7 @@ var IdeaSharePanel = React.createClass({
   large() {
     return (
       <div>
-        <div className="h5">
+        <div className="h5 gray-2 p1">
           Share this idea to push it to the next level.
           Community support will make this idea real.
         </div>

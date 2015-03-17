@@ -73,6 +73,7 @@ let IdeasIndex = React.createClass({
               <Button type="primary" action={function() { page('/ideas/new'); }}>
                 Start your product idea
               </Button>
+              <p className="mt2"><a href="/start">Learn more</a></p>
             </div>
           </div>
         </div>

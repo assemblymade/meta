@@ -33,12 +33,14 @@ let Idea = React.createClass({
     let idea = this.props.idea
 
     return (
-      <div className="p4">
-        <span className="right">
-          <Heart size="huge" heartable_id={idea.news_feed_item.id} heartable_type="NewsFeedItem" />
-        </span>
-        <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
-        {this.renderAdminRow()}
+      <div>
+        <div className="p3 pb0">
+          {this.renderHeader()}
+        </div>
+        <div className="p4 pt2">
+          <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
+          {this.renderAdminRow()}
+        </div>
       </div>
     )
   },
@@ -88,11 +90,11 @@ let Idea = React.createClass({
   renderHeader() {
     var idea = this.props.idea;
     var shareMessage = 'We need help with ' + idea.name + '! via @asm';
-    return [
-      <div className="clearfix border-bottom mb1">
+    return (
+      <div className="clearfix border-bottom mb2">
         <div className="right ml1 center">
           <Heart
-            size="medium"
+            size="huge"
             heartable_id={idea.news_feed_item.id}
             heartable_type="NewsFeedItem" />
           <p>
@@ -102,11 +104,10 @@ let Idea = React.createClass({
           </p>
         </div>
         <div className="overflow-hidden">
-          <h3 className="gray-2">The community builds what it loves.</h3>
-          <h6 className="gray-2">It's better to have hearted and lost than never to have hearted at all</h6>
+          <h4 className="gray-2">Heart this idea and the community will build it</h4>
         </div>
       </div>
-    ];
+      )
   },
 
   renderProductRow() {

@@ -152,10 +152,9 @@ let IdeaShow = React.createClass({
               <div className="mb3 ">
                 <Tile>
                   <div className="p3">
-                    <IdeaSharePanel idea={idea} size="large" message={"asdas"} />
+                    <IdeaSharePanel idea={idea} size="large" />
                   </div>
                 </Tile>
-
               </div>
             </div>
           </div>
