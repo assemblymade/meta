@@ -1,9 +1,13 @@
 .new-nav {
   margin-bottom: 0;
 
-  > .new-nav-item > a {
-    color: $gray-2;
+  > .new-nav-item {
     text-align: center;
+
+    > a {
+      display: block;
+      color: $gray-2;
+    }
   }
 
   > .new-nav-item > a:hover,
@@ -23,9 +27,6 @@
 .new-nav--horizontal {
   > .new-nav-item {
     display: block;
-    > a {
-      display: block;
-    }
   }
 
   > .new-nav-divider {
@@ -36,6 +37,11 @@
 }
 
 .new-nav--stacked {
+  > .new-nav-item {
+    display: block;
+    text-align: left;
+  }
+
   > .new-nav-divider {
     margin-top:    1rem;
     margin-bottom: 1rem;

@@ -2,7 +2,7 @@
 
 If you are following a product, you’ll receive occasional emails with updates from the team.
 
-You can follow 'Everything' to receive notifications (both on the web and occasionally via email) when people are discussing the product or creating new bounties and projects on it.
+You can follow 'Everything' to receive notifications (both on the web and occasionally via email) when people are discussing the product or creating new bounties on it.
 
 If you want to help build a product, start by following 'Everything' and introducing yourself to the team.
 

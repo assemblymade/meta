@@ -29,8 +29,7 @@ doing and how they can help.
 **3. Organize your work**
 
 In addition to starting to build your product, it’s also important to lay out
-your ideas. That means starting discussions, creating bounties and organizing
-them within projects, and posting updates to your product blog.
+your ideas. That means starting discussions, creating bounties, and posting updates to your product blog.
 
 *Tip: Keep your bounties clear, and small in scope. That makes it easy for
 newcomers to know how to get moving.*

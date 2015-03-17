@@ -122,7 +122,7 @@ class Product < ActiveRecord::Base
   scope :with_topic,   -> (topic) { where('topics @> ARRAY[?]::varchar[]', topic) }
   scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
 
-  EXCLUSIONS = %w(admin about script if owner core start-conversation product ideas)
+  EXCLUSIONS = %w(admin about core hello ideas if owner product script start-conversation)
 
   validates :slug, uniqueness: { allow_nil: true },
                    exclusion: { in: EXCLUSIONS }

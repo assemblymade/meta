@@ -33,7 +33,7 @@ module Metrics
           weeks[0].to_s,
         ]
       end
-      [["KPI (Wk ending #{start_at.end_of_week.to_date})", "Wk Total", "Wk Change", "Prev Wk", "4 Wk / 4 Wk average", "8 Wks ago"]] + rows
+      [["KPI (Wk ending #{end_at.to_date})", "Wk Total", "Wk Change", "Prev Wk", "4 Wk / 4 Wk average", "8 Wks ago"]] + rows
     end
 
     def name

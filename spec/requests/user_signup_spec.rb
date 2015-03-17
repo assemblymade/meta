@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe 'User signup' do
+  let!(:kernel) { User.make!(username: 'kernel') }
+
   it 'redirects to the discover page after home page signup' do
     post "/signup", user: { username: 'lumpy', email: 'lumpy@spaceprincesses.com', password: 'whatevers' }
 

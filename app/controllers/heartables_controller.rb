@@ -13,6 +13,8 @@ class HeartablesController < ApplicationController
     p = heart_params
     heartable = p[:type].constantize.find(p[:id])
 
+    previous_hearts = heartable.user.hearts_received
+
     @heart = heartable.hearts.create(user: current_user)
     if @heart.valid?
       TrackInfluenced.perform_async(
@@ -31,13 +33,13 @@ class HeartablesController < ApplicationController
       )
 
       PusherWorker.perform_async(heartable.user.pusher_channel, 'HEART_RECEIVED', {
-          heartsCount: (heartable.user.hearts_received + 1),
+          heartsCount: previous_hearts + 1
         }, socket_id: params[:socket_id])
 
       render json: {
         heartable_id: @heart.heartable_id,
         heartable_type: @heart.heartable_type,
-        hearts_count: @heart.heartable.hearts_count
+        hearts_count: @heart.heartable.hearts_count,
       }
     else
       render status: :unprocessable_entity, json: @heart.errors

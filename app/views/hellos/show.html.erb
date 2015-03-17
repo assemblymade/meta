@@ -1,0 +1,25 @@
+<% title "Hello @#{@user.username}" %>
+
+<%= render 'shared/navbar' %>
+
+<div class="container">
+  <div class="clearfix">
+    <div class="col-8 mx-auto mt2" id="hello-el"></div>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>
+
+<% content_for :javascript do %>
+  <script>
+    var hello = React.createElement(Hello, <%= {
+      user: UserSerializer.new(@user),
+    }.to_json.html_safe %>)
+
+    var discussionElement = React.createElement(Discussion, {
+      newsFeedItem: <%= NewsFeedItemSerializer.new(@news_feed_item).to_json.html_safe %>
+    }, hello)
+
+    React.render(discussionElement, document.getElementById('hello-el'))
+  </script>
+<% end %>

@@ -18,7 +18,7 @@ var Avatar = React.createClass({
   render: function() {
     var size = this.props.size
     return (
-      <Vignette shape="circle" width={size} height={size}>
+      <Vignette shape="circle" width={size} height={size} style={this.props.style}>
         <img className="bg-gray-6"
              src={this.avatarUrl()}
              alt={this.altText()}

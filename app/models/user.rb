@@ -132,7 +132,7 @@ class User < ActiveRecord::Base
       where("lower(name) like :query", query: "%#{query.downcase}%")
     end
 
-    %w(asm-bot maeby).each do |username|
+    %w(asm-bot maeby kernel).each do |username|
       define_method username.underscore.to_sym do
         find_by(username: username).tap do |user|
           raise "You need an #{username} user in your database. Run db:seeds" if user.nil?
@@ -459,6 +459,17 @@ class User < ActiveRecord::Base
     self.marks = new_marks
     self.top_products = []
   end
+
+  # news_feed_item
+
+  def user
+    self # this allows us to use user as the target of an NFI. This is the user signed up NFI
+  end
+
+  def url_params
+    ["hello", self]
+  end
+
 
   private
 

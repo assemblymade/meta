@@ -322,6 +322,15 @@ namespace :metrics do
     puts csv
   end
 
+  task :kpis => :environment do
+    results = Metrics::KPI.weekly_report(2.days.ago)
+    widths = results.first.map(&:size)
+
+    results.each do |row|
+      puts row.map.with_index{|c, i| c.rjust(widths[i] + 2) }.join
+    end
+  end
+
   def pp_csv(csv)
     cols = csv.split("\n").first.split(",")
     csv.split("\n").each{|row| $stderr.puts row.split(',').map.with_index{|col, i| col.ljust([cols[i].size, 7].max + 2) }.join }

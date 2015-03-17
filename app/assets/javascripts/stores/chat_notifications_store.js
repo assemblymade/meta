@@ -138,7 +138,7 @@ var ChatNotificationsStore = _.extend(_store, ReadTimesMixin, {
   }
 });
 
-ChatNotificationsStore.dispatchIndex = Dispatcher.register(function(payload) {
+ChatNotificationsStore.dispatchToken = Dispatcher.register(function(payload) {
   var action = payload.action;
   var data = payload.data;
   var sync = payload.sync;

@@ -95,6 +95,31 @@ class UsersController < ApplicationController
     render nothing: true, status: 204
   end
 
+  def heart_stories
+    set_user
+    query = HeartStoriesQuery.new(@user, params)
+
+    render json: {
+      nfis: ActiveModel::ArraySerializer.new(query.nfis, each_serializer: HeartNFISerializer),
+      comments: ActiveModel::ArraySerializer.new(query.comments, each_serializer: HeartCommentSerializer),
+      users: ActiveModel::ArraySerializer.new(User.find(query.hearter_ids))
+    }
+  end
+
+  def awarded_bounties
+    set_user
+    query = AwardedBountiesQuery.new(@user, params)
+
+    balances = TransactionLogEntry.product_balances(@user)
+
+    render json: {
+      awards: json_array(query.awards),
+      coins: balances,
+      counts: Award.where(winner: current_user).joins(:wip).group(:product_id).count,
+      totals: TransactionLogEntry.where(product_id: balances.keys).group(:product_id).sum(:cents)
+    }
+  end
+
   def search
     users = User.by_partial_match(params[:query]).order(:name)
     suggestions = users.map do |user|

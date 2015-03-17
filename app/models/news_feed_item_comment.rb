@@ -1,5 +1,7 @@
 # TODO: (whatupdave) rename this to just Comment
 class NewsFeedItemComment < ActiveRecord::Base
+  include Kaminari::ActiveRecordModelExtension
+
   belongs_to :news_feed_item, touch: true, counter_cache: :comments_count
   belongs_to :user
 
