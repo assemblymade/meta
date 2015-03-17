@@ -108,7 +108,7 @@ var Heart = React.createClass({
      }
 
      if (!UserStore.isSignedIn()) {
-       return <div className={"gray"}>
+       return <div className={"gray huge-heart"}>
          <SvgIcon type="huge-heart" />
        </div>
      }

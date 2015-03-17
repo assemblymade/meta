@@ -34,10 +34,10 @@ let Idea = React.createClass({
 
     return (
       <div>
-        <div className="py1 px4 mb2" style={{border: 'solid 5px aliceblue'}}>
+        <div className="py1 px4 mb3" style={{border: 'solid 5px aliceblue'}}>
           {this.renderHeader()}
         </div>
-        <div className="p4 py0">
+        <div className="px4 py2">
           <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
           {this.renderAdminRow()}
         </div>

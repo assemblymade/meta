@@ -59,7 +59,7 @@ var ProductStateWidget = React.createClass({
         stage = ''
       }
       return (
-        <li className={active} onClick={this.showStage.bind(null, null, index)} key={index} style={{width: width}}>{stage}</li>
+        <li className={active} key={index} style={{width: width}}>{stage}</li>
       )
     }.bind(this));
     return (
