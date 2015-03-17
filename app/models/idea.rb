@@ -41,8 +41,8 @@ class Idea < ActiveRecord::Base
   scope :with_topic, -> (topic) { where("? = ANY(topics)", topic) }
 
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
-  DEFAULT_TILTING_THRESHOLD = 10
   EPOCH_START = Time.new(2013, 6, 6)
+  DEFAULT_TILTING_THRESHOLD = 10
 
   CATEGORY_NAMES = [
     "Ideas searching for names",
@@ -81,7 +81,9 @@ class Idea < ActiveRecord::Base
 
   def self.create_with_discussion(user, idea_params)
     idea = transaction do
+      puts idea_params
       idea = user.ideas.create(idea_params)
+
       idea.push_to_news_feed
       idea
     end
@@ -163,6 +165,44 @@ class Idea < ActiveRecord::Base
 
   def unhearted(heart)
     decrement_score(heart)
+  end
+
+  def checklist_state
+    checklists = []
+    hearts = {}
+    hearts['title'] = "Get some love"
+    hearts['editable'] = false
+    hearts['state'] = self.love >= DEFAULT_TILTING_THRESHOLD
+    if hearts['state']
+      hearts['smalltext'] = self.love.to_s + " hearts"
+    else
+      hearts['smalltext'] = self.love.to_s + " / "+DEFAULT_TILTING_THRESHOLD.to_s+" hearts"
+    end
+    checklists.append(hearts)
+
+    name = {}
+    name['title'] = "Pick a name"
+    if self.tentative_name
+      name['smalltext'] = self.tentative_name
+      name['state'] = true
+    else
+      name['state'] = false
+      name['smalltext'] = "Unnamed"
+    end
+    name['editable'] = true
+    name['editable_type'] = 'tentative_name'
+    name['editable_button_text'] = "Name it"
+    checklists.append(name)
+
+    comments = {}
+    comments['title'] = "Get feedback"
+    comment_n = self.comments.count
+    comments['state'] = comment_n >= COMMENT_MINIMUM
+    comments['smalltext'] = comment_n.to_s + " comments"
+    comments['editable'] = false
+    checklists.append(comments)
+
+    checklists
   end
 
   def add_score

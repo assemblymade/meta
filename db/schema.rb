@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310212204) do
+ActiveRecord::Schema.define(version: 20150312205251) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "uuid-ossp"
   enable_extension "hstore"
   enable_extension "plpgsql"
   enable_extension "pg_stat_statements"
-  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -128,6 +128,22 @@ ActiveRecord::Schema.define(version: 20150310212204) do
   end
 
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
+
+  create_table "checklist_items", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "state"
+    t.uuid     "user_id"
+    t.uuid     "product_id"
+    t.uuid     "checklist_type_id"
+    t.uuid     "idea_id"
+  end
+
+  create_table "checklist_types", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.uuid   "stage_id"
+  end
 
   create_table "choices", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.float    "value"
@@ -344,6 +360,7 @@ ActiveRecord::Schema.define(version: 20150310212204) do
     t.text     "categories",                     default: [],                                 array: true
     t.datetime "deleted_at"
     t.datetime "last_tweeted_at"
+    t.string   "tentative_name"
   end
 
   add_index "ideas", ["deleted_at"], name: "index_ideas_on_deleted_at", using: :btree
@@ -551,46 +568,6 @@ ActiveRecord::Schema.define(version: 20150310212204) do
     t.datetime "cancelled_at"
   end
 
-  create_table "oauth_access_grants", force: :cascade do |t|
-    t.uuid     "resource_owner_id", null: false
-    t.integer  "application_id",    null: false
-    t.string   "token",             null: false
-    t.integer  "expires_in",        null: false
-    t.text     "redirect_uri",      null: false
-    t.datetime "created_at",        null: false
-    t.datetime "revoked_at"
-    t.string   "scopes"
-  end
-
-  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
-
-  create_table "oauth_access_tokens", force: :cascade do |t|
-    t.uuid     "resource_owner_id"
-    t.integer  "application_id"
-    t.string   "token",             null: false
-    t.string   "refresh_token"
-    t.integer  "expires_in"
-    t.datetime "revoked_at"
-    t.datetime "created_at",        null: false
-    t.string   "scopes"
-  end
-
-  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
-  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
-  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
-
-  create_table "oauth_applications", force: :cascade do |t|
-    t.string   "name",                      null: false
-    t.string   "uid",                       null: false
-    t.string   "secret",                    null: false
-    t.text     "redirect_uri",              null: false
-    t.string   "scopes",       default: "", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
-
   create_table "offers", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "bounty_id",  null: false
     t.uuid     "user_id",    null: false
@@ -759,6 +736,7 @@ ActiveRecord::Schema.define(version: 20150310212204) do
     t.text     "asmlytics_key"
     t.integer  "total_visitors",                                default: 0,    null: false
     t.text     "analytics_category"
+    t.uuid     "stage_id"
   end
 
   add_index "products", ["asmlytics_key"], name: "index_products_on_asmlytics_key", unique: true, using: :btree
@@ -767,6 +745,7 @@ ActiveRecord::Schema.define(version: 20150310212204) do
   add_index "products", ["profitable_at"], name: "index_products_on_profitable_at", using: :btree
   add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
+  add_index "products", ["stage_id"], name: "index_products_on_stage_id", using: :btree
   add_index "products", ["started_team_building_at"], name: "index_products_on_started_team_building_at", using: :btree
   add_index "products", ["state"], name: "index_products_on_state", using: :btree
 
@@ -828,6 +807,14 @@ ActiveRecord::Schema.define(version: 20150310212204) do
   end
 
   add_index "showcases", ["ended_at"], name: "index_showcases_on_ended_at", using: :btree
+
+  create_table "stages", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "description"
+    t.integer  "order"
+  end
 
   create_table "status_messages", id: :uuid, force: :cascade do |t|
     t.uuid     "product_id",             null: false
@@ -1265,12 +1252,10 @@ ActiveRecord::Schema.define(version: 20150310212204) do
     t.datetime "created_at"
   end
 
-  add_foreign_key "daily_metrics", "products"
   add_foreign_key "markings", "marks"
   add_foreign_key "monthly_metrics", "products"
   add_foreign_key "news_feed_item_comments", "news_feed_items"
   add_foreign_key "screenshots", "assets"
   add_foreign_key "showcase_entries", "products"
   add_foreign_key "showcase_entries", "showcases"
-  add_foreign_key "weekly_metrics", "products"
 end

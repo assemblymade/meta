@@ -52,7 +52,8 @@ describe('IdeaShow', function() {
       },
       product: {
         url: '/test-idea'
-      }
+      },
+      tentative_name: "unnamed"
     };
 
     it('renders a show page if it gets an idea', function() {

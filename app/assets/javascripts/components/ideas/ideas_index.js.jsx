@@ -61,21 +61,29 @@ let IdeasIndex = React.createClass({
 
     return (
       <main role="main  bg-white">
-
-        <Jumbotron>
-          <h1 className="mt0 mb3 center white">The fast lane for bringing ideas to life</h1>
-          <div className="center">
-            <Button action="/ideas/new">Submit your idea</Button>
+        <div className="subnav bg-white py3 md-show lg-show mb3">
+          <div className="container clearfix">
+            <div className="left">
+              <h3 className="mt2 mb2">
+                What inspires you?
+              </h3>
+              <h4 className="gray-2">The ideas with the most hearts will be built by the community.</h4>
+            </div>
+            <div className="center right py1">
+              <Button type="primary" action={function() { page('/ideas/new'); }}>
+                Start your product idea
+              </Button>
+              <p className="mt2"><a href="/start">Learn more</a></p>
+            </div>
           </div>
-        </Jumbotron>
+        </div>
 
         <section className="tile-grid tile-grid-ideas" key="ideas-grid">
           <div className="container">
             <div className="header">
 
-              <div className="py4">
+              <div className="py3">
                 <Nav>
-
                   <Nav.Item label="Trending" href="/ideas?sort=trending" />
                   <Nav.Item label="New" href="/ideas?sort=newness" />
                   {this.renderMyIdeas()}
@@ -94,6 +102,58 @@ let IdeasIndex = React.createClass({
         </section>
       </main>
     );
+  },
+
+  renderProgress() {
+    return (
+      <ul className="list list-steps hidden-xs hidden-sm">
+        <li className="overlay"></li>
+        <li>
+          <div className="step active">1</div>
+          <div className="body">
+            <a href="/create"><strong>Idea</strong></a>
+            <div className="gray-2">Every great company begins as an Idea.</div>
+          </div>
+        </li>
+        <li>
+          <div className="step">2</div>
+          <div className="body">
+            <strong>Recruit</strong>
+            <div className="gray-2">Find the partners who can help make it real.</div>
+          </div>
+        </li>
+        <li>
+        <div className="step">3</div>
+        <div className="body">
+          <strong>Get Started</strong>
+          <div className="gray-2">Lay the groundwork for a thriving project.</div>
+        </div>
+      </li>
+      <li>
+        <div className="step">4</div>
+        <div className="body">
+          <strong>Build an MVP</strong>
+          <div className="gray-2">Build a minimum viable product.  Create something beautiful.</div>
+        </div>
+      </li>
+      <li>
+        <div className="step">5</div>
+        <div className="body">
+          <strong>Launch</strong>
+          <div className="gray-2">Tell the world about what you've built.</div>
+        </div>
+      </li>
+      <li>
+        <div className="step">6</div>
+        <div className="body">
+          <strong>Grow</strong>
+          <div className="gray-2">Take your product to the next level.  Iterate, improve, and grow.  The world is your oyster</div>
+        </div>
+      </li>
+      <li className="overlay"></li>
+    </ul>
+
+    )
   },
 
   renderHeader() {

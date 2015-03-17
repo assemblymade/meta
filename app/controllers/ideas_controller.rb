@@ -64,6 +64,11 @@ class IdeasController < ProductController
     respond_with({})
   end
 
+  def checklistitems
+    @idea = Idea.find(params[:idea_id])
+    render json: ChecklistHandler.new.checklists(@idea)
+  end
+
   def show
     find_idea!
 
@@ -154,13 +159,16 @@ class IdeasController < ProductController
       :body,
       :flagged_at,
       :founder_preference,
+      :tentative_name,
       :topics => [],
       :categories => [],
-      :mark_names => []
+      :mark_names => [],
+
     ])
   end
 
   def filter_params
     params.permit([:filter, :mark, :sort, :topic, :user])
   end
+
 end

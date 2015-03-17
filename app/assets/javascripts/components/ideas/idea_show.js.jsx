@@ -22,6 +22,9 @@ const SvgIcon = require('../ui/svg_icon.js.jsx');
 const TextPost = require('../ui/text_post.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const UserStore = require('../../stores/user_store');
+const Checklist = require('../checklist.js.jsx');
+const ProductStateIndicator = require('../product_state_indicator.js.jsx');
+const ProductStateWidget = require('../product_state_widget.js.jsx');
 
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
@@ -119,18 +122,19 @@ let IdeaShow = React.createClass({
 
     return (
       <div>
-
         <div className="subnav bg-white py3 md-show lg-show mb3">
           <div className="container clearfix">
             <div className="left">
-              <h4 className="mt2 mb2">
-                Turn ideas into great products with people around the world
-              </h4>
+              <h3 className="mt2 mb2">
+                What inspires you?
+              </h3>
+              <h4 className="gray-2">The ideas with the most hearts will be built by the community.</h4>
             </div>
-            <div className="right py1">
-              <Button action={function() { page('/ideas/new'); }}>
+            <div className="center right py1">
+              <Button type="primary" action={function() { page('/ideas/new'); }}>
                 Start your product idea
               </Button>
+              <p className="mt2"><a href="/start">Learn more</a></p>
             </div>
           </div>
         </div>
@@ -144,56 +148,19 @@ let IdeaShow = React.createClass({
               </Discussion>
             </div>
 
-            <div className="col col-4 px2 mb3">
+            <div className="col col-4 px2">
+              <ProductStateWidget entity={idea} />
 
-              <div className="">
-
+              <div className="mb3 ">
                 <Tile>
                   <div className="p3">
-                    <h6 className="mt0 caps gray-2">Next steps for this idea</h6>
-
-                    <ol className="list-reset">
-                      <li className="py1">
-                        <div className="left mr2 green">
-                          <Icon icon="check" fw={true} />
-                        </div>
-                        Pick a name
-                      </li>
-                      <li className="py1">
-                        <div className="left mr2 gray-2">
-                          <Icon icon="minus" fw={true} />
-                        </div>
-                        Write a small pitch
-                      </li>
-                      <li className="py1">
-                        <div className="left mr2 gray-2">
-                          <Icon icon="minus" fw={true} />
-                        </div>
-                        Create the core team
-                      </li>
-                      <li className="py1">
-                        <div className="left mr2 gray-2">
-                          <Icon icon="minus" fw={true} />
-                        </div>
-                        Get 10 hearts
-                      </li>
-                    </ol>
-
-                    <hr />
-
-                    <Button type="primary" block="true">
-                      <Icon icon="lock" fw="true" />
-                      Setup ownership
-                    </Button>
-
+                    <IdeaSharePanel idea={idea} size="large" message={"asdas"} />
                   </div>
                 </Tile>
-
               </div>
             </div>
           </div>
         </div>
-
       </div>
     );
   },

@@ -107,7 +107,10 @@ var IdeaSharePanel = React.createClass({
   large() {
     return (
       <div>
-        {this.renderText()}
+        <div className="h5">
+          Share this idea to push it to the next level.
+          Community support will make this idea real.
+        </div>
 
         <div className="clearfix" key="share-buttons">
           <div className="left" key="social-buttons">
@@ -141,21 +144,6 @@ var IdeaSharePanel = React.createClass({
     return this[this.props.size]();
   },
 
-  renderText() {
-    var idea = this.props.idea;
-
-    return <div>
-      <h5 className="mb1 mt1 gray-2">
-        We're almost there! Tell your friends to help this idea be
-        fast-tracked next Wednesday.
-      </h5>
-
-      <p className="gray-2">
-        Every Wednesday we fast-track the most loved ideas on Assembly.
-        That idea then spends the next week being built into a <abbr title="Minimum Viable Product">MVP</abbr> by the community.
-      </p>
-    </div>
-  },
 
   shortUrl() {
     var idea = this.props.idea;

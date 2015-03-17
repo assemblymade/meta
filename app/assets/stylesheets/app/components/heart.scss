@@ -3,3 +3,22 @@
     fill:$red;
   }
 }
+
+.huge-heart.hover-red:hover {
+  .svg-icon-huge-heart .path1, .svg-icon-huge-heart .path2 {
+    fill:$red;
+  }
+}
+
+.huge-heart {
+  .svg-icon-huge-heart .path1, .svg-icon-huge-heart .path2 {
+    fill:$gray-3;
+  }
+}
+
+
+.huge-heart.red {
+  .svg-icon-huge-heart .path1, .svg-icon-huge-heart .path2 {
+    fill:$red;
+  }
+}
