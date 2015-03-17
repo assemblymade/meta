@@ -125,14 +125,16 @@ let IdeaShow = React.createClass({
         <div className="subnav bg-white py3 md-show lg-show mb3">
           <div className="container clearfix">
             <div className="left">
-              <h4 className="mt1 mb1">
-                Propose something amazing.
-              </h4>
+              <h3 className="mt2 mb2">
+                What inspires you?
+              </h3>
+              <h4 className="gray-2">The ideas with the most hearts will be built by the community.</h4>
             </div>
-            <div className="right py1">
-              <Button action={function() { page('/ideas/new'); }}>
+            <div className="center right py1">
+              <Button type="primary" action={function() { page('/ideas/new'); }}>
                 Start your product idea
               </Button>
+              <p className="mt2"><a href="/start">Learn more</a></p>
             </div>
           </div>
         </div>
@@ -149,33 +151,11 @@ let IdeaShow = React.createClass({
             <div className="col col-4 px2">
               <ProductStateWidget entity={idea} />
 
-              <div className="mb3">
+              <div className="mb3 ">
                 <Tile>
-                  <Drawer open={this.state.heart.user_heart}>
-                    <div className="p3 bg-gray-6 border-top border-gray-5">
-                      <div className="h6 center gray-2">
-                        Spread this idea to help it become reality
-                      </div>
-
-                      <ul className="h3 list-reset clearfix mxn1 mb0">
-                        <li className="left p1">
-                          <a className="gray-3 gray-2-hover bold clickable" onClick={this.handleTwitterClick}>
-                            <Icon icon="twitter" />
-                          </a>
-                        </li>
-                        <li className="left p1">
-                          <a className="gray-3 gray-2-hover bold" href="#" onClick={this.handleFacebookClick}><Icon icon="facebook" /></a>
-                        </li>
-                        <li className="left p1">
-                          <a className="gray-3 gray-2-hover bold" href={this.mailToLink()}>
-                            <Icon icon="envelope" />
-                          </a>
-                        </li>
-                      </ul>
-
-                    </div>
-                  </Drawer>
-
+                  <div className="p3">
+                    <IdeaSharePanel idea={idea} size="large" message={"asdas"} />
+                  </div>
                 </Tile>
               </div>
             </div>

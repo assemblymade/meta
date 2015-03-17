@@ -87,52 +87,26 @@ let Idea = React.createClass({
     );
   },
 
-  getInitialState() {
-    return {
-      isShareDrawerOpen: false
-    }
-  },
-
-  handleHeartClick() {
-    this.setState({
-      isShareDrawerOpen: true
-    })
-  },
-
   renderHeader() {
     var idea = this.props.idea;
     var shareMessage = 'We need help with ' + idea.name + '! via @asm';
     return [
-      <div className="clearfix mb2" key="heart-and-idea">
-        <h4 className="gray-2">The community builds what it loves.</h4>
-        <br/>
-        <div className="left p2 mr1" onClick={this.handleHeartClick}>
+      <div className="clearfix border-bottom mb1">
+        <div className="right ml1 center">
           <Heart
             size="huge"
             heartable_id={idea.news_feed_item.id}
             heartable_type="NewsFeedItem" />
-        </div>
-        <div className="overflow-hidden">
-          <div className="col col-12">
-            {this.renderHeartsToGo()}
-            <small className="left gray-2 bold mt1 mb1">
+          <p>
+            <small className="gray-2 bold mt1 px2">
               {idea.hearts_count} / {idea.tilting_threshold} hearts
             </small>
-          </div>
-          <div className="clearfix mt3 mb1 py1">
-            <div className="col col-12">
-              <IdeaProgressBar idea={idea} />
-            </div>
-          </div>
+          </p>
         </div>
-        <div className="clearfix p2 px3">
-          <Drawer open={this.state.isShareDrawerOpen}>
-            <IdeaSharePanel idea={idea} size="large" message={shareMessage} />
-            <hr className="mb0" />
-          </Drawer>
+        <div className="overflow-hidden">
+          <h4 className="gray-2">The community builds what it loves.</h4>
         </div>
-      </div>,
-      idea.product ? this.renderProductRow() : null
+      </div>
     ];
   },
 
@@ -142,8 +116,8 @@ let Idea = React.createClass({
 
     if (!_.isNull(product)) {
       return (
-        <div className="mt4">
-          <h6 className="mb2 center purple">Development of this idea has already started:</h6>
+        <div className="mt1 mb1">
+          <h6 className="mb1 center purple">Development of this idea has already started:</h6>
           <a className="block border rounded p2 mxn2 border-gray-5-hover shadow-hover" href={product.url}>
             <div className="left mr2">
               <AppIcon app={product} size={48} />

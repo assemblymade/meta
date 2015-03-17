@@ -66,7 +66,10 @@ var ProductStateWidget = React.createClass({
     return (
       <div className="product-state-indicator">
         <div className="p2 pt3">
-          <div className="stateName center"><strong>{this.state.stages[this.state.activeStage]['name']}</strong></div>
+          <div className="stateName center"><strong>{this.state.stages[this.state.activeStage]['name']}</strong>
+            <small className="center gray-2 ml2">Stage {this.state.activeStage+1} out of {this.state.stages.length}</small>
+          </div>
+
         </div>
         <div className="col-sm-12">
           <ul className="indicator-container mb3">
