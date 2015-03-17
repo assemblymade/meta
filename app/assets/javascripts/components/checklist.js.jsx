@@ -75,7 +75,7 @@ sendUpdate: function(editable_type, path) {
     var currentUser = UserStore.getUser();
     if(currentUser) {
       var isOwner = (currentUser.id === this.props.entity.user.id)
-      if (this.props.locked) {
+      if (this.props.locked || !isOwner) {
         var buttonAction = null
       } else {
         var buttonAction = function () {

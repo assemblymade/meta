@@ -90,6 +90,17 @@ var Heart = React.createClass({
   },
 
   renderHuge: function() {
+
+    var classes = React.addons.classSet({
+      'huge-heart': true,
+      'action-icon': true,
+      'hover-red': UserStore.isSignedIn(),
+      gray: !this.state.user_heart,
+      'inline-block': true,
+      red: this.state.user_heart,
+      'pointer': true
+    });
+
      var heartsCount = this.state.hearts_count;
      // Dammit, JavaScript
      if (heartsCount == null) {
@@ -97,14 +108,14 @@ var Heart = React.createClass({
      }
 
      if (!UserStore.isSignedIn()) {
-       return <div className={"heart-circle heart-circle-green"}>
-         <SvgIcon type="heart" />
+       return <div className={"gray"}>
+         <SvgIcon type="huge-heart" />
        </div>
      }
 
      return (
-       <div className={"pointer heart-circle heart-circle-" + (this.state.user_heart ? 'white' : 'green')} onClick={this.handleClick}>
-         <SvgIcon type="heart" />
+       <div className={classes} onClick={this.handleClick}>
+         <SvgIcon type="huge-heart" />
        </div>
      );
    },
