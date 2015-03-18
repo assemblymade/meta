@@ -1,4 +1,5 @@
 require 'timed_set'
+require 'csv'
 
 class ProductsController < ProductController
   respond_to :html, :json
@@ -28,7 +29,18 @@ class ProductsController < ProductController
   end
 
   def checklistitem
-    
+  end
+
+  def ownership
+    find_product!
+    ownership = CsvCompiler.new.get_product_partner_breakdown(@product)
+
+    csv_file = CSV.generate({}) do |csv|
+      ownership.each do |a|
+        csv << a
+      end
+    end
+    send_data csv_file, :type => 'text/csv'
   end
 
   def create

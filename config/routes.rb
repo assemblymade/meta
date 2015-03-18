@@ -305,6 +305,7 @@ ASM::Application.routes.draw do
     post 'unfollow'
 
     get '/checklistitems' => 'products#checklistitems'
+    get '/ownership' => 'products#ownership'
 
     get 'log' => 'stakes#show'
     get 'search' => 'search#index'
