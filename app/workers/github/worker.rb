@@ -58,7 +58,7 @@ module Github
         req.body = body.to_json
       end
 
-      log = ['  ', method, url, body.inspect, "[#{resp.status}]"]
+      log = ['  ', method, url, body.inspect, "[#{resp.status}]", "X-RateLimit-Remaining: #{resp.headers['X-RateLimit-Remaining']}"]
       if !resp.success?
         log << resp.body.inspect
       end

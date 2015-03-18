@@ -51,6 +51,7 @@ module ASM
 
     console do
       require 'console_helpers'
+      require 'string_colors'
       Rails::ConsoleMethods.send :include, ASM::Console
     end
 
