@@ -108,7 +108,7 @@ let Bounty = React.createClass({
     if (this.props.showCoins) {
       valuation = (
         <div className="left px3 py2 border-right border-gray-5">
-          <BountyValuation {...bounty} {...this.props.valuation} />
+          <BountyValuation {...bounty} {...this.props.valuation} allowEditing={currentUser && currentUser.is_core} />
         </div>
       )
     }

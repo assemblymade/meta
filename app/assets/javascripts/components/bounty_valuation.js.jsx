@@ -30,15 +30,26 @@
     },
 
     render: function() {
+      var chevron
+      var toggle
+
+      if (this.props.allowEditing) {
+        chevron = (
+          <div className="left yellow ml1">
+            <Icon icon="chevron-down" />
+          </div>
+        )
+
+        toggle = this.toggle
+      }
+
       return (
         <div className="clearfix">
-          <a className="block left clearfix" href="#" id="bounty-amount-link" onClick={this.toggle}>
+          <a className="block left clearfix" href="#" id="bounty-amount-link" onClick={toggle}>
             <div className="left">
               <AppCoins n={this.props.earnable_coins_cache} />
             </div>
-            <div className="left yellow ml1">
-              <Icon icon="chevron-down" />
-            </div>
+            {chevron}
           </a>
 
           <a className="block right ml2 gray-4 gray-2-hover" href="/help/revenue">
