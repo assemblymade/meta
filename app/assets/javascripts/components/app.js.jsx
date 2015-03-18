@@ -8,6 +8,7 @@ var Label = require('./ui/label.js.jsx')
 // root level components
 window.Hello = require('./user/hello.js.jsx')
 window.ProfileProductBadges = require('./user/profile_product_badges.js.jsx')
+window.StartPage = require('./start_page.js.jsx')
 window.UserProfile = require('./user/user_profile.js.jsx')
 
 var App = React.createClass({

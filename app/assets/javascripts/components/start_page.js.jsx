@@ -400,4 +400,4 @@ var StartPage = React.createClass({
   }
 });
 
-module.exports = window.StartPage = StartPage;
+module.exports = StartPage;
