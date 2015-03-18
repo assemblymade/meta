@@ -1,9 +1,10 @@
 require 'timed_set'
+require 'csv'
 
 class ProductsController < ProductController
   respond_to :html, :json
 
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :follow, :unfollow, :announcements, :welcome]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :follow, :unfollow, :announcements, :welcome, :ownership]
   before_action :set_product,
     only: [:show, :activity, :old, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
@@ -28,7 +29,18 @@ class ProductsController < ProductController
   end
 
   def checklistitem
-    
+  end
+
+  def ownership
+    find_product!
+    ownership = CsvCompiler.new.get_product_partner_breakdown(@product)
+
+    csv_file = CSV.generate({}) do |csv|
+      ownership.each do |a|
+        csv << a
+      end
+    end
+    send_data csv_file, :type => 'text/csv'
   end
 
   def create
