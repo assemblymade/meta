@@ -45,12 +45,14 @@ const TextPost = React.createClass({
 
     return (
       <div className="visible-hover-wrapper">
-        <div className="clearfix gray-2 mb3">
-          <div className="left mr1">
-            <User user={author} />
-          </div>
-          {' '}
-          {author.username}
+        <div className="clearfix gray-2 mb3 h6">
+          <a className="gray-2 black-hover" href={author.url} title={author.username}>
+            <div className="left mr1">
+              <Avatar user={author} size={18} />
+            </div>
+            {' '}
+            {author.username}
+          </a>
           {' '}
           <span className="visible-hover">posted {moment(this.props.timestamp).fromNow()}</span>
         </div>
