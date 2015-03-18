@@ -4,7 +4,7 @@ require 'csv'
 class ProductsController < ProductController
   respond_to :html, :json
 
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :follow, :unfollow, :announcements, :welcome, :ownership]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :follow, :unfollow, :announcements, :welcome]
   before_action :set_product,
     only: [:show, :activity, :old, :edit, :update, :follow, :announcements, :unfollow, :metrics, :flag, :feature, :launch]
 
