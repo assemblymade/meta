@@ -39,7 +39,7 @@ class SingleSignOnController < ApplicationController
   end
 
   def extract_user
-    User.find(decode_payload["uid"][0])
+    User.find_by(authentication_token: decode_payload["uid"][0]))
   end
 
   def sign(payload)

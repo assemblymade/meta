@@ -9,7 +9,11 @@ class User < ActiveRecord::Base
 
   LEADER_TIME_SPAN = 7.days
 
-  attr_encryptor :wallet_private_key, :key => ENV["USER_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
+  attr_encryptor :wallet_private_key,
+    :key => ENV["USER_ENCRYPTION_KEY"],
+    :encode => true,
+    :mode => :per_attribute_iv_and_salt,
+    :unless => Rails.env.test?
 
   belongs_to :user_cluster
   has_many :leader_positions
