@@ -168,7 +168,7 @@ let IdeaStartConversation = React.createClass({
 
     this.setState({
       question: question,
-      showWarning: question.indexOf('?') < 0
+      showWarning: false
     });
   }
 });

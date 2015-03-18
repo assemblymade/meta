@@ -22,7 +22,11 @@
             <p class="h6 gray-2">
               A name is important, but it can always change. If you have a codename already, use that, otherwise don't get too hung up on making it perfect.
             </p>
-            <%= f.text_field :name, class: 'form-control', autofocus: true %>
+            <% if params[:name] %>
+            <%= f.text_field :name, class: 'form-control', autofocus: true, value: params[:name] %>
+            <% else %>
+              <%= f.text_field :name, class: 'form-control', autofocus: true %>
+            <% end %>
           <% end %>
 
           <%= form_group @product, :pitch, class: 'mb3' do %>

@@ -61,6 +61,7 @@ ASM::Application.routes.draw do
     get '/admin', on: :member, action: :admin
     patch '/admin', on: :member, action: :admin_update
     patch :mark
+    get '/checklistitems' => 'ideas#checklistitems'
   end
 
   devise_for :users,
@@ -252,6 +253,7 @@ ASM::Application.routes.draw do
 
       # deprecate (launchpad)
       resources :potential_users, controller: 'subscribers', only: [:create, :destroy]
+
     end
 
     resources :textcompletes, only: [:index]
@@ -298,6 +300,8 @@ ASM::Application.routes.draw do
     post 'follow'
     post 'announcements'
     post 'unfollow'
+
+    get '/checklistitems' => 'products#checklistitems'
 
     get 'log' => 'stakes#show'
     get 'search' => 'search#index'

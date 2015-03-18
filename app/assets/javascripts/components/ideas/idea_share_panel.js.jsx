@@ -37,7 +37,7 @@ var IdeaSharePanel = React.createClass({
         setTimeout(function() {
           self.setState({
             copyIcon: 'link',
-            copyText: self.shortUrl().substr(0, 35) + '...'
+            copyText: self.shortUrl().substr(0, 120) + '...'
           });
         }, 1500);
       });
@@ -54,7 +54,7 @@ var IdeaSharePanel = React.createClass({
   getInitialState() {
     return {
       copyIcon: 'link',
-      copyText: this.shortUrl().substr(0, 30) + '...',
+      copyText: this.shortUrl().substr(0, 120) + '...',
       shortUrl: this.shortUrl()
     };
   },
@@ -107,23 +107,26 @@ var IdeaSharePanel = React.createClass({
   large() {
     return (
       <div>
-        {this.renderText()}
+        <div className="h5 gray-2 p1">
+          Share this idea to push it to the next level.
+          Community support will make this idea real.
+        </div>
 
         <div className="clearfix" key="share-buttons">
           <div className="left" key="social-buttons">
-            <a href="javascript:void(0);" className="mr1" onClick={this.handleTwitterClick} key="twitter-button">
-              <CircleIcon icon="twitter" margin={5} />
-              <span className="bold" style={{ color: '#4099FF' }}>Tweet</span>
+            <a href="javascript:void(0);" className="mr1 gray-2" onClick={this.handleTwitterClick} key="twitter-button">
+              <Icon icon="twitter" fw={true} />
+              <span className="gray-2">Tweet</span>
             </a>
 
-            <a href="javascript:void(0);" className="mr1" onClick={this.handleFacebookClick} key="facebook-button">
-              <CircleIcon icon="facebook" margin={5} />
-              <span className="bold" style={{ color: '#3b5998' }}>Share</span>
+            <a href="javascript:void(0);" className="mr1 gray-2" onClick={this.handleFacebookClick} key="facebook-button">
+              <Icon icon="facebook" fw={true} />
+              <span className="gray-2">Share</span>
             </a>
 
-            <a href="javascript:void(0);" className="mr1" onClick={this.handleGooglePlusClick} key="google-button">
-              <CircleIcon icon="google-plus" margin={5} />
-              <span className="bold" style={{ color: '#d34836' }}>Plus</span>
+            <a href="javascript:void(0);" className="mr1 gray-2" onClick={this.handleGooglePlusClick} key="google-button">
+              <Icon icon="google-plus" fw={true} />
+              <span className="gray-2">Plus</span>
             </a>
           </div>
 
@@ -141,21 +144,6 @@ var IdeaSharePanel = React.createClass({
     return this[this.props.size]();
   },
 
-  renderText() {
-    var idea = this.props.idea;
-
-    return <div>
-      <h5 className="mb1 mt1 gray-2">
-        We're almost there! Tell your friends to help this idea be
-        fast-tracked next Wednesday.
-      </h5>
-
-      <p className="gray-2">
-        Every Wednesday we fast-track the most loved ideas on Assembly.
-        That idea then spends the next week being built into a <abbr title="Minimum Viable Product">MVP</abbr> by the community.
-      </p>
-    </div>
-  },
 
   shortUrl() {
     var idea = this.props.idea;

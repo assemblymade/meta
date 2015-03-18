@@ -41,9 +41,11 @@ var IconWithNumber = React.createClass({
       icon = this.props.icon
     }
 
+  
     return (
       <div>{icon} {label}</div>
     )
+
   }
 })
 

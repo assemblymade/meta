@@ -24,7 +24,6 @@ class Product < ActiveRecord::Base
   belongs_to :user
   belongs_to :evaluator, class_name: 'User'
   belongs_to :main_thread, class_name: 'Discussion'
-
   belongs_to :logo, class_name: 'Asset', foreign_key: 'logo_id'
 
   has_one :product_trend
@@ -62,6 +61,7 @@ class Product < ActiveRecord::Base
   has_many :showcase_entries
   has_many :showcases, through: :showcase_entries
   has_many :status_messages
+
   has_many :stream_events
   has_many :subscribers
   has_many :tasks
@@ -249,7 +249,6 @@ class Product < ActiveRecord::Base
       greenlit_at: nil,
       profitable_at: nil
     )
-
   end
 
   def on_team_building_entry(prev_state, event, *args)
