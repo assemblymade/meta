@@ -37,10 +37,11 @@ class HeartsReceivedStore extends Store {
         case ActionTypes.HEARTS_STORIES_RECEIVE:
           Dispatcher.waitFor([PeopleStore.dispatchToken])
           var newStories = Immutable.List(action.nfis).concat(action.comments).sortBy(s => -moment(s.last_hearted_at).unix())
-          stories = stories || Immutable.List()
-          stories = stories.concat(newStories)
+
+          stories = stories || Immutable.OrderedMap()
+          newStories.map(s => { stories = stories.set(s.id, s) })
           moreStoriesAvailable = newStories.size > 1
-          heartsByDay = stories.groupBy(s => moment(s.last_hearted_at).format('YYDDD'))
+          heartsByDay = stories.valueSeq().groupBy(s => moment(s.last_hearted_at).format('YYDDD'))
           break
 
         case ActionTypes.HEARTS_ACKNOWLEDGED:

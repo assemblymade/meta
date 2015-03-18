@@ -17,7 +17,7 @@ module.exports = React.createClass({
 
   getInitialState() {
     return _.extend({
-      page: 0,
+      page: 1,
       more: true,
       loading: true
     }, this.getStateFromStores())
@@ -126,7 +126,7 @@ module.exports = React.createClass({
 
   componentDidMount() {
     HeartsReceivedStore.addChangeListener(this._onChange)
-    this.fetchFeedPage(0)
+    this.fetchFeedPage(1)
     window.addEventListener('scroll', this.onScroll);
   },
 
