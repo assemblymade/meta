@@ -46,14 +46,14 @@ var StartPage = React.createClass({
               <div className="step">3</div>
               <div className="body px1">
                 <strong>Lay the foundation</strong>
-                <div className="gray-2">First steps to making something amazing.</div>
+                <div className="gray-2">First steps: making an idea real</div>
               </div>
             </li>
             <li>
               <div className="step">4</div>
               <div className="body px1">
                 <strong>Build a product</strong>
-                <div className="gray-2">Create something beautiful.</div>
+                <div className="gray-2">Create something beautiful. Manage progress across your team.</div>
               </div>
             </li>
             <li>

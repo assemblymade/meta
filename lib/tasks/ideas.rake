@@ -72,10 +72,13 @@ namespace :ideas do
   end
 
   task unmigrate_products: :environment do
-    Idea.where.not(product_id: nil).each do |idea|
-      idea.news_feed_item.hearts.each(&:delete)
-      idea.news_feed_item.delete
-      idea.delete
+    Idea.find_each do |idea|
+      if (idea.product_id != nil) || idea.news_feed_item.comments.count == 0
+        idea.news_feed_item.hearts.each(&:delete)
+        idea.news_feed_item.comments.delete_all
+        idea.news_feed_item.delete
+        idea.delete
+      end
     end
   end
 

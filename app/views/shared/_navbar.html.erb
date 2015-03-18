@@ -23,11 +23,9 @@
           <a href="<%= discover_path %>">Products</a>
         </li>
 
-        <% if current_user.try(:staff?) %>
-          <li class="<%= nav_active_class(:ideas) %>">
-            <a href="<%= ideas_path %>">Ideas</a>
-          </li>
-        <% end %>
+        <li class="<%= nav_active_class(:ideas) %>">
+          <a href="<%= ideas_path %>">Ideas</a>
+        </li>
 
         <% if user_signed_in? %>
 
