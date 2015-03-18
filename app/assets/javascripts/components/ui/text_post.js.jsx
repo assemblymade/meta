@@ -1,3 +1,5 @@
+'use strict'
+
 const _ = require('underscore')
 const moment  = require('moment')
 const Markdown  = require('../markdown.js.jsx')
@@ -22,7 +24,8 @@ const TextPost = React.createClass({
   },
 
   render: function() {
-    var body, labels
+    let body, labels
+    let author = this.props.author
 
     if (this.props.body) {
       body = <Markdown content={this.props.body} normalized="true" />
@@ -42,12 +45,14 @@ const TextPost = React.createClass({
 
     return (
       <div className="visible-hover-wrapper">
-        <div className="clearfix mb3">
+        <div className="clearfix gray-2 mb3">
           <div className="left mr1">
-            <User user={this.props.author} />
+            <User user={author} />
           </div>
           {' '}
-          <span className="gray-2 visible-hover">posted {moment(this.props.timestamp).fromNow()}</span>
+          {author.username}
+          {' '}
+          <span className="visible-hover">posted {moment(this.props.timestamp).fromNow()}</span>
         </div>
 
         <h2 className="mt0 mb2" style={{ lineHeight: '36px' }}>
