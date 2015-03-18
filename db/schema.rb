@@ -1260,5 +1260,4 @@ ActiveRecord::Schema.define(version: 20150317225633) do
   add_foreign_key "screenshots", "assets"
   add_foreign_key "showcase_entries", "products"
   add_foreign_key "showcase_entries", "showcases"
-  add_foreign_key "weekly_metrics", "products"
 end

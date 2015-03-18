@@ -11,7 +11,7 @@ const CustomIcons = [
   'wallet',
   'logout',
   'field-guide'
-]
+];
 
 const Icon = React.createClass({
   propTypes: {

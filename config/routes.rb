@@ -29,6 +29,9 @@ ASM::Application.routes.draw do
   # Internal
   get '/playground/:action', controller: 'playground'
 
+  # Single sign-on
+  get '/sso' => 'single_sign_on#sso'
+
   # Legacy
   get '/discover/blog', to: redirect('/discover/updates')
   get '/explore', to: redirect('/discover')
