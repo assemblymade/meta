@@ -59,7 +59,7 @@ module.exports = React.createClass({
       }
 
       return <div>{heading}{this.renderStory(s, heading != null)}</div>
-    })
+    }).toJS()
 
     return <div>{stories}</div>
   },
@@ -173,7 +173,6 @@ module.exports = React.createClass({
     var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 200
 
     if (atBottom) {
-      console.log(this.state.page + 1)
       this.setState({page: this.state.page + 1})
     }
   },
