@@ -118,8 +118,7 @@ let IdeaShow = React.createClass({
 
     // Discussion expects the NFI to have a url
     nfi.url = idea.url;
-    var currentUser = UserStore.getUser();
-    var isOwner = (currentUser.id === idea.user.id)
+
     return (
       <div>
         <div className="subnav bg-white py3 md-show lg-show mb3">

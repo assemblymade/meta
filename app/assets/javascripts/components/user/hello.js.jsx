@@ -1,5 +1,7 @@
-var Avatar = require('../ui/avatar.js.jsx')
-var Markdown = require('../markdown.js.jsx')
+'use strict';
+
+const Avatar = require('../ui/avatar.js.jsx')
+const Markdown = require('../markdown.js.jsx')
 
 module.exports = React.createClass({
   displayName: 'Hello',

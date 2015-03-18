@@ -100,13 +100,14 @@ sendUpdate: function(editable_type, path) {
           <div className="center mb2">
             <Button>Start Recruiting</Button>
           </div>
-        )
+        );
       }
   },
 
   renderChecklistItemsNew: function() {
     var currentUser = UserStore.getUser();
-    var isOwner = (currentUser.id === this.props.entity.user.id);
+    var isOwner = currentUser && currentUser.id === this.props.entity.user.id;
+
     return (
       _.map(this.props.checklistItems, function(item, index) {
         if (item.complete && !this.props.locked) {

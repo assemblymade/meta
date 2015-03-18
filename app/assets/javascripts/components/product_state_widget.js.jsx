@@ -1,12 +1,12 @@
 'use strict';
+
 const ChecklistStore = require('../stores/checklist_store');
 const ChecklistActions = require('../actions/checklist_actions');
 const Button = require('./ui/button.js.jsx');
 const Tile = require('./ui/tile.js.jsx');
 const Checklist = require('./checklist.js.jsx');
 
-var ProductStateWidget = React.createClass({
-
+const ProductStateWidget = React.createClass({
   propTypes: {
     entity: React.PropTypes.object.isRequired
   },
@@ -21,7 +21,7 @@ var ProductStateWidget = React.createClass({
   },
 
   getStateFromStore: function() {
-    var data = ChecklistStore.fetchChecklistItems();
+    let data = ChecklistStore.fetchChecklistItems();
     this.setState({
       checklist_data: data,
       currentStage: data.current_stage,
@@ -51,17 +51,18 @@ var ProductStateWidget = React.createClass({
   },
 
   renderStages: function() {
-    var activeStage = this.state.activeStage
-    var width = (100 / this.state.stages.length) + '%'
-    var stages = this.state.stages.map(function(stage, index) {
-      var active = index <= this.state.activeStage ? 'active' : ''
+    let activeStage = this.state.activeStage
+    let width = (100 / this.state.stages.length) + '%'
+    let stages = this.state.stages.map((stage, index) => {
+      let active = index <= this.state.activeStage ? 'active' : ''
       if (true) {
         stage = ''
       }
       return (
         <li className={active} key={index} style={{width: width}}>{stage}</li>
       )
-    }.bind(this));
+    });
+
     return (
       <div className="product-state-indicator">
         <div className="p2 pt0">
@@ -80,18 +81,24 @@ var ProductStateWidget = React.createClass({
 
   render: function() {
 
-    var activeChecklist = this.state.stages[this.state.activeStage];
-    var complete = activeChecklist.can_progress;
-    var b = this.state.buttonTexts[this.state.activeStage];
+    let activeChecklist = this.state.stages[this.state.activeStage];
+    let complete = activeChecklist.can_progress;
+    let b = this.state.buttonTexts[this.state.activeStage];
     return (
       <Tile>
         <div className="p3">
           {this.renderStages()}
-          <Checklist entity_type={"Idea"} entity={this.props.entity} checklistItems={activeChecklist.items} locked={(this.state.activeStage > this.state.currentStage)} complete={complete} buttonText={b} />
+          <Checklist
+            entity_type={"Idea"}
+            entity={this.props.entity}
+            checklistItems={activeChecklist.items}
+            locked={this.state.activeStage > this.state.currentStage} 
+            complete={complete}
+            buttonText={b} />
         </div>
       </Tile>
-    )
+    );
   }
-})
+});
 
 module.exports = ProductStateWidget
