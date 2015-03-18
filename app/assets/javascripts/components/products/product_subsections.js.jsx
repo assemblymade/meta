@@ -59,11 +59,11 @@ let ProductSubsections = React.createClass({
         }
 
         renderedSubsections.push(
-          <div className="clearfix mxn2 mb3" key={leftHeading + '-' + i}>
-            <div className="col col-6 px2">
+          <div className="clearfix mxn2" key={leftHeading + '-' + i}>
+            <div className="sm-col sm-col-6 px2 mb2">
               {renderedLeft}
             </div>
-            <div className="col col-6 px2">
+            <div className="sm-col sm-col-6 px2 mb2">
               {renderedRight}
             </div>
           </div>

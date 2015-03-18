@@ -70,44 +70,31 @@ let ProductSubsection = React.createClass({
     return (
       <div className="hover-toggle-wrapper">
         <div className="clearfix">
-          <div className="right">
-            <div className="clearfix">
-              <div className="left mr2">
-                {this.renderRemoveButton()}
-              </div>
-
-              <div className="right">
-                {this.renderEditButton()}
-              </div>
-            </div>
-          </div>
-
-          <div className="left">
-            <h5 className="mt0 mb0">{title}</h5>
-          </div>
+          <h5 className="mt0 mb0">{title}</h5>
         </div>
         <Markdown content={body} normalized={true} />
+
+          {this.renderAdminControls()}
       </div>
     );
   },
 
 
-  renderEditButton() {
+  renderAdminControls() {
     if (ProductStore.isCoreTeam(UserStore.getUser())) {
       return (
-        <a className="gray-1 hover-toggle-target" href="javascript:void(0);" onClick={this.handleEditClick}>
-          <Icon icon="pencil" />
-        </a>
-      );
-    }
-  },
-
-  renderRemoveButton() {
-    if (ProductStore.isCoreTeam(UserStore.getUser())) {
-      return (
-        <a className="gray-1 hover-toggle-target right" href="javascript:void(0);" onClick={this.handleRemoveClick}>
-          <Icon icon="close" />
-        </a>
+        <ul className="list-reset py1 mxn1 h6">
+          <li className="left">
+            <a className="px1" href="javascript:void(0);" onClick={this.handleEditClick}>
+              <Icon icon="pencil" /> Edit
+            </a>
+          </li>
+          <li className="left">
+            <a className="px1" href="javascript:void(0);" onClick={this.handleRemoveClick}>
+              <Icon icon="trash" /> Delete
+            </a>
+          </li>
+        </ul>
       );
     }
   }
