@@ -20,6 +20,7 @@ class ChatRoomsController < ApplicationController
   end
 
   def show
+    @debug = params[:debug] == 'true'
     @chat_room = ChatRoom.find_by!(slug: params[:id])
 
     @default_users = []
