@@ -16,8 +16,8 @@ module.exports = React.createClass({
 
   render() {
     let cs = classnames('block py1', {
-      'gray-2 gray-2-focus black-hover': !this.state.following,
-      'green green-hover green-focus': this.state.following
+      'blue blue-focus black-hover': !this.state.following,
+      'gray-3 gray-3-hover gray-3-focus': this.state.following
     })
 
     return (
