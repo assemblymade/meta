@@ -126,12 +126,12 @@ let IdeaShow = React.createClass({
           <div className="container clearfix">
             <div className="left">
               <h3 className="mt2 mb1">
-                What inspires you?
+                Turn ideas into great products
               </h3>
               <h4 className="mt0 mb0 regular gray-2">The ideas with the most hearts will be built by the community.</h4>
             </div>
             <div className="center right py1">
-              <Button type={isOwner ? "default" : "primary"} action={function() { page('/ideas/new'); }}>
+              <Button type={"default"} action={function() { page('/ideas/new'); }}>
                 Start your product idea
               </Button>
               <p className="mt2"><a href="/start">Learn more</a></p>
@@ -149,13 +149,6 @@ let IdeaShow = React.createClass({
             </div>
             <div className="col col-4 px2 mb2">
               <ProductStateWidget entity={idea} />
-            </div>
-            <div className="col col-4 px2">
-              <Tile>
-                <div className="p3">
-                  <IdeaSharePanel idea={idea} size="large" />
-                </div>
-              </Tile>
             </div>
           </div>
         </div>

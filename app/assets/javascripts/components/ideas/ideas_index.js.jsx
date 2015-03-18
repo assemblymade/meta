@@ -65,7 +65,7 @@ let IdeasIndex = React.createClass({
           <div className="container clearfix">
             <div className="left">
               <h3 className="mt2 mb1">
-                What inspires you?
+                Turn ideas into great products
               </h3>
               <h4 className="mt0 mb0 regular gray-2">The ideas with the most hearts will be built by the community.</h4>
             </div>
