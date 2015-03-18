@@ -79,13 +79,15 @@ var ProductStateWidget = React.createClass({
   },
 
   render: function() {
+
     var activeChecklist = this.state.stages[this.state.activeStage];
+    var complete = activeChecklist.can_progress;
     var b = this.state.buttonTexts[this.state.activeStage];
     return (
       <Tile>
         <div className="p3">
           {this.renderStages()}
-          <Checklist entity_type={"Idea"} entity={this.props.entity} checklistItems={activeChecklist.items} locked={this.state.activeStage > this.state.currentStage} buttonText={b} />
+          <Checklist entity_type={"Idea"} entity={this.props.entity} checklistItems={activeChecklist.items} locked={(this.state.activeStage > this.state.currentStage)} complete={complete} buttonText={b} />
         </div>
       </Tile>
     )

@@ -163,16 +163,33 @@ class ChecklistHandler
     checklists
   end
 
+  def progressable(info)
+    c = true
+    info.each do |a|
+      if a['complete'] == false
+        c = false
+      end
+    end
+    c
+  end
+
   def checklists(entity)
     result = {}
     checklist = []
     s = stages = [["Idea", 0, "Build a Product"], ["Recruitment", 1, "Move to Setup"], ["Setup", 2, "Start Building"], ["Building", 3, "To the Moon"], ["Growth", 4, "Grow an Industrial Empire"]]
     s.each do |stage|
-      stage_info = {name: stage[0], order: stage[1], items: checklist_info(entity, stage[1]), buttonText: stage[2]}
+      info = checklist_info(entity, stage[1])
+      stage_info = {name: stage[0], order: stage[1], items: info, buttonText: stage[2], can_progress: progressable(info)}
       checklist.append(stage_info)
     end
     result['stages'] = checklist
     result['current_stage'] = 0
+    c = true
+    # result['stages'].items[result['current_stage']].each do |a|
+    #   if !complete
+    #     c=false
+    #   end
+    # end
     result['button_texts'] = stages.map{|a| a[2]}
     result
   end

@@ -8,7 +8,8 @@ var Checklist = React.createClass({
 
   propTypes: {
     entity_type: React.PropTypes.string,
-    entity: React.PropTypes.object.isRequired
+    entity: React.PropTypes.object.isRequired,
+    complete: React.PropTypes.bool
   },
 
   getInitialState: function() {
@@ -51,7 +52,7 @@ sendUpdate: function(editable_type, path) {
       return (
         <div style={{display:"inline"}}>
           <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}
-            <span className="fa fa-remove ml1 gray-2" />
+            <span className="fa fa-remove pointer ml1 gray-2" />
           </span>
 
           <input className="col-xs-12 py1" name={item.editable_type} type="text" ref="editedData" />
@@ -63,7 +64,7 @@ sendUpdate: function(editable_type, path) {
     else {
       return (
         <div style={{display:"inline"}}>
-          <span onClick={this.setOpenItem.bind(null, index)} className="ml2">{item.title}
+          <span onClick={this.setOpenItem.bind(null, index)} className="pointer ml2">{item.title}
             <a>Edit</a>
           </span>
         </div>
@@ -73,27 +74,25 @@ sendUpdate: function(editable_type, path) {
 
   renderProgressButton: function() {
     var currentUser = UserStore.getUser();
-    var complete = true
+
     if(currentUser) {
       var isOwner = (currentUser.id === this.props.entity.user.id)
-      if (this.props.locked || !isOwner) {
+      if (this.props.locked || !isOwner || !this.props.complete) {
         var buttonAction = null
       } else {
         var buttonAction = function () {
             window.location = '/create?pitch=' + this.props.entity.name + '&idea_id=' + this.props.entity.id + '&name=' + this.props.entity.tentative_name;
           }.bind(this)
       }
+      return (
+        <div>
+          <Button type="primary" block="true" action={buttonAction}>
+            <Icon fw="true" />
+            {this.props.buttonText}
+          </Button>
+        </div>
+      )
 
-      if (currentUser && (currentUser.staff || isOwner) && complete ) {
-        return (
-          <div>
-            <Button type="primary" block="true" action={buttonAction}>
-              <Icon fw="true" />
-              {this.props.buttonText}
-            </Button>
-          </div>
-        )
-      }
     }
     else
       {
