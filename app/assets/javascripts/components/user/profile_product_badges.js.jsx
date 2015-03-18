@@ -9,10 +9,13 @@ module.exports = React.createClass({
   },
 
   render() {
-    if (!this.state.products) {
+    if (!this.state.products || this.state.products.length == 0) {
       return <div />
     }
-    return <div className="clearfix">{this.state.products.map(this.renderProduct)}</div>
+    return <div className="clearfix">
+      <h6>Products involved in</h6>
+      {this.state.products.map(this.renderProduct)}
+    </div>
   },
 
   renderProduct(product) {
