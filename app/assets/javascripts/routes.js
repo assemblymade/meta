@@ -749,4 +749,3 @@ exports.product_path = function(options){
     return '/' + params.id + ''
   }
 }
-

@@ -2,12 +2,15 @@
 
 const ActionTypes = require('../constants').ActionTypes
 const Dispatcher = require('../dispatcher')
+window.Immutable = require('immutable');
 const Store = require('./es6_store')
 const PeopleStore = require('./people_store')
 const UserStore = require('./user_store')
 
 var heartsCount = null
+var heartsByDay = Immutable.Map()
 var stories = null
+var moreStoriesAvailable = true
 var lastHeartedAt = 0
 let ackKey = '_asm_heart_ack'
 
@@ -33,7 +36,11 @@ class HeartsReceivedStore extends Store {
 
         case ActionTypes.HEARTS_STORIES_RECEIVE:
           Dispatcher.waitFor([PeopleStore.dispatchToken])
-          stories = _.sortBy(action.nfis.concat(action.comments), s => -moment(s.last_hearted_at).unix())
+          var newStories = Immutable.List(action.nfis).concat(action.comments).sortBy(s => -moment(s.last_hearted_at).unix())
+          stories = stories || Immutable.List()
+          stories = stories.concat(newStories)
+          moreStoriesAvailable = newStories.size > 1
+          heartsByDay = stories.groupBy(s => moment(s.last_hearted_at).format('YYDDD'))
           break
 
         case ActionTypes.HEARTS_ACKNOWLEDGED:
@@ -52,18 +59,19 @@ class HeartsReceivedStore extends Store {
   }
 
   getHeartCountForDay(date) {
-    let formatted = moment(date).format('YYDDD')
-    return _(stories).
-      filter(s => moment(s.last_hearted_at).format('YYDDD') == formatted).
-      reduce((count, s) => count + s.users.count, 0)
+    return heartsByDay.get(moment(date).format('YYDDD')).size
+  }
+
+  getStories() {
+    return stories
   }
 
   hasNewHearts() {
     return lastHeartedAt > acknowledgedAt()
   }
 
-  getStories() {
-    return stories
+  moreStoriesAvailable() {
+    return moreStoriesAvailable;
   }
 }
 

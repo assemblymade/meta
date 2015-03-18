@@ -11,10 +11,16 @@ var UserStore = require('../../stores/user_store')
 var leftPadding = 54
 
 module.exports = React.createClass({
+  mixins: [React.addons.PureRenderMixin],
+
   displayName: 'ProfileHeartsReceived',
 
   getInitialState() {
-    return this.getStateFromStores()
+    return _.extend({
+      page: 0,
+      more: true,
+      loading: true
+    }, this.getStateFromStores())
   },
 
   render() {
@@ -24,7 +30,8 @@ module.exports = React.createClass({
 
     return <div>
       {this.renderStories()}
-      {this.state.stories.length < 5 ? this.renderNewProfile() : null}
+      {this.state.stories.size < 5 ? this.renderNewProfile() : null}
+      {this.state.loading ? <Spinner /> : null}
     </div>
   },
 
@@ -119,11 +126,24 @@ module.exports = React.createClass({
 
   componentDidMount() {
     HeartsReceivedStore.addChangeListener(this._onChange)
-    HeartActions.feedSelected(this.props.user_id)
+    this.fetchFeedPage(0)
+    window.addEventListener('scroll', this.onScroll);
   },
 
   componentWillUnmount() {
     HeartsReceivedStore.removeChangeListener(this._onChange)
+    window.removeEventListener('scroll', this.onScroll);
+  },
+
+  componentDidUpdate(props, state) {
+    if (this.state.more && this.state.page > state.page) {
+      this.fetchFeedPage(this.state.page)
+    }
+  },
+
+  fetchFeedPage(page) {
+    HeartActions.fetchFeedPage(this.props.user_id, page)
+    this.setState({loading: true})
   },
 
   getHeartCount(date) {
@@ -132,7 +152,8 @@ module.exports = React.createClass({
 
   getStateFromStores() {
     return {
-      stories: HeartsReceivedStore.getStories()
+      stories: HeartsReceivedStore.getStories(),
+      more: HeartsReceivedStore.moreStoriesAvailable()
     }
   },
 
@@ -144,6 +165,17 @@ module.exports = React.createClass({
       'task': 'check-square-o',
       'team_membership': 'user'
     }[type]
+  },
+
+  onScroll() {
+    if (this.state.loading) return
+
+    var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 200
+
+    if (atBottom) {
+      console.log(this.state.page + 1)
+      this.setState({page: this.state.page + 1})
+    }
   },
 
   sentence(parts, pluralize) {
@@ -163,6 +195,6 @@ module.exports = React.createClass({
   },
 
   _onChange() {
-    this.setState(this.getStateFromStores())
+    this.setState(_.extend({loading: false}, this.getStateFromStores()))
   }
 })
