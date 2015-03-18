@@ -4,9 +4,7 @@ var CircleIcon = React.createClass({
   propTypes: {
     diameter: React.PropTypes.number,
     icon: React.PropTypes.string.isRequired,
-    margin: React.PropTypes.number,
-    muted: React.PropTypes.bool,
-    color: React.PropTypes.string
+    margin: React.PropTypes.number
   },
 
   getDefaultProps() {
@@ -22,7 +20,7 @@ var CircleIcon = React.createClass({
     var style = {
       backgroundColor: backgroundColor,
       borderRadius: '100%',
-      color: color,
+      color: '#FFF',
       display: 'inline-block',
       fontSize: 16,
       height: diameter,

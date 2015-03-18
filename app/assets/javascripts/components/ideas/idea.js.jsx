@@ -12,6 +12,7 @@ const page = require('page');
 const SvgIcon = require('../ui/svg_icon.js.jsx');
 const TextPost = require('../ui/text_post.js.jsx');
 const UserStore = require('../../stores/user_store');
+const CircleIcon = require('../ui/circle_icon.js.jsx');
 
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
@@ -27,6 +28,14 @@ let Idea = React.createClass({
         id: React.PropTypes.string.isRequired
       }).isRequired
     })
+  },
+
+  getInitialState: function() {
+    return (
+      {
+        hearted: false
+      }
+    )
   },
 
   render() {
@@ -90,27 +99,55 @@ let Idea = React.createClass({
   renderHeader() {
     var idea = this.props.idea;
     var shareMessage = 'We need help with ' + idea.name + '! via @asm';
+    var hearted = this.state.hearted
+    var leftSideText
+    if (hearted) {
+      leftSideText = function() {
+        return (
+          <div className="py2">
+            <IdeaSharePanel idea={idea} size="large"/>
+          </div>
+        )
+      }
+    }
+    else {
+      leftSideText = function() {
+        return (
+          <div className="overflow-hidden">
+            <h4 className="gray-2">Heart this idea and the community will build it</h4>
+            <p className="h5 gray-2">
+              If this product gets enough hearts, it will advance to the next stage of development.
+            </p>
+          </div>
+        )
+      }
+    }
     return (
       <div className="clearfix">
         <div className="right py3 center">
-          <Heart
-            size="huge"
-            heartable_id={idea.news_feed_item.id}
-            heartable_type="NewsFeedItem" />
+          <div onClick={this.heartClick}>
+            <Heart
+              size="huge"
+              heartable_id={idea.news_feed_item.id}
+              heartable_type="NewsFeedItem" />
+          </div>
           <p>
             <small className="gray-2 bold mt1 px2">
               {idea.hearts_count} / {idea.tilting_threshold} hearts
             </small>
           </p>
         </div>
-        <div className="overflow-hidden">
-          <h4 className="gray-2">Heart this idea and the community will build it</h4>
-          <p className="h5 gray-2">
-            This is a product idea submitted to Assembly by <a className="gray-2" href={idea.user.url}>@{idea.user.username}</a>. If this product gets enough hearts, it will advance to the next stage of development.
-          </p>
-        </div>
+        {leftSideText()}
       </div>
       )
+  },
+
+  heartClick(){
+    return (
+      this.setState({
+        hearted: true
+      })
+    )
   },
 
   renderProductRow() {

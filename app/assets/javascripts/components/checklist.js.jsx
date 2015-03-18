@@ -87,7 +87,7 @@ sendUpdate: function(editable_type, path) {
       return (
         <div>
           <Button type="primary" block="true" action={buttonAction}>
-            <Icon fw="true" />
+            {buttonAction === null ? <Icon fw="true" icon="lock" /> : ''}
             {this.props.buttonText}
           </Button>
         </div>
@@ -117,7 +117,7 @@ sendUpdate: function(editable_type, path) {
               </div>
               <div className="overflow-hidden">
                 {item.name}
-                {item.editable && isOwner ? <span>{this.renderInputForm(item, index)}</span> : <span/>}
+                {item.editable && isOwner ? <span>{this.renderInputForm(item, index)}</span> : (item.editable ? <span className="gray-2 ml1 fa fa-lock"/>: <span/>)  }
                 <div className="gray-2">{item.subtext}</div>
               </div>
             </li>
@@ -131,7 +131,7 @@ sendUpdate: function(editable_type, path) {
               </div>
               <div className="overflow-hidden">
                 {item.name}
-                {item.editable && isOwner ? <span>{this.renderInputForm(item, index)}</span> : <span/>}
+                {item.editable && isOwner ? <span>{this.renderInputForm(item, index)}</span> : (item.editable ? <span className="gray-2 ml1 fa fa-lock"/>: <span/>)}
                 <div className="gray-2">{item.subtext}</div>
               </div>
             </li>
