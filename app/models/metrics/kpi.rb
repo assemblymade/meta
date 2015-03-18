@@ -21,8 +21,10 @@ module Metrics
 
         # we need to know if we're averaging raw numbers or percentages
         num_type = weeks[0].class
-        four_wk_avg = num_type.new(weeks[3..7].map(&:raw).reduce(0, :+) / 4.0).
+        four_wk_avg = num_type.new(weeks[4..7].map(&:raw).reduce(0, :+) / 4.0).
           change_from(num_type.new(weeks[0..3].map(&:raw).reduce(0, :+) / 4.0))
+
+        # puts weeks.join(' ')
 
         [
           k.name,
