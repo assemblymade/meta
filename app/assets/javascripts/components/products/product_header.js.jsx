@@ -74,14 +74,17 @@ const ProductHeader = React.createClass({
       <div className="bg-white shadow-light">
         <div className="border-bottom border-gray">
           <div className="container py3">
-            <div className="">
-              <div className="left">
-                <a className="block left mr3" href={product.url} style={{ maxWidth: 96 }}>
-                  <AppIcon app={product} size={96} />
+            <div className="clearfix">
+                <a className="block left mr2 sm-mr3" href={product.url} style={{ maxWidth: 60 }}>
+                  <AppIcon app={product} size={60} />
                 </a>
 
-                <div className="inline-block">
-                  <h2 className="mt0 mb1 ml0">
+                <div className="right py2 ml3">
+                  {this.renderTryButton()}
+                </div>
+
+                <div className="overflow-hidden">
+                  <h2 className="mt0 mb0">
                     <a className="black" href={product.url}>{product.name}</a>
                   </h2>
                   <h4 className="m0 regular gray-2">
@@ -94,11 +97,7 @@ const ProductHeader = React.createClass({
                     </ul>
                   </div>
                 </div>
-              </div>
 
-              <div className="sm-right-align sm-py3 center">
-                {this.renderTryButton()}
-              </div>
             </div>
           </div>
         </div>
@@ -108,11 +107,7 @@ const ProductHeader = React.createClass({
 
             <div className="sm-right">
               <div className="center sm-right-align py1">
-                <span className="h6 mr3">
-                  <ProductFollowers product_id={product.id} />
-                </span>
-
-                <CreateProductItem product={product} activeMenuItem={this.state.activeMenuItem} />
+                <ProductFollowers product_id={product.id} />
               </div>
             </div>
 

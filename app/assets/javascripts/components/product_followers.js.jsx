@@ -5,6 +5,7 @@ const ProductFollowersStore = require('../stores/product_followers_store');
 const ProductActionCreators = require('../actions/product_action_creators');
 const UserActions = require('../actions/user_actions')
 const UserStore = require('../stores/user_store')
+const classnames = require('classnames')
 
 module.exports = React.createClass({
   displayName: 'ProductFollowers',
@@ -14,19 +15,16 @@ module.exports = React.createClass({
   },
 
   render() {
-    let linkClasses = React.addons.classSet({
-      'gray-2': !this.state.following,
-      'gray-3': this.state.following,
-      bold: true
-    });
+    let cs = classnames('block py1', {
+      'gray-2 gray-2-focus black-hover': !this.state.following,
+      'green green-hover green-focus': this.state.following
+    })
 
     return (
-      <div className="inline-block py1">
+      <a className={cs} href="javascript:void(0);" onClick={this.handleClick}>
         {this.renderCheckmark()}
-        <a href="javascript:void(0);" onClick={this.handleClick} className={linkClasses}>
-          {this.state.following ? 'Following' : 'Follow' }
-        </a>
-      </div>
+        {this.state.following ? 'Following' : 'Follow' }
+      </a>
     );
   },
 
@@ -69,14 +67,14 @@ module.exports = React.createClass({
   renderCheckmark() {
     if (this.state.following) {
       return (
-        <span className="green mr1">
+        <span className="mr1">
           <Icon icon="star" />
         </span>
       );
     }
 
     return (
-      <span className="gray-2 mr1">
+      <span className="mr1">
         <Icon icon="star" />
       </span>
     )

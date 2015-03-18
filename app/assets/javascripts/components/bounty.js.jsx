@@ -138,7 +138,7 @@ let Bounty = React.createClass({
           {valuation}
 
           <div className="left px3 py2">
-            <ul className="list-inline mt0 mb0" style={{fontSize:13, lineHeight: '2rem'}}>
+            <ul className="list-reset list-inline mt0 mb0 h6" style={{lineHeight: '2rem'}}>
               {this.renderEditButton()}
               {this.renderOpenButton()}
               {this.renderFollowButton()}
@@ -147,6 +147,9 @@ let Bounty = React.createClass({
           </div>
 
           <div className="right px2 py1">
+            <div className="left mr2">
+              <Button action={window.showCreateBounty} block={true}>New bounty</Button>
+            </div>
             {this.renderStartWorkButton()}
           </div>
         </div>
@@ -173,7 +176,7 @@ let Bounty = React.createClass({
     }
 
     return (
-      <li className="omega">
+      <li className="mb0">
         <a href="#" className="btn btn-default disabled">
           {bounty.state === 'resolved' ? 'Completed & Closed' : 'Closed'}
         </a>
@@ -196,7 +199,7 @@ let Bounty = React.createClass({
 
     if (bounty.can_update) {
       return (
-        <li>
+        <li className="left">
           <a href={bounty.edit_url}>Edit</a>
         </li>
       );
@@ -210,7 +213,7 @@ let Bounty = React.createClass({
 
     if (isStaff) {
       return (
-        <li className="alpha">
+        <li className="mt0">
           <ToggleButton
             bool={bounty.flagged}
             text={{ true: 'Unflag', false: 'Flag' }}
@@ -278,7 +281,7 @@ let Bounty = React.createClass({
 
     if (bounty.can_update) {
       return (
-        <li>
+        <li className="block px1 gray-2">
           {this.renderOpenOrClosedButton()}
         </li>
       )
@@ -300,7 +303,7 @@ let Bounty = React.createClass({
 
     if (item && window.app.staff()) {
       return (
-        <li className="alpha">
+        <li className="mt0">
           <ToggleButton
             bool={item.popular_at !== null}
             text={{ true: 'Depopularize', false: 'Popularize' }}

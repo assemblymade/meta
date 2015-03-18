@@ -145,32 +145,28 @@ var BountyIndex = React.createClass({
 
     if (this.state.user && !this.state.user.coin_callout_viewed_at) {
       callout = (
-        <div className="clearfix mxn2">
-          <div className="col col-12">
-            <Callout>
-              <div className="sm-show">
-                <div style={{ padding: '1.5rem 2rem' }}>
-                  <strong>Coins determine your ownership of a product.</strong>
-                  {' '}
-                  <span>
-                    You'll notice each bounty below is assigned a coin value.
-                    Complete the bounty and you'll be awarded those coins which
-                    represent your ownership.
-                  </span>
-                  {' '}
-                  <a href="/guides/platform#earning-coins">Learn more</a>
-                </div>
-              </div>
-              <div className="sm-hide">
-                <div style={{ padding: '1.5rem 2rem' }}>
-                  <strong>Coins determine your ownership.</strong>
-                  {' '}
-                  <a href="/guides/platform#earning-coins">Learn more</a>
-                </div>
-              </div>
-            </Callout>
+        <Callout>
+          <div className="sm-show">
+            <div style={{ padding: '1.5rem 2rem' }}>
+              <strong>Coins determine your ownership of a product.</strong>
+              {' '}
+              <span>
+                You'll notice each bounty below is assigned a coin value.
+                Complete the bounty and you'll be awarded those coins which
+                represent your ownership.
+              </span>
+              {' '}
+              <a href="/guides/platform#earning-coins">Learn more</a>
+            </div>
           </div>
-        </div>
+          <div className="sm-hide">
+            <div style={{ padding: '1.5rem 2rem' }}>
+              <strong>Coins determine your ownership.</strong>
+              {' '}
+              <a href="/guides/platform#earning-coins">Learn more</a>
+            </div>
+          </div>
+        </Callout>
       )
     }
 
@@ -180,6 +176,10 @@ var BountyIndex = React.createClass({
         <div className="clearfix mxn3">
 
           <div className="sm-col-right sm-col-4 px3">
+            <div className="mb3">
+              <Button action={window.showCreateBounty} block={true}>Create a new bounty</Button>
+            </div>
+
             <div className="mb3">
               <Tile>
                 <div className="p3">
