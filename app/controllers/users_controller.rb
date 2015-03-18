@@ -6,8 +6,7 @@ class UsersController < ApplicationController
   def show
     set_user
 
-    @products = @user.core_products.ordered_by_trend
-    @products = @products.public_products if @user != current_user
+    @products = @user.involved_products
 
     default_filters = {
       user: 'assigned',

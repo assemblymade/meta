@@ -8,14 +8,6 @@
 
         <%= render 'users/card', user: @user %>
 
-        <% if can?(:update, @user) %>
-          <!-- FIXME: This URL is a hack -->
-          <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
-            Edit Profile
-          </a>
-          <br>
-        <% end %>
-
         <% if Rails.env.development? || (signed_in? && current_user.staff?) %>
           <dl class="well well-sm small hidden-xs">
             <dt>auth token</dt>

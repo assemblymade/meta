@@ -8,6 +8,7 @@ class Heart < ActiveRecord::Base
   after_commit :update_hearts_received_count, on: :create
 
   before_validation :set_target_user_id, on: :create
+  before_validation :set_product_id, on: :create
   validates :heartable_id, uniqueness: { scope: :user }
   validates :user, presence: true
 
@@ -36,5 +37,9 @@ class Heart < ActiveRecord::Base
 
   def set_target_user_id
     self.target_user_id = heartable.try(:user_id) || heartable.source_id
+  end
+
+  def set_product_id
+    self.product_id = heartable.try(:product).try(:id)
   end
 end

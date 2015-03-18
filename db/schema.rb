@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150314000058) do
+ActiveRecord::Schema.define(version: 20150317225633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -337,6 +337,7 @@ ActiveRecord::Schema.define(version: 20150314000058) do
     t.datetime "created_at",                 null: false
     t.datetime "sent_at"
     t.uuid     "target_user_id"
+    t.uuid     "product_id"
   end
 
   add_index "hearts", ["sent_at"], name: "index_hearts_on_sent_at", using: :btree
@@ -1252,6 +1253,7 @@ ActiveRecord::Schema.define(version: 20150314000058) do
   end
 
   add_foreign_key "daily_metrics", "products"
+  add_foreign_key "hearts", "products"
   add_foreign_key "markings", "marks"
   add_foreign_key "monthly_metrics", "products"
   add_foreign_key "news_feed_item_comments", "news_feed_items"

@@ -36,7 +36,7 @@
             {numeral(this.props.coins).format('0,0')}
           </span>
           {' '}
-          to 
+          to
           {' '}
           <span data-toggle="tooltip" title={this.props.tooltip} data-placement="left">
             {this.props.label}

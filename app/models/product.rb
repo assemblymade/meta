@@ -271,6 +271,12 @@ class Product < ActiveRecord::Base
     update!(profitable_at: Time.now)
   end
 
+  def public?
+    self.flagged_at.nil? &&
+      !Product.private_ids.include?(self.id) &&
+      !%w(stealth reviewing).include?(self.state)
+  end
+
   def wallet_private_key_salt
     # http://ruby-doc.org/stdlib-2.1.0/libdoc/openssl/rdoc/OpenSSL/Cipher.html#class-OpenSSL::Cipher-label-Encrypting+and+decrypting+some+data
     cipher = OpenSSL::Cipher::AES256.new(:CBC)

@@ -242,9 +242,18 @@ class User < ActiveRecord::Base
 
   def partnerships
     Product.
-       joins('inner join transaction_log_entries tle on tle.product_id = products.id').
-       where('wallet_id = ?', id).
+       joins(:transaction_log_entries).
+       where(transaction_log_entries: { wallet_id: id }).
        group('products.id')
+  end
+
+  def involved_products
+    Product.
+      public_products.
+      joins("left join hearts on hearts.product_id = products.id and hearts.target_user_id = '#{self.id}'").
+      joins("left join transaction_log_entries t on t.product_id = products.id and t.wallet_id = '#{self.id}'").
+      where("t.id is not null or hearts.id is not null").
+      group('products.id')
   end
 
   # this is used on signup to auto follow a product

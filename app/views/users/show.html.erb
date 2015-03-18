@@ -10,15 +10,8 @@
 
         <%= render 'users/card', user: @user %>
 
-        <% if can?(:update, @user) %>
-          <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
-            Edit Profile
-          </a>
-          <br>
-        <% end %>
-
         <% if Rails.env.development? || staff? %>
-          <div class="well well-sm small">
+          <div class="well well-sm small mt4">
             <div><%= @user.email %></div>
             <div>last request
               <%= @user.last_request_at && time_ago_in_words(@user.last_request_at) %> ago</div>

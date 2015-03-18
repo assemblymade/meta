@@ -55,3 +55,14 @@
     <% end %>
   </div>
 </div>
+
+<% if can?(:update, @user) %>
+  <!-- FIXME: This URL is a hack -->
+  <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
+    Edit Profile
+  </a>
+  <br>
+<% end %>
+
+<h6>Products involved in</h6>
+<%= react_component 'ProfileProductBadges' %>
