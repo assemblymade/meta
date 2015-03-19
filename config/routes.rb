@@ -64,6 +64,8 @@ ASM::Application.routes.draw do
     get '/admin', on: :member, action: :admin
     patch '/admin', on: :member, action: :admin_update
     patch :mark
+    patch '/up_score' => 'ideas#up_score'
+    patch '/down_score' => 'ideas#down_score'
     get '/checklistitems' => 'ideas#checklistitems'
   end
 

@@ -2,7 +2,7 @@ class IdeasController < ProductController
   respond_to :html, :json
   layout 'ideas'
 
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :admin]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :admin, :up_score, :down_score]
 
   IDEAS_PER_PAGE = 12
 
@@ -16,6 +16,26 @@ class IdeasController < ProductController
       idea: IdeaSerializer.new(@idea),
       topics: topics
     })
+  end
+
+  def up_score
+    return unless current_user.is_staff?
+    @idea = Idea.find_by(slug: params[:idea_id])
+    if @idea
+      score = @idea.score * 2
+      @idea.update!({score: score})
+    end
+    render json: {}
+  end
+
+  def down_score
+    return unless current_user.is_staff?
+    @idea = Idea.find_by(slug: params[:idea_id])
+    if @idea
+      score = @idea.score / 2
+      @idea.update!({score: score})
+    end
+    render json: {}
   end
 
   def create

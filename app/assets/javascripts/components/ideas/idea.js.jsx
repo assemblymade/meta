@@ -50,6 +50,7 @@ let Idea = React.createClass({
           <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
           {this.renderEditLink()}
           {this.renderAdminRow()}
+          {this.renderStaffRow()}
         </div>
       </div>
     )
@@ -62,6 +63,34 @@ let Idea = React.createClass({
       return (
         <a className="inline-block mt3 right h5 px1" href={idea.url + '/edit'}>Edit</a>
       )
+    }
+  },
+
+  upScore() {
+    $.ajax({
+      url: this.props.idea.url + "/up_score",
+      type: 'PATCH'
+    });
+  },
+
+  downScore() {
+    $.ajax({
+      url: this.props.idea.url + "/down_score",
+      type: 'PATCH'
+    });
+  },
+
+  renderStaffRow() {
+    let currentUser = UserStore.getUser();
+    if (currentUser) {
+      if (currentUser.staff) {
+        return (
+          <div>
+            <Button action={this.upScore} active={true}>Up Score</Button>
+            <Button action={this.downScore} active={true}>Down Score</Button>
+          </div>
+        )
+      }
     }
   },
 
