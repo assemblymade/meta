@@ -29,6 +29,10 @@ var _peopleStore = _.extend(_store, {
     return _people[id]
   },
 
+  getPeopleWithoutGroups: function() {
+    return _(_.values(_people)).filter(u => u.avatar_url) // group users like @core don't have avatars
+  },
+
   getPerson: function(username) {
     return _searchPeople(username);
   },

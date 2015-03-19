@@ -14,11 +14,7 @@ describe('BountyActionCreators', function() {
 
   describe('call()', function() {
     it('prevents the default action, tracks the event, and makes an AJAX request to the supplied url', function(){
-      var e = {
-        preventDefault: jest.genMockFunction()
-      };
-
-      BountyActionCreators.call(e, 'event.name', '/path/to/resource');
+      BountyActionCreators.call('event.name', '/path/to/resource');
 
       expect(e.preventDefault.mock.calls.length).toEqual(1);
       expect(analytics.track.mock.calls.length).toEqual(1);

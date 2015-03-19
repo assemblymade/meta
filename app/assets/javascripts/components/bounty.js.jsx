@@ -4,6 +4,7 @@ const AvatarWithUsername = require('./ui/avatar_with_username.js.jsx');
 const BountyActionCreators = require('../actions/bounty_action_creators');
 const BountyStore = require('../stores/bounty_store');
 const Button = require('./ui/button.js.jsx');
+const FloatingUserSelector = require('./floating_user_selector.js.jsx');
 const formatShortTime = require('../lib/format_short_time.js');
 const Heart = require('./heart.js.jsx');
 const Icon = require('./ui/icon.js.jsx');
@@ -31,8 +32,9 @@ let Bounty = React.createClass({
 
   abandonWork(e) {
     let stopWorkUrl = this.state.bounty.stop_work_url;
+    e.preventDefault();
 
-    BountyActionCreators.call(e, 'bounty.abandoned', stopWorkUrl);
+    BountyActionCreators.call('bounty.abandoned', stopWorkUrl);
 
     this.setState({
       worker: null,
@@ -58,8 +60,9 @@ let Bounty = React.createClass({
 
   extendWork(e) {
     let lockUrl = this.state.bounty.lock_url;
+    e.preventDefault();
 
-    BountyActionCreators.call(e, 'bounty.extended', lockUrl);
+    BountyActionCreators.call('bounty.extended', lockUrl);
 
     let extendUntil = moment().add(60 * ONE_HOUR);
 
@@ -150,7 +153,12 @@ let Bounty = React.createClass({
             <div className="left mr2">
               <Button action={window.showCreateBounty} block={true}>New bounty</Button>
             </div>
+          </div>
+          <div className="right px2 py1" style={{position:'relative'}}>
             {this.renderStartWorkButton()}
+            {this.state.selectingLocker && <FloatingUserSelector
+                onUserSelected={this.assignUser}
+                onRequestClose={this.hideLockSelector}/>}
           </div>
         </div>
 
@@ -336,16 +344,16 @@ let Bounty = React.createClass({
         if (bounty.state == "reviewing") {
           return <Button>Core Team review requested</Button>
         }
-
-        return (
-          <Button action={this.requestReview}>Request Core Team review</Button>
-        );
+        return <Button action={this.requestReview}>Request Core Team review</Button>
       }
 
       return <Button><Icon icon="lock" /> Locked for {formatShortTime(this.state.lockUntil)}</Button>
     }
 
-    return <Button action={this.startWork} type="primary">Work on this bounty</Button>
+    if (ProductStore.isCoreTeam(UserStore.getUser())) {
+      return <Button action={this.assignToUser} type="primary">Assign to user</Button>
+    }
+    return <Button action={this.startWork} type="primary">Assign to me</Button>
   },
 
   reopenBounty(e) {
@@ -354,16 +362,32 @@ let Bounty = React.createClass({
     BountyActionCreators.reopenBounty(this.state.bounty.number);
   },
 
-  startWork(e) {
-    let currentUser = UserStore.getUser();
-    let startWorkUrl = this.state.bounty.start_work_url;
-
-    BountyActionCreators.call(e, 'bounty.started', startWorkUrl);
+  assignUser(user) {
+    BountyActionCreators.assign(this.state.bounty.product.slug, this.state.bounty.number, user.id);
 
     this.setState({
-      worker: currentUser,
-      lockUntil: moment().add(60, 'hours')
+      worker: user,
+      lockUntil: moment().add(60, 'hours'),
+      selectingLocker: false
     });
+  },
+
+  hideLockSelector() {
+    this.setState({selectingLocker: false})
+  },
+
+  startWork(e) {
+    e.preventDefault();
+    assignUser(UserStore.getUser())
+  },
+
+  assignToUser(e) {
+    e.preventDefault()
+
+    this.setState({
+      selectingLocker: true
+    })
+
   },
 
   requestReview() {

@@ -38,6 +38,10 @@ var UserStore = _.extend(Object.create(Store), {
     }
   },
 
+  isCurrent: function(user) {
+    return user.id == this.getId()
+  },
+
   isSignedIn: function() {
     return _currentUser !== null
   },

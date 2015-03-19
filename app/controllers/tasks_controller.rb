@@ -170,12 +170,11 @@ class TasksController < WipsController
     end
   end
 
-  def start_work
-    if username = params[:assign_to]
-      assignee = User.find_by(username: username.gsub('@', '').strip())
+  def assign
+    asignee = current_user
+    if user_id = params[:assign_to_user_id]
+      assignee = User.find(user_id)
     end
-
-    assignee ||= current_user
 
     @allocation = @wip.start_work!(assignee)
     respond_with @wip, location: product_wip_path(@product, @wip)

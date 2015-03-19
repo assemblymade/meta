@@ -7,7 +7,7 @@ class BountySerializer < ApplicationSerializer
     :locked_at, :priority, :earnable_coins_cache
 
   attributes :chat_room_url, :close_url, :edit_url, :flag_url, :follow_url,
-    :offers_url, :mute_url, :start_work_url, :stop_work_url, :tag_url,
+    :offers_url, :mute_url, :stop_work_url, :tag_url,
     :unflag_url, :reopen_url, :url, :lock_url
 
   has_one :locker
@@ -98,10 +98,6 @@ class BountySerializer < ApplicationSerializer
 
   def mute_url
     product_wip_mute_path(product, bounty)
-  end
-
-  def start_work_url
-    product_wip_start_work_path(product, bounty)
   end
 
   def stop_work_url

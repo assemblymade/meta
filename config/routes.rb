@@ -358,7 +358,7 @@ ASM::Application.routes.draw do
       get 'search', :on => :collection
 
       get   'checkin'
-      patch 'start_work'
+      patch 'assign'
       patch 'stop_work'
       patch 'review'
       patch 'reject'

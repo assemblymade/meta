@@ -461,6 +461,23 @@ exports.product_repos_path = function(options){
   }
 }
 
+exports.product_wip_assign_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/' + params.wip_id + '/assign?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/' + params.wip_id + '/assign'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/bounties/' + params.wip_id + '/assign'
+  }
+}
+
 exports.award_product_wip_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -749,3 +766,4 @@ exports.product_path = function(options){
     return '/' + params.id + ''
   }
 }
+

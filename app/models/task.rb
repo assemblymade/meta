@@ -191,6 +191,7 @@ class Task < Wip
       event: 'product.wip.start_work',
       properties: WipAnalyticsSerializer.new(self, scope: worker).as_json
     )
+    puts "workers: #{self.workers.count}  #{self.locked_at.inspect}"
     allocate!(worker) unless self.workers.count > 1
     lock_bounty!(worker) if self.locked_at.nil?
   end

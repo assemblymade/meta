@@ -2,6 +2,55 @@
 
 desc "Generate a JavaScript file that contains your Rails routes"
 namespace :js do
+  ROUTES = [
+    'award_product_wip',
+    'awarded_bounties_user',
+    'daily_product_metrics',
+    'discover',
+    'discussion_comment',
+    'discussion_comments',
+    'edit_product',
+    'heartables_lovers',
+    'heart_stories_user',
+    'idea_mark',
+    'idea',
+    'ideas',
+    'new_idea',
+    'new_product_asset',
+    'new_product_post',
+    'new_product_wip',
+    'new_user_session',
+    'notifications',
+    'product',
+    'product_activity',
+    'product_assets',
+    'product_chat',
+    'product_financials',
+    'product_follow',
+    'product_metrics',
+    'product_people',
+    'product_person',
+    'product_post',
+    'product_posts',
+    'product_repos',
+    'product_screenshots',
+    'product_tips',
+    'product_unfollow',
+    'product_update_subscribe',
+    'product_update_unsubscribe',
+    'product_update',
+    'product_wip_close',
+    'product_wip_assign',
+    'product_wip_reopen',
+    'product_wips',
+    'product',
+    'readraptor',
+    'start_idea',
+    'user',
+    'snippet_product_metrics',
+    'weekly_product_metrics'
+  ]
+
   task :routes, [:filename] => :environment do |t, args|
     filename = args[:filename].blank? ? "routes.js" : args[:filename]
     save_path = "#{Rails.root}/app/assets/javascripts/#{filename}"
@@ -45,54 +94,6 @@ exports.#{name}_path = function(options){
 }
 EOS
 end
-
-ROUTES = [
-  'award_product_wip',
-  'awarded_bounties_user',
-  'daily_product_metrics',
-  'discover',
-  'discussion_comment',
-  'discussion_comments',
-  'edit_product',
-  'heartables_lovers',
-  'heart_stories_user',
-  'idea_mark',
-  'idea',
-  'ideas',
-  'new_idea',
-  'new_product_asset',
-  'new_product_post',
-  'new_product_wip',
-  'new_user_session',
-  'notifications',
-  'product',
-  'product_activity',
-  'product_assets',
-  'product_chat',
-  'product_financials',
-  'product_follow',
-  'product_metrics',
-  'product_people',
-  'product_person',
-  'product_post',
-  'product_posts',
-  'product_repos',
-  'product_screenshots',
-  'product_tips',
-  'product_unfollow',
-  'product_update_subscribe',
-  'product_update_unsubscribe',
-  'product_update',
-  'product_wip_close',
-  'product_wip_reopen',
-  'product_wips',
-  'product',
-  'readraptor',
-  'start_idea',
-  'user',
-  'snippet_product_metrics',
-  'weekly_product_metrics'
-]
 
 def routes
   Rails.application.reload_routes!

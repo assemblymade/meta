@@ -6,10 +6,20 @@ var Routes = require('../routes');
 
 var BountyActionCreators = {
   call: function(e, eventName, url) {
-    e.preventDefault();
+    e.preventDefault()
 
     _track(eventName);
     _patch(url);
+  },
+
+  assign: function(slug, wip_number, user_id) {
+    _track('bounty.started')
+    $.ajax({
+      type: "PATCH",
+      url: Routes.product_wip_assign_path({product_id: slug, wip_id: wip_number}),
+      dataType: 'json',
+      data: { assign_to_user_id: user_id }
+    })
   },
 
   closeBounty: function(bountyId) {
