@@ -6,7 +6,7 @@ class IdeaSerializer < ApplicationSerializer
     :flagged_at, :founder_preference, :greenlit_at, :hearts_count,
     :heart_distance_from_percentile, :id, :name, :news_feed_item, :path,
     :percentile, :product, :rank, :rank_total, :raw_body, :score,
-    :short_body, :slug, :tilting_threshold, :topics, :url, :mark_names, :tentative_name
+    :short_body, :slug, :tilting_threshold, :topics, :url, :mark_names, :tentative_name, :sanitized_body
 
   has_one :product
   has_one :user
@@ -33,6 +33,10 @@ class IdeaSerializer < ApplicationSerializer
 
   def short_body
     truncate_html(markdown(object.body), length: 120)
+  end
+
+  def sanitized_body
+    Search::Sanitizer.new.sanitize(object.body)
   end
 
   def url
