@@ -23,9 +23,9 @@
           <a href="<%= discover_path %>">Products</a>
         </li>
 
-        <li class="<%= nav_active_class(:ideas) %>">
+        <!-- <li class="<%= nav_active_class(:ideas) %>">
           <a href="<%= ideas_path %>">Ideas</a>
-        </li>
+        </li> -->
 
         <% if user_signed_in? %>
 
@@ -100,7 +100,7 @@
               </li>
               <li class="left px1 py1">
                 <a class="button button--primary px2" href="<%= new_product_path %>">
-                  Add your idea
+                  Start an idea
                 </a>
               </li>
             </ul>

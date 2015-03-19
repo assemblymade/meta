@@ -31,7 +31,7 @@ var Navbar = React.createClass({
     if (this.isDropdownOpen()) {
       userDropdownMenu = (
         <DropdownMenu position="right" key="user dropdown menu">
-          <DropdownMenu.Item label="Start a Product" icon="building" action={routes.start_idea_path()} />
+          <DropdownMenu.Item label="Start an idea" icon="building" action='/ideas/new' />
 
           <DropdownMenu.Divider />
 

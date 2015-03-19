@@ -19,14 +19,6 @@
 
             <%= form_for(resource, as: resource_name, url: new_user_session_path) do |f| %>
 
-              <a class="button btn-facebook button--block" href="<%= user_omniauth_authorize_path(:facebook) %>">
-                <span class="fa fa-facebook mr1"></span> Use Facebook
-              </a>
-
-              <fieldset class="hr-line">
-                <legend align="center">OR</legend>
-              </fieldset>
-
               <% if flash[:notice].present? %>
                 <div class="alert alert-info" role="alert">
                   <%= flash[:notice] %>
@@ -38,6 +30,14 @@
                   <%= flash[:alert] %>
                 </div>
               <% end %>
+
+              <a class="button btn-facebook button--block" href="<%= user_omniauth_authorize_path(:facebook) %>">
+                <span class="fa fa-facebook mr1"></span> Use Facebook
+              </a>
+
+              <fieldset class="hr-line">
+                <legend align="center">OR</legend>
+              </fieldset>
 
               <div class="form-group">
                 <%= f.label :login, 'Email or username', class: 'input-label' %>
