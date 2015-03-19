@@ -149,16 +149,16 @@ let Bounty = React.createClass({
             </ul>
           </div>
 
-          <div className="right px2 py1">
-            <div className="left mr2">
-              <Button action={window.showCreateBounty} block={true}>New bounty</Button>
-            </div>
-          </div>
           <div className="right px2 py1" style={{position:'relative'}}>
             {this.renderStartWorkButton()}
             {this.state.selectingLocker && <FloatingUserSelector
                 onUserSelected={this.assignUser}
                 onRequestClose={this.hideLockSelector}/>}
+          </div>
+          <div className="right px2 py1">
+            <div className="left mr2">
+              <Button action={window.showCreateBounty} block={true}>New bounty</Button>
+            </div>
           </div>
         </div>
 

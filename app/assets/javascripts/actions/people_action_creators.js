@@ -2,7 +2,7 @@ var ActionTypes = require('../constants').ActionTypes;
 var Dispatcher = require('../dispatcher');
 
 module.exports = {
-  searchUsers: function(text) {
+  searchUsers: _.debounce(text => {
     var postData = {
       suggest_username: {
         text: text.toLowerCase(),
@@ -27,5 +27,5 @@ module.exports = {
         })
       }
     });
-  }
+  }, 100)
 }

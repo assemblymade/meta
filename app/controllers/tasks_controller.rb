@@ -173,6 +173,7 @@ class TasksController < WipsController
   def assign
     asignee = current_user
     if user_id = params[:assign_to_user_id]
+      authorize! :update, @product
       assignee = User.find(user_id)
     end
 
