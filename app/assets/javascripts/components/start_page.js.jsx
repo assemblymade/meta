@@ -28,41 +28,36 @@ var StartPage = React.createClass({
         <div className="container center">
           <ul className="list list-steps hidden-xs hidden-sm">
             <li className="overlay" />
+
             <li>
               <div className="step active">1</div>
-              <div className="body px1">
-                <strong>Submit your idea</strong>
+              <div className="body">
+                <strong>Share your idea</strong>
                 <div className="gray-2">Every great product begins with an idea.</div>
               </div>
             </li>
             <li>
               <div className="step">2</div>
-              <div className="body px1">
+              <div className="body">
                 <strong>Find collaborators</strong>
                 <div className="gray-2">Assemble a founding team.  Own what you make.</div>
               </div>
             </li>
             <li>
               <div className="step">3</div>
-              <div className="body px1">
-                <strong>Lay the foundation</strong>
-                <div className="gray-2">First steps: making an idea real</div>
+              <div className="body">
+                <strong>Build a product</strong>
+                <div className="gray-2">Create something beautiful with the help of the community.</div>
               </div>
             </li>
             <li>
               <div className="step">4</div>
-              <div className="body px1">
-                <strong>Build a product</strong>
-                <div className="gray-2">Create something beautiful. Manage progress across your team.</div>
+              <div className="body">
+                <strong>Launch it</strong>
+                <div className="gray-2">Grow a real business from what you've built.</div>
               </div>
             </li>
-            <li>
-              <div className="step">5</div>
-              <div className="body px1">
-                <strong>Grow</strong>
-                <div className="gray-2">Scale it to the moon. </div>
-              </div>
-            </li>
+
             <li className="overlay" />
           </ul>
           <div className="row visible-sm visible-xs">
