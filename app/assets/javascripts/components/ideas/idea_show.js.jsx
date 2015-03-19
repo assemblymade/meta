@@ -131,7 +131,7 @@ let IdeaShow = React.createClass({
             </div>
             <div className="center right py1">
               <Button type={"default"} action={function() { page('/ideas/new'); }}>
-                Start your product idea
+                Start an idea
               </Button>
               <p className="mt2"><a href="/start">Learn more</a></p>
             </div>
