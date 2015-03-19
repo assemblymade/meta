@@ -378,7 +378,7 @@ let Bounty = React.createClass({
 
   startWork(e) {
     e.preventDefault();
-    assignUser(UserStore.getUser())
+    this.assignUser(UserStore.getUser())
   },
 
   assignToUser(e) {
