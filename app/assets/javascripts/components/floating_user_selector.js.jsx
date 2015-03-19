@@ -2,11 +2,12 @@
 
 const Tile = require('./ui/tile.js.jsx')
 const User = require('./user.js.jsx')
+const UserSearchActions = require('../actions/people_action_creators')
 const UserStore = require('../stores/user_store')
 const UserSearchStore = require('../stores/user_search_store')
 
 module.exports = React.createClass({
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [React.addons.PureRenderMixin, React.addons.LinkedStateMixin],
 
   displayName: 'FloatingUserSelector',
 
@@ -18,7 +19,8 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       offset: [-20,48],
-      searchResults: this.orderedSearchResults()
+      searchResults: this.orderedSearchResults(),
+      query: ''
     }
   },
 
@@ -34,7 +36,7 @@ module.exports = React.createClass({
     return <div style={style} onKeyDown={this.handleKeyDown}>
       <Tile>
         <div className="p2">
-          <input placeholder="Search users" className="form-control full-width mb2" />
+          <input placeholder="Search users" className="form-control full-width mb2" valueLink={this.linkState('query')} />
 
           {this.state.searchResults.map(this.renderUserRow).toJS()}
         </div>
@@ -62,6 +64,12 @@ module.exports = React.createClass({
     UserSearchStore.removeChangeListener(this._onChange)
   },
 
+  componentDidUpdate(props, state) {
+    if (state.query != this.state.query) {
+      UserSearchActions.searchUsers(this.state.query)
+    }
+  },
+
   handleKeyDown(e) {
     if (e.keyCode == 27 /*esc*/) {
       this.requestClose()
@@ -72,10 +80,6 @@ module.exports = React.createClass({
     return (e) => this.props.onUserSelected(user)
   },
 
-  handleChange(e) {
-    console.log('change', e)
-  },
-
   requestClose() {
     if (this.props.onRequestClose) {
       this.props.onRequestClose()
@@ -83,7 +87,11 @@ module.exports = React.createClass({
   },
 
   orderedSearchResults() {
-    return UserSearchStore.getResults().sortBy(u =>
+    var users = UserSearchStore.getSearchResults()
+    if (users.size == 0) {
+      users = UserSearchStore.getRelevant()
+    }
+    return users.sortBy(u =>
       (UserStore.isCurrent(u) ? 'a' : 'z') + u.username.toLowerCase()
     )
   },
