@@ -138,6 +138,14 @@ class Task < Wip
     end
   end
 
+  def assign_lowest_priority
+    ActiveRecord::Base.transaction do
+      lowest_priority = product.tasks.where(state: 'open').where.not(priority: nil).order(priority: :desc).limit(1).pluck(:priority).first
+      lowest_priority ||= 0
+      update(priority: lowest_priority + 1)
+    end
+  end
+
   def remove_priority
     ActiveRecord::Base.transaction do
       update(priority: nil)

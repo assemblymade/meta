@@ -35,7 +35,11 @@ var CreateBounty = React.createClass({
   },
 
   renderBountyOffer: function() {
-    return <CreateBountyOffer {...this.props} />
+    var currentUser = UserStore.getUser();
+
+    if (currentUser.is_core) {
+      return <CreateBountyOffer {...this.props} />
+    }
   },
 
   render: function() {

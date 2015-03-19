@@ -41,7 +41,11 @@ class WipFactory
   end
 
   def prioritize(wip)
-    wip.assign_top_priority
+    if @product.core_team?(@creator)
+      wip.assign_top_priority
+    else
+      wip.assign_lowest_priority
+    end
   end
 
   def register_with_readraptor(wip, users)
