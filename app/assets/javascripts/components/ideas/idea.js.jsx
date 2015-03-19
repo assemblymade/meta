@@ -115,8 +115,10 @@ let Idea = React.createClass({
     if (hearted) {
       leftSideText = function() {
         return (
-          <div className="py2">
-            <IdeaSharePanel idea={idea} size="large"/>
+          <div className="overflow-hidden">
+            <div className="py2">
+              <IdeaSharePanel idea={idea} size="large"/>
+            </div>
           </div>
         )
       }

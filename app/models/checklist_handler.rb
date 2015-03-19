@@ -38,12 +38,13 @@ class ChecklistHandler
     elsif entity.class.name == "Product"
       name = entity.name
     end
+
     if !name
-      name = "Suggest a name"
+      name = "Discuss potential names in the comments"
     end
 
     checklistitem['subtext'] = name.to_s
-    checklistitem['complete'] = ((name != "Unnamed") && (name != nil))
+    checklistitem['complete'] = name.present? && name != "Discuss potential names in the comments"
     checklistitem['editable_button_text'] = "Set tentative name"
     checklistitem['editable_type'] = "tentative_name"
     checklistitem
@@ -174,10 +175,10 @@ class ChecklistHandler
   def checklists(entity)
     result = {}
     checklist = []
-    s = stages = [["Move this idea forward", 0, "Build a Product"], ["Recruitment", 1, "Move to Setup"], ["Building", 2, "To the Moon"], ["Growth", 3, "Grow an Industrial Empire"]]
+    s = stages = [["Idea", 0, "Build a Product", "Move this idea forward"], ["Recruitment", 1, "Move to Setup"], ["Building", 2, "To the Moon"], ["Growth", 3, "Grow an Industrial Empire"]]
     s.each do |stage|
       info = checklist_info(entity, stage[1])
-      stage_info = {name: stage[0], order: stage[1], items: info, buttonText: stage[2], can_progress: progressable(info)}
+      stage_info = {name: stage[0], order: stage[1], items: info, buttonText: stage[2], cta: stage[3], can_progress: progressable(info)}
       checklist.append(stage_info)
     end
     result['stages'] = checklist

@@ -7,3 +7,5 @@
 
 <%= render 'shared/navbar' %>
 <%= react_component('StartPage', productsStarted: Product.count, mastheadUrl: image_url("faces.jpg"), productsWorked: Product.where(state: [:team_building, :greenlit, :profitable]).count) %>
+
+<%= render 'shared/footer' %>

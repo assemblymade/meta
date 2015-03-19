@@ -116,17 +116,17 @@ var IdeaSharePanel = React.createClass({
           <div className="left" key="social-buttons">
             <a href="javascript:void(0);" className="mr1" onClick={this.handleTwitterClick} key="twitter-button">
               <CircleIcon icon="twitter" margin={5} />
-              <span className="gray-2">Tweet</span>
+              <span className="gray-2 bold">Tweet</span>
             </a>
 
             <a href="javascript:void(0);" className="mr1" onClick={this.handleFacebookClick} key="facebook-button">
               <CircleIcon icon="facebook" margin={5} />
-              <span className="gray-2">Share</span>
+              <span className="gray-2 bold">Share</span>
             </a>
 
             <a href="javascript:void(0);" className="mr1" onClick={this.handleGooglePlusClick} key="google-button">
               <CircleIcon icon="google-plus" margin={5} />
-              <span className="gray-2">Plus</span>
+              <span className="gray-2 bold">Plus</span>
             </a>
           </div>
 

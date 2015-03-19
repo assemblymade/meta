@@ -95,7 +95,7 @@ var StartPage = React.createClass({
             <div className="visible-xs mt3" />
             <div className="mb3">
               Already have a product and want to migrate it to Assembly?&nbsp;
-              <a href="mailto:assembly@helpful.io" data-helpful="assembly">Contact Us</a>
+              <a href="mailto:assembly@helpful.io" data-helpful="assembly">Contact us</a>
             </div>
           </div>
         </div>
@@ -384,7 +384,7 @@ var StartPage = React.createClass({
               <div className="visible-xs mt3" />
               <div className="pull-right mb3">
                 Already have a product and want to migrate it to Assembly?&nbsp;
-                <a href="mailto:assembly@helpful.io" data-helpful="assembly">Contact Us</a>
+                <a href="mailto:assembly@helpful.io" data-helpful="assembly">Contact us</a>
               </div>
             </div>
           </div>
