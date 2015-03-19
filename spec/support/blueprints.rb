@@ -112,7 +112,6 @@ Product.blueprint do
   name  { "Product #{sn}" }
   slug  { "product-#{sn}" }
   pitch { Faker::Lorem.paragraph(1) }
-  can_advertise { true }
 end
 
 Story.blueprint do

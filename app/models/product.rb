@@ -102,10 +102,9 @@ class Product < ActiveRecord::Base
       date.beginning_of_week, date.beginning_of_week + 1.week
     )
   }
-  scope :advertisable,     -> { where(can_advertise: true) }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
   scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC') }
-  scope :public_products,  -> { where.not(id: Product.private_ids).where(flagged_at: nil).advertisable.where.not(state: ['stealth', 'reviewing']) }
+  scope :public_products,  -> { where.not(id: Product.private_ids).where(flagged_at: nil).where.not(state: ['stealth', 'reviewing']) }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
   scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }
@@ -121,6 +120,7 @@ class Product < ActiveRecord::Base
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
   scope :with_topic,   -> (topic) { where('topics @> ARRAY[?]::varchar[]', topic) }
   scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
+  scope :visible_to, ->(user) { user.nil? ? public_products : where.not(id: Product.private_ids).where(flagged_at: nil) }
 
   EXCLUSIONS = %w(admin about core hello ideas if owner product script start-conversation)
 

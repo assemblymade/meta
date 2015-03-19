@@ -14,6 +14,6 @@ describe 'showing bounty' do
     visit product_wip_path(product, task)
 
     expect(page).to have_text('Design a new logo')
-    expect(page).to have_text('Work on this bounty')
+    expect(page).to have_text('Assign to me')
   end
 end

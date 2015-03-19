@@ -65,3 +65,31 @@
 <% end %>
 
 <%= react_component 'ProfileProductBadges' %>
+
+<% if @user.products.any? %>
+  <h6 class="mt4">Products started</h6>
+  <div class="clearfix">
+    <% @user.products.visible_to(current_user).each do |product| %>
+      <div class="left mr1 mt1" data-toggle="tooltip" title="<%= product.name %>">
+        <a href="<%= product_path(product) %>">
+          <div class="vignette vignette--rounded vignette--dark" style="max-width:35px;max-height:35px;">
+            <%= firesize_img product.logo_url, 70, 70, 'g_center' %>
+          </div>
+        </a>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @user.ideas.any? %>
+  <h6 class="mt4">Ideas proposed</h6>
+  <div class="clearfix">
+    <% @user.ideas.order(created_at: :desc).each do |idea| %>
+      <div class="py1">
+        <a href="<%= idea_path(idea) %>" class="gray-2">
+          <%= idea.title %>
+        </a>
+      </div>
+    <% end %>
+  </div>
+<% end %>
