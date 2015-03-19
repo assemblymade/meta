@@ -152,10 +152,8 @@ class ChecklistHandler
     elsif stage_number == 1
       checklists = recruit_checklists(entity)
     elsif stage_number == 2
-      checklists = setup_checklists(entity)
-    elsif stage_number == 3
       checklists = build_checklists(entity)
-    elsif stage_number == 4
+    elsif stage_number == 3
       checklists = growth_checklists(entity)
     else
       checklists = []
@@ -176,7 +174,7 @@ class ChecklistHandler
   def checklists(entity)
     result = {}
     checklist = []
-    s = stages = [["Move Your Idea Forward", 0, "Build a Product"], ["Recruitment", 1, "Move to Setup"], ["Setup", 2, "Start Building"], ["Building", 3, "To the Moon"], ["Growth", 4, "Grow an Industrial Empire"]]
+    s = stages = [["Move this idea forward", 0, "Build a Product"], ["Recruitment", 1, "Move to Setup"], ["Building", 2, "To the Moon"], ["Growth", 3, "Grow an Industrial Empire"]]
     s.each do |stage|
       info = checklist_info(entity, stage[1])
       stage_info = {name: stage[0], order: stage[1], items: info, buttonText: stage[2], can_progress: progressable(info)}
