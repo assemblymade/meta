@@ -1,11 +1,11 @@
 class ChecklistHandler
 
-  DEFAULT_TILTING_THRESHOLD = 10
+  DEFAULT_TILTING_THRESHOLD = 20
   COMMENT_MINIMUM = 5
 
   def hearts_checklist(entity)
     hearts = {}
-    hearts['name'] = "Get some love"
+    hearts['name'] = "Validate people want this"
     hearts['editable'] = false
 
     if entity.class.name == "Idea"
@@ -22,9 +22,9 @@ class ChecklistHandler
 
     hearts['complete'] = love >= DEFAULT_TILTING_THRESHOLD
     if hearts['complete']
-      hearts['subtext'] = love.to_s + " hearts"
+      hearts['subtext'] = "#{love} hearts"
     else
-      hearts['subtext'] = love.to_s + " / "+DEFAULT_TILTING_THRESHOLD.to_s+" hearts"
+      hearts['subtext'] = "#{love} / #{DEFAULT_TILTING_THRESHOLD} hearts from the community"
     end
     hearts
   end
@@ -64,7 +64,7 @@ class ChecklistHandler
     end
     checklistitem['complete'] = comments >= COMMENT_MINIMUM
 
-    checklistitem['subtext'] = comments.to_s + " / " + COMMENT_MINIMUM.to_s + " comments"
+    checklistitem['subtext'] = "#{comments} / #{COMMENT_MINIMUM} comments"
     checklistitem
   end
 

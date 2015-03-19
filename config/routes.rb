@@ -303,6 +303,8 @@ ASM::Application.routes.draw do
     post 'follow'
     post 'announcements'
     post 'unfollow'
+    
+    post 'make_idea'
 
     get '/checklistitems' => 'products#checklistitems'
     get '/ownership' => 'products#ownership'

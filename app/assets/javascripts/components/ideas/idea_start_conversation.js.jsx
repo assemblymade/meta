@@ -90,10 +90,6 @@ let IdeaStartConversation = React.createClass({
 
                 <div className="clearfix mb1">
                   <h5 className="mt0 mb2">Shape the idea with help from the community. Start by asking a question to kick things off.</h5>
-
-                  <a className="h6" href="javascript:void(0);" onClick={this.handleHowItWorksClick}>
-                    How it works
-                  </a>
                 </div>
 
                 <form>

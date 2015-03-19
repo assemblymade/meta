@@ -1,6 +1,7 @@
 'use strict';
 
 const Avatar = require('../ui/avatar.js.jsx');
+const Button = require('../ui/button.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
 const IntroductionForm = require('./introduction_form.js.jsx');
 const MetricsBadge = require('./metrics_badge.js.jsx');
@@ -66,6 +67,8 @@ let ProductShow = React.createClass({
     let seeHowAssemblyWorksLink = <a href="/help" className="block px3 py2 center border-top">
       See how Assembly works
     </a>
+    
+    
 
     return (
       <div>
@@ -136,6 +139,10 @@ let ProductShow = React.createClass({
               </div>
 
               <ProductImportantLinks product={product} />
+              
+              {
+                (UserStore.isStaff() ? <Button block={true} action={this.handleMakeIdea}>Make idea</Button> : null)
+              }  
 
             </div>
           </div>
@@ -227,6 +234,10 @@ let ProductShow = React.createClass({
         </a>
       }
     });
+  },
+  
+  handleMakeIdea(e) {
+    $.post(this.state.product.url + '/make_idea')
   }
 });
 

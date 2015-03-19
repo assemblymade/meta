@@ -89,7 +89,7 @@ var StartPage = React.createClass({
           <div className="text-large center" style={{padding: '60px 30px', fontSize: 20}}>
             <div className="mb3">
               <Button type="primary" action="/ideas/new">
-                Submit Your Idea
+                Start an idea
               </Button>
             </div>
             <div className="visible-xs mt3" />
@@ -379,7 +379,7 @@ var StartPage = React.createClass({
             </div>
             <div className="text-large" style={{padding: '60px 30px', fontSize: 20}}>
               <Button type="primary" action="/ideas/new">
-                Submit Your Idea
+                Start an idea
               </Button>
               <div className="visible-xs mt3" />
               <div className="pull-right mb3">
