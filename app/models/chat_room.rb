@@ -19,6 +19,14 @@ class ChatRoom < ActiveRecord::Base
     end
   end
 
+  def migrate_to(connection, url)
+    data = {
+      slug: slug,
+      topic: product.try(:pitch) || slug
+    }
+    connection.post(url, data)
+  end
+
   def key
     "chat_#{id}"
   end
