@@ -12,16 +12,18 @@ class TipsController < ProductController
         @via,
         add_cents
       )
-
       Karma::Kalkulate.new.karma_from_tip(@tip)
-
-      TipMailer.delay(queue: 'mailer').tipped(@tip.id)
       Activities::Tip.publish!(
         actor: current_user,
         subject: @tip,
         target: @tip.to
       )
       @product.auto_watch!(current_user)
+
+      unless @via.is_a? Activities::GitPush
+        # no template for this, let's just skip it
+        TipMailer.delay(queue: 'mailer').tipped(@tip.id)
+      end
     end
 
     render nothing: true, status: 200

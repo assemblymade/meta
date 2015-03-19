@@ -9,7 +9,7 @@ namespace :es do
     ].each do |model|
       model.__elasticsearch__.create_index! force: true
       i = 0
-      total = model.count
+      total = query.count
       query.find_each do |m|
         puts "#{i.to_s.rjust(6)} / #{total}  #{model} #{m.id}"
         client.index  index: model.index_name, type: model.name.downcase, id: m.id, body: m.as_indexed_json
