@@ -86,8 +86,8 @@ let Idea = React.createClass({
       if (currentUser.staff) {
         return (
           <div>
-            <Button action={this.upScore} active={true}>Up Score</Button>
-            <Button action={this.downScore} active={true}>Down Score</Button>
+            <Button action={this.upScore} active={true}>Up Score X2</Button>
+            <Button action={this.downScore} active={true}>Down Score /2</Button>
           </div>
         )
       }
