@@ -20,6 +20,9 @@ class ProductsController < ProductController
         'Easily find useful information.'
       ].sample
 
+    @idea = Idea.find_by(id: params[:idea_id])
+    @participants = @idea.participants
+
     render layout: 'application'
   end
 

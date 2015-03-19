@@ -1,6 +1,6 @@
 class ChecklistHandler
 
-  DEFAULT_TILTING_THRESHOLD = 20
+  DEFAULT_TILTING_THRESHOLD = 6
   COMMENT_MINIMUM = 5
 
   def hearts_checklist(entity)
