@@ -8,7 +8,8 @@ var Button = React.createClass({
     ]),
     type:   React.PropTypes.oneOf(['default', 'primary', 'facebook']),
     block:  React.PropTypes.bool,
-    active: React.PropTypes.bool
+    active: React.PropTypes.bool,
+    disableWith: React.PropTypes.string
   },
 
   getDefaultProps: function() {
@@ -33,7 +34,7 @@ var Button = React.createClass({
     })
 
     if (_.isString(action)) {
-      return <a className={cs} href={action}>{this.props.children}</a>
+      return <a className={cs} href={action} data-disable-with={this.props.disableWith}>{this.props.children}</a>
     }
 
     return (

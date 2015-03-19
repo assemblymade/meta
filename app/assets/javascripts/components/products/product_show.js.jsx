@@ -67,8 +67,8 @@ let ProductShow = React.createClass({
     let seeHowAssemblyWorksLink = <a href="/help" className="block px3 py2 center border-top">
       See how Assembly works
     </a>
-    
-    
+
+
 
     return (
       <div>
@@ -139,10 +139,10 @@ let ProductShow = React.createClass({
               </div>
 
               <ProductImportantLinks product={product} />
-              
+
               {
                 (UserStore.isStaff() ? <Button block={true} action={this.handleMakeIdea}>Make idea</Button> : null)
-              }  
+              }
 
             </div>
           </div>
@@ -235,9 +235,11 @@ let ProductShow = React.createClass({
       }
     });
   },
-  
+
   handleMakeIdea(e) {
-    $.post(this.state.product.url + '/make_idea')
+    $.post(this.state.product.url + '/make_idea', (data) => {
+      window.app.redirectTo(data.url)
+    })
   }
 });
 

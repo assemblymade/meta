@@ -274,11 +274,12 @@ class ProductsController < ProductController
       }
     end
   end
-  
+
   def make_idea
+    authorize! :update, @product
     product = Product.find_by_slug!(params[:product_id])
-    
-    idea = Idea.create_with_discussion(
+
+    @idea = Idea.create_with_discussion(
       product.user,
       name: product.pitch,
       body: product.description,
@@ -288,45 +289,19 @@ class ProductsController < ProductController
       product_id: product.id
     )
 
-    if idea.body.nil? || idea.body.empty?
-      idea.update(flagged_at: Time.now)
+    (product.votes + product.watchings + product.team_memberships).map do |h|
+      next unless h.user_id
+
+      heart = @idea.news_feed_item.hearts.find_or_initialize_by(user_id: h.user_id)
+      heart.created_at = h.created_at
+      heart.save!
     end
 
-    if idea.name.split(' ').count >= 20
-      idea.update(flagged_at: Time.now)
-    end
+    @idea.news_feed_item.update_column('last_commented_at', product.created_at)
 
-    hearts = (product.votes + product.watchings + product.team_memberships).map do |h|
-      # next unless h.user_id
-      { user_id: h.user_id, created_at: h.created_at }
-    end
-
-    # hearts.each do |heart|
-    #   begin
-    #     next if Heart.where(user_id: heart[:user_id], heartable_id: idea.news_feed_item.id).any?
-    #     next if heart[:user_id].nil?
-    #     h = idea.news_feed_item.hearts.create!(
-    #       user_id: heart[:user_id]
-    #     )
-    #
-    #     h.update_column('created_at', heart[:created_at])
-    #   rescue => e
-    #     puts "Heart failed #{e}"
-    #   end
-    # end
-
-    # idea.greenlight! if idea.should_greenlight?
-    # idea.greenlight! if product.greenlit_at
-
-    idea.news_feed_item.update_column('last_commented_at', product.created_at)
-
-    if idea.hearts_count == 0
-      idea.update(flagged_at: Time.now)
-    end
-    
-    
+    render json: @idea
   end
-  
+
   def filter_params
     params.permit(:archived, :mark, :type)
   end
