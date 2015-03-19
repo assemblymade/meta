@@ -23,9 +23,9 @@
           <a href="<%= discover_path %>">Products</a>
         </li>
 
-        <!-- <li class="<%= nav_active_class(:ideas) %>">
+        <li class="<%= nav_active_class(:ideas) %>">
           <a href="<%= ideas_path %>">Ideas</a>
-        </li> -->
+        </li>
 
         <% if user_signed_in? %>
 
@@ -90,7 +90,7 @@
             </li>
           </ul>
         </div>
-    
+
         <script>
           var signupElement = document.getElementById('signup-button');
           signupElement.addEventListener('click', function(e) {
