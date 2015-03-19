@@ -16,7 +16,8 @@ const CustomIcons = [
 const Icon = React.createClass({
   propTypes: {
     icon: React.PropTypes.string.isRequired,
-    fw:   React.PropTypes.bool.isRequired
+    fw:   React.PropTypes.bool.isRequired,
+    extraClasses: React.PropTypes.string
   },
 
   getDefaultProps: function() {
@@ -40,7 +41,7 @@ const Icon = React.createClass({
       )
     }
 
-    return <span className={cs} style={{verticalAlign: this.props.verticalAlign}} />;
+    return <span className={cs + " " + this.props.extraClasses} style={{verticalAlign: this.props.verticalAlign}} />;
   }
 });
 

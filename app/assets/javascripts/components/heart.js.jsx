@@ -45,7 +45,7 @@ var Heart = React.createClass({
 
     var icon = <Icon icon="heart" verticalAlign={1} />
     if (!UserStore.isSignedIn()) {
-      return icon;
+      return (<Icon icon="heart" verticalAlign={1} extraClasses="gray-3" />)
     }
 
     var toggler = <IconToggler on={this.state.user_heart || false} icon={icon} action={this.handleClick} color="red" />

@@ -139,14 +139,13 @@ let IdeaShow = React.createClass({
         </div>
 
         <div className="container">
-
-          <div className="clearfix mxn2">
-            <div className="col col-8 px2">
+          <div className="clearfix mxn2 mt1">
+            <div className="sm-col sm-col-8 px2 mb2">
               <Discussion newsFeedItem={nfi}>
                 <Idea idea={idea} />
               </Discussion>
             </div>
-            <div className="col col-4 px2 mb2">
+            <div className="sm-col sm-col-4 px2 mb2">
               <ProductStateWidget entity={idea} />
             </div>
           </div>
