@@ -9,6 +9,9 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
   attributes :most_recent_product_name
   attributes :most_recent_product_slug
 
+  attributes :most_recent_idea_name
+  attributes :most_recent_idea_slug
+
   attributes :comments, :following, :ideas, :wips
 
   attributes :most_important_quality
@@ -48,6 +51,18 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
 
   def most_recent_product_slug
     object.products.order(:created_at).last.try(:slug)
+  end
+
+  def most_recent_idea_name
+    most_recent_idea.try(:name)
+  end
+
+  def most_recent_idea_slug
+    most_recent_idea.try(:slug)
+  end
+
+  def most_recent_idea
+    @mri ||= object.ideas.order(:created_at).last
   end
 
   def ideas
