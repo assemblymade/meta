@@ -39,14 +39,14 @@ var StartPage = React.createClass({
             <li>
               <div className="step">2</div>
               <div className="body">
-                <strong>Find Collaborators</strong>
+                <strong>Find collaborators</strong>
                 <div className="gray-2">Assemble a founding team.  Own what you make.</div>
               </div>
             </li>
             <li>
               <div className="step">3</div>
               <div className="body">
-                <strong>Build a Product</strong>
+                <strong>Build a product</strong>
                 <div className="gray-2">Create something beautiful with the help of the community.</div>
               </div>
             </li>
