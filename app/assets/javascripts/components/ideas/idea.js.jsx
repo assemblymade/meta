@@ -48,10 +48,21 @@ let Idea = React.createClass({
         </div>
         <div className="px4 py2">
           <TextPost author={idea.user} title={idea.name} timestamp={idea.created_at} body={idea.body} />
+          {this.renderEditLink()}
           {this.renderAdminRow()}
         </div>
       </div>
     )
+  },
+
+  renderEditLink() {
+    let currentUser = UserStore.getUser();
+    let idea = this.props.idea;
+    if (currentUser && (currentUser.staff || currentUser.id === idea.user.id)) {
+      return (
+        <a className="inline-block mt3 right h5 px1" href={idea.url + '/edit'}>Edit</a>
+      )
+    }
   },
 
   renderAdminRow() {
@@ -61,7 +72,7 @@ let Idea = React.createClass({
       let idea = this.props.idea;
 
       return (
-        <a className="bold inline-block mt3 right" href={idea.url + '/admin'}>Admin</a>
+        <a className="inline-block mt3 right h5 px1" href={idea.url + '/admin'}>Admin</a>
       )
     }
   },
