@@ -11,7 +11,7 @@ class ChatMailer < BaseMailer
     @chat_room = @event.wip.chat_room
     @product = @chat_room.product
 
-    @previous_events = @event.wip.comments.order(created_at: :desc).where('created_at < ?', @event.created_at).limit(2)
+    @previous_events = Event::Comment.where(wip_id: @event.wip_id).where('created_at < ?', @event.created_at).limit(2)
     @previous_events.to_a.reverse! if @previous_events
     @comments = @previous_events + [@event]
 
