@@ -30,6 +30,12 @@ class CoinsMinted
     if chosen_participants.count > 0
       title = "Participate in the Idea stage of #{product.name}"
       t = Task.create!({title: title, user: author, product: product, earnable_coins_cache: coins_each})
+
+      if t.valid?
+        NewsFeedItem.create_with_target(t)
+        Offer.create!(user: author, bounty: t, earnable: coins_each, ip: author.current_sign_in_ip)
+      end
+
       chosen_participants.each do |p|
         events = idea.news_feed_item.comments.where(user_id: p.id)
         if events.count == 0
