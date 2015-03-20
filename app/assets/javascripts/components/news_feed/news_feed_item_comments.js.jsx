@@ -199,7 +199,7 @@ var NewsFeedItemComments = React.createClass({
     return (
       <div>
         {this.renderComments()}
-        <div className="py3">
+        <div className="py3 border-top">
           {this.renderNewCommentForm()}
         </div>
       </div>
@@ -225,7 +225,6 @@ var NewsFeedItemComments = React.createClass({
         <Timeline>
           {confirmedComments}
           {optimisticComments}
-          {this.renderRuler()}
         </Timeline>
       </div>
     );
@@ -331,9 +330,9 @@ var NewsFeedItemComments = React.createClass({
   renderOptimisticComments: function() {
     return this.state.optimisticComments.map(function(comment) {
       return (
-        <div className="_py1_25" key={comment.id}>
+        <Timeline.Item key={comment.id}>
           <Comment author={comment.user} body={marked(comment.body)} optimistic={true} key={comment.id} />
-        </div>
+        </Timeline.Item>
       )
     });
   },
@@ -441,9 +440,9 @@ function parseEvent(event, awardUrl, editUrl) {
 
   if (renderedEvent) {
     return (
-      <div className="_py1_25" key={event.id}>
+      <Timeline.Item key={event.id}>
         {renderedEvent}
-      </div>
+      </Timeline.Item>
     );
   }
 }

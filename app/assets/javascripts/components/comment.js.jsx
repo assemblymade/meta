@@ -78,8 +78,8 @@ module.exports = React.createClass({
     var author = this.props.author;
 
     return (
-      <div id={this.props.id} className="timeline-item">
-        <div className="left activity-avatar _inline-block">
+      <div id={this.props.id}>
+        <div className="left activity-avatar inline-block">
           <a href={Routes.user_path({ id: this.props.author.username })}>
             <Partner user={author} size={30} product={this.props.product} />
           </a>
