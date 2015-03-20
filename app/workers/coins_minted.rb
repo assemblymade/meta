@@ -43,18 +43,13 @@ class CoinsMinted
         end
         if events.count > 0
           event = events.first
-          # award = t.awards.create!(
-          #   awarder: author,
-          #   winner: p,
-          #   event: event,
-          #   wip: t,
-          #   cents: coins_each
-          # )
-          # minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, coins_each)
           puts "AWARDING USER HERE #{p.username} #{coins_each}"
           t.award(author, event, coins_each)
         end
       end
+
+      t.close!(author, "autoclosed")
+
     end
   end
 
