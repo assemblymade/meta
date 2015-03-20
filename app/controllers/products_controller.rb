@@ -71,13 +71,16 @@ class ProductsController < ProductController
       end
 
       chosen_ids = params[:product][:partner_ids].split(',').flatten
-      puts "CHOSEN IDS #{chosen_ids} #{params[:product]}"
       chosen_few = chosen_ids.map{|a| User.find(a)}
-      puts "CHOSEN FEW"
-      puts chosen_few.inspect
-      puts "PROUDCT"
-      puts @product
       CoinsMinted.new.give_coins_to_participants(chosen_few, @product)
+
+      # chosen_ids.each do |a|
+      #   EmailLog.send_once(a, the_key) do
+      #     PartnershipMailer.delay(queue: 'mailer').create(a, @product.id, @idea.id)
+      #   end
+      # end
+
+      AutoPost.new.generate_idea_product_transition_post(@product)
 
     else
       render action: :new, layout: 'application'

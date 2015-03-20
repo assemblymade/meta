@@ -1,10 +1,21 @@
-<h3><%= @product.name %> just became an Assembly Product</h3>
-<h4 style="center">And you're now an owner!</h4>
-<p>You were listed as a contributor on the idea: <a href="<%= idea_url(@idea) %>"><br><b><%= @idea.name %></b></a>.</p>
-<p>This has become an Assembly Product called <a href="<%= product_url(@product) %>"><b><%= @product.name %></b></a></p>
+<h3><%= @idea.name %> just became an Assembly Product</h3>
 
-<p>You've been given <a href="<%= product_partners_url(@product) %>">10 coins</a> of ownership in <%= @product.name %> by <a href="<%= user_url(@product.user) %>"><b><%= @product.user.username %></b></a> for your participation in the idea.</p>
+You were listed as a contributor on <a href="<%= idea_url(@idea) %>"><b><%= @idea.name %></b></a>, which has just become a
+product called <a href="<%= product_url(@product) %>"><b><%= @product.name %></b></a>.  It's on its way to becoming a real
+product.</p>
 
-<h4>Get more ownership by helping build <%= @product.name %> into a reality.</h4>
+<p>For your early participation, <a href="<%= user_url(@product.user) %>"><b><%= @product.user.username %></b></a> gave you
+10 coins.  These coins represent ownership in Coderwall.</p>
 
-<button>Start Building</button>
+<p><a href="<%= product_url(@product) %>"><b><%= @product.name %></b></a> is currently building its founding team.  Participate
+early to earn more ownership. </p>
+
+<div align="center">
+  <table class="button success radius" style="width: 200px">
+                    <tr>
+                      <td>
+                        <a href="<%= product_url(@product) %>">Get Involved</a>
+                      </td>
+                    </tr>
+  </table>
+</div>
