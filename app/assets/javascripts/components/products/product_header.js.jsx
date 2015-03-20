@@ -79,7 +79,7 @@ const ProductHeader = React.createClass({
                   <AppIcon app={product} size={60} />
                 </a>
 
-                <div className="right py2 ml3">
+                <div className="sm-show right py2 ml3">
                   {this.renderTryButton()}
                 </div>
 
