@@ -17,7 +17,7 @@ const User = require('../user.js.jsx')
 const UserStore = require('../../stores/user_store');
 const BountyCard = require('../bounty_card.js.jsx');
 const Partner = require('../partner.js.jsx')
-const {List} = require('immutable')
+const {List, Map} = require('immutable')
 
 let ProductShow = React.createClass({
   propTypes: {
@@ -97,15 +97,14 @@ let ProductShow = React.createClass({
       }
     }
 
-    let team = List()
+    var team = List()
 
     if (product) {
-      team = List(product.core_team)
-        .merge(product.partners)
+      let coreTeam = List(product.core_team).map(u => [u.id, u])
+      let partners = List(product.partners).map(u => [u.id, u])
 
-      team = team
-        .sortBy(u => !ProductStore.isCoreTeam(u.toJS()))
-        .map(u => u.toJS())
+      team = Map(coreTeam).merge(partners).valueSeq()
+        .sortBy(u => !ProductStore.isCoreTeam(u))
     }
 
     return (
