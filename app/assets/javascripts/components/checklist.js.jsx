@@ -57,7 +57,7 @@ sendUpdate: function(editable_type, path) {
 
           <input className="col-xs-12 py1" name={item.editable_type} type="text" ref="editedData" />
           <br />
-          <Button action={this.sendUpdate.bind(null, item.editable_type, this.props.entity.path)}>{item.editable_button_text}</Button>
+          <Button action={this.sendUpdate.bind(null, item.editable_type, this.props.entity.path)} block={true}>{item.editable_button_text}</Button>
         </div>
       )
     }
@@ -85,12 +85,10 @@ sendUpdate: function(editable_type, path) {
           }.bind(this)
       }
       return (
-        <div>
-          <Button type="primary" block="true" action={buttonAction}>
-            {buttonAction === null ? <Icon fw="true" icon="lock" /> : ''}
-            {this.props.buttonText}
-          </Button>
-        </div>
+        <Button type="primary" block={true} action={buttonAction}>
+          {buttonAction === null ? <Icon fw="true" icon="lock" /> : ''}
+          {this.props.buttonText}
+        </Button>
       )
 
     }

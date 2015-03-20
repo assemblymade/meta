@@ -21,7 +21,12 @@ class ProductsController < ProductController
       ].sample
 
     @idea = Idea.find_by(id: params[:idea_id])
-    @participants = @idea.try(:participants)
+
+    if @idea
+      @participants = @idea.participants.map{|a| UserSerializer.new(a)}
+    else
+      @participants = []
+    end
 
     render layout: 'application'
   end
@@ -65,8 +70,13 @@ class ProductsController < ProductController
         @idea.update(product: @product)
       end
 
-      chosen_ids = @product.partner_ids.split(',')
-      chosen_few = chosen_ids.map{|a| User.find_by(id: a)}.select{|a| a}
+      chosen_ids = params[:product][:partner_ids].split(',').flatten
+      puts "CHOSEN IDS #{chosen_ids} #{params[:product]}"
+      chosen_few = chosen_ids.map{|a| User.find(a)}
+      puts "CHOSEN FEW"
+      puts chosen_few.inspect
+      puts "PROUDCT"
+      puts @product
       CoinsMinted.new.give_coins_to_participants(chosen_few, @product)
 
     else
@@ -195,30 +205,27 @@ class ProductsController < ProductController
         product.core_team_memberships.create(user: user)
       end
 
-      coins_allocated = ownership.values.map(&:to_i).sum
-      founder_coins = 100 * Product::INITIAL_COINS
-      TransactionLogEntry.minted!(nil, Time.now, product, current_user.id, founder_coins)
       product.update_partners_count_cache
       product.save!
 
       AutoTipContract.replace_contracts_with_default_core_team_split(product)
 
-      invitees = (core_team_ids + ownership.keys).uniq
-      invitees.each do |email_or_user_id|
-        invite_params = {
-          invitor: current_user,
-          via: product,
-          tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS,
-          core_team: true
-        }
-
-        if email_or_user_id.uuid?
-          invite_params[:invitee] = User.find(email_or_user_id)
-        else
-          invite_params[:invitee_email] = email_or_user_id
-        end
-        Invite.create_and_send(invite_params)
-      end
+      # invitees = (core_team_ids + ownership.keys).uniq
+      # invitees.each do |email_or_user_id|
+      #   invite_params = {
+      #     invitor: current_user,
+      #     via: product,
+      #     tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS,
+      #     core_team: true
+      #   }
+      #
+      #   if email_or_user_id.uuid?
+      #     invite_params[:invitee] = User.find(email_or_user_id)
+      #   else
+      #     invite_params[:invitee_email] = email_or_user_id
+      #   end
+      #   Invite.create_and_send(invite_params)
+      # end
 
       flash[:new_product_callout] = true
     end

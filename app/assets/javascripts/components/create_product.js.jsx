@@ -6,9 +6,12 @@ const PersonPicker = require('./person_picker.js.jsx');
 const CreateProduct = React.createClass({
 
   getInitialState: function() {
+    var currentUser = app.currentUser().attributes
     var partners = this.props.participants || []
+    partners = _.reject(partners, function(p){return p.id === currentUser.id})
+
     return {
-      creator: app.currentUser().attributes,
+      creator: currentUser,
       partners: partners,
       potentialPartner: null
     }
@@ -144,4 +147,3 @@ const CreateProduct = React.createClass({
 })
 
 module.exports = window.CreateProduct = CreateProduct;
-

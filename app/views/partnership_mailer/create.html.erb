@@ -1,0 +1,88 @@
+<span style="font-size:18px;font-weight:bold;color:#444">Hi @<%= @user.username %>,</span style="font-size:18px;">
+
+<p style="font-size:18px;line-height:24px;margin-top:15px;color:#8b909a;">
+  I've built this tool to help you find the activities and products you'll enjoy the most.  My algorithm tries to best match you based on your expressed interests.
+  It's still a work-in-progress.  But in the meantime, you might enjoy what we've found.
+</p>
+<p style="font-size:18px;line-height:24px;margin-top:15px;color:#8b909a;>
+  Let me know how it's going.  If you find these activities interesting, feel free to jump in.  They're available right now.
+</p>
+<p  style="font-size:18px;line-height:24px;margin-top:15px;color:#8b909a;>
+Andrew Barisser,<br>
+Assembly Engineer</p>
+
+<h4 style="margin-top:30px;margin-bottom:30px;color:#444">Here is what we found for you.</h4>
+
+<style>
+  img.app-icon{
+    width:30px !important;
+    height:30px !important;
+  }
+  img.fixed-size-icon{
+    height:14px !important;
+  }
+</style>
+
+<table style="width:100%;">
+  <tr>
+    <td>
+      <% @bounties.each do |bounty| %>
+        <table style="margin-bottom:25px;background:white;height:100px;width:100%;">
+          <tr style="height:30px;border-bottom:solid thin #eee;">
+            <td style="padding:10px 15px;vertical-align:top;width:30px;">
+              <%= app_icon(bounty.product, size: 25) %>
+            </td>
+            <td style="padding-top:12px; height:30px;vertical-align:top;text-align:left;" valign="top">
+              <%= link_to bounty.product.name, product_url(bounty.product), style: "font-size:14px;font-weight:bold;color:#333 !important;" %>
+              <span style="font-size:14px;padding-left:10px;color:#8b909a;">
+                <%= bounty.product.pitch %>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding:15px 15px 0px;">
+              <%= link_to bounty.title, product_wip_url(bounty.product, bounty), style: "font-size:20px;" %>
+            </td>
+          </tr>
+          <% if bounty.description %>
+            <tr>
+              <td colspan="2" style="padding:0px 15px 15px;color:#8b909a;font-size:14px;">
+                <%= truncate(bounty.description, length: 150) %>
+              </td>
+            </tr>
+          <% end %>
+          <tr>
+            <td colspan="2" style="padding:0px 10px 15px;color:#8b909a;font-size:14px;">
+              <span>
+                <% bounty.marks.limit(4).pluck(:name).each do |m| %>
+                  <span style="text-transform: uppercase;margin-left:5px;font-size:12px;font-weight:600;"><%= "##{m}" %></span>
+                <% end %>
+              </span>
+            </td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<table style="margin-top:30px;">
+  <tr>
+    <td>
+      <center>
+        <span class="button success radius" style="border-radius: 20px;-moz-border-radius: 20px;-webkit-border-radius: 20px;padding:10px 60px;color:white;font-weight:bold;">
+          <%= link_to "See what the community is building", discover_url(:updates), style: "color:white !important;" %>
+        </span>
+      </center>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding-top:40px;">
+      <h4 style="text-align:center !important;">
+      Don't see what you're looking for?
+      <br />
+      <a href="mailto:notifications@assembly.com">Let us know.</a>
+      </h4>
+    </td>
+  </tr>
+</table>

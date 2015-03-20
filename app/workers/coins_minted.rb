@@ -21,19 +21,32 @@ class CoinsMinted
     @product.save!
   end
 
-  def give_coins_to_participants(chosen_participants, product, coins_each=1)
+  def give_coins_to_participants(chosen_participants, product, coins_each=10)
     author = product.user
     idea = Idea.find_by(product_id: product.id)
+    if !chosen_participants.include?(author)
+      chosen_participants.append(author)
+    end
     if chosen_participants.count > 0
       title = "Participate in the Idea stage of #{product.name}"
       t = Task.create!({title: title, user: author, product: product, earnable_coins_cache: coins_each})
       chosen_participants.each do |p|
-        event = idea.news_feed_item.comments.where(user_id: p.id)
-        if event.count == 0
-          event = idea.news_feed_item.hearts.where(user_id: p.id)
+        events = idea.news_feed_item.comments.where(user_id: p.id)
+        if events.count == 0
+          events = idea.news_feed_item.hearts.where(user_id: p.id)
         end
-        if event.count > 0
-          t.award(author, event.first)
+        if events.count > 0
+          event = events.first
+          # award = t.awards.create!(
+          #   awarder: author,
+          #   winner: p,
+          #   event: event,
+          #   wip: t,
+          #   cents: coins_each
+          # )
+          # minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, coins_each)
+          puts "AWARDING USER HERE #{p.username} #{coins_each}"
+          t.award(author, event, coins_each)
         end
       end
     end
