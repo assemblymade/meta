@@ -374,8 +374,10 @@ let DashboardIndex = React.createClass({
           <h6 className="gray-3 caps mt2 mb2">Bounties you&#8217;re working on</h6>
           {this.state.lockedBounties.map(function(bounty) {
             return (
-              <div className="mt2">
-                <BountyCard bounty={bounty} showLocker={true} />
+              <div className="mb2">
+                <Tile>
+                  <BountyCard bounty={bounty} />
+                </Tile>
               </div>
             )
           })}
@@ -390,8 +392,10 @@ let DashboardIndex = React.createClass({
           <h6 className="gray-3 caps mt2 mb2">Bounties to review</h6>
           {this.state.reviewingBounties.map(function(bounty) {
             return (
-              <div className="mt2">
-                <BountyCard bounty={bounty} />
+              <div className="mb2">
+                <Tile>
+                  <BountyCard bounty={bounty} />
+                </Tile>
               </div>
             )
           })}

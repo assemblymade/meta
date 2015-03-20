@@ -243,7 +243,9 @@ ASM::Application.routes.draw do
         resources :comments, only: [:create]
       end
 
-      resources :bounties, only: [:create] do
+      resources :partners, only: [:index]
+
+      resources :bounties, only: [:index, :create] do
         resources :offers, only: [:create, :show]
       end
 
@@ -305,7 +307,7 @@ ASM::Application.routes.draw do
     post 'follow'
     post 'announcements'
     post 'unfollow'
-    
+
     post 'make_idea'
 
     get '/checklistitems' => 'products#checklistitems'

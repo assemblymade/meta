@@ -3,7 +3,13 @@ class Api::BountiesController < ApiController
 
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
-  before_action :authenticate
+  before_action :authenticate, only: [:create]
+
+  def index
+    @product = Product.find_by_slug(params[:product_id])
+    @bounties = @product.tasks.where.not(state: [:closed, :resolved]).order('priority ASC NULLS LAST').limit(3)
+    respond_with(@bounties, each_serializer: BountyShallowSerializer)
+  end
 
   def create
     @product = Product.find_by_slug(params[:product_id])

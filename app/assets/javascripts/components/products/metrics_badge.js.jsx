@@ -9,35 +9,36 @@ const UserStore = require('../../stores/user_store.js')
 module.exports = React.createClass({
   displayName: 'MetricsBadge',
 
-  getInitialState() {
-    var product = ProductStore.getProduct()
-    return {
-      product: product,
-      totalVisitors: product.total_visitors
-    }
+  propTypes: {
+    product: React.PropTypes.object.isRequired
   },
 
   render() {
-    if (this.state.totalVisitors == null || this.state.totalVisitors == 0) {
+    let product = this.props.product
+    let totalVisitors = product.total_visitors
+
+    if (totalVisitors == null || totalVisitors == 0) {
       return this.renderEmptyState()
     }
 
-    if (this.state.totalVisitors < 1000) {
+    if (totalVisitors < 1000) {
       return <div />
     }
 
     return <div className="px3 py2">
       <span className="gray-2">Used by </span>
-      <span>{this.cleanNumber(this.state.totalVisitors)}</span>
+      <span>{this.cleanNumber(totalVisitors)}</span>
       <span className="gray-2"> people</span>
     </div>
   },
 
   renderEmptyState() {
+    let {product} = this.props
+    
     if (ProductStore.isCoreTeam(UserStore.getUser())) {
       return <div className="px3 py2 border-top">
         <span className="yellow"><Icon icon="exclamation-triangle" /> </span>
-        <a href={Routes.snippet_product_metrics_path({product_id: this.state.product.slug})} className="gray-1 text-stealth-link">Set up metric collection</a>
+        <a href={Routes.snippet_product_metrics_path({product_id: product.slug})} className="gray-1 text-stealth-link">Set up metric collection</a>
       </div>
     }
     return null

@@ -1,116 +1,59 @@
-var AppIcon = require('./app_icon.js.jsx')
-var Icon = require('./ui/icon.js.jsx')
-var Tile = require('./ui/tile.js.jsx')
-var ProductTile = require('./product_tile.js.jsx')
+'use strict'
 
-var BountyCard = React.createClass({
+import Icon from './ui/icon.js.jsx'
+import Avatar from './ui/avatar.js.jsx'
+import AppCoins from './app_coins.js.jsx'
+
+const BountyCard = React.createClass({
+
   propTypes: {
-    bounty: React.PropTypes.object.isRequired,
-    showLocker: React.PropTypes.bool
+    bounty: React.PropTypes.object.isRequired
   },
-
-  getDefaultProps: function() {
-    return {
-      showLocker: false
-    }
-  },
-
-  renderProduct: function() {
-    var product = this.props.bounty.product
-
-    return (
-      <a href={product.url} className="block clearfix">
-        <div className="left mr2">
-          <AppIcon app={product} size={18} />
-        </div>
-        <div className="overflow-hidden">
-          <h6 className="mt0 mb0 black">{product.name}</h6>
-        </div>
-      </a>
-    )
-  },
-
-  renderDetails: function() {
-    var bounty = this.props.bounty
-    var showLocker = this.props.showLocker
-
-    if (showLocker) {
-      return
-    }
-
-    return (
-      <div className="mt2">
-        <div className="right h6 mt0 mb0" style={{ marginTop: 3 }}>
-          <div className="ml2 inline gray-3 bold">
-            <Icon icon={"comment"} />
-            <span className="ml1">{bounty.comments_count}</span>
-          </div>
-          <div className="ml2 inline gray-3 bold">
-            <Icon icon={"heart"} />
-            <span className="ml1">{bounty.hearts_count}</span>
-          </div>
-        </div>
-
-        <div className="h6 mt0 mb0 clearfix">
-          <div className="left mr1">
-            <Avatar user={bounty.user} size={18} />
-          </div>
-          <a href={bounty.user.url} className="block overflow-hidden bold black ml1">
-            {bounty.user.username}
-          </a>
-        </div>
-      </div>
-    )
-  },
-
-  renderLocker: function() {
-    var bounty = this.props.bounty
-    var locker = bounty.locker
-    var showLocker = this.props.showLocker
-
-    if (!showLocker || !locker) {
-      return
-    }
-
-    return (
-      <div className="p2 border-top h6 mt0 mb0 clearfix">
-        <div className="left">
-          <Avatar user={locker} size={18} />
-        </div>
-        <div className="overflow-hidden">
-          <a href={locker.url} className="bold black ml1">
-            {locker.username}
-          </a>
-          {' '}
-          <span className="gray-2">
-            has {moment(bounty.locked_at).add(60, 'hours').fromNow(true)} to work on this
-          </span>
-        </div>
-      </div>
-    )
-  },
-
 
   render: function() {
-    var bounty = this.props.bounty
-    var product = this.renderProduct()
-    var details = this.renderDetails()
-    var locker = this.renderLocker()
+    let bounty = this.props.bounty
+    let locker = null,
+        meta = null,
+        comments = null,
+        hearts = null
+
+    if (bounty.locker) {
+      locker = <div className="right ml2 py2">
+        <Avatar user={bounty.locker} />
+      </div>
+    }
+
+    if (bounty.comments_count > 0) {
+      comments = <div className="left px1">
+        <Icon icon="comment" /> {bounty.comments_count}
+      </div>
+    }
+
+    if (bounty.hearts_count > 0) {
+      hearts = <div className="left px1">
+        <Icon icon="heart" /> {bounty.hearts_count}
+      </div>
+    }
 
     return (
-      <ProductTile product={this.props.bounty.product}>
-        <div className="py2" style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
-          <a className="blue block h5 mt0 mb0" href={bounty.url}>
-            {bounty.title}
-          </a>
-
-          {details}
-        </div>
-
+      <div className="px3 py2 clearfix">
         {locker}
-      </ProductTile>
+
+        <div className="overflow-hidden">
+          <div>
+            {bounty.title}
+          </div>
+          <div className="clearfix mxn1 gray-3 h6" style={{lineHeight: '2rem'}}>
+            <div className="left px1">
+              <AppCoins n={bounty.coins} color="gray-3" />
+            </div>
+            {comments}
+            {hearts}
+          </div>
+        </div>
+      </div>
     )
   }
 })
 
-window.BountyCard = module.exports = BountyCard
+module.exports = window.BountyCard = BountyCard

@@ -15,6 +15,9 @@ const Screenshots = require('./screenshots.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const User = require('../user.js.jsx')
 const UserStore = require('../../stores/user_store');
+const BountyCard = require('../bounty_card.js.jsx');
+const Partner = require('../partner.js.jsx')
+const {List} = require('immutable')
 
 let ProductShow = React.createClass({
   propTypes: {
@@ -30,10 +33,17 @@ let ProductShow = React.createClass({
 
     ProductStore.addChangeListener(this.onProductChange);
 
+
+    // This splendor is @chrislloyd. I'm sorry future maintainers!
     $.getJSON(`/api/products/${this.state.product.slug}/updates/paged.json`, function(data) {
       this.setState({
         updates: data.posts,
         updateCount: data.meta.count
+      })
+    }.bind(this))
+    $.getJSON(`/api/products/${this.state.product.slug}/bounties.json?limit=3`, function(data) {
+      this.setState({
+        bounties: data
       })
     }.bind(this))
   },
@@ -45,7 +55,10 @@ let ProductShow = React.createClass({
   getInitialState() {
     return {
       product: this.getProductStateFromStore(),
-      updates: []
+      updates: [],
+      bounties: [],
+      partners: [],
+      description: false
     }
   },
 
@@ -63,12 +76,37 @@ let ProductShow = React.createClass({
     let product = this.state.product;
     let slug = product.slug;
     let user = UserStore.getUser();
+    let description = null
 
     let seeHowAssemblyWorksLink = <a href="/help" className="block px3 py2 center border-top">
       See how Assembly works
     </a>
 
+    if (product.description_html) {
+      if (this.state.description) {
+        description = <div className="mb2">
+          <div className="mb2">
+            <Markdown color="gray-1" content={product.description_html} normalized={true} />
+          </div>
+          <a href="#" onClick={this.handleToggleDescription}>Read less</a>
+        </div>
+      } else {
+        description = <div className="mb2">
+          <a href="#" onClick={this.handleToggleDescription}>Read more</a>
+        </div>
+      }
+    }
 
+    let team = List()
+
+    if (product) {
+      team = List(product.core_team)
+        .merge(product.partners)
+
+      team = team
+        .sortBy(u => !ProductStore.isCoreTeam(u.toJS()))
+        .map(u => u.toJS())
+    }
 
     return (
       <div>
@@ -84,61 +122,66 @@ let ProductShow = React.createClass({
                 <Screenshots key="product-screenshots" />
 
                 <div className="clearfix p3 sm-p4">
-                  <Markdown content={product.description_html} normalized={true} />
-
-                  <div className="mt3">
-                    <ProductSubsections />
-                  </div>
-
-                  <hr />
-
-                  <div className="mb4">
-                    <h6 className="gray-2 caps mt0 mb2">Core team ({product.core_team.length})</h6>
-                    <div className="clearfix mxn1">
-                      {product.core_team.map(function(user) {
-                        return <div className="left p1" key={user.id} href={user.url}>
-                          <User user={user} />
-                        </div>
-                      })}
+                  <div className="mb3">
+                    <div className="h4 mb2 black mb3">
+                      <Markdown color="black" content={product.lead} />
                     </div>
+                    {description}
                   </div>
 
-
-                  <div className="mb4">
-                    <div className="mb2">
-                      <a href={`/${product.slug}/activity`} className="right">More</a>
+                  <div className="py3">
+                    <div className="clearfix py2">
+                      <a href={`/${product.slug}/activity`} className="right h6">View all</a>
                       <h6 className="gray-2 caps mt0 mb0">Updates ({this.state.updateCount})
                       </h6>
                     </div>
+                    {this.renderUpdates()}
+                  </div>
 
-                    <div className="mxn2">
-                      {this.renderUpdates()}
+
+                  <div className="py3">
+                    <div className="clearfix py2">
+                      <h6 className="left gray-2 caps mt0 mb0">
+                        Team ({team.size})
+                      </h6>
+
+                      <a className="right h6" href={`${product.url}/partners`}>View all</a>
+                    </div>
+                    <div className="clearfix mxn1">
+                      {team.take(20).map(function(user) {
+                        return <a className="left p1" key={user.id} href={user.url}>
+                          <Partner user={user} product={product} size={36} />
+                        </a>
+                      }).toJS()}
                     </div>
                   </div>
-                </div>
 
+
+                </div>
               </Tile>
             </div>
 
             <div className="md-col md-col-4 px3">
               <div className="mb3">
-                <Tile>
-                  <div className="p3">
-                    <h5 className="mt0 mb1">Build {product.name} with us!</h5>
-                    {this.renderIntroductionForm()}
+                <Accordion title="Get started">
+                  <div className="mxn3">
+                    <Tile>
+                      {_.sortBy(this.state.bounties, (b) => b.priority).map((bounty) => {
+                        return <a className="block border-bottom" href={bounty.url}><BountyCard bounty={bounty} key={bounty.id} /></a>
+                      })}
+                    </Tile>
+                    <a className="h6 block px3 py2 gray-2" href={`${product.url}/bounties`}>View more</a>
                   </div>
-
-                  <MetricsBadge />
-
-                  {this.renderMostActiveUsers()}
-
-                  {
-                    (!UserStore.isSignedIn()) ? seeHowAssemblyWorksLink : null
-                  }
-                </Tile>
+                </Accordion>
               </div>
 
-              <ProductImportantLinks product={product} />
+              <div className="mb3">
+                <MetricsBadge product={product} />
+              </div>
+
+              <div className="mb3">
+                <ProductImportantLinks product={product} />
+              </div>
 
               {
                 (UserStore.isStaff() ? <Button block={true} action={this.handleMakeIdea}>Make idea</Button> : null)
@@ -221,19 +264,27 @@ let ProductShow = React.createClass({
   },
 
   renderUpdates() {
-    return _.first(this.state.updates, 3).map(function(update) {
+    let product = this.state.product
+    return _.first(this.state.updates, 1).map(function(update) {
       if (update.body) {
-        return <a className="block clearfix p2 rounded bg-gray-6-hover" href={update.url} key={update.id}>
-          <div className="right mt1 ml2">
-            <Avatar user={update.user} size={24} />
+        return <a className="block clearfix py2 rounded" href={update.url} key={update.id}>
+          <div className="left mr3">
+            <Partner user={update.user} product={product} size={30} />
           </div>
           <div className="overflow-hidden">
             <h5 className="black mt0 mb0">{update.title}</h5>
-            <p className="gray-2 mb0">{truncate(update.body.text, 140)}</p>
+            <p className="gray-2 mb0">{truncate(update.body.text, 60)}</p>
           </div>
         </a>
       }
     });
+  },
+
+  handleToggleDescription(e) {
+    e.preventDefault()
+    this.setState({
+      description: !this.state.description
+    })
   },
 
   handleMakeIdea(e) {
