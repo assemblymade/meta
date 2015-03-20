@@ -193,8 +193,6 @@ class ProductsController < ProductController
       product.update_partners_count_cache
       product.save!
 
-      AutoTipContract.replace_contracts_with_default_core_team_split(product)
-
       invitees = (core_team_ids + ownership.keys).uniq
       invitees.each do |email_or_user_id|
         invite_params = {

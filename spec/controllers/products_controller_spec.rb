@@ -118,11 +118,6 @@ describe ProductsController do
       expect(assigns(:product).core_team).to include(collaborator)
     end
 
-    it 'gives auto tip contracts to core team members' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: [collaborator.id]
-      expect(assigns(:product).auto_tip_contracts.map(&:user)).to include(collaborator)
-    end
-
     it 'creates an invite for core team members with email' do
       expect {
         post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com'], ownership: { 'jake@adventure.com' => 10 }
