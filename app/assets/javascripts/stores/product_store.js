@@ -1,10 +1,10 @@
 var ActionTypes = require('../constants').ActionTypes
 var Dispatcher = require('../dispatcher');
-var Immutable = require('immutable');
+var {Map, List} = require('immutable');
 var Store = require('./es6_store');
 
 var _dispatchToken
-var _product = Immutable.Map({});
+var _product = Map({});
 
 class ProductStore extends Store {
   constructor() {
@@ -17,7 +17,7 @@ class ProductStore extends Store {
           this.emitChange()
           break
         case ActionTypes.PRODUCT_RECEIVE:
-          _product = Immutable.Map(action.product);
+          _product = Map(action.product);
           this.emitChange()
           break
       }
@@ -38,19 +38,14 @@ class ProductStore extends Store {
   }
 
   getCoreTeamIds() {
-    var product = _product && _product.toJS()
-    return (product && product.core_team) || []
+    return List(
+        _product.get('core_team')
+      ).map(u => u.id)
   }
 
-  isCoreTeam(currentUser) {
-    if (currentUser) {
-      return this.getCoreTeamIds().indexOf(currentUser.id) > -1 ||
-        currentUser.is_staff ||
-        currentUser.staff ||
-        currentUser.is_core;
-    }
-
-    return false;
+  isCoreTeam(user) {
+    return user &&
+      this.getCoreTeamIds().contains(user.id)
   }
 
 }
