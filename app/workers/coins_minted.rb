@@ -21,12 +21,13 @@ class CoinsMinted
     @product.save!
   end
 
-  def give_coins_to_participants(chosen_participants, product, author, coins_each)
+  def give_coins_to_participants(chosen_participants, product, coins_each=1)
+    author = product.user
     idea = Idea.find_by(product_id: product.id)
     if chosen_participants.count > 0
       title = "Participate in the Idea stage of #{product.name}"
       t = Task.create!({title: title, user: author, product: product, earnable_coins_cache: coins_each})
-      participants.each do |p|
+      chosen_participants.each do |p|
         event = idea.news_feed_item.comments.where(user_id: p.id)
         if event.count == 0
           event = idea.news_feed_item.hearts.where(user_id: p.id)

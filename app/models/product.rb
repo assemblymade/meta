@@ -20,6 +20,7 @@ class Product < ActiveRecord::Base
   friendly_id :slug_candidates, use: :slugged
 
   attr_encryptor :wallet_private_key, :key => ENV["PRODUCT_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
+  attr_accessor :partner_ids
 
   belongs_to :user
   belongs_to :evaluator, class_name: 'User'

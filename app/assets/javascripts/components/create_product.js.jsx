@@ -77,9 +77,13 @@ const CreateProduct = React.createClass({
 
   render: function() {
     var creator = this.state.creator;
+    var partners = this.state.partners.map(function(x){
+      return x.id
+    })
 
     return (
       <div>
+        <input type="hidden" value={partners.join(',')} name="product[partner_ids]" />
         <table className="table">
           <tbody>
             {this.renderAddNewPartnerRow()}

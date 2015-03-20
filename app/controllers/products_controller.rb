@@ -21,7 +21,7 @@ class ProductsController < ProductController
       ].sample
 
     @idea = Idea.find_by(id: params[:idea_id])
-    @participants = @idea.participants
+    @participants = @idea.try(:participants)
 
     render layout: 'application'
   end
@@ -65,9 +65,9 @@ class ProductsController < ProductController
         @idea.update(product: @product)
       end
 
-      chosen_ids = params[:product][:chosen]
+      chosen_ids = @product.partner_ids.split(',')
       chosen_few = chosen_ids.map{|a| User.find_by(id: a)}.select{|a| a}
-      CoinsMinted.new.give_coins_to_participants(chosen_few, product, author, coins_each)
+      CoinsMinted.new.give_coins_to_participants(chosen_few, @product)
 
     else
       render action: :new, layout: 'application'
@@ -326,7 +326,8 @@ class ProductsController < ProductController
       :try_url,
       :you_tube_video_url,
       :terms_of_service,
-      {:tags => []}
+      {:tags => []},
+      :partner_ids
     ] + Product::INFO_FIELDS.map(&:to_sym)
 
     params.require(:product).permit(*fields)
