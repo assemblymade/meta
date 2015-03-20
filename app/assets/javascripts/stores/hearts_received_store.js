@@ -60,7 +60,7 @@ class HeartsReceivedStore extends Store {
   }
 
   getHeartCountForDay(date) {
-    return heartsByDay.get(moment(date).format('YYDDD')).size
+    return heartsByDay.get(moment(date).format('YYDDD')).map(s => s.users.count).reduce((memo, count) => memo + count)
   }
 
   getStories() {
