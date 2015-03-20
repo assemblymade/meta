@@ -43,15 +43,16 @@
 
           <h5>Invite People</h5>
           <p class="h6 gray-2">Let people know about this product.  It's crucial to start finding collaborators early.</p>
-          <form action="">
-            <% @participants.each do |p| %>
-              <div>
-                <input type="checkbox" checked>
-                <%= inline_react_component 'Avatar', size: 35, user: {username: p.username, avatar_url: p.avatar.url} %>
-                <%= p.username %>
-              </div>
-            <% end %>
-          </form>
+
+          <!-- <% @participants.each do |p| %>
+            <div>
+              <input type="checkbox" checked>
+              <%= inline_react_component 'Avatar', size: 35, user: {username: p.username, avatar_url: p.avatar.url} %>
+              <%= p.username %>
+            </div>
+          <% end %> -->
+
+
 
           <div class="left-align">
 

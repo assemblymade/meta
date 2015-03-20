@@ -21,6 +21,23 @@ class CoinsMinted
     @product.save!
   end
 
+  def give_coins_to_participants(chosen_participants, product, author, coins_each)
+    idea = Idea.find_by(product_id: product.id)
+    if chosen_participants.count > 0
+      title = "Participate in the Idea stage of #{product.name}"
+      t = Task.create!({title: title, user: author, product: product, earnable_coins_cache: coins_each})
+      participants.each do |p|
+        event = idea.news_feed_item.comments.where(user_id: p.id)
+        if event.count == 0
+          event = idea.news_feed_item.hearts.where(user_id: p.id)
+        end
+        if event.count > 0
+          t.award(author, event.first)
+        end
+      end
+    end
+  end
+
   def transfer_coins_to_user_wallets!
     entry.with_lock do
       entry_balance = entry.cents
