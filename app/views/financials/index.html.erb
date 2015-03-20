@@ -118,7 +118,7 @@
   <script>
     $(document).ready(function() {
       var data = <%= @moneystream.to_json.html_safe %>;
-      FinanceGraph(data);
+      FinanceGraph(data, null, ['PlatformCosts', 'Profits', 'Expenses']);
     })
   </script>
 <% end %>
