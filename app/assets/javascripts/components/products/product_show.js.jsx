@@ -78,23 +78,38 @@ let ProductShow = React.createClass({
     let user = UserStore.getUser();
     let description = null
 
-    let seeHowAssemblyWorksLink = <a href="/help" className="block px3 py2 center border-top">
-      See how Assembly works
-    </a>
+    let seeHowAssemblyWorksLink = (<a href="/help" className="block px3 py2 center border-top">
+        See how Assembly works
+      </a>
+    );
 
-    if (product.description_html) {
-      if (this.state.description) {
-        description = <div className="mb2">
-          <div className="mb2">
-            <Markdown color="gray-1" content={product.description_html} normalized={true} />
+    if (product.lead) {
+      var moreDesc;
+
+      if (product.description_html) {
+        if (this.state.description) {
+          moreDesc = <div className="mb2">
+            <div className="mb2">
+              <Markdown color="gray-1" content={product.description_html} normalized={true} />
+            </div>
+            <a href="#" onClick={this.handleToggleDescription}>Read less</a>
           </div>
-          <a href="#" onClick={this.handleToggleDescription}>Read less</a>
-        </div>
-      } else {
-        description = <div className="mb2">
-          <a href="#" onClick={this.handleToggleDescription}>Read more</a>
-        </div>
+        } else {
+          moreDesc = <div className="mb2">
+            <a href="#" onClick={this.handleToggleDescription}>Read more</a>
+          </div>
+        }
       }
+
+      description = <div>
+        <div className="h4 mb2 black mb3">
+          <Markdown color="black" content={product.lead} />
+        </div>
+        {moreDesc}
+      </div>
+
+    } else {
+      description = <Markdown color="black" content={product.description_html} />
     }
 
     var team = List()
@@ -119,12 +134,8 @@ let ProductShow = React.createClass({
               <Tile>
 
                 <Screenshots key="product-screenshots" />
-
-                <div className="clearfix p3 sm-p4">
+                <div className="p3 sm-p4">
                   <div className="mb3">
-                    <div className="h4 mb2 black mb3">
-                      <Markdown color="black" content={product.lead} />
-                    </div>
                     {description}
                   </div>
 
@@ -154,8 +165,6 @@ let ProductShow = React.createClass({
                       }).toJS()}
                     </div>
                   </div>
-
-
                 </div>
               </Tile>
             </div>
