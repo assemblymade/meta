@@ -1,0 +1,2 @@
+class AutoPost
+end

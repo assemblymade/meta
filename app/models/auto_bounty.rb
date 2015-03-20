@@ -1,0 +1,3 @@
+class AutoBounty
+  
+end
