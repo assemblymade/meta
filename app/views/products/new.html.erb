@@ -41,20 +41,17 @@
             <%= f.text_area :description, class: 'form-control',  value: params[:blurb] || '', rows: 8 %>
           <% end %>
 
+          <h5>Invite People</h5>
+          <p class="h6 gray-2">Let people know about this product.  It's crucial to start finding collaborators early.</p>
 
-          <h5>Coins &amp; Ownership</h5>
+          <!-- <% @participants.each do |p| %>
+            <div>
+              <input type="checkbox" checked>
+              <%= inline_react_component 'Avatar', size: 35, user: {username: p.username, avatar_url: p.avatar.url} %>
+              <%= p.username %>
+            </div>
+          <% end %> -->
 
-          <p class="h6 gray-2">
-            Coins are how Assembly tracks ownership. Every product starts out with <%= number_with_delimiter(10_000_000) %> coins of which you can allocate 5% (<%= number_with_delimiter((10_000_000 * 0.05).to_i) %>) initially.
-          </p>
-          <p class="h6 gray-2">
-            Profits are paid out to partners monthly based on their ownership.
-          </p>
-          <p class="h6 gray-2">
-            Sharing ownership with other partners recognizes existing help and incentivizes future work.
-          </p>
-
-          <%= react_component 'CoinOwnership' %>
 
 
           <div class="left-align">
@@ -65,7 +62,6 @@
 
             <p class="h6 gray-2 py1">By creating this product, you agree to Assembly's <a href="<%= tos_path %>">Terms of Service</a>.</p>
           </div>
-
         <% end %>
       </div>
     </div>

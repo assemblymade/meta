@@ -20,6 +20,9 @@ class ProductsController < ProductController
         'Easily find useful information.'
       ].sample
 
+    @idea = Idea.find_by(id: params[:idea_id])
+    @participants = @idea.participants
+
     render layout: 'application'
   end
 
@@ -61,6 +64,11 @@ class ProductsController < ProductController
       if @idea
         @idea.update(product: @product)
       end
+
+      chosen_ids = params[:product][:chosen]
+      chosen_few = chosen_ids.map{|a| User.find_by(id: a)}.select{|a| a}
+      CoinsMinted.new.give_coins_to_participants(chosen_few, product, author, coins_each)
+
     else
       render action: :new, layout: 'application'
     end
