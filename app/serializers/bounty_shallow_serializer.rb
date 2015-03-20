@@ -16,6 +16,10 @@ class BountyShallowSerializer < ApplicationSerializer
     object.news_feed_item.comments_count
   end
 
+  def hearts_count
+    object.news_feed_item.hearts_count
+  end
+
   def coins
     object.earnable_coins_cache
   end

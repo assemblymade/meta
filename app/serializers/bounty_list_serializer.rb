@@ -9,7 +9,8 @@ class BountyListSerializer < ApplicationSerializer
              :priority,
              :product_slug,
              :title,
-             :url
+             :url,
+             :hearts_count
 
   has_one :locker
   has_one :user
@@ -18,6 +19,10 @@ class BountyListSerializer < ApplicationSerializer
 
   def comments_count
     object.news_feed_item.comments_count
+  end
+
+  def hearts_count
+    object.news_feed_item.hearts_count
   end
 
   def url
