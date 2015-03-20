@@ -44,15 +44,13 @@
           <h5>Invite People</h5>
           <p class="h6 gray-2">Let people know about this product.  It's crucial to start finding collaborators early.</p>
 
-          <!-- <% @participants.each do |p| %>
-            <div>
-              <input type="checkbox" checked>
-              <%= inline_react_component 'Avatar', size: 35, user: {username: p.username, avatar_url: p.avatar.url} %>
-              <%= p.username %>
-            </div>
-          <% end %> -->
+          <h5>Reward early supporters</h5>
 
+          <p class="h6 gray-2">
+            Coins are how Assembly tracks ownership. Reward the people who supported your idea through hearts or comments by awarding them one coin in your product.
+          </p>
 
+          <%= react_component 'CreateProduct', participants: @participants %>
 
           <div class="left-align">
 

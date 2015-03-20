@@ -16,6 +16,12 @@ var PersonPicker = React.createClass({
     return { users: [], highlightIndex: 0 }
   },
 
+  getDefaultProps: function() {
+    return {
+      placeholder: '@username or email address'
+    }
+  },
+
   clearText: function() {
     this.refs.usernameOrEmail.getDOMNode().value = ''
     this.setState(this.getInitialState())
@@ -28,7 +34,7 @@ var PersonPicker = React.createClass({
                ref="usernameOrEmail"
                onChange={this.handleChange}
                onKeyDown={this.handleKey}
-               placeholder="@username or email address" />
+               placeholder={this.props.placeholder} />
         {this.state.users.length > 0 ? this.userPicker() : null }
       </div>
     )
