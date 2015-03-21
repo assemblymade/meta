@@ -52,15 +52,16 @@ class ProductsController < ProductController
   end
 
   def create
-    if idea_id = params[:product][:idea_id]
+    if idea_id = params[:product].delete(:idea_id)
       @idea = Idea.find(idea_id)
 
-      return render action: :new, layout: 'application' unless @idea.user == current_user
+      puts "#{@idea.user.username} #{current_user.username}"
+
+      return redirect_to action: :new, layout: 'application' unless @idea.user == current_user
     end
 
     @product = create_product_with_params
     if @product.valid?
-      respond_with(@product, location: product_welcome_path(@product))
 
       Karma::Kalkulate.new.award_for_product_to_stealth(@product)
 
@@ -70,9 +71,9 @@ class ProductsController < ProductController
         @idea.update(product: @product)
       end
 
-      chosen_ids = params[:product][:partner_ids].split(',').flatten
-      chosen_few = chosen_ids.map{|a| User.find(a)}
-      CoinsMinted.new.give_coins_to_participants(chosen_few, @product)
+      chosen_ids = params[:product][:partner_ids] || ''
+      chosen_ids = chosen_ids.split(',').flatten
+      GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)
 
       # chosen_ids.each do |a|
       #   EmailLog.send_once(a, the_key) do
@@ -81,7 +82,6 @@ class ProductsController < ProductController
       # end
 
       #AutoPost.new.generate_idea_product_transition_post(@product)
-
     else
       render action: :new, layout: 'application'
     end
@@ -337,7 +337,8 @@ class ProductsController < ProductController
       :you_tube_video_url,
       :terms_of_service,
       {:tags => []},
-      :partner_ids
+      :partner_ids,
+      :idea_id
     ] + Product::INFO_FIELDS.map(&:to_sym)
 
     params.require(:product).permit(*fields)

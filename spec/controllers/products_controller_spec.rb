@@ -64,6 +64,7 @@ describe ProductsController do
   describe '#create' do
     before do
       sign_in creator
+      creator.update! current_sign_in_ip: IPAddr.new('127.0.0.1/24')
     end
 
     context 'with good params' do
@@ -108,14 +109,35 @@ describe ProductsController do
       end
     end
 
-    it 'fails if terms of service not accepted' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      expect(response).to_not be_success
-    end
-
     it 'creates a product with core team' do
       post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: [collaborator.id]
       expect(assigns(:product).core_team).to include(collaborator)
+    end
+
+    context 'from an idea' do
+      let!(:idea) { Idea.make!(user_id: creator.id) }
+
+      it 'creates a product associated with the correct idea' do
+        post :create, product: { name: 'KJDB', 
+                                 pitch: 'Manage your karaoke life',
+                                 idea_id: idea.id}, 
+                      core_team: [collaborator.id]
+
+        puts "#{creator.username} #{idea.user.username}"
+
+        expect(assigns(:product).id).to eql(idea.product_id)
+      end
+
+      it 'awards coins to supporters if created from an idea' do
+
+        partner_ids = [creator, new_user].map(&:id).join(',')
+        post :create, product: { name: 'KJDB', 
+                                 pitch: 'Manage your karaoke life',
+                                 idea_id: idea.id,
+                                 partner_ids: partner_ids}, 
+                      core_team: [collaborator.id]
+        expect(assigns(:product).partners_count).to eq(2)
+      end
     end
 
     it 'gives auto tip contracts to core team members' do
