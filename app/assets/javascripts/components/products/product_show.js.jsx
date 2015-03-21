@@ -152,7 +152,7 @@ let ProductShow = React.createClass({
                   <div className="py3">
                     <div className="clearfix py2">
                       <h6 className="left gray-2 caps mt0 mb0">
-                        Team ({team.size})
+                        Partners ({team.size})
                       </h6>
 
                       <a className="right h6" href={`${product.url}/partners`}>View all</a>
