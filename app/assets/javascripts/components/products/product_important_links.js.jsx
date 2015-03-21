@@ -50,13 +50,11 @@ let ProductImportantLinks = React.createClass({
   },
 
   renderLink(icon, label, url) {
-    return <a className="col col-4 p1" href={url}>
-      <div>
-        <span className="mr2 gray-3">
-          <Icon icon={icon} />
-        </span>
-        {label}
-      </div>
+    return <a className="block sm-col sm-col-6 lg-col-4 p1" href={url}>
+      <span className="mr2 gray-3">
+        <Icon icon={icon} />
+      </span>
+      {label}
     </a>
   },
 
