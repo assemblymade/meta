@@ -16,6 +16,7 @@ class NewsFeedItemsController < ProductController
         @news_feed_items = ActiveModel::ArraySerializer.new(
           @product.news_feed_items.unarchived_items.order(updated_at: :desc)
         ).as_json
+        store_data news_feed_items: @news_feed_items
       end
 
       format.json do @product.news_feed_items

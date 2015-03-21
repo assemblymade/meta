@@ -3,7 +3,7 @@ class NewsFeedItemComment < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
 
   belongs_to :news_feed_item, touch: true, counter_cache: :comments_count
-  belongs_to :user
+  belongs_to :user, touch: true
 
   has_many :hearts, as: :heartable, after_add: :hearted
   has_many :tips, foreign_key: 'via_id'

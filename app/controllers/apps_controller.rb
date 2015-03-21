@@ -9,10 +9,10 @@ class AppsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        @products = if params[:search].present?
+        @apps = if params[:search].present?
           Search::ProductSearch.new(params[:search]).results
         else
-          @apps = AppsQuery.new(current_user, params).perform.page(params[:page]).per(PER_PAGE)
+          AppsQuery.new(current_user, params).perform.page(params[:page]).per(PER_PAGE)
         end
 
         respond_with(@apps, each_serializer: AppSerializer)

@@ -1,8 +1,6 @@
-<% if current_user %>
-  <%= initial_store_data(
-    'UserStore',
-    UserWithBalanceSerializer.new(current_user).as_json.merge(
-      is_core: ((@product && @product.core_team?(current_user)) || current_user.is_staff?),
-    )
-  ) %>
-<% end %>
+<%= initial_store_data(
+  'UserStore',
+  UserWithBalanceSerializer.new(current_user).as_json.merge(
+    is_core: ((@product && @product.core_team?(current_user)) || current_user.is_staff?),
+  )
+) %>

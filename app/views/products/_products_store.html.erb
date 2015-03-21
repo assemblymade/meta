@@ -1,3 +1,1 @@
-<% if @products.present? %>
-  <%= initial_store_data('ProductsStore', ActiveModel::ArraySerializer.new(@products, each_serializer: ProductShallowSerializer).as_json) %>
-<% end %>
+<%= initial_store_data('ProductsStore', ActiveModel::ArraySerializer.new(store_data(:products), each_serializer: ProductShallowSerializer).as_json) %>

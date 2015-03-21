@@ -81,10 +81,9 @@ class Idea < ActiveRecord::Base
 
   def self.create_with_discussion(user, idea_params)
     idea = transaction do
-      puts idea_params
       idea = user.ideas.create(idea_params)
-
       idea.push_to_news_feed
+      user.touch
       idea
     end
   end

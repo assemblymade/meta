@@ -13,11 +13,13 @@ class TasksController < WipsController
     end
 
     @bounties = find_wips
+    store_data bounties: @bounties
 
     @heartables = NewsFeedItem.where(target_id: @bounties.map(&:id))
+    store_data heartables: @heartables
 
     if signed_in?
-      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map(&:id))
+      store_data user_hearts: Heart.where(user: current_user, heartable_id: @heartables.map(&:id))
     end
 
     if params[:count]
@@ -120,10 +122,10 @@ class TasksController < WipsController
       @invites = Invite.where(invitor: current_user, via: @wip)
     end
 
-    @product_assets = @bounty.product.assets
+    store_data product_assets: @bounty.product.assets
 
     if Watching.watched?(current_user, @bounty.news_feed_item)
-      @user_subscriptions = [@bounty.news_feed_item.id]
+      store_data user_subscriptions: [@bounty.news_feed_item.id]
     end
 
     # FIXME: This call is dominating the worker queue

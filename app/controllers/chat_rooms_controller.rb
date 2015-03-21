@@ -23,9 +23,8 @@ class ChatRoomsController < ApplicationController
     @debug = params[:debug] == 'true'
     @chat_room = ChatRoom.find_by!(slug: params[:id])
 
-    @default_users = []
     if @product
-      @default_users << {id: 'core', username: 'core', name: "#{@product.name} Core Team"}
+      store_data default_users: [{id: 'core', username: 'core', name: "#{@product.name} Core Team"}]
     end
 
     @rooms = (
@@ -33,7 +32,7 @@ class ChatRoomsController < ApplicationController
       ChatRoom.where(product_id: current_user.followed_product_ids).includes(:product).order(updated_at: :desc)
     ).uniq.compact
 
-    @activity_stream = ActivityStream.new(@chat_room.id).page(params[:top_id])
+    store_data activity_stream: ActivityStream.new(@chat_room.id).page(params[:top_id])
   end
 
   def set_product

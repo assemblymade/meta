@@ -14,6 +14,7 @@ class Admin::AppsController < AdminController
     end
 
     @products = @products.page(params[:page]).per(200)
+    store_data products: @products
 
     respond_to do |format|
       format.html { }

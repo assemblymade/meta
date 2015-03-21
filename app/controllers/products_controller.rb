@@ -61,6 +61,7 @@ class ProductsController < ProductController
       if @idea
         @idea.update(product: @product)
       end
+      current_user.touch
     else
       render action: :new, layout: 'application'
     end
@@ -242,11 +243,13 @@ class ProductsController < ProductController
         NewsFeedItemSerializer.new(nfi).as_json
       end
     end
+    store_data news_feed_items: @news_feed_items
 
     @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).compact
+    store_data heartables: @heartables
 
     if signed_in?
-      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['id']})
+      store_data user_hearts: Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['id']})
     end
 
     respond_to do |format|

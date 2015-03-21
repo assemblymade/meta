@@ -37,9 +37,10 @@ class ProposalsController < ProductController
     @proposal_n = Proposal.all.find_index(@proposal)+1
 
     @heartables = Heart.store_data([@proposal].map(&:news_feed_item))
+    store_data heartables: @heartables
 
     if signed_in?
-      @user_hearts = Heart.where(
+      store_data user_hearts: Heart.where(
         user: current_user,
         heartable_id: @heartables.map{ |h| h['heartable_id'] }
       )

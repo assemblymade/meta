@@ -1,6 +1,4 @@
-<% if @product %>
-  <%= initial_store_data(
-        'ProductStore',
-        ProductShallowSerializer.new(@product).as_json
-      ) %>
-<% end %>
+<%= initial_store_data(
+      'ProductStore',
+      ProductShallowSerializer.new(store_data(:product)).as_json
+    ) %>

@@ -1,4 +1,6 @@
-<% if @wip %>
-  <% users = [{ id: 'core', username: 'core', name: "#{@product.name} Core Team" }, @wip.user, *@wip.events.map(&:user)] %>
-  <%= initial_store_data('PeopleStore', ActiveModel::ArraySerializer.new(users).as_json) %>
-<% end %>
+<%
+  product = store_data(:product)
+  wip = store_data(:wip)
+%>
+<% users = [{ id: 'core', username: 'core', name: "#{product.name} Core Team" }, wip.user, *wip.events.map(&:user)] %>
+<%= initial_store_data('PeopleStore', ActiveModel::ArraySerializer.new(users).as_json) %>

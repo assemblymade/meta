@@ -1,11 +1,9 @@
-<% if @bounties && @bounties.any? %>
-  <!-- FIXME: If we're expecting paginatable data, we need to safeguard against non-paginatable inputs -->
-  <%= initial_store_data(
-    'BountiesStore',
-    PaginationSerializer.new(
-      @bounties.try(:page, 1),
-      each_serializer: BountyListSerializer,
-      root: :bounties
-    ).as_json
-  ) %>
-<% end %>
+<% # FIXME: If we're expecting paginatable data, we need to safeguard against non-paginatable inputs %>
+<%= initial_store_data(
+  'BountiesStore',
+  PaginationSerializer.new(
+    store_data(:bounties).try(:page, 1),
+    each_serializer: BountyListSerializer,
+    root: :bounties
+  ).as_json
+) %>

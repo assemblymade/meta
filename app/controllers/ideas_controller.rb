@@ -55,14 +55,15 @@ class IdeasController < ProductController
 
     total_pages = @ideas.total_pages
 
-    @stores[:pagination_store] = {
+    store_data pagination_store: {
       current_page: params[:page] || 1,
       total_pages: total_pages
     }
 
     @heartables = @ideas.map(&:news_feed_item)
-    @user_hearts = if signed_in?
-      Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
+    store_data heartables: @heartables
+    if signed_in?
+      store_data user_hearts: Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
     end
 
     current_product = SevenDayMVP.current
@@ -96,8 +97,9 @@ class IdeasController < ProductController
 
     if nfi = @idea.news_feed_item
       @heartables = ([nfi] + nfi.comments).to_a
-      @user_hearts = if signed_in?
-        Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
+      store_data heartables: @heartables
+      if signed_in?
+        store_data user_hearts: Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
       end
     end
 

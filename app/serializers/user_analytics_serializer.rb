@@ -16,6 +16,12 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
 
   attributes :most_important_quality
 
+  cached
+
+  def cache_key
+    object
+  end
+
   def id
     object.id
   end
