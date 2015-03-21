@@ -13,17 +13,12 @@ class BountyFactory
       offer = bounty.offers.create(user: author, amount: value)
       bounty.watch!(author)
 
-
       @activity = Activities::Post.publish!(
         actor: author,
         subject: bounty,
-        target: product,
-        socket_id: params[:socket_id]
+        target: product
       )
     end
-
-
-
+    bounty.update!({description: description, title: title})
   end
-
-ends
+end
