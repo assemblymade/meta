@@ -165,6 +165,17 @@ let ProductShow = React.createClass({
                       }).toJS()}
                     </div>
                   </div>
+
+
+                  <div className="py3">
+                    <div className="clearfix py2">
+                      <h6 className="left gray-2 caps mt0 mb0">
+                        Important links
+                      </h6>
+                    </div>
+                    <ProductImportantLinks product={product} />
+                  </div>
+
                 </div>
               </Tile>
             </div>
@@ -185,10 +196,6 @@ let ProductShow = React.createClass({
 
               <div className="mb3">
                 <MetricsBadge product={product} />
-              </div>
-
-              <div className="mb3">
-                <ProductImportantLinks product={product} />
               </div>
 
               {
