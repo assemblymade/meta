@@ -80,7 +80,7 @@ class ProductsController < ProductController
       #   end
       # end
 
-      AutoPost.new.generate_idea_product_transition_post(@product)
+      #AutoPost.new.generate_idea_product_transition_post(@product)
 
     else
       render action: :new, layout: 'application'
