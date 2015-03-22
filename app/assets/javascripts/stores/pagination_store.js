@@ -23,6 +23,11 @@ class PaginationStore extends Store {
           _setTotalPages(action)
           this.emitChange()
           break
+        case ActionTypes.ASM_APP_ROUTE_CHANGED:
+          var query = qs.parse(action.context.path) || {}
+          currentPage = parseInt(query.page || 1, 10)
+          this.emitChange()
+          break
       }
     })
   }
