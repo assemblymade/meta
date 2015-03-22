@@ -1,6 +1,5 @@
 var ActionTypes = require('../constants').ActionTypes;
 var Dispatcher = require('../dispatcher');
-var elasticsearch = require('elasticsearch');
 var routes = require('../routes');
 var url = require('url');
 
@@ -26,6 +25,7 @@ var AppsActionCreators = {
     Dispatcher.dispatch({
       type: ActionTypes.APPS_START_SEARCH
     });
+    var elasticsearch = require('elasticsearch');
 
     var client = new elasticsearch.Client({
       host: document.getElementsByName('es-url')[0].content

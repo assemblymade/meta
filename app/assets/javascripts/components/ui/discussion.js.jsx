@@ -2,7 +2,6 @@ var DiscussionActionCreators = require('../../actions/discussion_action_creators
 var DiscussionStore = require('../../stores/discussion_store');
 var Heart = require('../heart.js.jsx');
 var Icon = require('./icon.js.jsx');
-var IdeaLovers = require('../ideas/idea_lovers.js.jsx');
 var NewFeedItemComments = require('../news_feed/news_feed_item_comments.js.jsx');
 var Tile = require('./tile.js.jsx');
 

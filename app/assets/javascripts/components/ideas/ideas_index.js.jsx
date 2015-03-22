@@ -47,17 +47,7 @@ let IdeasIndex = React.createClass({
   },
 
   render() {
-    let currentApp, lastApp
-
     let topicsDropdownMenu = this.renderTopics()
-
-    if (this.state.currentProduct) {
-      currentApp = <App app={this.state.currentProduct} />
-    }
-
-    if (this.state.lastProduct) {
-      lastApp = <App app={this.state.lastProduct} />
-    }
 
     return (
       <main role="main  bg-white">
