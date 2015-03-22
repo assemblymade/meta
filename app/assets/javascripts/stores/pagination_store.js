@@ -2,11 +2,9 @@ var ActionTypes = require('../constants').ActionTypes
 var Dispatcher = require('../dispatcher')
 var Store = require('./es6_store')
 var url = require('url')
-var qs = require('qs')
+window.qs = require('qs')
 
-var parsedUri = url.parse(window.location.toString())
-var query = qs.parse(parsedUri.query) || {}
-var currentPage = parseInt(query.page || 1, 10)
+var currentPage = null
 var totalPages = 1
 
 class PaginationStore extends Store {
@@ -24,8 +22,7 @@ class PaginationStore extends Store {
           this.emitChange()
           break
         case ActionTypes.ASM_APP_ROUTE_CHANGED:
-          var query = qs.parse(action.context.path) || {}
-          currentPage = parseInt(query.page || 1, 10)
+          _setPageFromPath(action.context.path)
           this.emitChange()
           break
       }
@@ -56,6 +53,12 @@ if (dataTag) {
 
 module.exports = store
 
+function _setPageFromPath(path) {
+  var parsedUri = url.parse(path)
+  var query = qs.parse(parsedUri.query) || {}
+  currentPage = parseInt(query.page || 1, 10)
+}
+
 function _setPage(action) {
   currentPage = action.page
 }
@@ -63,3 +66,5 @@ function _setPage(action) {
 function _setTotalPages(action) {
   totalPages = action.totalPages
 }
+
+_setPageFromPath(window.location.toString())
