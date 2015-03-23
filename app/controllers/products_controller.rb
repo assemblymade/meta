@@ -55,8 +55,6 @@ class ProductsController < ProductController
     if idea_id = params[:product].delete(:idea_id)
       @idea = Idea.find(idea_id)
 
-      puts "#{@idea.user.username} #{current_user.username}"
-
       return redirect_to action: :new, layout: 'application' unless @idea.user == current_user
     end
 
@@ -68,7 +66,7 @@ class ProductsController < ProductController
       @product.retrieve_key_pair
 
       if @idea
-        @idea.update(product: @product)
+        @idea.update(product_id: @product.id)
       end
 
       chosen_ids = params[:product][:partner_ids] || ''
@@ -82,7 +80,7 @@ class ProductsController < ProductController
       # end
 
       AutoPost.new.generate_idea_product_transition_post(@product)
-      respond_with(@product, location: product_welcome_path(@product))
+      respond_with(@product, location: product_path(@product))
     else
       render action: :new, layout: 'application'
     end

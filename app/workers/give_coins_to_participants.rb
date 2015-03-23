@@ -21,8 +21,10 @@ class GiveCoinsToParticipants
         Offer.create!(user: author, bounty: t, earnable: coins_each, ip: author.current_sign_in_ip)
       end
 
+      nfi = idea.news_feed_item
+
       chosen_participants.each do |p|
-        nfi = idea.news_feed_item
+
         events = nfi.comments.where(user_id: p.id) + nfi.hearts.where(user_id: p.id)
 
         if p.id == author.id
