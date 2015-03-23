@@ -162,6 +162,8 @@ class Idea < ActiveRecord::Base
     add_score
   end
 
+
+
   def unhearted(heart)
     decrement_score(heart)
   end

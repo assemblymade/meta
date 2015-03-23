@@ -74,14 +74,15 @@ class ProductsController < ProductController
       GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)
 
       if @idea
-        puts @idea
-        puts "IDEA HERE"
         the_key = @idea.slug.to_sym
         chosen_ids.each do |chosen_id|
           EmailLog.send_once(chosen_id, the_key) do
             PartnershipMailer.delay(queue: 'mailer').create(chosen_id, @product.id, @idea.id)
           end
         end
+
+        Tweeter.new.tweet_idea(@idea)
+
       end
 
       AutoPost.new.generate_idea_product_transition_post(@product)
