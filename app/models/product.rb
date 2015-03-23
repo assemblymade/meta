@@ -20,7 +20,6 @@ class Product < ActiveRecord::Base
   friendly_id :slug_candidates, use: :slugged
 
   attr_encryptor :wallet_private_key, :key => ENV["PRODUCT_ENCRYPTION_KEY"], :encode => true, :mode => :per_attribute_iv_and_salt, :unless => Rails.env.test?
-  attr_accessor :partner_ids
 
   belongs_to :user
   belongs_to :evaluator, class_name: 'User'
@@ -315,6 +314,11 @@ class Product < ActiveRecord::Base
 
   def partners
     entries = TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
+    User.where(id: entries.keys)
+  end
+
+  def partners_before_date(date)
+    entries = TransactionLogEntry.where('created_at < ?', date).where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
     User.where(id: entries.keys)
   end
 

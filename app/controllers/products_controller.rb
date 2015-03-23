@@ -75,13 +75,13 @@ class ProductsController < ProductController
       chosen_ids = chosen_ids.split(',').flatten
       GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)
 
-      # chosen_ids.each do |a|
-      #   EmailLog.send_once(a, the_key) do
-      #     PartnershipMailer.delay(queue: 'mailer').create(a, @product.id, @idea.id)
-      #   end
-      # end
+      chosen_ids.each do |a|
+        EmailLog.send_once(a, the_key) do
+          PartnershipMailer.delay(queue: 'mailer').create(a, @product.id, @idea.id)
+        end
+      end
 
-      #AutoPost.new.generate_idea_product_transition_post(@product)
+      AutoPost.new.generate_idea_product_transition_post(@product)
     else
       render action: :new, layout: 'application'
     end
