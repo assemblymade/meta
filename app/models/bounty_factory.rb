@@ -1,17 +1,10 @@
 class BountyFactory
   def generate_bounty(product, author, description, title, value)
-    bounty = WipFactory.create(
-      product,
-      @product.tasks,
-      author,
-      nil,
-      nil,
-      nil
-    )
+    wip = product.tasks.create({})
+    NewsFeedItem.create_with_target(wip)
 
     if bounty.valid?
-      offer = bounty.offers.create(user: author, amount: value)
-      bounty.watch!(author)
+      offer = bounty.offers.create(user: author, amount: value, ip: IPAddr.new('127.0.0.1'))
 
       @activity = Activities::Post.publish!(
         actor: author,
