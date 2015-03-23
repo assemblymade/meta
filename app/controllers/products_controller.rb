@@ -55,8 +55,6 @@ class ProductsController < ProductController
     if idea_id = params[:product].delete(:idea_id)
       @idea = Idea.find(idea_id)
 
-      puts "#{@idea.user.username} #{current_user.username}"
-
       return redirect_to action: :new, layout: 'application' unless @idea.user == current_user
     end
 
@@ -68,20 +66,21 @@ class ProductsController < ProductController
       @product.retrieve_key_pair
 
       if @idea
-        @idea.update(product: @product)
+        @idea.update(product_id: @product.id)
       end
 
       chosen_ids = params[:product][:partner_ids] || ''
       chosen_ids = chosen_ids.split(',').flatten
       GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)
 
-      chosen_ids.each do |a|
-        EmailLog.send_once(a, the_key) do
-          PartnershipMailer.delay(queue: 'mailer').create(a, @product.id, @idea.id)
-        end
-      end
+      # chosen_ids.each do |a|
+      #   EmailLog.send_once(a, the_key) do
+      #     PartnershipMailer.delay(queue: 'mailer').create(a, @product.id, @idea.id)
+      #   end
+      # end
 
       AutoPost.new.generate_idea_product_transition_post(@product)
+      respond_with(@product, location: product_path(@product))
     else
       render action: :new, layout: 'application'
     end
