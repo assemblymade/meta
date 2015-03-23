@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   before_action :strip_invite_token
   before_action :strip_promo_token
   before_action :initialize_feature_flags
-  before_action :initialize_stores
 
   after_action  :set_request_info!,   if: :signed_in?
   after_action  :claim_invite,        if: :signed_in?
@@ -44,8 +43,10 @@ class ApplicationController < ActionController::Base
     @feature_flags ||= {}
   end
 
-  def initialize_stores
+  def store_data(data)
     @stores ||= {}
+
+    @stores.merge!(data)
   end
 
   def strip_auth_token

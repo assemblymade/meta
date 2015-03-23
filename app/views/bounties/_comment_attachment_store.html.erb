@@ -1,8 +1,6 @@
-<% if @product_assets %>
-  <script id="CommentAttachmentStore" type="application/json">
-    <%== @product_assets.reduce({}) { |memo, asset|
-      memo[asset.attachment.asset_path] = 1
-      memo
-    }.to_json %>
-  </script>
-<% end %>
+<script id="CommentAttachmentStore" type="application/json">
+  <%== store_data(:product_assets).reduce({}) { |memo, asset|
+    memo[asset.attachment.asset_path] = 1
+    memo
+  }.to_json %>
+</script>

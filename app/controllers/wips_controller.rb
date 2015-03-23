@@ -192,12 +192,14 @@ class WipsController < ProductController
     else
       @wip = @product.wips.find_by!(number: number)
     end
+    store_data(wip: @wip)
     @events = @wip.events.includes(:tips).order(:number)
 
     if nfi = @wip.news_feed_item
       @heartables = ([nfi] + nfi.comments).to_a
-      @user_hearts = if signed_in?
-        Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
+      store_data heartables: @heartables
+      if signed_in?
+        store_data user_hearts: Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
       end
     end
   end

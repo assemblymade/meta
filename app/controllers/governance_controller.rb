@@ -8,9 +8,10 @@ class GovernanceController < ProductController
     find_product!
     @proposals = @product.proposals_sorted
     @heartables = Heart.store_data(@proposals.map(&:news_feed_item))
+    store_data heartables: @heartables
 
     if signed_in?
-      @user_hearts = Heart.where(
+      store_data user_hearts: Heart.where(
         user: current_user,
         heartable_id: @heartables.map{ |h| h['heartable_id'] }
       )

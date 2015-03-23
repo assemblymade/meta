@@ -1,6 +1,6 @@
 <% title "Idea", @idea.name %>
 <%= track_engaged 'show_idea' %>
-<%= react_component 'AsmApp' %>
+<%= react_component 'AsmApp', prerender: true %>
 
 <% if signed_in? %>
   <img class="hidden" data-src="<%= ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(@idea).first, current_user.id).url %>" />

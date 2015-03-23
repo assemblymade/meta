@@ -160,7 +160,7 @@ module.exports = React.createClass({
         </div>
 
         <div className={classes}>
-          <Markdown content={body} normalized={true} wideQuotes={true} />
+          <Markdown content={body} normalized={true} color="gray-1" />
         </div>
 
         <div className="h6">

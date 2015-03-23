@@ -1,5 +1,3 @@
-<% if @activity_stream %>
-  <%= initial_store_data('ChatMessageStore', @activity_stream.map {|a, _|
-    ActivitySerializer.new(a, scope: current_user)
-  }.as_json) %>
-<% end %>
+<%= initial_store_data('ChatMessageStore', store_data(:activity_stream).map {|a, _|
+  ActivitySerializer.new(a, scope: current_user)
+}.as_json) %>

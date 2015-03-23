@@ -48,16 +48,16 @@ var Idea = React.createClass({
     return (
       <Tile>
         <div className="clearfix px2 py1">
-          <div className="left px2 py3">
+          <div className="left pr1 py3">
             <Heart size="medium" heartable_id={item.id} heartable_type="NewsFeedItem" />
           </div>
 
-          <div className="right py2">
+          <div className="right py2 sm-show">
             <a href={user.url} className="right p2">
               <Avatar user={user} />
             </a>
 
-            <a href={idea.path} className="p2 block right gray-3 fill-gray-3 gray-2-hover fill-gray-2-hover bold">
+            <a href={idea.path} className="py2 px1 block right gray-3 fill-gray-3 gray-2-hover fill-gray-2-hover bold">
               <span className="mr1">
                 <Icon icon="comment" />
               </span>
@@ -65,7 +65,7 @@ var Idea = React.createClass({
             </a>
           </div>
 
-          <a className="block overflow-hidden p2" href={idea.url}>
+          <a className="block overflow-hidden py2 pl2" href={idea.url}>
             <h4 className="mt0 mb1 black underline-hover">{idea.name}</h4>
             <OverflowFade dimension="horizontal" width="100%" height="2rem">
               <p className="gray-2">{idea.sanitized_body}</p>

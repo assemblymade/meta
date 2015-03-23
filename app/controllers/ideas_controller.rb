@@ -50,34 +50,34 @@ class IdeasController < ProductController
   end
 
   def index
-    @ideas = FilterIdeasQuery.call(filter_params).
-      page(params[:page]).per(IDEAS_PER_PAGE)
+    respond_to do |format|
+      format.html
+      format.json do
+        @ideas = FilterIdeasQuery.call(filter_params).
+          page(params[:page]).per(IDEAS_PER_PAGE)
 
-    total_pages = @ideas.total_pages
+        total_pages = @ideas.total_pages
 
-    @stores[:pagination_store] = {
-      current_page: params[:page] || 1,
-      total_pages: total_pages
-    }
+        store_data pagination_store: {
+          current_page: params[:page] || 1,
+          total_pages: total_pages
+        }
 
-    @heartables = @ideas.map(&:news_feed_item)
-    @user_hearts = if signed_in?
-      Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
+        @heartables = @ideas.map(&:news_feed_item)
+        if signed_in?
+          store_data user_hearts: Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
+        end
+
+        respond_with({
+          categories: categories,
+          heartables: @heartables,
+          ideas: ActiveModel::ArraySerializer.new(@ideas),
+          topics: topics,
+          total_pages: total_pages,
+          user_hearts: @user_hearts
+        })
+      end
     end
-
-    current_product = SevenDayMVP.current
-    last_product = SevenDayMVP.recent.first
-
-    respond_with({
-      categories: categories,
-      heartables: @heartables,
-      ideas: ActiveModel::ArraySerializer.new(@ideas),
-      topics: topics,
-      total_pages: total_pages,
-      user_hearts: @user_hearts,
-      current_product: ProductSerializer.new(current_product),
-      last_product: ProductSerializer.new(last_product)
-    })
   end
 
   def new
@@ -96,8 +96,9 @@ class IdeasController < ProductController
 
     if nfi = @idea.news_feed_item
       @heartables = ([nfi] + nfi.comments).to_a
-      @user_hearts = if signed_in?
-        Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
+      store_data heartables: @heartables
+      if signed_in?
+        store_data user_hearts: Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
       end
     end
 

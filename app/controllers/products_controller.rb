@@ -80,6 +80,9 @@ class ProductsController < ProductController
       # end
 
       AutoPost.new.generate_idea_product_transition_post(@product)
+      current_user.touch
+      @product.reload
+
       respond_with(@product, location: product_path(@product))
     else
       render action: :new, layout: 'application'
@@ -210,25 +213,6 @@ class ProductsController < ProductController
       product.update_partners_count_cache
       product.save!
 
-      AutoTipContract.replace_contracts_with_default_core_team_split(product)
-
-      # invitees = (core_team_ids + ownership.keys).uniq
-      # invitees.each do |email_or_user_id|
-      #   invite_params = {
-      #     invitor: current_user,
-      #     via: product,
-      #     tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS,
-      #     core_team: true
-      #   }
-      #
-      #   if email_or_user_id.uuid?
-      #     invite_params[:invitee] = User.find(email_or_user_id)
-      #   else
-      #     invite_params[:invitee_email] = email_or_user_id
-      #   end
-      #   Invite.create_and_send(invite_params)
-      # end
-
       flash[:new_product_callout] = true
     end
     product
@@ -261,11 +245,13 @@ class ProductsController < ProductController
         NewsFeedItemSerializer.new(nfi).as_json
       end
     end
+    store_data news_feed_items: @news_feed_items
 
     @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).compact
+    store_data heartables: @heartables
 
     if signed_in?
-      @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['id']})
+      store_data user_hearts: Heart.where(user: current_user, heartable_id: @heartables.map{|h| h['id']})
     end
 
     respond_to do |format|

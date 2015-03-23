@@ -1,5 +1,6 @@
 var PaginationActionCreators = require('../../actions/pagination_action_creators');
 var PaginationStore = require('../../stores/pagination_store');
+var RoutesStore = require('../../stores/routes_store');
 
 var Pagination = React.createClass({
   displayName: 'Pagination',
@@ -21,10 +22,18 @@ var Pagination = React.createClass({
 
   componentDidMount() {
     PaginationStore.addChangeListener(this.updateState);
+    RoutesStore.addChangeListener(this.updateState);
   },
 
   componentWillUnmount() {
     PaginationStore.removeChangeListener(this.updateState);
+    RoutesStore.removeChangeListener(this.updateState);
+  },
+
+  componentDidUpdate(props, state) {
+    if (state.currentPath != this.state.currentPath) {
+      document.body.scrollTop = 0
+    }
   },
 
   getDefaultProps() {
@@ -36,7 +45,8 @@ var Pagination = React.createClass({
   getInitialState() {
     return {
       currentPage: PaginationStore.getCurrentPage(),
-      totalPages: PaginationStore.getTotalPages()
+      totalPages: PaginationStore.getTotalPages(),
+      currentPath: RoutesStore.getContext().path
     };
   },
 
@@ -145,7 +155,8 @@ var Pagination = React.createClass({
   updateState() {
     this.setState({
       currentPage: PaginationStore.getCurrentPage(),
-      totalPages: PaginationStore.getTotalPages()
+      totalPages: PaginationStore.getTotalPages(),
+      currentPath: RoutesStore.getContext().path
     });
   }
 });

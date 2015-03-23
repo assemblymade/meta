@@ -23,6 +23,8 @@ class Admin::ProductRankingsController < AdminController
             page(params[:page]).per(200)
     end
 
+    store_data(:products)
+
     respond_to do |format|
       format.html { }
       format.json { render json: @products, each_serializer: ProductRankingSerializer }

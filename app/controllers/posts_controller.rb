@@ -9,7 +9,9 @@ class PostsController < ProductController
     posts = Post.filter_with_params(query, params)
 
     @posts = ActiveModel::ArraySerializer.new(posts)
+    store_data posts: @posts
     @heartables = query.map(&:news_feed_item)
+    store_data heartables: @heartables
     respond_with({
       heartables: @heartables,
       posts: @posts,
@@ -22,6 +24,7 @@ class PostsController < ProductController
     authenticate_user!
 
     @post = @product.posts.new(author: current_user)
+    store_data post: @post
 
     respond_with({
       product: ProductSerializer.new(@product, scope: current_user)
@@ -67,6 +70,7 @@ class PostsController < ProductController
 
     if Watching.watched?(current_user, @post.news_feed_item)
       @user_subscriptions = [@post.news_feed_item.id]
+      store_data user_subscriptions: @user_subscriptions
     end
 
     respond_with({
@@ -103,8 +107,9 @@ private
 
     heartables = ([nfi] + nfi.comments).to_a
     @heartables = ActiveModel::ArraySerializer.new(heartables)
-    @user_hearts = if signed_in?
-      Heart.where(user_id: current_user.id).where(heartable_id: heartables.map(&:id))
+    store_data heartables: @heartables
+    if signed_in?
+      store_data user_hearts: Heart.where(user_id: current_user.id).where(heartable_id: heartables.map(&:id))
     end
   end
 
@@ -114,6 +119,7 @@ private
     else
       @post = @product.posts.find_by_slug!(params[:id])
     end
+    store_data post: @post
   end
 
   def send_emails!

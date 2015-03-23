@@ -1,8 +1,9 @@
-<% heartables = if @heartables %>
-  <% @heartables %>
-<% elsif @news_feed_item %>
-  <% ([@news_feed_item] + @news_feed_item.comments).compact %>
-<% end %>
+<%
+  heartables = store_data(:heartables)
+  if heartables.nil? && nfi = store_data(:news_feed_item)
+    heartables = ([nfi] + nfi.comments).compact
+  end
+%>
 
 <!-- FIXME: Decide on one consistent way to send these down -->
 <% if heartables %>
@@ -15,8 +16,7 @@
             id: h.id,
             heartable_id: h.id,
             heartable_type: h.class.name,
-            hearts_count: h.hearts_count,
-            hearts: h.hearts
+            hearts_count: h.hearts_count
           }
         }.to_json
       %>
@@ -26,9 +26,9 @@
   </script>
 
   <% if signed_in? %>
-    <% if @user_hearts %>
+    <% if user_hearts = store_data(:user_hearts) %>
       <script id="UserLoveStore" type="application/json">
-        <%== @user_hearts.map{|h| {
+        <%== user_hearts.map{|h| {
           id: h.id,
           heartable_id: h.heartable_id,
         }}.to_json

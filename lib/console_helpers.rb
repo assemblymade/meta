@@ -1,28 +1,34 @@
 module ASM
   module Console
     def help
-      puts "add_monthly_financials product, eom_date, revenue_in_cents, expenses_in_cents"
+      puts
+      puts "#{'add_monthly_financials'.green} product, eom_date, revenue_in_cents, expenses_in_cents"
       puts "  example: add_monthly_financials 'runbook', '30-jun-2015', 2138, 4995"
       puts
-      puts "coin_balance wallet"
+      puts "#{'coin_balance'.green} wallet"
       puts "  example: balance 'whatupdave'"
       puts "  example: balance 'firesize'"
       puts
-      puts "change_slug from, to"
+      puts "#{'change_slug'.green} from, to"
       puts
-      puts "mint_new_coins product, coins"
+      puts "#{'mint_new_coins'.green} product, coins"
       puts "  creates new coins for a product"
       puts "  example: mint_new_coins 'firesize', 150_000"
       puts
-      puts "remove_from_core_team product, user"
+      puts "#{'remove_from_core_team'.green} product, user"
       puts
-      puts "transactions product"
+      puts "#{'rename_repo'.green} product, from, to"
+      puts "  example: rename_repo 'firesize', 'asm-products/firesize', 'asm-products/firesize-web'"
       puts
-      puts "transfer_coins product, from, to, coins"
+      puts "#{'repos'.green} product"
+      puts
+      puts "#{'transactions'.green} product"
+      puts
+      puts "#{'transfer_coins'.green} product, from, to, coins"
       puts "  transfer coins from one wallet to another"
       puts "  example: transfer_coins 'firesize', 'firesize', 'whatupdave', 150_000"
       puts
-      puts "unlink_twitter user"
+      puts "#{'unlink_twitter'.green} user"
       puts
 
       # github repo commands
@@ -86,6 +92,26 @@ module ASM
       membership.upate!(is_core: false)
 
       puts "#{username} removed from #{slug} core team"
+    end
+
+    def rename_repo(slug, from, to)
+      product = prod!(slug)
+      repo = product.repos.find{|r| r.full_name == from }
+      raise 'repo not found' if repo.nil?
+
+      product.repos -= [repo]
+      product.repos << Repo::Github.new("https://github.com/#{to}")
+      product.save!
+
+      repos(slug)
+    end
+
+    def repos(slug)
+      puts "#{slug}:"
+      prod!(slug).repos.each do |repo|
+        puts "  #{repo.full_name}"
+      end
+      nil
     end
 
     def transactions(slug)

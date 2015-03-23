@@ -21,7 +21,7 @@ class Admin::OwnershipController < AdminController
     end
 
     @products = products.page(params[:page])
-  end
+    store_data(:product)  end
 
   def update
     ownership_status = OwnershipStatus.find(params[:id])
