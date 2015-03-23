@@ -238,7 +238,7 @@ namespace :emails do
     recently_inactive_users = User.recently_inactive
     recently_inactive_users.each do |user|
       if user.top_bountys.count > 0 and user.top_products.count > 0
-        the_key = "suggestion"+Time.now.strftime("%d%b%Y")
+        the_key = "suggestion" + Time.now.strftime("%d%b%Y")
         EmailLog.send_once(user.id, the_key) do
           SuggestionMailer.delay(queue: 'mailer').create(user.id)
         end
