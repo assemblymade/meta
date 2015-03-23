@@ -152,6 +152,16 @@ let ProductShow = React.createClass({
                   <div className="py3">
                     <div className="clearfix py2">
                       <h6 className="left gray-2 caps mt0 mb0">
+                        Important links
+                      </h6>
+                    </div>
+                    <ProductImportantLinks product={product} />
+                  </div>
+
+
+                  <div className="py3">
+                    <div className="clearfix py2">
+                      <h6 className="left gray-2 caps mt0 mb0">
                         Partners ({team.size})
                       </h6>
 
@@ -166,15 +176,6 @@ let ProductShow = React.createClass({
                     </div>
                   </div>
 
-
-                  <div className="py3">
-                    <div className="clearfix py2">
-                      <h6 className="left gray-2 caps mt0 mb0">
-                        Important links
-                      </h6>
-                    </div>
-                    <ProductImportantLinks product={product} />
-                  </div>
 
                 </div>
               </Tile>

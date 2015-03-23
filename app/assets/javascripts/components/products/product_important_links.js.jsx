@@ -18,8 +18,6 @@ let ProductImportantLinks = React.createClass({
       <div className="clearfix mxn1">
         {this.renderHomepageUrl()}
 
-        {this.renderLink('comments', 'Chat', Routes.product_chat_path({ product_id: slug }))}
-
         {this.renderLink('warning', 'File a bug', Routes.product_wips_path({
               params: {
                 product_id: slug
@@ -51,18 +49,27 @@ let ProductImportantLinks = React.createClass({
 
   renderLink(icon, label, url) {
     return <a className="block sm-col sm-col-6 lg-col-4 p1" href={url}>
-      <span className="mr2 gray-3">
-        <Icon icon={icon} />
-      </span>
-      {label}
+      <div className="clearfix">
+        <div className="left mr2 gray-3">
+          <Icon icon={icon} />
+        </div>
+        <div className="overflow-hidden">
+          <div>{label}</div>
+        </div>
+      </div>
     </a>
   },
 
   renderHomepageUrl() {
     let product = this.props.product;
 
+    const el = document.createElement('a')
+    el.href = product.homepage_url
+    const host = el.hostname
+    el.remove()
+
     if (product.homepage_url) {
-      return this.renderLink('home', 'Home', product.homepage_url)
+      return this.renderLink('home', host, product.homepage_url)
     }
   }
 });
