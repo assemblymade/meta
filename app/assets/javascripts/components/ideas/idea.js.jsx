@@ -137,6 +137,17 @@ let Idea = React.createClass({
   },
 
   renderHeader() {
+    let idea = this.props.idea;
+    let product = idea.product;
+
+    if (_.isNull(product)) {
+      return this.renderHeartsHeader()
+    } else {
+      return this.renderProductRow()
+    }
+  },
+
+  renderHeartsHeader() {
     var idea = this.props.idea;
     var shareMessage = 'We need help with ' + idea.name + '! via @asm';
     var hearted = this.state.hearted
@@ -198,8 +209,8 @@ let Idea = React.createClass({
 
     if (!_.isNull(product)) {
       return (
-        <div className="mt1 mb1">
-          <h6 className="mb1 center purple">Development of this idea has already started:</h6>
+        <div className="mt1 mb3">
+          <h5 className="mb1 center">Development of this idea has already started:</h5>
           <a className="block border rounded p2 mxn2 border-gray-5-hover shadow-hover" href={product.url}>
             <div className="left mr2">
               <AppIcon app={product} size={48} />
