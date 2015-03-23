@@ -1,5 +1,6 @@
 class ApiWorker
   include Sidekiq::Worker
+  include Rails.application.routes.url_helpers
 
   private
 
