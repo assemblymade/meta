@@ -7,7 +7,6 @@ class GiveCoinsToParticipants
     author = product.user
 
     chosen_participant_ids.append(author.id).uniq
-
     chosen_participants = User.where(id: chosen_participant_ids)
 
     idea = Idea.find_by(product_id: product_id)
@@ -26,18 +25,25 @@ class GiveCoinsToParticipants
       chosen_participants.each do |p|
 
         events = nfi.comments.where(user_id: p.id) + nfi.hearts.where(user_id: p.id)
-
         if p.id == author.id
           event = nfi
         else
           event = events.first
         end
 
-        t.award(author, event, coins_each) unless event.nil?
+        if !event
+          event = Event.create!({wip: t, user: p, type: "Event::ReviewReady"})
+        end
+
+        t.award!(author, event, coins_each) unless event.nil?
       end
-      product.update_partners_count_cache
-      product.save!
+    else
+      TransactionLogEntry.minted!(nil, Time.now, product, author.id, coins_each)
+
     end
+    product.update_partners_count_cache
+    product.save!
+    product.partners_count
   end
 
 end

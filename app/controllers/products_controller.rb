@@ -80,9 +80,10 @@ class ProductsController < ProductController
       # end
 
       AutoPost.new.generate_idea_product_transition_post(@product)
-      respond_with(@product, location: product_path(@product))
-
       current_user.touch
+      @product.reload
+
+      respond_with(@product, location: product_path(@product))
     else
       render action: :new, layout: 'application'
     end
@@ -211,44 +212,6 @@ class ProductsController < ProductController
 
       product.update_partners_count_cache
       product.save!
-
-<<<<<<< HEAD
-      AutoTipContract.replace_contracts_with_default_core_team_split(product)
-
-      # invitees = (core_team_ids + ownership.keys).uniq
-      # invitees.each do |email_or_user_id|
-      #   invite_params = {
-      #     invitor: current_user,
-      #     via: product,
-      #     tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS,
-      #     core_team: true
-      #   }
-      #
-      #   if email_or_user_id.uuid?
-      #     invite_params[:invitee] = User.find(email_or_user_id)
-      #   else
-      #     invite_params[:invitee_email] = email_or_user_id
-      #   end
-      #   Invite.create_and_send(invite_params)
-      # end
-=======
-      invitees = (core_team_ids + ownership.keys).uniq
-      invitees.each do |email_or_user_id|
-        invite_params = {
-          invitor: current_user,
-          via: product,
-          tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS,
-          core_team: true
-        }
-
-        if email_or_user_id.uuid?
-          invite_params[:invitee] = User.find(email_or_user_id)
-        else
-          invite_params[:invitee_email] = email_or_user_id
-        end
-        Invite.create_and_send(invite_params)
-      end
->>>>>>> 5c0a6b8f0b33ccfbef3c036f8f8e4efe8c8788ca
 
       flash[:new_product_callout] = true
     end

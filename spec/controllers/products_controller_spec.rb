@@ -110,13 +110,10 @@ describe ProductsController do
       expect(assigns(:product).core_team).to include(collaborator)
     end
 
+
     context 'from an idea' do
       let!(:idea) { Idea.make!(user: creator) }
       let!(:kernel) { User.make!(username: 'kernel') }
-    it 'creates an invite for core team members with email' do
-      expect {
-        post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com'], ownership: { 'jake@adventure.com' => 10 }
-      }.to change(Invite, :count).by(1)
 
       before do
         NewsFeedItem.create_with_target(idea)
@@ -142,41 +139,6 @@ describe ProductsController do
         expect(assigns(:product).partners_count).to eq(2)
       end
     end
-
-    # it 'gives auto tip contracts to core team members' do
-    #   post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: [collaborator.id]
-    #   expect(assigns(:product).auto_tip_contracts.map(&:user)).to include(collaborator)
-    # end
-
-    # it 'creates an invite for core team members with email' do
-    #   expect {
-    #     post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com'], ownership: { 'jake@adventure.com' => 10 }
-    #   }.to change(Invite, :count).by(1)
-
-    #   expect(
-    #     Invite.find_by(invitee_email: 'jake@adventure.com').via.name
-    #   ).to eq('KJDB')
-    # end
-
-    # it 'creates invite with tip to collaborator' do
-    #   post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, ownership: { collaborator.id => 10 }
-
-    #   invite = Invite.find_by(invitee_id: collaborator.id)
-    #   expect(invite.tip_cents).to eq(60000)
-    #   expect(invite.via.name).to eq('KJDB')
-    #   expect(invite.core_team?).to be_truthy
-    # end
-
-    # it 'mints founder coins' do
-    #   post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com'], ownership: { 'jake@adventure.com' => 10 }
-
-    #   expect(
-    #     TransactionLogEntry.find_by(product_id: assigns(:product).id)
-    #   ).to have_attributes(
-    #     action: 'minted',
-    #     cents: 600000
-    #   )
-    # end
   end
 
   describe '#update' do
