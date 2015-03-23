@@ -73,10 +73,14 @@ class ProductsController < ProductController
       chosen_ids = chosen_ids.split(',').flatten
       GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)
 
-      the_key = @idea.slug.to_sym
-      chosen_ids.each do |chosen_id|
-        EmailLog.send_once(chosen_id, the_key) do
-          PartnershipMailer.delay(queue: 'mailer').create(chosen_id, @product.id, @idea.id)
+      if @idea
+        puts @idea
+        puts "IDEA HERE"
+        the_key = @idea.slug.to_sym
+        chosen_ids.each do |chosen_id|
+          EmailLog.send_once(chosen_id, the_key) do
+            PartnershipMailer.delay(queue: 'mailer').create(chosen_id, @product.id, @idea.id)
+          end
         end
       end
 
