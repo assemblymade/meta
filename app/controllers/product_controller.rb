@@ -15,6 +15,8 @@ protected
       @product = Product.find_by_slug!(id).decorate
     end
     authorize! :read, @product
+    store_data product: @product
+    @product
   end
   alias_method :set_product, :find_product!
 

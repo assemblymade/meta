@@ -1,4 +1,4 @@
-<% if item = @post.try(:news_feed_item) %>
+<% if item = store_data(:post).try(:news_feed_item) %>
   <% initial_data = {} %>
   <% initial_data[item.id] = item.archived_at ? 1 : 0 %>
   <%= initial_store_data('ArchivedNewsFeedItemsStore', initial_data) %>

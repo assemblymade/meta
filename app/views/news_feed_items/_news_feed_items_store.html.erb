@@ -1,7 +1,5 @@
-<% if @news_feed_items.present? %>
-  <% if @news_feed_items.respond_to?(:current_page) %>
-    <%= initial_store_data('NewsFeedItemsStore', PaginationSerializer.new(@news_feed_items, root: 'news_feed_items').as_json) %>
-  <% else %>
-    <%= initial_store_data('NewsFeedItemsStore', ActiveModel::ArraySerializer.new(@news_feed_items, root: 'news_feed_items').as_json) %>
-  <% end %>
+<% if store_data(:news_feed_items).respond_to?(:current_page) %>
+  <%= initial_store_data('NewsFeedItemsStore', PaginationSerializer.new(store_data(:news_feed_items), root: 'news_feed_items').as_json) %>
+<% else %>
+  <%= initial_store_data('NewsFeedItemsStore', ActiveModel::ArraySerializer.new(store_data(:news_feed_items), root: 'news_feed_items').as_json) %>
 <% end %>

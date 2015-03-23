@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     set_user
 
     @products = @user.involved_products
+    store_data(products: @products)
 
     default_filters = {
       user: 'assigned',

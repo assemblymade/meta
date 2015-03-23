@@ -1,6 +1,11 @@
+'use strict'
+
+const Classnames = require('classnames');
+
 var Markdown = React.createClass({
 
   propTypes: {
+    color: React.PropTypes.string,
     content: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.object
@@ -9,15 +14,14 @@ var Markdown = React.createClass({
       React.PropTypes.bool,
       React.PropTypes.string
     ]),
-    safelySetHtml: React.PropTypes.bool,
-    wideQuotes: React.PropTypes.bool
+    safelySetHtml: React.PropTypes.bool
   },
 
   getDefaultProps: function() {
     return {
+      color: "gray-1",
       normalized: false,
-      safelySetHtml: false,
-      wideQuotes: false
+      safelySetHtml: false
     }
   },
 
@@ -29,10 +33,8 @@ var Markdown = React.createClass({
   },
 
   render: function() {
-    var cs = React.addons.classSet({
-      'markdown': true,
+    var cs = Classnames('markdown', this.props.color, {
       'markdown-normalized': !!this.props.normalized,
-      'markdown-wide-quotes': this.props.wideQuotes
     })
 
     if (this.props.safelySetHtml) {

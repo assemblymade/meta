@@ -47,20 +47,10 @@ let IdeasIndex = React.createClass({
   },
 
   render() {
-    let currentApp, lastApp
-
     let topicsDropdownMenu = this.renderTopics()
 
-    if (this.state.currentProduct) {
-      currentApp = <App app={this.state.currentProduct} />
-    }
-
-    if (this.state.lastProduct) {
-      lastApp = <App app={this.state.lastProduct} />
-    }
-
     return (
-      <main role="main  bg-white">
+      <main role="main bg-white">
         <div className="subnav bg-white py3 md-show lg-show mb3">
           <div className="container clearfix">
             <div className="left">
@@ -133,21 +123,21 @@ let IdeasIndex = React.createClass({
         <div className="step">4</div>
         <div className="body">
           <strong>Build an MVP</strong>
-          <div className="gray-2">Build a minimum viable product.  Create something beautiful.</div>
+          <div className="gray-2">Build a minimum viable product. Create something beautiful.</div>
         </div>
       </li>
       <li>
         <div className="step">5</div>
         <div className="body">
           <strong>Launch</strong>
-          <div className="gray-2">Tell the world about what you've built.</div>
+          <div className="gray-2">Tell the world about what you&#39;ve built.</div>
         </div>
       </li>
       <li>
         <div className="step">6</div>
         <div className="body">
           <strong>Grow</strong>
-          <div className="gray-2">Take your product to the next level.  Iterate, improve, and grow.  The world is your oyster</div>
+          <div className="gray-2">Take your product to the next level. Iterate, improve, and grow. The world is your oyster</div>
         </div>
       </li>
       <li className="overlay"></li>

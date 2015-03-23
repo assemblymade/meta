@@ -1,51 +1,54 @@
-<div class="clearfix mxn2">
-  <div class="col col-12 sm-col-2 px2">
-    <%= image_tag 'asm-logo-flag-2x.png', width: 44, height: 27, class: 'logo' %>
-    <span class="sr-only">Assembly</span>
-  </div>
+<% cache do %>
+  <div class="clearfix mxn2">
+    <div class="col col-12 sm-col-2 px2">
+      <%= image_tag 'flag.svg', width: 44, height: 27, class: 'logo', style: 'vertical-align: -3px' %>
 
-  <div class="col col-6 sm-col-2 px2">
-    <h5 class="alpha">Assembly</h5>
-    <ul class="list-reset">
-      <li><a href="<%= about_path %>">About</a></li>
-      <li><a href="<%= product_wips_path('meta') %>">Meta</a></li>
-      <li><a href="<%= blog_path %>">Blog</a></li>
-      <li><a href="<%= badges_path %>">Badges</a></li>
-    </ul>
-  </div>
+      <span class="sr-only">Assembly</span>
+    </div>
 
-  <div class="col col-6 sm-col-2 px2">
-    <h5 class="alpha">Help</h5>
-    <ul class="list-reset">
-      <li><a href="<%= getting_started_path %>">Getting Started</a></li>
-      <li><a href="<%= faq_path %>">FAQs</a></li>
-      <li><a href="<%= tos_path %>">Terms</a></li>
-    </ul>
-  </div>
+    <div class="col col-6 sm-col-2 px2">
+      <h5 class="alpha">Assembly</h5>
+      <ul class="list-reset">
+        <li><a href="<%= about_path %>">About</a></li>
+        <li><a href="<%= product_wips_path('meta') %>">Meta</a></li>
+        <li><a href="<%= blog_path %>">Blog</a></li>
+        <li><a href="<%= badges_path %>">Badges</a></li>
+      </ul>
+    </div>
 
-  <div class="col col-6 sm-col-2 px2">
-    <h5 class="alpha">Discover</h5>
-    <ul class="list-reset">
-      <li><a href="<%= discover_path %>">Products</a></li>
-    </ul>
-  </div>
+    <div class="col col-6 sm-col-2 px2">
+      <h5 class="alpha">Help</h5>
+      <ul class="list-reset">
+        <li><a href="<%= getting_started_path %>">Getting Started</a></li>
+        <li><a href="<%= faq_path %>">FAQs</a></li>
+        <li><a href="<%= tos_path %>">Terms</a></li>
+      </ul>
+    </div>
 
-  <div class="col col-6 sm-col-2 px2">
-    <h5 class="alpha">Start</h5>
-    <ul class="list-reset">
-      <li><a href="<%= start_idea_path %>">Create a New Product</a></li>
-    </ul>
-  </div>
+    <div class="col col-6 sm-col-2 px2">
+      <h5 class="alpha">Discover</h5>
+      <ul class="list-reset">
+        <li><a href="<%= discover_path %>">Products</a></li>
+      </ul>
+    </div>
 
-  <div class="col col-6 sm-col-2 px2">
-    <h5 class="alpha">Say hello!</h5>
-    <ul class="list-reset">
-      <li><a href="https://twitter.com/asm">Twitter</a></li>
-      <li><a href="https://facebook.com/assemblymade">Facebook</a></li>
-      <li>
-        <a href="mailto:assembly@helpful.io" data-helpful="assembly">Support</a>
-        <script defer src="https://assets.helpful.io/assets/widget.js"></script>
-      </li>
-    </ul>
-  </div>
-</div><!-- .row -->
+    <div class="col col-6 sm-col-2 px2">
+      <h5 class="alpha">Start</h5>
+      <ul class="list-reset">
+        <li><a href="<%= start_idea_path %>">Create a New Product</a></li>
+      </ul>
+    </div>
+
+    <div class="col col-6 sm-col-2 px2">
+      <h5 class="alpha">Say hello!</h5>
+      <ul class="list-reset">
+        <li><a href="https://twitter.com/asm">Twitter</a></li>
+        <li><a href="https://facebook.com/assemblymade">Facebook</a></li>
+        <li>
+          <a href="mailto:assembly@helpful.io" data-helpful="assembly">Support</a>
+          <script defer src="https://assets.helpful.io/assets/widget.js"></script>
+        </li>
+      </ul>
+    </div>
+  </div><!-- .row -->
+<% end %>

@@ -17,7 +17,6 @@ class LoveStore extends Store {
         case ActionTypes.DISCUSSION_RECEIVE:
           setHeartables(action.comments);
           setUserHearts(action.userHearts);
-          LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
           break
 
         case ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT:
@@ -38,8 +37,6 @@ class LoveStore extends Store {
             },
             {}
           );
-
-          LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
           break
 
         case ActionTypes.LOVE_RECEIVE_ALL_HEARTS:
@@ -122,7 +119,6 @@ class LoveStore extends Store {
               hearts_count: activity.hearts_count
             }
           })
-          LoveActionCreators.retrieveRecentHearts(this.getAllHeartableIds())
           break
 
         default:

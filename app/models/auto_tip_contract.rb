@@ -58,11 +58,6 @@ class AutoTipContract < ActiveRecord::Base
     end
   end
 
-  def self.replace_contracts_with_default_core_team_split(product, start_at = Time.now)
-    user_amounts = product.core_team.inject({}) {|h, u| h[u] = DEFAULT_SPLIT/product.core_team.size.to_f; h }
-    replace_contracts(product, user_amounts, start_at)
-  end
-
   def self.replace_contracts(product, user_amounts, start_at = Time.now)
     AutoTipContract.transaction do
       end_at = start_at - 1

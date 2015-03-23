@@ -1,5 +1,3 @@
-<% if @user_subscriptions %>
-  <script id="UserSubscriptionsStore" type="application/json">
-    <%== @user_subscriptions.to_json %>
-  </script>
-<% end %>
+<script id="UserSubscriptionsStore" type="application/json">
+  <%== store_data(:user_subscriptions).to_json %>
+</script>

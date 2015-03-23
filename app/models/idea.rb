@@ -24,7 +24,7 @@ class Idea < ActiveRecord::Base
   before_validation :set_tilting_threshold!, on: :create
 
   after_commit :ensure_news_feed_item, on: :create
-  after_commit :update_news_feed_item, on: :update
+  after_commit :touch_news_feed_item, on: :update
 
   default_scope -> { where(deleted_at: nil) }
 
@@ -81,10 +81,9 @@ class Idea < ActiveRecord::Base
 
   def self.create_with_discussion(user, idea_params)
     idea = transaction do
-      puts idea_params
       idea = user.ideas.create(idea_params)
-
       idea.push_to_news_feed
+      user.touch
       idea
     end
   end
@@ -110,9 +109,9 @@ class Idea < ActiveRecord::Base
     NewsFeedItem.create_with_target(self)
   end
 
-  def update_news_feed_item
+  def touch_news_feed_item
     if news_feed_item
-      news_feed_item.update(updated_at: Time.now)
+      news_feed_item.touch
     end
   end
 

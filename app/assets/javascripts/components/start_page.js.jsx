@@ -20,41 +20,44 @@ var StartPage = React.createClass({
         <div className="masthead" style={{background: background, paddingTop: 0}}>
           <div className="masthead-title p4">
             <div className="clearfix">
-              <h1 className="col-8 mx-auto center white">Turn your idea into a great product with people around the world</h1>
+              <h1 className="col-8 mx-auto center white">
+                 Create a community-owned product that shares the success with everyone that helps.
+              </h1>
             </div>
           </div>
         </div>
 
         <div className="container center">
+          
           <ul className="list list-steps hidden-xs hidden-sm">
             <li className="overlay" />
 
             <li>
-              <div className="step active">1</div>
+              <div className="step">1</div>
               <div className="body">
                 <strong>Share your idea</strong>
-                <div className="gray-2">Every great product begins with an idea.</div>
+                <div className="gray-2">A good web or mobile app idea works.</div>
               </div>
             </li>
             <li>
               <div className="step">2</div>
               <div className="body">
                 <strong>Find collaborators</strong>
-                <div className="gray-2">Assemble a founding team.  Own what you make.</div>
+                <div className="gray-2">Work together here in your own online space.</div>
               </div>
             </li>
             <li>
               <div className="step">3</div>
               <div className="body">
                 <strong>Build a product</strong>
-                <div className="gray-2">Create something beautiful with the help of the community.</div>
+                <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
               </div>
             </li>
             <li>
               <div className="step">4</div>
               <div className="body">
-                <strong>Launch it</strong>
-                <div className="gray-2">Grow a real business from what you've built.</div>
+                <strong>Grow it</strong>
+                <div className="gray-2">Share its success with everyone who helped.</div>
               </div>
             </li>
 
@@ -64,24 +67,20 @@ var StartPage = React.createClass({
             <div className="col-xs-8 col-xs-offset-2">
               <ul className="list-reset text-large center">
                 <li className="p2">
-                  <strong>Submit your idea</strong>
-                  <div className="gray-2">Every great product begins with an idea</div>
+                  <strong>Share your idea</strong>
+                  <div className="gray-2">A good web or mobile app idea works.</div>
                 </li>
                 <li className="p2">
-                  <strong>Recruit a team</strong>
-                  <div className="gray-2">Work with talented people and distribute ownership</div>
-                </li>
-                <li className="p2">
-                  <strong>Lay the foundation</strong>
-                  <div className="gray-2">First steps to making something amazing</div>
+                  <strong>Find collaborators</strong>
+                  <div className="gray-2">Work together here in your own online space.</div>
                 </li>
                 <li className="p2">
                   <strong>Build a product</strong>
-                  <div className="gray-2">Create something beautiful.</div>
+                  <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
                 </li>
                 <li className="p2">
-                  <strong>Grow</strong>
-                  <div className="gray-2">Scale it to the moon</div>
+                  <strong>Grow it</strong>
+                  <div className="gray-2">Share its success with everyone who helped.</div>
                 </li>
               </ul>
             </div>
@@ -94,7 +93,7 @@ var StartPage = React.createClass({
             </div>
             <div className="visible-xs mt3" />
             <div className="mb3">
-              Already have a product and want to migrate it to Assembly?&nbsp;
+              Already have a product that could benefit from the community's help?&nbsp;
               <a href="mailto:assembly@helpful.io" data-helpful="assembly">Contact us</a>
             </div>
           </div>
@@ -172,7 +171,7 @@ var StartPage = React.createClass({
         <div className="container-fluid" style={{background: '#fff url(<%= image_url "section-gradient.png" %>) no-repeat center bottom'}}>
           <div className="container">
             <div className="center">
-              <h1 style={{fontSize: 48}}>An entirely new way to create the next great software product</h1>
+              <h1>Turn your idea into a great product with people around the world</h1>
             </div>
             <div className="row">
               <div className="col-xs-2 col-xs-offset-5">
@@ -182,7 +181,7 @@ var StartPage = React.createClass({
             <div className="row">
               <div className="col-xs-12 col-sm-8 col-sm-offset-2 center">
                 <h2 style={{fontSize: 32}}>Smart Questions Answered</h2>
-                <p className="lead gray-2">An outside-the-box platform for launching your product deserves some thoughtful questions ‐ these are our thoughtful answers.</p>
+                <p className="lead gray-2">An outside-the-box platform for launching community products deserves some thoughtful questions ‐ these are our thoughtful answers.</p>
               </div>
             </div>
             <br />
@@ -201,26 +200,6 @@ var StartPage = React.createClass({
                     <div id="why-not-just-do-open-source" className="panel-collapse collapse">
                       <div className="panel-body">
                         <p>Open source is great. Assembly products are built with OSS. What’s unique about Assembly is that it allows you to collaborate on real products your colleagues (and mom) can use with people all around the world and then monetize them. Thanks internets!</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="panel panel-subtle">
-                    <div className="panel-heading">
-                      <p className="panel-title">
-                        <a href="#what-is-assemblys-fee" data-toggle="collapse" style={{display: 'block'}}>
-                          <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
-                          How does Assembly make money?
-                        </a>
-                      </p>
-                    </div>
-                    <div id="what-is-assemblys-fee" className="panel-collapse collapse">
-                      <div className="panel-body">
-                        <p>
-                          Assembly collects a 10% platform fee of the revenue after expenses. This is initially used to cover basic operating costs until a product’s revenue exceeds costs. Any proceeds after expenses are distributed to coin holders based on their app coins percentages. You can see <a href="https://assembly.com/coderwall/financials">Coderwall</a> as an example of a mature product paying out in this model.
-                        </p>
-                        <p>
-                          We care deeply that we’re creating more value for the community than the 10% collected as a platform fee. Building on Assembly not only connects you with others around the world, but you also can build products with the freedom of not having to hand initial capital to run the product, managing the finances, paying accounting and legal costs and all the other burdens of operating a traditional company. We’re also investing in continuing to find ways to create new value for the community as well as exploring ways to reduce fees if feasible.
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -282,7 +261,27 @@ var StartPage = React.createClass({
                     <div id="can-a-product-leave-assembly" className="panel-collapse collapse">
                       <div className="panel-body">
                         <p>Generally no. Assembly is not an incubator. We’re focused on enabling the distributed Assembly community to both build and continue to grow successful products. An important part of this is that anyone can come help build any product, with full trust that their work (if accepted) will be rewarded with an ownership stake in that product that will translate to a portion of any future revenue.</p>
-                        <p>In order for Assembly to ensure that the community’s work is rewarded in perpetuity, products being built on Assembly need to stay on Assembly. An exception to this is if the partners agreed to sell the product to an acquiring company.</p>
+                        <p>In order for Assembly to ensure that the community’s work is rewarded in perpetuity, products being built on Assembly need to stay on Assembly. An exception to this is if the majority of those that built it agree to sell the product to an acquiring company.</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="panel panel-subtle">
+                    <div className="panel-heading">
+                      <p className="panel-title">
+                        <a href="#what-is-assemblys-fee" data-toggle="collapse" style={{display: 'block'}}>
+                          <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
+                          Does Assembly cost anything?
+                        </a>
+                      </p>
+                    </div>
+                    <div id="what-is-assemblys-fee" className="panel-collapse collapse">
+                      <div className="panel-body">
+                        <p>
+                          Assembly collects a 10% platform fee of the revenue after expenses. This is initially used to cover basic operating costs until a product’s revenue exceeds costs. Any proceeds after expenses are distributed to App Coin holders based on their App Coin percentages. You can see <a href="https://assembly.com/coderwall/financials">Coderwall</a> as an example of a mature product paying out in this model.
+                        </p>
+                        <p>
+                          We care deeply that we’re creating more value for the community than the 10% collected as a platform fee. Building on Assembly not only connects you with others around the world, but you also can build products with the freedom of not having to hand initial capital to run the product, managing the finances, paying accounting and legal costs and all the other burdens of operating a traditional company. We’re also investing in continuing to find ways to create new value for the community as well as exploring ways to reduce fees if feasible.
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -322,6 +321,26 @@ var StartPage = React.createClass({
                       </div>
                     </div>
                   </div>
+
+
+                  <div className="panel panel-subtle">
+                    <div className="panel-heading">
+                      <p className="panel-title">
+                        <a href="#must-make-money" data-toggle="collapse" style={{display: 'block'}}>
+                          <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
+                          Does a product have to make money?
+                        </a>
+                      </p>
+                    </div>
+                    <div id="must-make-money" className="panel-collapse collapse">
+                      <div className="panel-body">
+                        <p>
+                          No, products on Assembly are not required to earn revenue.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                        
                   <div className="panel panel-subtle">
                     <div className="panel-heading">
                       <p className="panel-title">
@@ -331,49 +350,53 @@ var StartPage = React.createClass({
                         </a>
                       </p>
                     </div>
-                    {/* TODO: (pletcher) This response doesn't address the question */}
                     <div id="will-product-make-money" className="panel-collapse collapse">
                       <div className="panel-body">
-                        <p>We deliberately leave the roadmap up to each product’s Core Team. We urge and help products to outline clear ways to monetizing the product. You’ll find most products have these roadmaps in their discussions or plainly stated on their product pages.
+                        <p>
+                          If, when, and how a product earn's revenue is up to the product roadmap set by each product’s Core Team. You’ll find most products have these roadmaps in their discussions or plainly stated on their product pages.
                         </p>
                         <p>
-                          Sometimes a product solves a problem but it is unclear how it would make revenue today. These products can also be built on Assembly.
+                          Assembly products earning revenue do so through credit card purchases through the Assembly API or by Assembly provided invoicing when amounts exceed $1,000. 
                         </p>
                       </div>
                     </div>
                   </div>
+
                   <div className="panel panel-subtle">
                     <div className="panel-heading">
                       <p className="panel-title">
                         <a href="#hiring-employees" data-toggle="collapse" style={{display: 'block'}}>
                           <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
-                          How do I hire employees down the road?
+                          Can products hire employees?
                         </a>
                       </p>
                     </div>
                     <div id="hiring-employees" className="panel-collapse collapse">
                       <div className="panel-body">
                         <p>In lots of cases, people are using bounties on Assembly for things that you might think you need to hire an employee for. For example, someone might put in 4 hours per week responding to support emails, and earn a flat number of App Coins for that work.</p>
-                        <p>Additionally, once your product is earning money you can spend it as you please – which might mean hiring contract employees.</p>
+                        <p>Additionally, once a product is earning money a community can use the income to cover costs as it needs – which might including hiring contract employees.</p>
                       </div>
                     </div>
-                  </div>
+                  </div>                  
+
                   <div className="panel panel-subtle">
                     <div className="panel-heading">
                       <p className="panel-title">
-                        <a href="#how-much-of-my-product-do-I-own" data-toggle="collapse" style={{display: 'block'}}>
+                        <a href="#what-about-investors" data-toggle="collapse" style={{display: 'block'}}>
                           <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
-                          Why do I only start with 5% of the App Coins of my product?
+                          Can an Assembly product receive an investment?
                         </a>
                       </p>
                     </div>
-                    <div id="how-much-of-my-product-do-I-own" className="panel-collapse collapse">
+                    <div id="what-about-investors" className="panel-collapse collapse">
                       <div className="panel-body">
-                        <p>You actually get 100% at the start. The 500,000 App Coins we start you off with are 100% of the allocated coins at that point, but 5% of the available coins. As new ones are awarded, each coin will be worth a smaller percentage of the product.</p>
-                        <p>But, typically the person who submits the idea is highly active in planning and building it, so you will continue to earn App Coins throughout the process.</p>
+                        <p>
+                          Yes, technically accredited investors could invest in a product. It is important to remember community products don't have traditional costs because Assembly often covers hosting and there is a community volunteering their time to build and support the product.
+                        </p>
                       </div>
                     </div>
                   </div>
+                          
                 </div>
               </div>
             </div>
@@ -383,7 +406,7 @@ var StartPage = React.createClass({
               </Button>
               <div className="visible-xs mt3" />
               <div className="pull-right mb3">
-                Already have a product and want to migrate it to Assembly?&nbsp;
+                Already have a product that could benefit from the community's help?&nbsp;
                 <a href="mailto:assembly@helpful.io" data-helpful="assembly">Contact us</a>
               </div>
             </div>

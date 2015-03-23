@@ -3,8 +3,6 @@ var Dispatcher = require('../dispatcher');
 var Store = require('./es6_store')
 
 var currentIdeas = []
-var currentProduct
-var lastProduct
 
 class IdeasStore extends Store {
   constructor() {
@@ -23,20 +21,10 @@ class IdeasStore extends Store {
   getIdeas() {
     return currentIdeas
   }
-
-  getCurrentProduct() {
-    return currentProduct
-  }
-
-  getLastProduct() {
-    return lastProduct
-  }
 }
 
 module.exports = new IdeasStore()
 
 function _setIdeas(action) {
   currentIdeas = action.ideas
-  currentProduct = action.currentProduct
-  lastProduct = action.lastProduct
 }

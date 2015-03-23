@@ -113,15 +113,19 @@ describe ProductsController do
     context 'from an idea' do
       let!(:idea) { Idea.make!(user: creator) }
       let!(:kernel) { User.make!(username: 'kernel') }
+    it 'creates an invite for core team members with email' do
+      expect {
+        post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com'], ownership: { 'jake@adventure.com' => 10 }
+      }.to change(Invite, :count).by(1)
 
       before do
         NewsFeedItem.create_with_target(idea)
       end
 
       it 'creates a product associated with the correct idea' do
-        post :create, product: { name: 'KJDB', 
+        post :create, product: { name: 'KJDB',
                                  pitch: 'Manage your karaoke life',
-                                 idea_id: idea.id}, 
+                                 idea_id: idea.id},
                       core_team: [collaborator.id]
 
         expect(assigns(:product).id).to eql(assigns(:idea).product_id)
@@ -130,10 +134,10 @@ describe ProductsController do
       it 'awards coins to supporters if created from an idea' do
 
         partner_ids = [creator, collaborator].map(&:id).join(',')
-        post :create, product: { name: 'KJDB', 
+        post :create, product: { name: 'KJDB',
                                  pitch: 'Manage your karaoke life',
                                  idea_id: idea.id,
-                                 partner_ids: partner_ids}, 
+                                 partner_ids: partner_ids},
                       core_team: [collaborator.id]
         expect(assigns(:product).partners_count).to eq(2)
       end
