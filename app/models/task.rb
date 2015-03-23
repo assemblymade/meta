@@ -231,7 +231,7 @@ class Task < Wip
     end
   end
 
-  def award(closer, winning_event)
+  def award(closer, winning_event, amount=self.value)
     stop_work!(winning_event.user)
 
     minting = nil
@@ -247,7 +247,7 @@ class Task < Wip
           cents: self.earnable_coins_cache
         )
 
-        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, self.value)
+        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, amount)
 
         milestones.each(&:touch)
       end

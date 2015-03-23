@@ -139,20 +139,43 @@ let IdeaShow = React.createClass({
         </div>
 
         <div className="container">
-          <div className="clearfix mxn2 mt1">
-            <div className="sm-col sm-col-8 px2 mb2">
-              <Discussion newsFeedItem={nfi}>
-                <Idea idea={idea} />
-              </Discussion>
-            </div>
-            <div className="sm-col sm-col-4 px2 mb2">
-              <ProductStateWidget entity={idea} />
-            </div>
-          </div>
+          {this.renderContent()}
         </div>
 
       </div>
     );
+  },
+
+
+  renderContent() {
+    let idea = this.state.idea
+    let product = idea.product
+    let nfi = idea.news_feed_item
+
+    if (_.isNull(product)) {
+      return (
+        <div className="clearfix mxn2 mt1">
+          <div className="sm-col sm-col-8 px2 mb2">
+            <Discussion newsFeedItem={nfi}>
+              <Idea idea={idea} />
+            </Discussion>
+          </div>
+          <div className="sm-col sm-col-4 px2 mb2">
+            <ProductStateWidget entity={idea} />
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className="clearfix mxn2 mt1">
+          <div className="sm-col-8 px2 mb2 mx-auto">
+            <Discussion newsFeedItem={nfi}>
+              <Idea idea={idea} />
+            </Discussion>
+          </div>
+        </div>
+      )
+    }
   },
 
   // Stuff for the share thingy

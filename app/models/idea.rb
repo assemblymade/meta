@@ -314,4 +314,15 @@ class Idea < ActiveRecord::Base
     Tweeter.new.tweet_idea(self)
   end
 
+  def participants
+    p = [self.user]
+    self.news_feed_item.comments.each do |a|
+      p.append(a.user)
+    end
+    self.news_feed_item.hearts.each do |b|
+      p.append(b.user)
+    end
+    p.uniq
+  end
+
 end

@@ -64,6 +64,7 @@ describe ProductsController do
   describe '#create' do
     before do
       sign_in creator
+      creator.update! current_sign_in_ip: IPAddr.new('127.0.0.1/24')
     end
 
     context 'with good params' do
@@ -76,10 +77,6 @@ describe ProductsController do
 
       it 'adds user to core team' do
         expect(assigns(:product).core_team).to include(creator)
-      end
-
-      it 'should redirect to welcome page' do
-        expect(response).to redirect_to(product_welcome_path(assigns(:product)))
       end
 
       it 'has slug based on name' do
@@ -108,44 +105,39 @@ describe ProductsController do
       end
     end
 
-    it 'fails if terms of service not accepted' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }
-      expect(response).to_not be_success
-    end
-
     it 'creates a product with core team' do
       post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: [collaborator.id]
       expect(assigns(:product).core_team).to include(collaborator)
     end
 
-    it 'creates an invite for core team members with email' do
-      expect {
-        post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com'], ownership: { 'jake@adventure.com' => 10 }
-      }.to change(Invite, :count).by(1)
 
-      expect(
-        Invite.find_by(invitee_email: 'jake@adventure.com').via.name
-      ).to eq('KJDB')
-    end
+    context 'from an idea' do
+      let!(:idea) { Idea.make!(user: creator) }
+      let!(:kernel) { User.make!(username: 'kernel') }
 
-    it 'creates invite with tip to collaborator' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, ownership: { collaborator.id => 10 }
+      before do
+        NewsFeedItem.create_with_target(idea)
+      end
 
-      invite = Invite.find_by(invitee_id: collaborator.id)
-      expect(invite.tip_cents).to eq(60000)
-      expect(invite.via.name).to eq('KJDB')
-      expect(invite.core_team?).to be_truthy
-    end
+      it 'creates a product associated with the correct idea' do
+        post :create, product: { name: 'KJDB',
+                                 pitch: 'Manage your karaoke life',
+                                 idea_id: idea.id},
+                      core_team: [collaborator.id]
 
-    it 'mints founder coins' do
-      post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' }, core_team: ['jake@adventure.com'], ownership: { 'jake@adventure.com' => 10 }
+        expect(assigns(:product).id).to eql(assigns(:idea).product_id)
+      end
 
-      expect(
-        TransactionLogEntry.find_by(product_id: assigns(:product).id)
-      ).to have_attributes(
-        action: 'minted',
-        cents: 600000
-      )
+      it 'awards coins to supporters if created from an idea' do
+
+        partner_ids = [creator, collaborator].map(&:id).join(',')
+        post :create, product: { name: 'KJDB',
+                                 pitch: 'Manage your karaoke life',
+                                 idea_id: idea.id,
+                                 partner_ids: partner_ids},
+                      core_team: [collaborator.id]
+        expect(assigns(:product).partners_count).to eq(2)
+      end
     end
   end
 

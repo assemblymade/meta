@@ -139,7 +139,7 @@ var StartPage = React.createClass({
                       <div style={{margin: '35px 0 20px 0'}}>
                         <div className="avatar-comment" style={{background: 'url("https://gravatar.com/avatar/4f731655f6de1f6728c716448e0ba634?d=https%3A%2F%2Fassembly.com%2Fassets%2Fdefault_avatar.png&s=170")'}} />
                       </div>
-                      <em className="gray-2" style={{fontSize: 18, lineHeight: '1.2'}}>Assembly has been fantastic for providing a new venue to collaborate on <a href="<%= product_path(Product.find_by(slug: 'buckets')) %>">Buckets</a>. I love the variety of contributions we receive and overall being able to share our product’s development so openly!</em>
+                      <em className="gray-2" style={{fontSize: 18, lineHeight: '1.2'}}>Assembly has been fantastic for providing a new venue to collaborate on <a href="/buckets">Buckets</a>. I love the variety of contributions we receive and overall being able to share our product’s development so openly!</em>
                       <br />
                       <div style={{marginTop: 10}}>
                         <strong>David Kaneda - UX Designer</strong>

@@ -20,6 +20,14 @@ class ProductsController < ProductController
         'Easily find useful information.'
       ].sample
 
+    @idea = Idea.find_by(id: params[:idea_id])
+
+    if @idea
+      @participants = @idea.participants.map{|a| UserSerializer.new(a)}
+    else
+      @participants = []
+    end
+
     render layout: 'application'
   end
 
@@ -44,24 +52,38 @@ class ProductsController < ProductController
   end
 
   def create
-    if idea_id = params[:product][:idea_id]
+    if idea_id = params[:product].delete(:idea_id)
       @idea = Idea.find(idea_id)
 
-      return render action: :new, layout: 'application' unless @idea.user == current_user
+      return redirect_to action: :new, layout: 'application' unless @idea.user == current_user
     end
 
     @product = create_product_with_params
     if @product.valid?
-      respond_with(@product, location: product_welcome_path(@product))
 
       Karma::Kalkulate.new.award_for_product_to_stealth(@product)
 
       @product.retrieve_key_pair
 
       if @idea
-        @idea.update(product: @product)
+        @idea.update(product_id: @product.id)
       end
+
+      chosen_ids = params[:product][:partner_ids] || ''
+      chosen_ids = chosen_ids.split(',').flatten
+      GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)
+
+      # chosen_ids.each do |a|
+      #   EmailLog.send_once(a, the_key) do
+      #     PartnershipMailer.delay(queue: 'mailer').create(a, @product.id, @idea.id)
+      #   end
+      # end
+
+      AutoPost.new.generate_idea_product_transition_post(@product)
       current_user.touch
+      @product.reload
+
+      respond_with(@product, location: product_path(@product))
     else
       render action: :new, layout: 'application'
     end
@@ -188,28 +210,8 @@ class ProductsController < ProductController
         product.core_team_memberships.create(user: user)
       end
 
-      coins_allocated = ownership.values.map(&:to_i).sum
-      founder_coins = 100 * Product::INITIAL_COINS
-      TransactionLogEntry.minted!(nil, Time.now, product, current_user.id, founder_coins)
       product.update_partners_count_cache
       product.save!
-
-      invitees = (core_team_ids + ownership.keys).uniq
-      invitees.each do |email_or_user_id|
-        invite_params = {
-          invitor: current_user,
-          via: product,
-          tip_cents: (ownership[email_or_user_id].to_i || 0) * Product::INITIAL_COINS,
-          core_team: true
-        }
-
-        if email_or_user_id.uuid?
-          invite_params[:invitee] = User.find(email_or_user_id)
-        else
-          invite_params[:invitee_email] = email_or_user_id
-        end
-        Invite.create_and_send(invite_params)
-      end
 
       flash[:new_product_callout] = true
     end
@@ -319,7 +321,9 @@ class ProductsController < ProductController
       :try_url,
       :you_tube_video_url,
       :terms_of_service,
-      {:tags => []}
+      {:tags => []},
+      :partner_ids,
+      :idea_id
     ] + Product::INFO_FIELDS.map(&:to_sym)
 
     params.require(:product).permit(*fields)
