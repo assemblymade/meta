@@ -156,7 +156,7 @@ let IdeaShow = React.createClass({
       return (
         <div className="clearfix mxn2 mt1">
           <div className="sm-col sm-col-8 px2 mb2">
-            <Discussion newsFeedItem={nfi}>
+            <Discussion newsFeedItem={nfi} totalVisitors={idea.total_visitors}>
               <Idea idea={idea} />
             </Discussion>
           </div>
@@ -169,7 +169,7 @@ let IdeaShow = React.createClass({
       return (
         <div className="clearfix mxn2 mt1">
           <div className="sm-col-8 px2 mb2 mx-auto">
-            <Discussion newsFeedItem={nfi}>
+            <Discussion newsFeedItem={nfi} totalVisitors={idea.total_visitors}>
               <Idea idea={idea} />
             </Discussion>
           </div>

@@ -6,7 +6,8 @@ class IdeaSerializer < ApplicationSerializer
     :flagged_at, :founder_preference, :greenlit_at, :hearts_count,
     :heart_distance_from_percentile, :id, :name, :news_feed_item, :path,
     :percentile, :product, :rank, :raw_body, :score,
-    :short_body, :slug, :tilting_threshold, :topics, :url, :mark_names, :tentative_name, :sanitized_body
+    :short_body, :slug, :tilting_threshold, :topics, :url, :mark_names, :tentative_name, :sanitized_body,
+    :total_visitors
 
   has_one :product
   has_one :user
@@ -14,7 +15,7 @@ class IdeaSerializer < ApplicationSerializer
   cached
 
   def cache_key
-    [object, object.news_feed_item]
+    ['v2', object, object.news_feed_item]
   end
 
   def body

@@ -61,9 +61,10 @@ class UpdateProductMetrics
 
   def grouped_idea_visitors(&blk)
     total_idea_visitors.each do |r|
-      slug = r['path'].split('/').last
-      if idea = Idea.find_by(slug: slug)
-        blk.call(idea, r['total'].to_i)
+      if r['path'] =~ /\/([\w-]+)$/
+        if idea = Idea.find_by(slug: $1)
+          blk.call(idea, r['total'].to_i)
+        end
       end
     end
   end

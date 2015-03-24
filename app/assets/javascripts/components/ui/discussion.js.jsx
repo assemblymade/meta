@@ -11,7 +11,8 @@ var Discussion = React.createClass({
       comments_count: React.PropTypes.number.isRequired,
       id: React.PropTypes.string.isRequired,
       url: React.PropTypes.string
-    }).isRequired
+    }).isRequired,
+    totalVisitors: React.PropTypes.number
   },
 
   componentDidMount() {
@@ -27,7 +28,6 @@ var Discussion = React.createClass({
 
   render() {
     var item = this.props.newsFeedItem
-
     return (
       <Tile>
         {this.props.children}
@@ -45,6 +45,12 @@ var Discussion = React.createClass({
           </ul>
 
           <ul className="right list-reset clearfix mxn1 mb0">
+            {this.props.totalVisitors && this.props.totalVisitors > 20 ? <li className="left p1">
+              <span className="gray-3">
+                {this.props.totalVisitors} visitors
+              </span>
+            </li> : null}
+
             <li className="left p1">
               <a className="gray-3 gray-2-hover bold" href="#" onClick={this.handleTwitterClick}>
                 <Icon icon="twitter" />
