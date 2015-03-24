@@ -5,7 +5,7 @@ product called <a href="<%= product_url(@product) %>"><b><%= @product.name %></b
 product.</p>
 
 <p>For your early participation, <a href="<%= user_url(@product.user) %>"><b><%= @product.user.username %></b></a> gave you
-10 coins.  These coins represent ownership in Coderwall.</p>
+10 coins.  These coins represent ownership in <%= @product.name %>.</p>
 
 <p><a href="<%= product_url(@product) %>"><b><%= @product.name %></b></a> is currently building its founding team.  Participate
 early to earn more ownership. </p>
