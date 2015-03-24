@@ -5,7 +5,6 @@
 <% activate_nav! :people_ownership %>
 
 <% cache [@product] do %>
-  <%= render 'people/nav' %>
 
   <% if !@product.for_profit? %>
     <%= render 'products/non_profit' %>
