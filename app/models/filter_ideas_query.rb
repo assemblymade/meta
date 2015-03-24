@@ -30,6 +30,7 @@ class FilterIdeasQuery
   end
 
   def filter_by
+    puts "FILTERING #{options[:filter]}"
     if options[:filter]
       Idea.send(options[:filter].to_sym)
     else
