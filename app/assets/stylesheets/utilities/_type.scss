@@ -37,6 +37,10 @@
   font-size: 1rem;
 }
 
+.ellipsis {
+  text-overflow: ellipsis;
+}
+
 @media #{$breakpoint-sm} {
   .sm-right-align { text-align: right }
   .sm-center      { text-align: center }

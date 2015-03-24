@@ -1,3 +1,5 @@
+'use strict'
+
 // TODO asset pipelined (chrislloyd)
 // var marked = require('marked')
 
@@ -15,6 +17,7 @@ var ProductStore = require('../stores/product_store');
 var Routes = require('../routes');
 var Tips = require('./tips_ui.js.jsx');
 var UserStore = require('../stores/user_store');
+import Partner from './partner.js.jsx'
 
 module.exports = React.createClass({
   displayName: 'Comment',
@@ -75,15 +78,11 @@ module.exports = React.createClass({
     var author = this.props.author;
 
     return (
-      <div id={this.props.id} className="timeline-item">
-        <div className="left activity-avatar _inline-block">
+      <div id={this.props.id}>
+        <div className="left activity-avatar inline-block">
           <a href={Routes.user_path({ id: this.props.author.username })}>
-            <Avatar user={author} size={30} />
+            <Partner user={author} size={30} product={this.props.product} />
           </a>
-        </div>
-
-        <div className="left _inline-block" style={{ position: 'relative', left: '-8px', top: '-6px' }}>
-          {this.renderCoreTeamIcon()}
         </div>
 
         {this.renderComment()}
@@ -175,18 +174,6 @@ module.exports = React.createClass({
         </div>
       </div>
     );
-  },
-
-  renderCoreTeamIcon: function() {
-    var author = this.props.author;
-
-    if (_(ProductStore.getCoreTeamIds()).contains(author.id)) {
-      return <img src="/assets/core_icon.svg"
-          width="12"
-          ref="coreIndicator"
-          data-toggle="tooltip"
-          title={'@' + author.username + ' is a member of the ' + ProductStore.getName() + ' core team'} />;
-    }
   },
 
   renderEditableComment: function() {

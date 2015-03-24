@@ -74,7 +74,7 @@ var BountyListItem = React.createClass({
 
     this.setState({ position: position })
 
-    var offset = $(this.getDOMNode()).closest('.row').offset()
+    var offset = $(this.getDOMNode()).parent().offset()
     var scrollTop = $(window).scrollTop()
 
     var left = position.left - 10 + offset.left

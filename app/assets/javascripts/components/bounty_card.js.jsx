@@ -12,13 +12,14 @@ const BountyCard = React.createClass({
 
   render: function() {
     let bounty = this.props.bounty
+    let coins = bounty.coins || bounty.earnable_coins_cache
     let locker = null,
         meta = null,
         comments = null,
         hearts = null
 
     if (bounty.locker) {
-      locker = <div className="right ml2 py2">
+      locker = <div className="right ml3 py2">
         <Avatar user={bounty.locker} />
       </div>
     }
@@ -40,12 +41,12 @@ const BountyCard = React.createClass({
         {locker}
 
         <div className="overflow-hidden">
-          <div>
+          <div className="black">
             {bounty.title}
           </div>
           <div className="clearfix mxn1 gray-3 h6" style={{lineHeight: '2rem'}}>
             <div className="left px1">
-              <AppCoins n={bounty.coins} color="gray-3" />
+              <AppCoins n={coins} color="gray-3" />
             </div>
             {comments}
             {hearts}

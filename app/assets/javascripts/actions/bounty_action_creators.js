@@ -5,9 +5,7 @@ var ProductStore = require('../stores/product_store.js');
 var Routes = require('../routes');
 
 var BountyActionCreators = {
-  call: function(e, eventName, url) {
-    e.preventDefault()
-
+  call: function(eventName, url) {
     _track(eventName);
     _patch(url);
   },

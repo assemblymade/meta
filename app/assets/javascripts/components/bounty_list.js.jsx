@@ -53,11 +53,9 @@ var BountyList = React.createClass({
 
   render: function() {
     return (
-      <div className="row">
-        <div className="col-xs-12">
-          {this.renderBounties()}
-          {this.renderSpinner()}
-        </div>
+      <div className="relative">
+        {this.renderBounties()}
+        {this.renderSpinner()}
       </div>
     )
   },
