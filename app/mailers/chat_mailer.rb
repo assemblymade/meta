@@ -12,7 +12,7 @@ class ChatMailer < BaseMailer
     @product = @chat_room.product
 
     scope = Event::Comment.where(wip_id: @event.wip_id)
-    @previous_events = scope.order(created_at: :asc).where('created_at < ?', @event.created_at).limit(2).to_a
+    @previous_events = scope.order(created_at: :desc).where('created_at < ?', @event.created_at).limit(2).to_a.reverse
     @future_event = scope.order(created_at: :asc).where('created_at > ?', @event.created_at).limit(1).to_a
     @comments = (@previous_events + [@event, @future_event]).flatten.compact
 
