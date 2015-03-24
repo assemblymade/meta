@@ -363,11 +363,8 @@ ActiveRecord::Schema.define(version: 20150324205010) do
     t.datetime "deleted_at"
     t.datetime "last_tweeted_at"
     t.string   "tentative_name"
-<<<<<<< HEAD
     t.datetime "last_tilt_email_sent"
-=======
     t.integer  "total_visitors",                 default: 0,                     null: false
->>>>>>> Capture idea visitor counts
   end
 
   add_index "ideas", ["deleted_at"], name: "index_ideas_on_deleted_at", using: :btree
