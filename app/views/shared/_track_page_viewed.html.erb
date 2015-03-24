@@ -27,7 +27,7 @@
 
     setTimeout(function(){
       if (!window._analyticsViewTarget) {
-        Bugsnag.notify("UntrackedPageView", "Make sure you call track_engaged");
+        track('untracked_page_view')
       }
     }, 2000)
   <% end %>

@@ -104,25 +104,26 @@ class Product < ActiveRecord::Base
       date.beginning_of_week, date.beginning_of_week + 1.week
     )
   }
+  scope :greenlit,     -> { public_products.where(state: 'greenlit') }
   scope :latest,           -> { where(flagged_at: nil).order(updated_at: :desc)}
+  scope :live,         -> { where.not(try_url: [nil, '']) }
+  scope :no_meta,         -> { where.not(id: self.meta_id) }
   scope :ordered_by_trend, -> { joins(:product_trend).order('product_trends.score DESC') }
+  scope :profitable,   -> { public_products.where(state: 'profitable') }
   scope :public_products,  -> { where.not(id: Product.private_ids).where(flagged_at: nil).where.not(state: ['stealth', 'reviewing']) }
   scope :repos_gt,         ->(count) { where('array_length(repos,1) > ?', count) }
   scope :since,            ->(time) { where('created_at >= ?', time) }
+  scope :stealth,      -> { where(state: 'stealth') }
   scope :tagged_with_any,  ->(tags) { where('tags && ARRAY[?]::varchar[]', tags) }
+  scope :team_building, -> { public_products.where(state: 'team_building') }
+  scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
   scope :validating,       -> { where(greenlit_at: nil) }
+  scope :visible_to, ->(user) { user.nil? ? public_products : where.not(id: Product.private_ids).where(flagged_at: nil) }
   scope :waiting_approval, -> { where('submitted_at is not null and evaluated_at is null') }
   scope :with_repo,        ->(repo) { where('? = ANY(repos)', repo) }
   scope :with_logo,        ->{ where.not(poster: nil).where.not(poster: '') }
-  scope :stealth,      -> { where(state: 'stealth') }
-  scope :team_building, -> { public_products.where(state: 'team_building') }
-  scope :greenlit,     -> { public_products.where(state: 'greenlit') }
-  scope :profitable,   -> { public_products.where(state: 'profitable') }
-  scope :live,         -> { where.not(try_url: [nil, '']) }
   scope :with_mark,   -> (name) { joins(:marks).where(marks: { name: name }) }
   scope :with_topic,   -> (topic) { where('topics @> ARRAY[?]::varchar[]', topic) }
-  scope :untagged, -> { where('array_length(tags, 1) IS NULL') }
-  scope :visible_to, ->(user) { user.nil? ? public_products : where.not(id: Product.private_ids).where(flagged_at: nil) }
 
   EXCLUSIONS = %w(admin about core hello ideas if owner product script start-conversation)
 

@@ -14,7 +14,7 @@ class AppsQuery
   end
 
   def perform
-    clauses.inject(Product.includes(logo: :attachment)) do |query, clause|
+    clauses.inject(Product.includes(logo: :attachment).no_meta) do |query, clause|
       query.merge(clause)
     end
   end
