@@ -39,6 +39,7 @@ class Idea < ActiveRecord::Base
     take(percentile * all.count/100)
   }
   scope :with_topic, -> (topic) { where("? = ANY(topics)", topic) }
+  scope :recently_tilted, -> { joins(:product).merge(Product.where('products.created_at > ?', 2.weeks.ago)).where.not(product_id: nil) }
 
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
   EPOCH_START = Time.new(2013, 6, 6)
