@@ -216,7 +216,10 @@ class ProductsController < ProductController
         product.core_team_memberships.create(user: user)
       end
 
+      product.state = 'greenlit'
+      product.greenlit_at = Time.now
       product.update_partners_count_cache
+
       product.save!
 
       flash[:new_product_callout] = true
