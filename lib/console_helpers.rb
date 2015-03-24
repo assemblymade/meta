@@ -54,6 +54,10 @@ module ASM
     def change_slug(from, to)
       product = Product.find_by!(slug: from)
       product.update!(slug: to)
+
+      if room = ChatRoom.find_by(slug: from)
+        room.update!(slug: to)
+      end
       puts "Changed to #{app.url_for(product.url_params)}"
     end
 
