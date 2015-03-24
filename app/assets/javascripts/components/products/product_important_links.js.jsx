@@ -1,8 +1,6 @@
 'use strict';
 
-const Accordion = require('../ui/accordion.js.jsx')
 const Icon = require('../ui/icon.js.jsx');
-const MetricsLink = require('./metrics_link.js.jsx')
 const Routes = require('../../routes')
 
 let ProductImportantLinks = React.createClass({
@@ -17,17 +15,10 @@ let ProductImportantLinks = React.createClass({
     let slug = product.slug;
 
     return (
-      <Accordion title="Important links">
+      <div className="clearfix mxn1">
         {this.renderHomepageUrl()}
 
-        <a className="block py1" href={Routes.product_chat_path({ product_id: slug })}>
-          <span className="mr2 gray-2">
-            <Icon icon="comments" />
-          </span>
-          Chat
-        </a>
-
-        <a className="block py1" href={Routes.product_wips_path({
+        {this.renderLink('warning', 'File a bug', Routes.product_wips_path({
               params: {
                 product_id: slug
               },
@@ -35,14 +26,9 @@ let ProductImportantLinks = React.createClass({
                 modal: true,
                 tags: 'bug'
               }
-            })}>
-          <span className="mr2 gray-2">
-            <Icon icon="warning" />
-          </span>
-          File a bug
-        </a>
+            }))}
 
-        <a className="block py1" href={Routes.product_posts_path({
+        {this.renderLink('question-circle', 'Ask a question', Routes.product_posts_path({
             params: {
               product_id: slug
             },
@@ -50,49 +36,40 @@ let ProductImportantLinks = React.createClass({
               modal: true,
               tags: 'question'
             }
-        })}>
-          <span className="mr2 gray-2">
-            <Icon icon="question-circle" />
-          </span>
-          Ask a question
-        </a>
+        }))}
 
-        <a className="block py1" href={Routes.product_repos_path({ product_id: slug })}>
-          <span className="mr2 gray-2">
-            <Icon icon="code" />
-          </span>
-          Source code
-        </a>
+        {this.renderLink('github', 'Source code', Routes.product_repos_path({ product_id: slug }))}
 
-        <a className="block py1" href={Routes.product_assets_path({ product_id: slug })}>
-          <span className="mr2 gray-2">
-            <Icon icon="photo" />
-          </span>
-          Assets
-        </a>
+        {this.renderLink('photo', 'Assets', Routes.product_assets_path({ product_id: slug }))}
 
-        <a className="block py1" href={Routes.product_financials_path({product_id: slug })}>
-          <span className="mr2 gray-2">
-            <Icon icon="bar-chart" />
-          </span>
-          Financials
-        </a>
-      </Accordion>
+        {this.renderLink('bar-chart', 'Financials', Routes.product_financials_path({product_id: slug }))}
+      </div>
     );
+  },
+
+  renderLink(icon, label, url) {
+    return <a className="block sm-col sm-col-6 lg-col-4 p1" href={url}>
+      <div className="clearfix">
+        <div className="left mr2 gray-3">
+          <Icon icon={icon} />
+        </div>
+        <div className="overflow-hidden">
+          <div>{label}</div>
+        </div>
+      </div>
+    </a>
   },
 
   renderHomepageUrl() {
     let product = this.props.product;
 
+    const el = document.createElement('a')
+    el.href = product.homepage_url
+    const host = el.hostname
+    el.remove()
+
     if (product.homepage_url) {
-      return (
-        <a className="block py1" href={product.homepage_url}>
-          <span className="mr2 gray-2">
-            <Icon icon="home" />
-          </span>
-          Home
-        </a>
-      );
+      return this.renderLink('home', host, product.homepage_url)
     }
   }
 });

@@ -1,4 +1,16 @@
-var Timeline = React.createClass({
+const TimelineItem = React.createClass({
+  render() {
+    return <div className="_py1_25">
+      {this.props.children}
+    </div>
+  }
+})
+
+const Timeline = React.createClass({
+
+  statics: {
+    Item: TimelineItem
+  },
 
   render() {
     return <div className="timeline">
@@ -8,4 +20,4 @@ var Timeline = React.createClass({
 
 })
 
-module.exports = Timeline
+export default Timeline

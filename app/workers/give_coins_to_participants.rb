@@ -39,8 +39,8 @@ class GiveCoinsToParticipants
       end
     else
       TransactionLogEntry.minted!(nil, Time.now, product, author.id, coins_each)
-
     end
+    t.close!(author)
     product.update_partners_count_cache
     product.save!
     product.partners_count

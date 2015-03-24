@@ -152,7 +152,17 @@ let ProductShow = React.createClass({
                   <div className="py3">
                     <div className="clearfix py2">
                       <h6 className="left gray-2 caps mt0 mb0">
-                        Team ({team.size})
+                        Important links
+                      </h6>
+                    </div>
+                    <ProductImportantLinks product={product} />
+                  </div>
+
+
+                  <div className="py3">
+                    <div className="clearfix py2">
+                      <h6 className="left gray-2 caps mt0 mb0">
+                        Partners ({team.size})
                       </h6>
 
                       <a className="right h6" href={`${product.url}/partners`}>View all</a>
@@ -165,6 +175,8 @@ let ProductShow = React.createClass({
                       }).toJS()}
                     </div>
                   </div>
+
+
                 </div>
               </Tile>
             </div>
@@ -185,10 +197,6 @@ let ProductShow = React.createClass({
 
               <div className="mb3">
                 <MetricsBadge product={product} />
-              </div>
-
-              <div className="mb3">
-                <ProductImportantLinks product={product} />
               </div>
 
               {
