@@ -82,7 +82,6 @@ class ProductsController < ProductController
         end
 
         Tweeter.new.tweet_idea(@idea)
-
       end
 
       AutoPost.new.generate_idea_product_transition_post(@product)
