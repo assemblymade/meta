@@ -1,7 +1,7 @@
 class ChecklistHandler
 
-  DEFAULT_TILTING_THRESHOLD = 20
-  COMMENT_MINIMUM = 5
+  DEFAULT_TILTING_THRESHOLD = Idea::DEFAULT_TILTING_THRESHOLD
+  COMMENT_MINIMUM = Idea::COMMENT_MINIMUM
 
   def hearts_checklist(entity)
     hearts = {}

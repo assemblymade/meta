@@ -98,7 +98,7 @@ let IdeaStartConversation = React.createClass({
                   </Drawer>
 
                   <div className="mb0">
-                    <div className="py3 h6 gray-2">
+                    <div className="py2 h6 gray-2">
                       <p>
                         Here are some example questions you could ask the community:
                       </p>

@@ -136,6 +136,15 @@ class Tweeter
     end
   end
 
+  def tweet_general(text)
+    password = compute_password
+    url = "https://asm-tweeter.herokuapp.com/general/" + password
+    the_data = {
+      tweet_text: text
+    }
+    request :post, url, the_data
+  end
+
   def tweet_love_idea(idea)
     password = compute_password
     url = "https://asm-tweeter.herokuapp.com/love/" + password

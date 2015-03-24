@@ -74,14 +74,15 @@ class ProductsController < ProductController
       GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)
 
       if @idea
-        puts @idea
-        puts "IDEA HERE"
         the_key = @idea.slug.to_sym
         chosen_ids.each do |chosen_id|
           EmailLog.send_once(chosen_id, the_key) do
             PartnershipMailer.delay(queue: 'mailer').create(chosen_id, @product.id, @idea.id)
           end
         end
+
+        tweet_text = "The idea #{@idea.name} just became a product called #{@product.name} #{product_path(@product)}"
+        TweetWorker.perform_async(tweet_text)
       end
 
       AutoPost.new.generate_idea_product_transition_post(@product)
@@ -216,7 +217,10 @@ class ProductsController < ProductController
         product.core_team_memberships.create(user: user)
       end
 
+      product.state = 'greenlit'
+      product.greenlit_at = Time.now
       product.update_partners_count_cache
+
       product.save!
 
       flash[:new_product_callout] = true

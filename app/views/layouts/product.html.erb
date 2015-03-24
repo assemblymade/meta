@@ -12,10 +12,6 @@
 
 <!-- Flashes! -->
 
-<% if current_user && @product.core_team?(current_user) && @product.stealth? %>
-  <%= render 'products/stealth_reminder' %>
-<% end %>
-
 <% if flash[:first_assets_granted] %>
   <%= render 'products/assets_granted' %>
 <% end %>

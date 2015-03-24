@@ -39,10 +39,13 @@ class Idea < ActiveRecord::Base
     take(percentile * all.count/100)
   }
   scope :with_topic, -> (topic) { where("? = ANY(topics)", topic) }
+  scope :recently_tilted, -> { joins(:product).merge(Product.where('products.created_at > ?', 2.weeks.ago)).where.not(product_id: nil) }
 
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
   EPOCH_START = Time.new(2013, 6, 6)
-  DEFAULT_TILTING_THRESHOLD = 10
+
+  DEFAULT_TILTING_THRESHOLD = 20
+  COMMENT_MINIMUM = 5
 
   CATEGORY_NAMES = [
     "Ideas searching for names",
@@ -160,6 +163,14 @@ class Idea < ActiveRecord::Base
 
   def hearted
     add_score
+  end
+
+  def tiltable
+    hearts = self.love >= DEFAULT_TILTING_THRESHOLD
+    name = self.name.present? && (self.name != "Discuss potential names in the comments")
+    comments = self.comments.count >= COMMENT_MINIMUM
+
+    hearts && name && comments
   end
 
   def unhearted(heart)

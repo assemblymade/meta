@@ -12,6 +12,13 @@ class AutoBounty
     make_bounty(product, description, title, value)
   end
 
+  def role_roster(product)
+    title = "Create a Role Roster"
+    description = "Lay out 5 or more roles you'd like to fill for the product"
+    value = 5000
+    make_bounty(production, description, title, value)
+  end
+
   def product_roadmap(product)
     description = "What do you need to build or validate your idea?  Set a timeframe releasing a first prototype of the product.  Give people specific milestones.  It's ok if these change later.  This is a guide for collaborators to keep their eye on the prize.  Publish this roadmap in a post."
     title = "Create a Product Roadmap"
