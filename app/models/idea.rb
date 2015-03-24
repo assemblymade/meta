@@ -43,7 +43,9 @@ class Idea < ActiveRecord::Base
 
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
   EPOCH_START = Time.new(2013, 6, 6)
-  DEFAULT_TILTING_THRESHOLD = 10
+
+  DEFAULT_TILTING_THRESHOLD = 20
+  COMMENT_MINIMUM = 5
 
   CATEGORY_NAMES = [
     "Ideas searching for names",
@@ -163,7 +165,13 @@ class Idea < ActiveRecord::Base
     add_score
   end
 
+  def tiltable
+    hearts = self.love >= DEFAULT_TILTING_THRESHOLD
+    name = self.name.present? && (self.name != "Discuss potential names in the comments")
+    comments = self.comments.count >= COMMENT_MINIMUM
 
+    hearts && name && comments
+  end
 
   def unhearted(heart)
     decrement_score(heart)

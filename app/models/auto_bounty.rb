@@ -13,8 +13,8 @@ class AutoBounty
   end
 
   def role_roster(product)
-    title = ""
-    description = ""
+    title = "Create a Role Roster"
+    description = "Lay out 5 or more roles you'd like to fill for the product"
     value = 5000
     make_bounty(production, description, title, value)
   end
