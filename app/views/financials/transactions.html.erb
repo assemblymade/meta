@@ -1,7 +1,5 @@
 <% title 'Awards', @product.name %>
 
-<div id="available_coins"></div>
-
 <h2>Awards</h2>
 
 <div id="chart_div" style="width: 800px; height: 200px;"></div>
@@ -19,6 +17,7 @@
   <tbody>
     <% @awards.each do |award| %>
       <% tlem = TransactionLogEntry.where(wallet_id: award.id).where(action: 'minted').first %>
+      <% next unless tlem %>
       <tr>
         <td rowspan="<%= TransactionLogEntry.where(work_id: tlem.id).where.not(action: 'debit', cents: award.cents).count + 1 %>"><%= award.created_at.strftime("%b %d, %Y") %></td>
         <td><%= link_to award.winner.username, award.winner %></td>
@@ -48,38 +47,6 @@
     $(document).ready(function() {
       var data = <%= @data.to_json.html_safe %>;
       FinanceGraph(data, '%b %d');
-      var coin_data = [
-        { x: 0, y: 600000},
-        { x: 1, y: 120000},
-        { x: 2, y: 80000}
-      ];
-
-      var svg = d3.select('#available_coins')
-                  .append('svg')
-                  .attr("width", 500)
-                  .attr("height", 20);
-
-      var colors = d3.scale.category10();
-      var ys = coin_data.map(function(d){
-        return d.y;
-      });
-
-      svg.selectAll('rect')
-         .data(coin_data)
-         .enter()
-         .append('rect')
-         .attr("x", function(d, i) {
-          return i == 0 ? 0 : d3.sum(coin_data.slice(0,i), function(o){ return o.y}) / d3.sum(ys) * 500;
-         })
-         .attr("y", 0)
-         .attr("width", function(d, i) {
-          console.log(d);
-          return d.y / d3.sum(ys) * 500;
-         })
-         .attr("height", 20)
-         .attr("fill", function(d, i) {
-          return colors(i);
-         });
     })
   </script>
 <% end %>
