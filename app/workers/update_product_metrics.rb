@@ -26,6 +26,10 @@ class UpdateProductMetrics
     grouped_total_visitors do |product, total|
       product.update!(total_visitors: total)
     end
+
+    grouped_idea_visitors do |idea, total|
+      idea.update!(total_visitors: total)
+    end
   end
 
   def grouped_metrics(grouping, &blk)
@@ -51,6 +55,15 @@ class UpdateProductMetrics
     total_visitors.each do |r|
       if product = find_product(r['app_id'])
         blk.call(product, r['total'].to_i)
+      end
+    end
+  end
+
+  def grouped_idea_visitors(&blk)
+    total_idea_visitors.each do |r|
+      slug = r['path'].split('/').last
+      if idea = Idea.find_by(slug: slug)
+        blk.call(idea, r['total'].to_i)
       end
     end
   end
@@ -85,6 +98,17 @@ class UpdateProductMetrics
   def total_visitors
     pg.exec(%Q{
       SELECT COUNT(DISTINCT(domain_userid)) as total, app_id FROM "atomic".events GROUP BY app_id;
+    }).to_a
+  end
+
+  def total_idea_visitors
+    pg.exec(%Q{
+      select count(distinct(domain_userid)) as total,
+        page_urlpath as path
+      from atomic.events
+      where page_urlhost='assembly.com'
+        and page_urlpath like '/ideas/%'
+      group by page_urlpath
     }).to_a
   end
 
