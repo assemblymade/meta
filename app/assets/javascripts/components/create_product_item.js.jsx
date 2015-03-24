@@ -1,3 +1,4 @@
+var Bounty = require('./bounty.js.jsx');
 var page = require('page');
 var routes = require('../routes');
 var NewPostModal = require('./posts/new_post_modal.js.jsx');
@@ -18,7 +19,7 @@ var CreateProductItem = React.createClass({
     var createBountyMenuItem = <DropdownMenu.Item
           key="create bounty"
           label='Create bounty'
-          action="javascript:window.showCreateBounty();void(0);" />
+          action={Bounty.showCreateBounty.bind(null, this.props.product)} />
 
     var createPostMenuItem = <DropdownMenu.Item
           key="create post"

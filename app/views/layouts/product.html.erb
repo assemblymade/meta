@@ -89,33 +89,11 @@
 <% end %>
 
 <div id="public-address-prompt"></div>
-<div id="create-modal-placeholder"></div>
 
 <% content_for :javascript do %>
   <script>
     window.app.product = new Product(<%= json @product, scope: current_user %>)
     window.app.setCurrentAnalyticsProduct(<%= ProductAnalyticsSerializer.new(@product, scope: (current_user || {})).to_json.html_safe %>);
-
-    window.showCreateBounty = function() {
-      window.analytics.track('product.wip.showed_bounty_modal', { product: "<%= @product.slug %>" });
-      try {
-        $('#create-bounty-modal').modal('show');
-      } catch (e) {}
-      React.render(
-        CreateBounty({
-          key: 'create-bounty-modal',
-          id: 'create-bounty-modal',
-          product: { name: "<%= @product.name %>" },
-          url: "<%= product_wips_path(@product) %>",
-          maxOffer: <%= (6 * @product.average_bounty).round(-4) %>,
-          averageBounty: <%= @product.average_bounty %>,
-          coinsMinted: <%= @product.coins_minted %>,
-          profitLastMonth: <%= @product.profit_last_month %>,
-          steps: <%= BountyGuidance::Valuations.suggestions(@product) %>
-        }),
-        document.getElementById('create-modal-placeholder')
-      );
-    };
 
     window.showCreatePost = function() {
       try {

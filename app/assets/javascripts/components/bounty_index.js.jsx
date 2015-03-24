@@ -1,19 +1,20 @@
 'use strict'
 
-const Tile = require('./ui/tile.js.jsx')
+const Accordion = require('./ui/accordion.js.jsx')
+const BountiesStore = require('../stores/bounties_store.js')
+const Bounty = require('./bounty.js.jsx');
+const BountyActionCreators = require('../actions/bounty_action_creators.js')
+const BountyFilter = require('./bounty_filter.js.jsx')
+const BountyList = require('./bounty_list.js.jsx')
+const Button = require('./ui/button.js.jsx')
+const Callout = require('./callout.js.jsx')
 const Label = require('./ui/label.js.jsx')
-var Accordion = require('./ui/accordion.js.jsx')
-var BountiesStore = require('../stores/bounties_store.js')
-var BountyActionCreators = require('../actions/bounty_action_creators.js')
-var BountyFilter = require('./bounty_filter.js.jsx')
-var BountyList = require('./bounty_list.js.jsx')
-var Button = require('./ui/button.js.jsx')
-var Callout = require('./callout.js.jsx')
-var PaginationLinks = require('./pagination_links.js.jsx')
-var Spinner = require('./spinner.js.jsx')
-var UserStore = require('../stores/user_store.js')
+const PaginationLinks = require('./pagination_links.js.jsx')
+const Spinner = require('./spinner.js.jsx')
+const Tile = require('./ui/tile.js.jsx')
+const UserStore = require('../stores/user_store.js')
 
-var BountyIndex = React.createClass({
+const BountyIndex = React.createClass({
   propTypes: {
     tags: React.PropTypes.array,
     assets: React.PropTypes.array,
@@ -177,7 +178,7 @@ var BountyIndex = React.createClass({
 
           <div className="sm-col-right sm-col-4 px3">
             <div className="mb3">
-              <Button action={window.showCreateBounty} block={true}>Create a new bounty</Button>
+              <Button action={Bounty.showCreateBounty.bind(null, product)} block={true}>Create a new bounty</Button>
             </div>
 
             <div className="mb3">

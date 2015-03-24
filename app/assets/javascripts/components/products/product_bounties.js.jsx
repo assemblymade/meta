@@ -1,6 +1,7 @@
 'use strict';
 
 const AssetsStore = require('../../stores/assets_store');
+const Bounty = require('../bounty.js.jsx');
 const BountyIndex = require('../bounty_index.js.jsx');
 const BountyMarksStore = require('../../stores/bounty_marks_store');
 const ProductHeader = require('./product_header.js.jsx');
@@ -28,7 +29,7 @@ let ProductBounties = React.createClass({
     );
 
     if (query && query.modal) {
-      window.showCreateBounty && window.showCreateBounty();
+      Bounty.showCreateBounty(ProductStore.getProduct());
     }
 
     AssetsStore.addChangeListener(this.onAssetsChange);

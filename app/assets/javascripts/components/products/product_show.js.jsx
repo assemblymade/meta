@@ -1,10 +1,14 @@
 'use strict';
 
+const {List, Map} = require('immutable');
 const Avatar = require('../ui/avatar.js.jsx');
+const BountyCard = require('../bounty_card.js.jsx');
 const Button = require('../ui/button.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
 const IntroductionForm = require('./introduction_form.js.jsx');
 const MetricsBadge = require('./metrics_badge.js.jsx');
+const page = require('page');
+const Partner = require('../partner.js.jsx');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductImportantLinks = require('./product_important_links.js.jsx');
 const ProductScreenshotPlaceholder = require('./product_screenshot_placeholder.js.jsx');
@@ -15,9 +19,6 @@ const Screenshots = require('./screenshots.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const User = require('../user.js.jsx')
 const UserStore = require('../../stores/user_store');
-const BountyCard = require('../bounty_card.js.jsx');
-const Partner = require('../partner.js.jsx')
-const {List, Map} = require('immutable')
 
 let ProductShow = React.createClass({
   propTypes: {
@@ -32,7 +33,6 @@ let ProductShow = React.createClass({
     document.title = this.state.product && this.state.product.name;
 
     ProductStore.addChangeListener(this.onProductChange);
-
 
     // This splendor is @chrislloyd. I'm sorry future maintainers!
     $.getJSON(`/api/products/${this.state.product.slug}/updates/paged.json`, function(data) {
@@ -78,13 +78,14 @@ let ProductShow = React.createClass({
     let user = UserStore.getUser();
     let description = null
 
-    let seeHowAssemblyWorksLink = (<a href="/help" className="block px3 py2 center border-top">
+    let seeHowAssemblyWorksLink = (
+      <a href="/help" className="block px3 py2 center border-top">
         See how Assembly works
       </a>
     );
 
     if (product.lead) {
-      var moreDesc;
+      let moreDesc;
 
       if (product.description_html) {
         if (this.state.description) {
@@ -305,7 +306,7 @@ let ProductShow = React.createClass({
 
   handleMakeIdea(e) {
     $.post(this.state.product.url + '/make_idea', (data) => {
-      window.app.redirectTo(data.url)
+      page(data.url)
     })
   }
 });

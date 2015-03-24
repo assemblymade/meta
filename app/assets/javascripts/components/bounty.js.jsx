@@ -4,6 +4,7 @@ const AvatarWithUsername = require('./ui/avatar_with_username.js.jsx');
 const BountyActionCreators = require('../actions/bounty_action_creators');
 const BountyStore = require('../stores/bounty_store');
 const Button = require('./ui/button.js.jsx');
+const CreateBounty = require('./create_bounty.js.jsx');
 const FloatingUserSelector = require('./floating_user_selector.js.jsx');
 const formatShortTime = require('../lib/format_short_time.js');
 const Heart = require('./heart.js.jsx');
@@ -28,6 +29,41 @@ let Bounty = React.createClass({
     item: React.PropTypes.object.isRequired,
     noInvites: React.PropTypes.bool,
     showCoins: React.PropTypes.bool
+  },
+
+  statics: {
+    showCreateBounty(product) {
+      let averageBounty = product.average_bounty;
+      let bountyValuationSteps = product.bounty_valuation_steps;
+      let coinsMinted = product.coins_minted;
+      let name = product.name;
+      let profitLastMonth = product.profit_last_month;
+      let slug = product.slug;
+
+      window.analytics.track(
+        'product.wip.showed_bounty_modal',
+        { product: slug }
+      );
+
+      try {
+        $('#create-bounty-modal').modal('show');
+      } catch (e) {}
+
+      React.render(
+        CreateBounty({
+          key: 'create-bounty-modal',
+          id: 'create-bounty-modal',
+          product: { name: name },
+          url: `/${slug}/bounties`,
+          maxOffer: Math.round(6 * averageBounty),
+          averageBounty: averageBounty,
+          coinsMinted: coinsMinted,
+          profitLastMonth: profitLastMonth,
+          steps: bountyValuationSteps
+        }),
+        document.getElementById('create-modal-placeholder')
+      );
+    }
   },
 
   abandonWork(e) {
@@ -101,8 +137,9 @@ let Bounty = React.createClass({
   render() {
     let bounty = this.state.bounty;
 
+    // fail-over for modals :(
     if (_.isEmpty(bounty)) {
-      bounty = this.props.bounty; // fail-over for modals :(
+      bounty = this.props.bounty;
     }
 
     let currentUser = UserStore.getUser();
@@ -157,7 +194,7 @@ let Bounty = React.createClass({
           </div>
           <div className="right px2 py1">
             <div className="left mr2">
-              <Button action={window.showCreateBounty} block={true}>New bounty</Button>
+              <Button action={Bounty.showCreateBounty.bind(null, ProductStore.getProduct())} block={true}>New bounty</Button>
             </div>
           </div>
         </div>
@@ -387,7 +424,6 @@ let Bounty = React.createClass({
     this.setState({
       selectingLocker: true
     })
-
   },
 
   requestReview() {
