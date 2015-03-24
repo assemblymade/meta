@@ -3,6 +3,7 @@ require 'sidekiq/testing'
 
 describe UpdateProductMetrics do
   let!(:product) { Product.make! }
+  let!(:idea) { Idea.make! }
 
   describe '#perform' do
     it 'records metrics' do
@@ -33,6 +34,13 @@ describe UpdateProductMetrics do
         }]
       end
 
+      allow(u).to receive(:total_idea_visitors) do
+        [{
+          "path" => "/ideas/#{idea.slug}",
+          "total" => "567948"
+        }]
+      end
+
 
       u.perform
 
@@ -46,6 +54,7 @@ describe UpdateProductMetrics do
       expect(metric.total_accounts).to eq(5489)
 
       expect(product.reload.total_visitors).to eq(98567)
+      expect(idea.reload.total_visitors).to eq(567948)
     end
   end
 end
