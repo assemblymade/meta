@@ -81,7 +81,8 @@ class ProductsController < ProductController
           end
         end
 
-        Tweeter.new.tweet_idea(@idea)
+        tweet_text = "The idea #{@idea.name} just became a product called #{@product.name} #{product_path(@product)}"
+        TweetWorker.perform_async(tweet_text)
       end
 
       AutoPost.new.generate_idea_product_transition_post(@product)
