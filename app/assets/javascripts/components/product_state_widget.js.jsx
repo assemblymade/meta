@@ -81,11 +81,17 @@ const ProductStateWidget = React.createClass({
   },
 
   renderProgress: function() {
+    let items = this.state.stages[this.state.activeStage].items
+    var progress = 0
+    if (items) {
+      progress = _.reduce(items, function(m, x){ return x.complete ? m + 1 : m}, 0) / items.length * 100
+    }
+
     return (
       <div className="p2">
-        <div className="center gray-2 h5 px2">Complete these bounties to make your product visible</div>
+        <div className="center h5 bold px2">{this.state.stages[this.state.activeStage]['cta'] || this.state.stages[this.state.activeStage]['name']}</div>
         <div className="py2">
-          <ProgressBar progress={33} type="success" />
+          <ProgressBar progress={progress} type="success" />
         </div>
       </div>
     )
