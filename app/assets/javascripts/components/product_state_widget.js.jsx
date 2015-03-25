@@ -5,6 +5,7 @@ const ChecklistActions = require('../actions/checklist_actions');
 const Button = require('./ui/button.js.jsx');
 const Tile = require('./ui/tile.js.jsx');
 const Checklist = require('./checklist.js.jsx');
+const ProgressBar = require('./ui/progress_bar.js.jsx');
 
 const ProductStateWidget = React.createClass({
   propTypes: {
@@ -79,6 +80,17 @@ const ProductStateWidget = React.createClass({
     )
   },
 
+  renderProgress: function() {
+    return (
+      <div className="p2">
+        <div className="center gray-2 h5 px2">Complete these bounties to make your product visible</div>
+        <div className="py2">
+          <ProgressBar progress={33} type="success" />
+        </div>
+      </div>
+    )
+  },
+
   render: function() {
 
     let activeChecklist = this.state.stages[this.state.activeStage];
@@ -87,7 +99,7 @@ const ProductStateWidget = React.createClass({
     return (
       <Tile>
         <div className="p3">
-          {this.renderStages()}
+          {this.renderProgress()}
           <Checklist
             entity_type={"Idea"}
             entity={this.props.entity}
