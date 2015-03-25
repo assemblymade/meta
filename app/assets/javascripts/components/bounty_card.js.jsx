@@ -41,7 +41,7 @@ const BountyCard = React.createClass({
         {locker}
 
         <div className="overflow-hidden">
-          <div className="black">
+          <div>
             {bounty.title}
           </div>
           <div className="clearfix mxn1 gray-3 h6" style={{lineHeight: '2rem'}}>
