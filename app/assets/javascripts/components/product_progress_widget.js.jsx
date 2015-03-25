@@ -5,7 +5,7 @@ const ChecklistActions = require('../actions/checklist_actions');
 const Button = require('./ui/button.js.jsx');
 const Tile = require('./ui/tile.js.jsx');
 const ProgressBar = require('./ui/progress_bar.js.jsx');
-
+const UserStore = require('../stores/user_store');
 
 const ProductTaskList = React.createClass({
   getDefaultProps: function () {
@@ -22,7 +22,8 @@ const ProductTaskList = React.createClass({
             {
               'left': true,
               'mr2': true,
-              'green': complete
+              'green': complete,
+              'gray-2': !complete
             }
           )
           return (
@@ -31,8 +32,7 @@ const ProductTaskList = React.createClass({
                 <Icon icon={complete ? 'check' : 'minus'} fw={true} />
               </div>
               <div className="overflow-hidden">
-                {tasks.name}
-                <div className="gray-2">{tasks.subtext}</div>
+                <a href={task.url}>{task.title}</a>
               </div>
             </li>
           )

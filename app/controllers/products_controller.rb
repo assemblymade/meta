@@ -40,15 +40,16 @@ class ProductsController < ProductController
     find_product!
     ordered_tasks = @product.tasks.where.not(display_order: nil).order(display_order: :desc)
     completed_ordered_tasks = ordered_tasks.where.not(state: "open").count
-    data = {}
-    data['tasks'] = ordered_tasks
+
     if ordered_tasks.count == 0
       completion = 0
     else
       completion = ((completed_ordered_tasks / ordered_tasks.count)*100).round(2)
     end
-    data['percent_completion'] = completion
-    render json: data
+
+    ordered_tasks = ActiveModel::ArraySerializer.new(ordered_tasks)
+
+    render json: {tasks: ordered_tasks, percent_completion: completion}
   end
 
   def ownership
