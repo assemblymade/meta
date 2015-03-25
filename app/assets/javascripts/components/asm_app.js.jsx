@@ -17,7 +17,7 @@ var AsmApp = React.createClass({
     var Component = RoutesStore.getComponent();
     var context = RoutesStore.getContext();
 
-    this.replaceState({
+    this.setState({
       component: <Component params={context.params}
           query={context.query} />
     });

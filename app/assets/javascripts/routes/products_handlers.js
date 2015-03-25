@@ -213,6 +213,17 @@ let ProductsHandlers = {
     });
   },
 
+  showProductPartners(data) {
+
+    Dispatcher.dispatch({
+      type: ActionTypes.PARTNERS_RECEIVE,
+      product: data.product,
+      partners: data.partners
+    });
+
+    _setActiveTab('partners')
+  },
+
   showProductNewPost(data) {
     let {
       product

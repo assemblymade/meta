@@ -22,7 +22,8 @@ module ApplicationHelper
     posts_index_route? ||
     post_show_route? ||
     product_activity_route? ||
-    product_show_route?
+    product_show_route? ||
+    product_partners_route?
   end
 
   def bounties_index_route?
@@ -57,6 +58,11 @@ module ApplicationHelper
   def product_activity_route?
     controller_name == 'products' &&
       action_name == 'activity'
+  end
+
+  def product_partners_route?
+    controller_name == 'partners' &&
+      action_name == 'index'
   end
 
   def product_show_route?

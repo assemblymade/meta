@@ -4,7 +4,7 @@ const ActionTypes = require('../constants').ActionTypes;
 const Dispatcher = require('../dispatcher');
 const Store = require('./es6_store');
 
-const VALID_ITEMS = ['activity', 'bounties', 'overview', 'updates']
+const VALID_ITEMS = ['activity', 'bounties', 'overview', 'partners', 'updates']
 
 let activeTab = 'assets';
 
