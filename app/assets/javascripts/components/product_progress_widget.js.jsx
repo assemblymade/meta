@@ -40,6 +40,25 @@ const ProductTaskList = React.createClass({
     )
   },
 
+  renderActionButton: function() {
+    if (this.props.complete) {
+      return (
+        <Button type="primary" block={true} action={null}>
+          {buttonAction === null ? <Icon fw="true" icon="lock" /> : ''}
+          {this.props.buttonText}
+        </Button>
+      )
+    } else {
+      return (
+        <Button type="primary" block={true} action={null}>
+          <Icon fw="true" icon="lock" />
+          {this.props.buttonText}
+        </Button>
+      )
+    }
+
+  },
+
   render: function() {
     return (
       <ol className="list-reset">
@@ -95,7 +114,7 @@ const ProductProgressWidget = React.createClass({
           <Tile>
             <div className="p3">
               {this.renderProgress()}
-              <ProductTaskList tasks={this.state.tasks} />
+              <ProductTaskList tasks={this.state.tasks} complete={this.state.progress === 100}/>
             </div>
           </Tile>
         </div>
