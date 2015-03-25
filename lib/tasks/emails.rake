@@ -248,7 +248,7 @@ namespace :emails do
 
   desc "Send Tilt Email to Idea Owners"
   task tilt_email_prompt: :environment do
-    tiltable_ideas = Idea.all.select{|a| a.tiltable}
+    tiltable_ideas = Idea.where(product_id: nil).select{|a| a.tiltable}
     notification_interval = 7.days.to_i
     should_notify = tiltable_ideas.select{ |a| (DateTime.now - a.last_tilt_email_sent) >= notification_interval }
 
