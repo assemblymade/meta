@@ -19,6 +19,7 @@ const Screenshots = require('./screenshots.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const User = require('../user.js.jsx')
 const UserStore = require('../../stores/user_store');
+const ProductProgressWidget = require('../product_progress_widget.js.jsx');
 
 let ProductShow = React.createClass({
   propTypes: {
@@ -183,6 +184,9 @@ let ProductShow = React.createClass({
             </div>
 
             <div className="md-col md-col-4 px3">
+              <div className="mb3">
+                <ProductProgressWidget product={this.state.product} />
+              </div>
               <div className="mb3">
                 <Accordion title="Get started">
                   <div className="mxn3">

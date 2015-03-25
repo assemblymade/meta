@@ -23,7 +23,7 @@ const TextPost = require('../ui/text_post.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const UserStore = require('../../stores/user_store');
 const Checklist = require('../checklist.js.jsx');
-const ProductStateWidget = require('../product_state_widget.js.jsx');
+const IdeaProgressWidget = require('../idea_progress_widget.js.jsx');
 
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
@@ -161,7 +161,7 @@ let IdeaShow = React.createClass({
             </Discussion>
           </div>
           <div className="sm-col sm-col-4 px2 mb2">
-            <ProductStateWidget entity={idea} />
+            <IdeaProgressWidget entity={idea} />
           </div>
         </div>
       )
