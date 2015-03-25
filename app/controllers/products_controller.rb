@@ -47,7 +47,7 @@ class ProductsController < ProductController
       completion = ((completed_ordered_tasks.to_f / ordered_tasks.count.to_f)*100).round(2)
     end
 
-    ordered_tasks = ActiveModel::ArraySerializer.new(ordered_tasks)
+    ordered_tasks = ActiveModel::ArraySerializer.new(ordered_tasks.where(state: "open").take(5))
 
     render json: {tasks: ordered_tasks, percent_completion: completion}
   end
