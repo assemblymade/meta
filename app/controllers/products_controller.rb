@@ -39,7 +39,12 @@ class ProductsController < ProductController
   def checklistitems
     find_product!
     ordered_tasks = @product.tasks.where.not(display_order: nil).order(display_order: :desc)
-    render json: ordered_tasks
+    completed_ordered_tasks = ordered_tasks.where.not(state: "open").count
+    data = {}
+    data['tasks'] = ordered_tasks
+    completion = ((completed_ordered_tasks / ordered_tasks.count)*100).round(2)
+    data['percent_completion'] = completion
+    render json: data
   end
 
   def ownership
