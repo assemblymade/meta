@@ -89,14 +89,20 @@ const ProductProgressWidget = React.createClass({
   },
 
   render: function() {
-    return (
-      <Tile>
-        <div className="p3">
-          {this.renderProgress()}
-          <ProductTaskList tasks={this.state.tasks} />
+    if (this.state.tasks.length > 0) {
+      return (
+        <div className="mb3">
+          <Tile>
+            <div className="p3">
+              {this.renderProgress()}
+              <ProductTaskList tasks={this.state.tasks} />
+            </div>
+          </Tile>
         </div>
-      </Tile>
-    );
+      )
+    } else {
+      return null
+    }
   }
 });
 

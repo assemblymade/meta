@@ -184,9 +184,7 @@ let ProductShow = React.createClass({
             </div>
 
             <div className="md-col md-col-4 px3">
-              <div className="mb3">
-                <ProductProgressWidget product={this.state.product} />
-              </div>
+              {this.renderProductProgressWidget()}
               <div className="mb3">
                 <Accordion title="Get started">
                   <div className="mxn3">
@@ -213,6 +211,16 @@ let ProductShow = React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderProductProgressWidget() {
+    if (UserStore.isSignedIn() && (UserStore.isStaff() || UserStore.getUser().id == product.user_id)) {
+      return (
+        <ProductProgressWidget product={this.state.product} />
+      )
+    } else {
+      return null
+    }
   },
 
   renderEditButton() {
