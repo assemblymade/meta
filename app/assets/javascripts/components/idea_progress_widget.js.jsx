@@ -7,7 +7,7 @@ const Tile = require('./ui/tile.js.jsx');
 const Checklist = require('./checklist.js.jsx');
 const ProgressBar = require('./ui/progress_bar.js.jsx');
 
-const ProductStateWidget = React.createClass({
+const IdeaProgressWidget = React.createClass({
   propTypes: {
     entity: React.PropTypes.object.isRequired
   },
@@ -119,4 +119,4 @@ const ProductStateWidget = React.createClass({
   }
 });
 
-module.exports = ProductStateWidget
+module.exports = IdeaProgressWidget
