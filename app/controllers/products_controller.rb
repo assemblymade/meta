@@ -44,7 +44,7 @@ class ProductsController < ProductController
     if ordered_tasks.count == 0
       completion = 0
     else
-      completion = ((completed_ordered_tasks / ordered_tasks.count)*100).round(2)
+      completion = ((completed_ordered_tasks.to_f / ordered_tasks.count.to_f)*100).round(2)
     end
 
     ordered_tasks = ActiveModel::ArraySerializer.new(ordered_tasks)
@@ -94,7 +94,13 @@ class ProductsController < ProductController
           end
         end
 
-        tweet_text = "The idea #{@idea.name} just became a product called #{@product.name} #{product_path(@product)}"
+        mention = @product.user.twitter_nickname
+        if !mention
+          mention = " "
+        else
+          mention = " @"+mention+" "
+        end
+        tweet_text = "The idea #{@idea.name} just became a product called #{@product.name}#{mention}#{product_url(@product)}"
         TweetWorker.perform_async(tweet_text)
       end
 

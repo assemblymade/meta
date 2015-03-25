@@ -80,7 +80,7 @@ const ProductProgressWidget = React.createClass({
   renderProgress: function() {
     return (
       <div className="p2">
-        <div className="center h5 gray-2 px2">Complete these tasks to make your product public</div>
+        <div className="center h5 gray-2 px2">Product Growth List</div>
         <div className="py2">
           <ProgressBar progress={this.state.progress} type="success" />
         </div>
