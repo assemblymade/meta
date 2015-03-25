@@ -30,7 +30,7 @@ class AutoBounty
     kernel = User.find_by(username: "kernel")
     if kernel
       author = kernel
-      BountyFactory.new.generate_bounty(product, author, description, title, value)
+      BountyFactory.new.generate_bounty(product, author, description, title, value, true)
     end
   end
 

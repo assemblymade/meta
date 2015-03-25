@@ -36,7 +36,10 @@ class ProductsController < ProductController
     render layout: 'application'
   end
 
-  def checklistitem
+  def checklistitems
+    find_product!
+    ordered_tasks = @product.tasks.where.not(display_order: nil).order(display_order: :desc)
+    render json: ordered_tasks
   end
 
   def ownership
@@ -71,7 +74,7 @@ class ProductsController < ProductController
 
       chosen_ids = params[:product][:partner_ids] || ''
       chosen_ids = chosen_ids.split(',').flatten
-      GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)
+      GiveCoinsToParticipants.perform_async(chosen_ids, @product.id)
 
       if @idea
         the_key = @idea.slug.to_sym
