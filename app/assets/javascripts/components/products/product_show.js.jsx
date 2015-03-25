@@ -182,7 +182,7 @@ let ProductShow = React.createClass({
               </Tile>
             </div>
 
-            <div className="md-col md-col-4 px3">
+            <div className="sm-col sm-col-4 px3">
               <div className="mb3">
                 <Accordion title="Get started">
                   <div className="mxn3">

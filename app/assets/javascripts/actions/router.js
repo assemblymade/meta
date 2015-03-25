@@ -96,6 +96,7 @@ function _callAndDispatch(component, context, callback) {
         break;
       default:
         // what should we do here?
+        break;
     }
   }).
   done(callback).
