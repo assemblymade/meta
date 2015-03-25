@@ -42,7 +42,11 @@ class ProductsController < ProductController
     completed_ordered_tasks = ordered_tasks.where.not(state: "open").count
     data = {}
     data['tasks'] = ordered_tasks
-    completion = ((completed_ordered_tasks / ordered_tasks.count)*100).round(2)
+    if ordered_tasks.count == 0
+      completion = 0
+    else
+      completion = ((completed_ordered_tasks / ordered_tasks.count)*100).round(2)
+    end
     data['percent_completion'] = completion
     render json: data
   end
@@ -79,7 +83,7 @@ class ProductsController < ProductController
 
       chosen_ids = params[:product][:partner_ids] || ''
       chosen_ids = chosen_ids.split(',').flatten
-      GiveCoinsToParticipants.perform_async(chosen_ids, @product.id)
+      GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)   #TO DO  --> Make this asynchronous.  Currently will cause tests to fail if asynchronous.
 
       if @idea
         the_key = @idea.slug.to_sym
