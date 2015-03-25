@@ -65,7 +65,7 @@ class IdeasController < ProductController
 
         @heartables = @ideas.map(&:news_feed_item)
         if signed_in?
-          store_data user_hearts: Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
+          @user_hearts = Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
         end
 
         respond_with({
