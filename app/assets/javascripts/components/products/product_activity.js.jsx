@@ -35,6 +35,7 @@ const ProductActivity = React.createClass({
 
   componentDidMount() {
     document.title = this.state.product.name;
+    window.TrackEngagement.track('product.activity')
 
     BountyMarksStore.addChangeListener(this.onBountyMarksChange);
     NewsFeedItemsStore.addChangeListener(this.onNewsFeedChange);

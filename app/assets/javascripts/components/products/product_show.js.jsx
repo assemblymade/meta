@@ -31,6 +31,7 @@ let ProductShow = React.createClass({
 
   componentDidMount() {
     document.title = this.state.product && this.state.product.name;
+    window.TrackEngagement.track('product')
 
     ProductStore.addChangeListener(this.onProductChange);
 
