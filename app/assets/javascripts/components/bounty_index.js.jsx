@@ -37,6 +37,7 @@ const BountyIndex = React.createClass({
     this.getStateFromStore();
 
     window.addEventListener('scroll', this.onScroll);
+    window.TrackEngagement.track('bounties')
   },
 
   componentWillUnmount: function() {

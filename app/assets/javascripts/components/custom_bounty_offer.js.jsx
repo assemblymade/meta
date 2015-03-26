@@ -46,7 +46,7 @@
       var profitLastMonth = Math.round(this.props.profitLastMonth / 100)
       var payout = Math.round(ownership * (profitLastMonth || 20000));
 
-      return "$" + payout 
+      return "$" + payout
     },
 
     renderProfitLastMonth: function() {

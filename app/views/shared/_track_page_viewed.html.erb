@@ -27,7 +27,7 @@
 
     setTimeout(function(){
       if (!window._analyticsViewTarget) {
-        track('untracked_page_view')
+        analytics.track('untracked_page_view')
       }
     }, 2000)
   <% end %>

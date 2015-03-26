@@ -188,6 +188,7 @@ const Apps = React.createClass({
   componentDidMount: function() {
     AppsStore.addChangeListener(this._onChange)
     AppsActionCreators.initialize();
+    window.TrackEngagement.track('discover')
   },
 
   componentWillUnmount: function() {

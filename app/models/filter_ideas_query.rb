@@ -10,7 +10,7 @@ class FilterIdeasQuery
   end
 
   def clauses
-    [by_user, filter_by, sort_by, with_mark, with_topic, without_flag].compact
+    [without_product, by_user, filter_by, sort_by, with_mark, with_topic, without_flag].compact
   end
 
   def filter
@@ -26,7 +26,7 @@ class FilterIdeasQuery
   def by_user
     return unless options[:user]
 
-    Idea.by(User.find_by(username: options[:user]))
+    Idea.by(User.find_by(username: options[:user])).unscope(where: :product_id)
   end
 
   def filter_by
@@ -58,6 +58,10 @@ class FilterIdeasQuery
     return unless options[:topic]
 
     Idea.with_topic(options[:topic])
+  end
+
+  def without_product
+    Idea.where(product_id: nil)
   end
 
   def without_flag

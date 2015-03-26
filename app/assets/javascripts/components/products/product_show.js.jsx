@@ -33,6 +33,7 @@ let ProductShow = React.createClass({
 
   componentDidMount() {
     document.title = this.state.product && this.state.product.name;
+    window.TrackEngagement.track('product')
 
     ProductStore.addChangeListener(this.onProductChange);
 
@@ -183,7 +184,6 @@ let ProductShow = React.createClass({
             </div>
 
             <div className="md-col md-col-4 px3">
-
               <div className="mb3">
                 <Accordion title="Get started">
                   <div className="mxn3">

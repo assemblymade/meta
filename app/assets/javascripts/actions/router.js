@@ -96,12 +96,11 @@ function _callAndDispatch(component, context, callback) {
         break;
       default:
         // what should we do here?
+        break;
     }
   }).
   done(callback).
   done(data => {
-    TrackEngagement.track(context.canonicalPath, context);
-
     Dispatcher.dispatch({
       type: ActionTypes.ASM_APP_ROUTE_CHANGED,
       component: component,

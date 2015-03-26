@@ -48,14 +48,6 @@ class ProductSerializer < ApplicationSerializer
     product_url(object)
   end
 
-  def wips_count
-    object.wips.count
-  end
-
-  def partners_count
-    object.partners.count
-  end
-
   def can_update
     Ability.new(current_user).can?(:update, object)
   end

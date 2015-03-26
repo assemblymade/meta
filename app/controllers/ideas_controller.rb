@@ -54,7 +54,7 @@ class IdeasController < ProductController
       format.html
       format.json do
         @ideas = FilterIdeasQuery.call(filter_params).
-          page(params[:page]).per(IDEAS_PER_PAGE)
+                  page(params[:page]).per(IDEAS_PER_PAGE)
 
         total_pages = @ideas.total_pages
 

@@ -4,7 +4,7 @@ describe TasksController do
   let(:user) { User.make! }
   let(:worker) { User.make! }
   let(:product) { Product.make!(user: user, state: 'team_building') }
-  let!(:wips) { [Task.make!(user: user, product: product)] }
+  let!(:wips) { [Task.make!(user: user, product: product)].each{|t| NewsFeedItem.create_with_target(t) } }
   let!(:event) { NewsFeedItemComment.make!(user: worker) }
 
   describe '#create' do
@@ -25,12 +25,11 @@ describe TasksController do
       post :create, product_id: product.slug, task: { title: 'It was a dark and stormy night', description: 'Get ye flask' }
 
       expect(assigns(:bounty).followers).not_to include(follower)
-
     end
 
   end
 
-  describe '#index' do
+  describe '#index.html' do
     before do
       sign_in user
       get :index, product_id: product.slug
@@ -39,9 +38,22 @@ describe TasksController do
     it "is succesful" do
       expect(response).to be_successful
     end
+  end
 
-    it "assigns wips" do
-      expect(assigns(:bounties)).to be
+  describe '#index.json' do
+    before do
+      sign_in user
+      get :index, product_id: product.slug, format: :json
+    end
+
+    it "is succesful" do
+      expect(response).to be_successful
+    end
+
+    it "serializes bounties" do
+      expect(JSON.parse(response.body)['bounties']).to eq(
+        JSON.parse(ActiveModel::ArraySerializer.new(wips, each_serializer: BountyListSerializer).to_json)
+      )
     end
   end
 

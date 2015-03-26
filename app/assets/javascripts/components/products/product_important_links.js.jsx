@@ -1,7 +1,8 @@
 'use strict';
 
 const Icon = require('../ui/icon.js.jsx');
-const Routes = require('../../routes')
+const Routes = require('../../routes');
+let url = require('url');
 
 let ProductImportantLinks = React.createClass({
   propTypes: {
@@ -62,14 +63,12 @@ let ProductImportantLinks = React.createClass({
 
   renderHomepageUrl() {
     let product = this.props.product;
+    let homepageUrl = product.homepage_url;
 
-    const el = document.createElement('a')
-    el.href = product.homepage_url
-    const host = el.hostname
-    el.remove()
+    if (homepageUrl) {
+      let host = url.parse(homepageUrl).hostname;
 
-    if (product.homepage_url) {
-      return this.renderLink('home', host, product.homepage_url)
+      return this.renderLink('home', host, homepageUrl);
     }
   }
 });

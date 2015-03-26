@@ -7,27 +7,6 @@ class TasksController < WipsController
   def index
     reject_blacklisted_users!
 
-    # TODO Figure out a better way to do this by manually setting params to FilterWipsQuery
-    if params.fetch(:format, 'html') == 'html'
-      params.merge!(sort: 'priority', state: 'open')
-    end
-
-    @bounties = find_wips
-    store_data bounties: @bounties
-
-    @heartables = NewsFeedItem.where(target_id: @bounties.map(&:id))
-    store_data heartables: @heartables
-
-    if signed_in?
-      store_data user_hearts: Heart.where(user: current_user, heartable_id: @heartables.map(&:id))
-    end
-
-    if params[:count]
-      tasks_count = { total: @product.tasks.where(state: ['open', 'awarded']).count }
-      render json: tasks_count
-      return
-    end
-
     respond_to do |format|
       format.html do
         expires_now
@@ -35,12 +14,20 @@ class TasksController < WipsController
       end
 
       format.json do
-        response = Rails.cache.fetch([@product.id, 'tasks'], expires_in: 5.minutes) do
-          {
+        # TODO Figure out a better way to do this by manually setting params to FilterWipsQuery
+        if params.fetch(:format, 'html') == 'html'
+          params.merge!(sort: 'priority', state: 'open')
+        end
+
+        @bounties = find_wips
+        store_data bounties: @bounties
+
+        @heartables = NewsFeedItem.where(target_id: @bounties.map(&:id))
+
+        response = {
             tags: Wip::Tag.suggested_tags,
             product: ProductSerializer.new(@product, scope: current_user),
             valuation: {
-              product: ProductSerializer.new(@product),
               url: product_wips_path(@product),
               maxOffer: (6 * @product.average_bounty).round(-4),
               averageBounty: @product.average_bounty,
@@ -52,16 +39,12 @@ class TasksController < WipsController
               @product.assets.order(created_at: :desc).limit(4),
               each_serializer: AssetSerializer
             )
-          }
-        end.merge(
+        }.merge(
           PaginationSerializer.new(
             @bounties,
             each_serializer: BountyListSerializer,
             root: :bounties
           ).as_json
-        ).merge(
-          heartables: @heartables,
-          user_hearts: @user_hearts
         )
 
         render json: response

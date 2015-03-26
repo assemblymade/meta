@@ -24,6 +24,10 @@ class ProductStore extends Store {
     })
   }
 
+  getId() {
+    return _product.get('id');
+  }
+
   getName() {
     return _product.get('name');
   }
