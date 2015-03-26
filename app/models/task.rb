@@ -20,7 +20,7 @@ class Task < Wip
   scope :won_by,      -> (user) { won.where('awards.winner_id = ?', user.id) }
   scope :won_by_after, -> (user, time) { won.where('awards.winner_id = ?', user.id).where('awards.created_at >= ?', time) }
 
-  AUTHOR_TIP = 0.05
+  AUTHOR_TIP = 0.0
   IN_PROGRESS = 'allocated'
 
   workflow_column :state
