@@ -135,9 +135,6 @@ let ProductShow = React.createClass({
 
           <div className="clearfix mxn3">
             <div className="sm-col sm-col-8 px3 mb2 sm-mb0">
-              <div className="py2">
-                {this.renderProductProgressWidget()}
-              </div>
               <Tile>
                 <Screenshots key="product-screenshots" />
                 <div className="p3 sm-p4">
@@ -185,11 +182,14 @@ let ProductShow = React.createClass({
 
             <div className="md-col md-col-4 px3">
               <div className="mb3">
+                {this.renderProductProgressWidget()}
+              </div>
+              <div className="mb3">
                 <Accordion title="Get started">
                   <div className="mxn3">
                     <Tile>
                       {_.sortBy(this.state.bounties, (b) => b.priority).map((bounty) => {
-                        return <a className="block border-bottom" href={bounty.url}><BountyCard bounty={bounty} key={bounty.id} /></a>
+                        return <a className="block border-bottom px3 py2" href={bounty.url}><BountyCard bounty={bounty} key={bounty.id} /></a>
                       })}
                     </Tile>
                     <a className="h6 block px3 py2 gray-2" href={`${product.url}/bounties`}>View more</a>
@@ -213,7 +213,10 @@ let ProductShow = React.createClass({
   },
 
   renderProductProgressWidget() {
-    if (UserStore.isSignedIn() && this.state.product.state === "stealth" ) {
+    var coreTeamIds = _.pluck(this.state.product.core_team, 'id') 
+    var isCoreTeam = _.contains(coreTeamIds, UserStore.getUser())
+
+    if (UserStore.isSignedIn() && isCoreTeam && this.state.product.state === 'stealth') {
       return (
         <ProductProgressWidget product={this.state.product} />
       )

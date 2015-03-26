@@ -37,7 +37,7 @@ const BountyCard = React.createClass({
     }
 
     return (
-      <div className="px3 py2 clearfix">
+      <div className="clearfix">
         {locker}
 
         <div className="overflow-hidden">

@@ -31,20 +31,20 @@ const ProductTaskList = React.createClass({
           var classes = React.addons.classSet(
             {
               'left': true,
-              'mr2': true,
               'green': complete,
-              'gray-2': !complete
+              'gray-2': !complete,
+              'py2': true
             }
           )
           return (
-            <li className="clearfix py1">
+            <div className="clearfix border-bottom px3">
               <div className={classes}>
                 <Icon icon={complete ? 'check' : 'minus'} fw={true} />
               </div>
               <div className="overflow-hidden">
-                <a href={task.url}>{task.title}</a>
+                <a className="block p2" href={task.url}><BountyCard bounty={task} key={task.id} /></a>
               </div>
-            </li>
+            </div>
           )
         })
     )
@@ -88,10 +88,10 @@ const ProductTaskList = React.createClass({
   render: function() {
     return (
       <div>
-        <ol className="list-reset">
-          {this.renderTasks()}
-        </ol>
-        {!this.state.greenlit ? this.renderActionButton() : this.renderPublic()}
+        {this.renderTasks()}
+        <div className="p3">
+          {!this.state.greenlit ? this.renderActionButton() : this.renderPublic()}
+        </div>
       </div>
     )
   }
@@ -127,10 +127,11 @@ const ProductProgressWidget = React.createClass({
 
   renderProgress: function() {
     return (
-      <div className="p2">
-        <div className="center h5 gray-2 px2">Take your first steps</div>
-        <div className="py2">
+      <div className="px2 mt3">
+        <div className="center bold h5 px2">Product checklist</div>
+        <div className="p2 py1">
           <ProgressBar progress={this.state.progress} type="success" />
+          <div className="h6 gray-2 p1 center">You can publish this page once the list is complete</div>
         </div>
       </div>
     )
@@ -141,7 +142,7 @@ const ProductProgressWidget = React.createClass({
       return (
         <div className="mb3">
           <Tile>
-            <div className="p3">
+            <div>
               {this.renderProgress()}
               <ProductTaskList tasks={this.state.tasks} product={this.props.product} buttonText={"Publish"} complete={this.state.progress === 100}/>
             </div>
