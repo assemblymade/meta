@@ -47,7 +47,7 @@ class ProductsController < ProductController
       completion = ((completed_ordered_tasks.to_f / ordered_tasks.count.to_f)*100).round(2)
     end
 
-    ordered_tasks = ActiveModel::ArraySerializer.new(ordered_tasks.take(3))
+    ordered_tasks = ActiveModel::ArraySerializer.new(ordered_tasks.take(6))
 
     render json: {tasks: ordered_tasks, percent_completion: completion}
   end
@@ -112,7 +112,6 @@ class ProductsController < ProductController
         TweetWorker.perform_async(tweet_text)
       end
 
-      AutoPost.new.generate_idea_product_transition_post(@product)
       AutoBounty.new.product_initial_bounties(@product)
       current_user.touch
       @product.reload

@@ -213,7 +213,7 @@ let ProductShow = React.createClass({
   },
 
   renderProductProgressWidget() {
-    if (UserStore.isSignedIn()) {
+    if (UserStore.isSignedIn() && this.state.product.state === "stealth" ) {
       return (
         <ProductProgressWidget product={this.state.product} />
       )

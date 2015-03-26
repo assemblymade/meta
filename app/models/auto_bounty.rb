@@ -36,41 +36,59 @@ class AutoBounty
   end
 
   def make_logo(product)
-    description = ""
-    value =
+    description = "Every product needs a logo.  Get a logo for your product as soon as possible.  It can be a placeholder for now.  But if it's cool, you'll certainly attract more attention."
+    value = 5000
     title = "Make a Logo"
     make_bounty(product, description, title, value)
   end
 
   def make_first_bounties(product)
-    description = ""
-    value =
-    title = "Make a Logo"
-    make_bounty(product, description, title, value)
+    description = "Write your first four bounties.  Whatever it is that this product needs first to get started, go ahead and write it down in a new bounty.  Even if it's something you are going to do yourself, write it down so you can award it later.  In general, when writing a bounty, try to make it as clear as possible for a new user.  How does someone new to your product start helping today?  Write four bounties to get started."
+    value = 1000
+    title = "Write your first four bounties"
+    make_bounty(product, description, title, value, 5)
   end
 
   def write_contributor_guide(product)
-    description = ""
-    value =
-    title = "Make a Logo"
+    description = "A lot of products require complex instructions for how to get started.  Write a guide detailing, step-by-step, how a new contributor can start helping.  What should they do first?  Where should they go for ideas?  If it's a software product, how do they set up their development environment?  What special instructions are needed to get started?  Be detailed.  Be explicit.  Contributors need to know HOW and WHERE to start."
+    value = 10000
+    title = "Write Contributor Guide"
     make_bounty(product, description, title, value)
   end
 
   def write_first_post(product)
-    description = ""
-    value =
-    title = "Make a Logo"
-    make_bounty(product, description, title, value)
+    description = "With the start of #{product.name}, it's time to write your first post.  Describe the purpose of #{product.name}, your goals, and perhaps who you are.  What do you want to get out of this.  Kick off the product with an introductory post."
+    value = 2000
+    title = "Write your first post"
+    make_bounty(product, description, title, value, 4)
   end
 
   def find_a_bug(product)
-    description = ""
-    value =
-    title = "Make a Logo"
+    description = "Find a bug that hasn't already been found.  Then create a bounty to fix that bug.  Including screenshots and a precise description of how the bug happened, will be extra useful."
+    value = 3000
+    title = "Find a Bug"
     make_bounty(product, description, title, value)
   end
 
   def create_product_twitter_handle(product)
+    description = "Creating a presence on Twitter is a great way to build an audience for the product.  Even if you're far from launching, it's not too soon to start telling people about #{product.name}."
+    value = 2000
+    title = "Set up a Twitter handle for the product"
+  end
+
+  def founder_bounty(product)
+    description = "Distribute initial ownership to founders.  These should be the leading initiators of the idea.  Through ownership, they will be vested with a significant stake in the future of the product."
+    value = 20000
+    title = "Founder Coins"
+    make_bounty(product, description, title, value, 3)
+  end
+
+  def make_someone_core(product)
+    description = "Core team members are vested with enormous powers within a Product.  They can value and award bounties.  This gives them enormous influence over the total ownership distribution.  They can write posts for which the entire team is notified.  They guide and lead the team.  It's an incredibly important position."
+    description = description + "  So it's especially important to pick someone excellent.  Pick someone you really trust.  Pick someone you respect to make the right choices in your absence.  Don't pick someone to be Core in a hurry.  If you're not sure, save this bounty for later."
+    value = 5000
+    title = "Find another Core Team Member"
+    make_bounty(product, description, title , value)
   end
 
   def make_bounty(product, description, title, value, order=nil)
@@ -82,11 +100,19 @@ class AutoBounty
   end
 
   def product_initial_bounties(product)
+    make_someone_core(product)
     introduce_yourself_bounty(product)
     product_roadmap(product)
     role_roster(product)
     github_repo(product)
+    write_contributor_guide(product)
+    make_first_bounties(product)
     assign_roles(product)
+    founder_bounty(product)
+    create_product_twitter_handle(product)
+    find_a_bug(product)
+    write_first_post(product)
+    make_logo(product)
   end
 
 
