@@ -14,6 +14,14 @@ class TasksController < WipsController
       end
 
       format.json do
+        if params[:count]
+          tasks_count = {
+            total: @product.tasks.where(state: ['open', 'awarded']).count
+          }
+          render json: tasks_count
+          return
+        end
+
         # TODO Figure out a better way to do this by manually setting params to FilterWipsQuery
         if params.fetch(:format, 'html') == 'html'
           params.merge!(sort: 'priority', state: 'open')
