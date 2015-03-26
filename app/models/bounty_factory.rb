@@ -14,7 +14,7 @@ class BountyFactory
     end
 
     if assignee
-      wip.allocate(assignee)
+      wip.start_work!(assignee)
     end
   end
 end
