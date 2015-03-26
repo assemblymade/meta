@@ -94,7 +94,7 @@ var StartPage = React.createClass({
             <div className="visible-xs mt3" />
             <div className="mb3">
               Already have a product that could benefit from the community's help?&nbsp;
-              <a href="mailto:assembly@helpful.io" data-helpful="assembly">Contact us</a>
+              <a href="http://port.assembly.com">Start here</a>
             </div>
           </div>
         </div>
@@ -407,7 +407,7 @@ var StartPage = React.createClass({
               <div className="visible-xs mt3" />
               <div className="pull-right mb3">
                 Already have a product that could benefit from the community's help?&nbsp;
-                <a href="mailto:assembly@helpful.io" data-helpful="assembly">Contact us</a>
+                <a href="http://port.assembly.com">Start here</a>
               </div>
             </div>
           </div>
