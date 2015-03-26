@@ -61,7 +61,7 @@ const ProductTaskList = React.createClass({
   },
 
   renderActionButton: function() {
-    if (this.props.complete) {
+    if (this.props.complete && (UserStore.isSignedIn() && (UserStore.isStaff() || UserStore.getUser().id == this.props.product.user_id))) {
       return (
         <Button type="primary" block={true} action={this.greenlightProduct}>
           {this.props.buttonText}

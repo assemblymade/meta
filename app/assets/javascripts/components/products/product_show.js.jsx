@@ -214,7 +214,7 @@ let ProductShow = React.createClass({
   },
 
   renderProductProgressWidget() {
-    if (UserStore.isSignedIn() && (UserStore.isStaff() || UserStore.getUser().id == product.user_id)) {
+    if (UserStore.isSignedIn()) {
       return (
         <ProductProgressWidget product={this.state.product} />
       )
