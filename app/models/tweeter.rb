@@ -200,6 +200,8 @@ class Tweeter
   end
 
   def request(method, url, body = {})
+    return if Rails.env.development? or Rails.env.test?
+
     resp = connection.send(method) do |req|
       req.url url
       req.headers['Content-Type'] = 'application/json'
