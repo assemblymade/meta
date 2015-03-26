@@ -20,6 +20,7 @@ const Tile = require('../ui/tile.js.jsx');
 const User = require('../user.js.jsx')
 const UserStore = require('../../stores/user_store');
 const ProductProgressWidget = require('../product_progress_widget.js.jsx');
+const ChecklistStore = require('../../stores/checklist_store');
 
 let ProductShow = React.createClass({
   propTypes: {
@@ -133,8 +134,10 @@ let ProductShow = React.createClass({
 
           <div className="clearfix mxn3">
             <div className="sm-col sm-col-8 px3 mb2 sm-mb0">
+              <div className="py2">
+                {this.renderProductProgressWidget()}
+              </div>
               <Tile>
-
                 <Screenshots key="product-screenshots" />
                 <div className="p3 sm-p4">
                   <div className="mb3">
@@ -150,7 +153,6 @@ let ProductShow = React.createClass({
                     {this.renderUpdates()}
                   </div>
 
-
                   <div className="py3">
                     <div className="clearfix py2">
                       <h6 className="left gray-2 caps mt0 mb0">
@@ -159,7 +161,6 @@ let ProductShow = React.createClass({
                     </div>
                     <ProductImportantLinks product={product} />
                   </div>
-
 
                   <div className="py3">
                     <div className="clearfix py2">
@@ -177,14 +178,12 @@ let ProductShow = React.createClass({
                       }).toJS()}
                     </div>
                   </div>
-
-
                 </div>
               </Tile>
             </div>
 
             <div className="md-col md-col-4 px3">
-              {this.renderProductProgressWidget()}
+
               <div className="mb3">
                 <Accordion title="Get started">
                   <div className="mxn3">
@@ -302,7 +301,7 @@ let ProductShow = React.createClass({
           </div>
           <div className="overflow-hidden">
             <h5 className="black mt0 mb0">{update.title}</h5>
-            <p className="gray-2 mb0">{truncate(update.body.text, 60)}</p>
+            <p className="gray-2 mb0">{truncate(update.body.text, 120)}</p>
           </div>
         </a>
       }

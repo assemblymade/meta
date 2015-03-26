@@ -18,7 +18,7 @@ class AutoBounty
     title = "Create a Github Repo"
     description = "Most products will want to have a Github Repository.  It's a great resource for managing a team's contributions."
     value = 3000
-    make_bounty(product, description, title, value, 3)
+    make_bounty(product, description, title, value)
   end
 
   def assign_roles(product)
