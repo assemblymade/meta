@@ -1,5 +1,5 @@
 class BountyFactory
-  def generate_bounty(product, author, description, title, value, order=nil)
+  def generate_bounty(product, author, description, title, value, order=nil, assignee=nil)
     wip = product.tasks.create({product: product, user: author, description: description, title: title, display_order: order})
     NewsFeedItem.create_with_target(wip)
 
@@ -11,6 +11,10 @@ class BountyFactory
         subject: wip,
         target: product
       )
+    end
+
+    if assignee
+      wip.allocate(assignee)
     end
   end
 end
