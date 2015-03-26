@@ -20,6 +20,7 @@
 #= require_self
 #= require ./main
 #= require functional
+#= require landline_migration
 #= require_tree ./models
 #= require_tree ./collections
 #= require_tree ./views

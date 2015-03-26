@@ -94,11 +94,12 @@ class window.ChatView extends Backbone.View
 
     @collection.push(activity)
     comment.save({socket_id: @collection.socketId},
-      success: (comment, data) ->
+      success: (comment, data) =>
         Dispatcher.dispatch(
           type: 'CHAT_MESSAGE_RECEIVE_ACTIVITIES'
           activities: [comment.attributes]
         )
+        @pushCommentToLandline(comment.attributes)
         activity.set(data)
     )
     activity
@@ -106,6 +107,9 @@ class window.ChatView extends Backbone.View
   onLoadMore: (e) =>
     e.preventDefault()
     this.loadMore(e)
+
+  pushCommentToLandline: (comment) ->
+    Landline.pushComment(comment)
 
   handleScroll: (e)=>
     @stuckToBottom = (@$el.height() - (e.currentTarget.scrollTop + @scrollContainer.height())) < BOTTOM_SCROLL_MARGIN

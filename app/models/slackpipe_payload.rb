@@ -1,5 +1,6 @@
 class SlackpipePayload
   def self.deploy!(body={})
+    return unless ENV['SLACKPIPE_SECRET']
     timestamp = Time.now.to_i
     payload = Hash[body[:message].sort_by(&:first)].to_json
     prehash = "#{timestamp}#{payload}"
