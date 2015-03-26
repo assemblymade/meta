@@ -10,9 +10,21 @@ const UserStore = require('../stores/user_store');
 const ProductTaskList = React.createClass({
   getDefaultProps: function () {
     return (
-      {tasks: []}
+      {tasks: [],
+      product: null,
+      buttonText: null,
+      greenlit: false
+      }
     )
   },
+
+  getInitialState: function() {
+    return {
+      greenlit: this.props.greenlit
+    }
+  },
+
+
 
   renderTasks: function() {
     return (
@@ -40,11 +52,22 @@ const ProductTaskList = React.createClass({
     )
   },
 
+  greenlightProduct: function() {
+    $.ajax({
+      url: this.props.product.url,
+      method: 'PATCH',
+      dataType: 'json',
+      data: {product: {state: "greenlit"}},
+      success: function() {
+        this.setState({greenlit: true})
+      }.bind(this)
+    })
+  },
+
   renderActionButton: function() {
     if (this.props.complete) {
       return (
-        <Button type="primary" block={true} action={null}>
-          {buttonAction === null ? <Icon fw="true" icon="lock" /> : ''}
+        <Button type="primary" block={true} action={this.greenlightProduct}>
           {this.props.buttonText}
         </Button>
       )
@@ -56,14 +79,24 @@ const ProductTaskList = React.createClass({
         </Button>
       )
     }
+  },
 
+  renderPublic: function() {
+    return (
+      <div>
+        <p className="h5 gray-2 center">This product is public</p>
+      </div>
+    )
   },
 
   render: function() {
     return (
-      <ol className="list-reset">
-        {this.renderTasks()}
-      </ol>
+      <div>
+        <ol className="list-reset">
+          {this.renderTasks()}
+        </ol>
+        {!this.state.greenlit ? this.renderActionButton() : this.renderPublic()}
+      </div>
     )
   }
 });
@@ -99,7 +132,7 @@ const ProductProgressWidget = React.createClass({
   renderProgress: function() {
     return (
       <div className="p2">
-        <div className="center h5 gray-2 px2">Product Growth List</div>
+        <div className="center h5 gray-2 px2">Core Team Checklist</div>
         <div className="py2">
           <ProgressBar progress={this.state.progress} type="success" />
         </div>
@@ -114,7 +147,7 @@ const ProductProgressWidget = React.createClass({
           <Tile>
             <div className="p3">
               {this.renderProgress()}
-              <ProductTaskList tasks={this.state.tasks} complete={this.state.progress === 100}/>
+              <ProductTaskList tasks={this.state.tasks} product={this.props.product} buttonText={"Publish"} complete={this.state.progress === 100}/>
             </div>
           </Tile>
         </div>
