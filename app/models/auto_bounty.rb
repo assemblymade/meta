@@ -1,7 +1,7 @@
 class AutoBounty
 
   def founder_bounty(product)
-    description = "Welcome!  You've started a new product.  Fantastic.  Here are some of the things you can do to get started. \n\n<b>Write a post</b> so partners know the gameplan.\n\n<b>Create some bounties</b> to show people how to help out.\n\nWe've also created some suggested bounties for you in the bounties tab.  Feel free to close them if you feel that they aren't relevant.\n\nLast but not least, <b>give yourself a little something</b>.  Award yourself this bounty.  That means you get coins representing ownership.  You're the founder, you deserve a real say.  If there are any co-founders, award them this bounty too to credit their contribution."
+    description = "Welcome!  You've started a new product.  Fantastic.  Here are some of the things you can do to get started. \n\n<b>Write a post</b> so partners know the gameplan.\n\n<b>Create some bounties</b> to show people how to help out.\n\nWe've also created some suggested bounties for you in the bounties tab.  Feel free to close them if you feel that they aren't relevant.\n\nLast but not least, <b>give yourself a little something</b>.  Write a comment and award yourself this bounty.  That means you get coins representing ownership.  You're the founder, you deserve a real say.  If there are any co-founders, award them this bounty too to credit their contribution."
     value = 20000
     title = "First steps"
     make_bounty(product, description, title, value, 0, product.user)
