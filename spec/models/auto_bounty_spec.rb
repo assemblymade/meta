@@ -14,4 +14,9 @@ describe AutoBounty do
     product.reload
     expect(product.tasks.count).to eq(1)
   end
+
+  it 'create initial tests' do
+    
+  end
+
 end

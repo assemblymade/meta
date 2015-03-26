@@ -312,6 +312,7 @@ ASM::Application.routes.draw do
     post 'unfollow'
 
     post 'make_idea'
+    post '/greenlight' => 'products#greenlight'
 
     get '/checklistitems' => 'products#checklistitems'
     get '/ownership' => 'products#ownership'

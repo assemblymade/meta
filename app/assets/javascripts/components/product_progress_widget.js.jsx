@@ -20,11 +20,9 @@ const ProductTaskList = React.createClass({
 
   getInitialState: function() {
     return {
-      greenlit: this.props.greenlit
+      greenlit: this.props.product.state === "greenlit"
     }
   },
-
-
 
   renderTasks: function() {
     return (
@@ -54,10 +52,8 @@ const ProductTaskList = React.createClass({
 
   greenlightProduct: function() {
     $.ajax({
-      url: this.props.product.url,
-      method: 'PATCH',
-      dataType: 'json',
-      data: {product: {state: "greenlit"}},
+      url: this.props.product.url + "/greenlight",
+      method: 'POST',
       success: function() {
         this.setState({greenlit: true})
       }.bind(this)

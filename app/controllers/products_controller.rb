@@ -52,6 +52,14 @@ class ProductsController < ProductController
     render json: {tasks: ordered_tasks, percent_completion: completion}
   end
 
+  def greenlight
+    find_product!
+    authorize! :update, @product
+
+    @product.update!({state: "greenlit", greenlit_at: Time.now})
+    render json: {message: "Success"}
+  end
+
   def ownership
     find_product!
     ownership = CsvCompiler.new.get_product_partner_breakdown(@product)
@@ -236,8 +244,6 @@ class ProductsController < ProductController
         product.core_team_memberships.create(user: user)
       end
 
-      product.state = 'greenlit'
-      product.greenlit_at = Time.now
       product.update_partners_count_cache
 
       product.save!
@@ -345,6 +351,7 @@ class ProductsController < ProductController
       :lead,
       :description,
       :tags_string,
+      :greenlit_at,
       :poster,
       :state,
       :homepage_url,
