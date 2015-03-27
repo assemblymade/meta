@@ -24,7 +24,10 @@ var BountyList = React.createClass({
 
     var product = this.props.product
 
-    return this.state.bounties.map(function(bounty) {
+    var featuredIndex = _.chain(this.state.bounties).first(3).pluck('placeholder').any(_.identity).value() ? 4 : 3;
+    var featuredBounties = _.first(this.state.bounties, featuredIndex);
+    var bounties = _.rest(this.state.bounties, featuredIndex);
+    var renderListItem = function(bounty) {
       if (bounty.placeholder) {
         return (
           <div className="bg-gray-5 mb3 rounded" style={{ height: bounty.height }} />
@@ -42,7 +45,13 @@ var BountyList = React.createClass({
             index={this.state.bounties.indexOf(bounty)}
             draggable={this.props.draggable} />
       );
-    }.bind(this))
+    }.bind(this);
+
+    return _.compact([
+      featuredBounties.map(renderListItem),
+      <div className="border-top mt3 mb3" style={{ borderColor: '#D7D7D7' }} />,
+      bounties.map(renderListItem)
+    ]);
   },
 
   renderSpinner: function() {
