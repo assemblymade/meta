@@ -127,7 +127,7 @@ module ASM
     def transfer_coins(slug, from_name, to_name, coins)
       product = prod!(slug)
       from = u(from_name) || prod!(from_name)
-      to = u!(to_name)
+      to = u(to_name) || prod!(from_name)
 
       TransactionLogEntry.transfer!(
         product,
