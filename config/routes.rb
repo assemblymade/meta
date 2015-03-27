@@ -2,6 +2,13 @@ require 'sidekiq/web'
 
 ASM::Application.routes.draw do
 
+  # api
+  # ◕ᴥ◕
+  namespace :api, path: '/', constraints: { subdomain: 'api' } do
+    get '/' => 'api#root'
+    resource :user
+  end
+
   authenticate :user, lambda { |u| u.staff? } do
     mount Sidekiq::Web => '/admin/sidekiq'
     mount Split::Dashboard  => '/admin/split'
@@ -220,14 +227,6 @@ ASM::Application.routes.draw do
 
   scope :upload do
     resources :attachments, only: [:create]
-  end
-
-  # api
-  # ◕ᴥ◕
-  namespace :api, path: '/' do
-    constraints subdomain: 'api' do
-      get '/' => 'api#root'
-    end
   end
 
   # Old api

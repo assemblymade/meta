@@ -2,6 +2,7 @@ class Api::ApiController < ApplicationController
   respond_to :json
   skip_before_filter :verify_authenticity_token
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
+  after_filter :strip_cookie
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActionController::RoutingError, with: :record_not_found
@@ -24,5 +25,9 @@ class Api::ApiController < ApplicationController
 
   def record_not_found(error)
     render json: {}, status: :not_found
+  end
+
+  def strip_cookie
+    request.session_options[:skip] = true
   end
 end

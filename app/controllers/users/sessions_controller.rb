@@ -15,7 +15,7 @@ class Users::SessionsController < Devise::SessionsController
     flash[:alert] = 'You need to sign in or sign up before continuing.' if params[:alert]
     super
   end
-  
+
   def after_sign_in_path_for(resource)
     after_sign_in_path_for_user
   end
