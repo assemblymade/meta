@@ -201,10 +201,6 @@ let ProductShow = React.createClass({
                 <MetricsBadge product={product} />
               </div>
 
-              {
-                (UserStore.isStaff() ? <Button block={true} action={this.handleMakeIdea}>Make idea</Button> : null)
-              }
-
             </div>
           </div>
         </div>
