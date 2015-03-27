@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ProductsController do
   render_views
 
-  let(:creator) { User.make! }
+  let(:creator) { User.make!({username: "kernel"}) }
   let(:collaborator) { User.make! }
   let(:product) { Product.make!(user: creator) }
 
@@ -113,7 +113,6 @@ describe ProductsController do
 
     context 'from an idea' do
       let!(:idea) { Idea.make!(user: creator) }
-      let!(:kernel) { User.make!(username: 'kernel') }
 
       before do
         NewsFeedItem.create_with_target(idea)

@@ -184,11 +184,6 @@ class ChecklistHandler
     result['stages'] = checklist
     result['current_stage'] = 0
     c = true
-    # result['stages'].items[result['current_stage']].each do |a|
-    #   if !complete
-    #     c=false
-    #   end
-    # end
     result['button_texts'] = stages.map{|a| a[2]}
     result
   end

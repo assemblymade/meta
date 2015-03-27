@@ -6,7 +6,7 @@ class TaskSerializer < ApplicationSerializer
 
   attributes :number, :title, :url, :value, :markdown_description, :state,
     :short_description, :thumbnails, :push_channel, :steps,
-    :offers_url, :contracts, :earnable_coins_cache
+    :offers_url, :contracts, :earnable_coins_cache, :display_order
 
   has_one :product
   has_many :tags
@@ -17,6 +17,12 @@ class TaskSerializer < ApplicationSerializer
   has_many :workers
 
   has_one :user
+
+  cached
+
+  def cache_key
+    ['v2', object]
+  end
 
   def url
     product_wip_path(product, number || id)
@@ -65,12 +71,6 @@ class TaskSerializer < ApplicationSerializer
   end
 
   def bounty
-    object
-  end
-
-  cached
-
-  def cache_key
     object
   end
 end

@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 20150327013821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "uuid-ossp"
-  enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "plpgsql"
   enable_extension "pg_stat_statements"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -128,22 +128,6 @@ ActiveRecord::Schema.define(version: 20150327013821) do
   end
 
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
-
-  create_table "checklist_items", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.string   "state"
-    t.uuid     "user_id"
-    t.uuid     "product_id"
-    t.uuid     "checklist_type_id"
-    t.uuid     "idea_id"
-  end
-
-  create_table "checklist_types", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.uuid   "stage_id"
-  end
 
   create_table "choices", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.float    "value"
@@ -364,7 +348,7 @@ ActiveRecord::Schema.define(version: 20150327013821) do
     t.datetime "last_tweeted_at"
     t.string   "tentative_name"
     t.datetime "last_tilt_email_sent"
-    t.integer  "total_visitors",                 default: 0,                     null: false
+    t.integer  "total_visitors",                   default: 0,                     null: false
   end
 
   add_index "ideas", ["deleted_at"], name: "index_ideas_on_deleted_at", using: :btree
@@ -810,14 +794,6 @@ ActiveRecord::Schema.define(version: 20150327013821) do
 
   add_index "showcases", ["ended_at"], name: "index_showcases_on_ended_at", using: :btree
 
-  create_table "stages", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "description"
-    t.integer  "order"
-  end
-
   create_table "status_messages", id: :uuid, force: :cascade do |t|
     t.uuid     "product_id",             null: false
     t.uuid     "user_id",                null: false
@@ -1230,6 +1206,7 @@ ActiveRecord::Schema.define(version: 20150327013821) do
     t.integer  "priority"
     t.integer  "hearts_count",                     default: 0,       null: false
     t.datetime "deleted_at"
+    t.integer  "display_order"
   end
 
   add_index "wips", ["deleted_at"], name: "index_wips_on_deleted_at", using: :btree
@@ -1256,7 +1233,6 @@ ActiveRecord::Schema.define(version: 20150327013821) do
   end
 
   add_foreign_key "daily_metrics", "products"
-  add_foreign_key "hearts", "products"
   add_foreign_key "markings", "marks"
   add_foreign_key "monthly_metrics", "products"
   add_foreign_key "news_feed_item_comments", "news_feed_items"

@@ -16,7 +16,7 @@ class WipContracts
   end
 
   def tip_contracts
-    ([author_contract] + auto_tip_contracts).compact
+    auto_tip_contracts
   end
 
   def author_contract
@@ -32,10 +32,12 @@ class WipContracts
   end
 
   def tip_cents
+    return 0 if tip_contracts.empty?
     @tip_cents ||= tip_contracts.map{|c| c.percentage * total_cents }.reduce(:+).round.to_i
   end
 
   def tip_percentage
+    return 0 if tip_contracts.empty?
     @tip_percentage ||= tip_contracts.map{|c| c.percentage }.reduce(:+)
   end
 

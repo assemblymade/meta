@@ -19,6 +19,8 @@ const Screenshots = require('./screenshots.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const User = require('../user.js.jsx')
 const UserStore = require('../../stores/user_store');
+const ProductProgressWidget = require('../product_progress_widget.js.jsx');
+const ChecklistStore = require('../../stores/checklist_store');
 
 let ProductShow = React.createClass({
   propTypes: {
@@ -134,7 +136,6 @@ let ProductShow = React.createClass({
           <div className="clearfix mxn3">
             <div className="sm-col sm-col-8 px3 mb2 sm-mb0">
               <Tile>
-
                 <Screenshots key="product-screenshots" />
                 <div className="p3 sm-p4">
                   <div className="mb3">
@@ -150,7 +151,6 @@ let ProductShow = React.createClass({
                     {this.renderUpdates()}
                   </div>
 
-
                   <div className="py3">
                     <div className="clearfix py2">
                       <h6 className="left gray-2 caps mt0 mb0">
@@ -159,7 +159,6 @@ let ProductShow = React.createClass({
                     </div>
                     <ProductImportantLinks product={product} />
                   </div>
-
 
                   <div className="py3">
                     <div className="clearfix py2">
@@ -177,19 +176,20 @@ let ProductShow = React.createClass({
                       }).toJS()}
                     </div>
                   </div>
-
-
                 </div>
               </Tile>
             </div>
 
-            <div className="sm-col sm-col-4 px3">
+            <div className="md-col md-col-4 px3">
+              <div className="mb3">
+                {this.renderProductProgressWidget()}
+              </div>
               <div className="mb3">
                 <Accordion title="Get started">
                   <div className="mxn3">
                     <Tile>
                       {_.sortBy(this.state.bounties, (b) => b.priority).map((bounty) => {
-                        return <a className="block border-bottom" href={bounty.url}><BountyCard bounty={bounty} key={bounty.id} /></a>
+                        return <a className="block border-bottom px3 py2" href={bounty.url}><BountyCard bounty={bounty} key={bounty.id} /></a>
                       })}
                     </Tile>
                     <a className="h6 block px3 py2 gray-2" href={`${product.url}/bounties`}>View more</a>
@@ -210,6 +210,20 @@ let ProductShow = React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderProductProgressWidget() {
+    var coreTeamIds = _.pluck(this.state.product.core_team, 'id')
+    var isCoreTeam = _.contains(coreTeamIds, UserStore.getId())
+
+    console.log(isCoreTeam)
+    if (UserStore.isSignedIn() && isCoreTeam && this.state.product.state === 'stealth') {
+      return (
+        <ProductProgressWidget product={this.state.product} />
+      )
+    } else {
+      return null
+    }
   },
 
   renderEditButton() {
@@ -291,7 +305,7 @@ let ProductShow = React.createClass({
           </div>
           <div className="overflow-hidden">
             <h5 className="black mt0 mb0">{update.title}</h5>
-            <p className="gray-2 mb0">{truncate(update.body.text, 60)}</p>
+            <p className="gray-2 mb0">{truncate(update.body.text, 120)}</p>
           </div>
         </a>
       }

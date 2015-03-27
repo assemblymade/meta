@@ -21,7 +21,7 @@ var ChecklistActions = {
     }
     else {
       $.ajax({
-        url: "/products/" + entity.id + "/checklistitems",
+        url: "/" + entity.slug + "/checklistitems",
         type: 'GET',
         dataType: 'json',
         success: function(data) {

@@ -5,8 +5,9 @@ const ChecklistActions = require('../actions/checklist_actions');
 const Button = require('./ui/button.js.jsx');
 const Tile = require('./ui/tile.js.jsx');
 const Checklist = require('./checklist.js.jsx');
+const ProgressBar = require('./ui/progress_bar.js.jsx');
 
-const ProductStateWidget = React.createClass({
+const IdeaProgressWidget = React.createClass({
   propTypes: {
     entity: React.PropTypes.object.isRequired
   },
@@ -79,6 +80,23 @@ const ProductStateWidget = React.createClass({
     )
   },
 
+  renderProgress: function() {
+    let items = this.state.stages[this.state.activeStage].items
+    var progress = 0
+    if (items) {
+      progress = _.reduce(items, function(m, x){ return x.complete ? m + 1 : m}, 0) / items.length * 100
+    }
+
+    return (
+      <div className="p2">
+        <div className="center h5 bold px2">{this.state.stages[this.state.activeStage]['cta'] || this.state.stages[this.state.activeStage]['name']}</div>
+        <div className="py2">
+          <ProgressBar progress={progress} type="success" />
+        </div>
+      </div>
+    )
+  },
+
   render: function() {
 
     let activeChecklist = this.state.stages[this.state.activeStage];
@@ -87,7 +105,7 @@ const ProductStateWidget = React.createClass({
     return (
       <Tile>
         <div className="p3">
-          {this.renderStages()}
+          {this.renderProgress()}
           <Checklist
             entity_type={"Idea"}
             entity={this.props.entity}
@@ -101,4 +119,4 @@ const ProductStateWidget = React.createClass({
   }
 });
 
-module.exports = ProductStateWidget
+module.exports = IdeaProgressWidget

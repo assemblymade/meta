@@ -415,6 +415,10 @@ class Product < ActiveRecord::Base
     (wip_creator_ids | event_creator_ids).size
   end
 
+  def love
+    
+  end
+
   def event_creator_ids
     ::Event.joins(:wip).where('wips.product_id = ?', self.id).group('events.user_id').count.keys
   end

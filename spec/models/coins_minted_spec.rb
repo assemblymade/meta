@@ -31,8 +31,7 @@ describe CoinsMinted do
       ).to eq({
         product.user.id => (10000 * 0.025).to_i,  # auto tip contract
         benefactor.id   => (10000 * 0.020).to_i,  # auto tip contract
-        proposer.id     => (10000 * 0.05).to_i,   # bounty author
-        worker.id       => (10000 * 0.905).to_i   # bounty winner
+        worker.id       => (10000 * 0.955).to_i   # bounty winner
       })
 
       expect(
