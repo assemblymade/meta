@@ -16,8 +16,6 @@ ASM::Application.routes.draw do
     get '/', to: redirect('/dashboard')
   end
 
-  root :to => 'pages#home'
-
   # Global Chat Experiment
   resources :chat_rooms, only: [:index, :show], path: 'chat'
 
@@ -226,6 +224,13 @@ ASM::Application.routes.draw do
 
   # api
   # ◕ᴥ◕
+  namespace :api, path: '/' do
+    constraints subdomain: 'api' do
+      get '/' => 'api#root'
+    end
+  end
+
+  # Old api
   namespace :api do
     resources :chat_rooms, path: 'chat' do
       resources :comments, only: [:create, :index], module: :chat
@@ -266,6 +271,8 @@ ASM::Application.routes.draw do
 
     resources :textcompletes, only: [:index]
   end
+
+  root :to => 'pages#home'
 
   post '/products' => 'products#create', as: :products
 

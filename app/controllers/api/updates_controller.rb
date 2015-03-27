@@ -1,5 +1,5 @@
 module Api
-  class UpdatesController < ApiController
+  class UpdatesController < Api::ApiController
 
     # monsoon hits this
     def index

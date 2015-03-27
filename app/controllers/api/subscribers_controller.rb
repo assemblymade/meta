@@ -1,5 +1,5 @@
 module Api
-  class SubscribersController < ApiController
+  class SubscribersController < Api::ApiController
     respond_to :json
     before_filter :set_access_control_headers
 
