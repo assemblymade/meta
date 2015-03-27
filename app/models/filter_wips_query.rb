@@ -80,14 +80,14 @@ class FilterWipsQuery
     return unless commented.present?
 
     commented_ids = User.where(username: commented).pluck(:id)
-    Wip.joins(:comments).where(user_id: commented_ids).uniq
+    Wip.joins(news_feed_item: :comments).where(user_id: commented_ids).uniq
   end
 
   def mentioned_filter
     return unless mentioned.present?
 
     mentioned_wildcards = mentioned.map { |m| "%@#{m}%" }
-    Wip.joins(:comments).where('body ILIKE ANY (ARRAY[?])', mentioned_wildcards).uniq
+    Wip.joins(news_feed_item: :comments).where('body ILIKE ANY (ARRAY[?])', mentioned_wildcards).uniq
   end
 
   def query_filter

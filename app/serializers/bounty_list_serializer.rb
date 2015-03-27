@@ -18,7 +18,8 @@ class BountyListSerializer < ApplicationSerializer
   has_many :tags
 
   def comments_count
-    object.news_feed_item.comments_count
+    object.news_feed_item &&
+      object.news_feed_item.comments_count
   end
 
   def hearts_count
