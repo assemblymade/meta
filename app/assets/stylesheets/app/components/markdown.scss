@@ -30,7 +30,7 @@
 }
 
 // Markdown Normalizer class overrides multiple heading types
-.markdown-normalized {
+.markdown--normalized {
   h1 {
     @extend .h4;
     margin-top: 3rem;
@@ -46,6 +46,13 @@
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-weight: bold;
+  }
+}
+
+.markdown--lead {
+  p:first-child {
+    font-size: 18px;
+    line-height: 24px;
   }
 }
 

@@ -22,6 +22,9 @@ const UserStore = require('../../stores/user_store');
 const ProductProgressWidget = require('../product_progress_widget.js.jsx');
 const ChecklistStore = require('../../stores/checklist_store');
 
+import Reveal from '../ui/reveal.js.jsx'
+import OverflowFade from '../ui/overflow_fade.js.jsx'
+
 let ProductShow = React.createClass({
   propTypes: {
     params: React.PropTypes.oneOfType([
@@ -79,42 +82,40 @@ let ProductShow = React.createClass({
     let product = this.state.product;
     let slug = product.slug;
     let user = UserStore.getUser();
-    let description = null
+    let perks = null
 
-    let seeHowAssemblyWorksLink = (
-      <a href="/help" className="block px3 py2 center border-top">
-        See how Assembly works
-      </a>
-    );
+    if (UserStore.isStaff()) {
+      perks = <div className="mb3">
+        <Accordion title="Partner perks">
+          <div className="mxn3">
+            <Tile>
+              <div className="p3 border-bottom">
+                <h5 className="mt0 mb0">Royalties</h5>
+                <div className="gray-2">
+                  On the 1st of every month partners are paid 10% of the previous month's accrued profit. The profit is split depending on the partner's current ownership.
+                </div>
+              </div>
 
-    if (product.lead) {
-      let moreDesc;
+              <div className="p3 border-bottom">
+                <h5 className="mt0 mb0">Voting</h5>
+                <div className="gray-2">
+                  Your partnership means you get one vote in any decisions that are put towards the partners.
+                </div>
+              </div>
 
-      if (product.description_html) {
-        if (this.state.description) {
-          moreDesc = <div className="mb2">
-            <div className="mb2">
-              <Markdown color="gray-1" content={product.description_html} normalized={true} />
-            </div>
-            <a href="#" onClick={this.handleToggleDescription}>Read less</a>
+              <div className="p3">
+                <h5 className="mt0 mb0">Updates</h5>
+                <div className="gray-2">
+                  Get access to parter-only updates about the product. Financials etc.
+                </div>
+              </div>
+            </Tile>
           </div>
-        } else {
-          moreDesc = <div className="mb2">
-            <a href="#" onClick={this.handleToggleDescription}>Read more</a>
-          </div>
-        }
-      }
-
-      description = <div>
-        <div className="h4 mb2 black mb3">
-          <Markdown color="black" content={product.lead} />
-        </div>
-        {moreDesc}
+        </Accordion>
       </div>
-
-    } else {
-      description = <Markdown color="black" content={product.description_html} />
     }
+
+
 
     var team = List()
 
@@ -137,9 +138,13 @@ let ProductShow = React.createClass({
             <div className="sm-col sm-col-8 px3 mb2 sm-mb0">
               <Tile>
                 <Screenshots key="product-screenshots" />
+
                 <div className="p3 sm-p4">
+
                   <div className="mb3">
-                    {description}
+                    <Reveal>
+                      <Markdown color="black" content={product.lead + "\n" + product.description_html} normalized={true} lead={true} ref="description" />
+                    </Reveal>
                   </div>
 
                   <div className="py3">
@@ -157,6 +162,7 @@ let ProductShow = React.createClass({
                         Important links
                       </h6>
                     </div>
+
                     <ProductImportantLinks product={product} />
                   </div>
 
@@ -180,22 +186,30 @@ let ProductShow = React.createClass({
               </Tile>
             </div>
 
-            <div className="md-col md-col-4 px3">
+            <div className="sm-col sm-col-4 px3">
               <div className="mb3">
                 {this.renderProductProgressWidget()}
               </div>
+
               <div className="mb3">
                 <Accordion title="Get started">
                   <div className="mxn3">
                     <Tile>
                       {_.sortBy(this.state.bounties, (b) => b.priority).map((bounty) => {
-                        return <a className="block border-bottom px3 py2" href={bounty.url}><BountyCard bounty={bounty} key={bounty.id} /></a>
+                        return <a className="block px3 py2 clearfix border-bottom" href={bounty.url}>
+                          <div className="right blue ml2">
+                            <Icon icon="angle-right" />
+                          </div>
+                          <BountyCard bounty={bounty} key={bounty.id} />
+                        </a>
                       })}
                     </Tile>
                     <a className="h6 block px3 py2 gray-2" href={`${product.url}/bounties`}>View more</a>
                   </div>
                 </Accordion>
               </div>
+
+              {perks}
 
               <div className="mb3">
                 <MetricsBadge product={product} />
