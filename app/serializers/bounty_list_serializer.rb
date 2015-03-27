@@ -23,7 +23,8 @@ class BountyListSerializer < ApplicationSerializer
   end
 
   def hearts_count
-    object.news_feed_item.hearts_count
+    object.news_feed_item &&
+      object.news_feed_item.hearts_count
   end
 
   def url

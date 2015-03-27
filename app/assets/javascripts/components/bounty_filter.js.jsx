@@ -9,7 +9,7 @@ var BountyFilter = React.createClass({
 
     if(username) {
       filters = filters.concat([
-        { name: "You're assigned",      query: 'assigned:' + username },
+        { name: "You're assigned",      query: 'is:open assigned:' + username },
         { name: "You created",          query: 'by:' + username },
         { name: "You commented on",     query: 'commented:' + username },
         { name: "You're mentioned in",  query: 'mentioned:' + username },
