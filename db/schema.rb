@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20150327013821) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "uuid-ossp"
-  enable_extension "hstore"
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pg_stat_statements"
+  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -1233,6 +1233,7 @@ ActiveRecord::Schema.define(version: 20150327013821) do
   end
 
   add_foreign_key "daily_metrics", "products"
+  add_foreign_key "hearts", "products"
   add_foreign_key "markings", "marks"
   add_foreign_key "monthly_metrics", "products"
   add_foreign_key "news_feed_item_comments", "news_feed_items"
