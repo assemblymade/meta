@@ -108,7 +108,7 @@
 
 </style>
 
-<% if @debug || current_user.is_staff? %>
+<% if @debug || (current_user.is_staff? && !@debug) %>
   <div style="position: absolute; top: 48px; bottom: 0px; width: 100%; overflow:hidden">
     <iframe width="100%" height="100%"
       src="<%= ENV['LANDLINE_HOST'] %>/chat?team=assembly&room=<%= @chat_room.product.try(:slug) || 'general' %>&uid=<%= current_user.authentication_token %>"
