@@ -50,7 +50,8 @@ class UpdatesWip
   end
 
   def update_with_priority_above
-    old_priority = wip.priority
+    # TODO This whole bounty code sucks because this hack has to exist
+    old_priority = wip.priority || 999_999
 
     if old_priority > priority_above
       new_priority = priority_above

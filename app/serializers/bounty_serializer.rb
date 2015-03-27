@@ -41,7 +41,8 @@ class BountySerializer < ApplicationSerializer
   end
 
   def comments_count
-    object.news_feed_item.comments_count
+    object.news_feed_item &&
+      object.news_feed_item.comments_count
   end
 
   def following

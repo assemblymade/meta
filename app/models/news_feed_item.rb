@@ -86,6 +86,24 @@ class NewsFeedItem < ActiveRecord::Base
     self.last_commented_at = Time.now
   end
 
+  def update_task!(index, checked)
+    if self.target && (text = target.description)
+      i = 0
+      new_text = text.gsub(/^(\s*)- \[(x| )\](.*)$/) do |match|
+        replacement = if i == index
+          "#{$1}- [#{checked ? 'x' : ' '}] #{$3.strip}"
+        else
+          match
+        end
+        i += 1
+
+        replacement
+      end
+
+      target.update!(description: new_text)
+    end
+  end
+
   def url_params
     target.url_params
   end

@@ -193,3 +193,17 @@ input[type="text"].task-list-entry {
   background-repeat: no-repeat;
   background-position: left center;
 }
+
+.with-checkbox {
+  position: relative;
+  list-style-type: none;
+
+  input {
+    margin-left: -24px;
+  }
+
+  .checkbox-label {
+    padding-left: 8px;
+  }
+
+}

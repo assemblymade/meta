@@ -23,7 +23,7 @@ class Admin::ProductRankingsController < AdminController
             page(params[:page]).per(200)
     end
 
-    store_data(:products)
+    store_data products: @products
 
     respond_to do |format|
       format.html { }
