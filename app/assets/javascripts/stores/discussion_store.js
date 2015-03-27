@@ -8,6 +8,7 @@ var _comments = {
 };
 
 var _events = {};
+var _canUpdate = false
 
 class DiscussionStore extends Store {
   constructor() {
@@ -15,31 +16,36 @@ class DiscussionStore extends Store {
 
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
+        case ActionTypes.BOUNTY_RECEIVE:
+          _canUpdate = action.bounty.can_update
+          break
+
         case ActionTypes.COMMENT_UPDATED:
           updateComment(action)
-
-          this.emitChange()
           break
+
         case ActionTypes.DISCUSSION_RECEIVE:
           setComments(action)
           setEvents(action)
-
-          this.emitChange()
           break
+
         case ActionTypes.NEWS_FEED_ITEM_CONFIRM_COMMENT:
           confirmComment(action.data)
-
-          this.emitChange()
           break
+
         case ActionTypes.NEWS_FEED_ITEM_OPTIMISTICALLY_ADD_COMMENT:
           optimisticallyAddComment(action.data)
-
-          this.emitChange()
           break
+
         default:
-          // fall through
+          return
       }
+      this.emitChange()
     });
+  }
+
+  canUpdate() {
+    return _canUpdate
   }
 
   getComments(itemId) {
