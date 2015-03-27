@@ -128,7 +128,7 @@ const ProductProgressWidget = React.createClass({
   renderProgress: function() {
     return (
       <div className="px2 mt3">
-        <div className="center bold h5 px2">Product checklist</div>
+        <div className="center bold h5 px2">First Steps Checklist</div>
         <div className="p2 py1">
           <ProgressBar progress={this.state.progress} type="success" />
           <div className="h6 gray-2 p1 center">You can publish this page once the list is complete</div>

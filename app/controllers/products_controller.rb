@@ -39,7 +39,7 @@ class ProductsController < ProductController
   def checklistitems
     find_product!
     ordered_tasks = @product.tasks.where.not(display_order: nil).order(display_order: :asc)
-    completed_ordered_tasks = ordered_tasks.where.not(state: "open").count
+    completed_ordered_tasks = ordered_tasks.where.not(state: ["open", "allocated"]).count
 
     if ordered_tasks.count == 0
       completion = 0

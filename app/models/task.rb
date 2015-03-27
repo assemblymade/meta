@@ -20,7 +20,7 @@ class Task < Wip
   scope :won_by,      -> (user) { won.where('awards.winner_id = ?', user.id) }
   scope :won_by_after, -> (user, time) { won.where('awards.winner_id = ?', user.id).where('awards.created_at >= ?', time) }
 
-  AUTHOR_TIP = 0.0
+  AUTHOR_TIP = 0
   IN_PROGRESS = 'allocated'
 
   workflow_column :state
@@ -319,6 +319,7 @@ class Task < Wip
 
   def contracts
     WipContracts.new(self)
+    # raise "#{WipContracts.new(self).inspect}"
   end
 
   def update_coins_cache!

@@ -8,10 +8,10 @@ class AutoBounty
   end
 
   def make_first_bounties(product)
-    description = "Write your first four bounties.  Whatever it is that this product needs first to get started, go ahead and write it down in a new bounty.  Even if it's something you are going to do yourself, write it down so you can award it later.  \n\nIn general, when writing a bounty, try to make it as clear as possible for a new user.  How does someone new to your product start helping today?  Write four bounties to get started."
-    description = description + "\n\n<h5>Bounty Samples</h5> \n\n- Set up a basic Rails app\n\n- Write the First Chapter to the Book\n\n- Set up a Github Repo\n\n- Report a Bug\n\n- Create a Product Twitter Handle"
+    description = "Write your first bounties.  Whatever it is that this product needs first to get started, go ahead and write it down in a new bounty.  Even if it's something you are going to do yourself, write it down so you can award it later.  \n\nIn general, when writing a bounty, try to make it as clear as possible for a new user.  How does someone new to your product start helping today?  Write some bounties to get started."
+    description = description + "\n\n<h5>Bounty Samples</h5> \n\n- <a href=https://assembly.com/kanshu/bounties/146>Become Project Lead</a>\n\n- <a href=https://assembly.com/runbook/bounties/292>Integrate with Mailchimp goals</a>\n\n- <a href=https://assembly.com/gamamia/bounties/137>Find Free Indie Games</a>\n\n- <a href=https://assembly.com/kanshu/bounties/102>Find Photos to use with App</a>"
     value = 2000
-    title = "Write your first four bounties"
+    title = "Write your first bounties"
     make_bounty(product, description, title, value, 1, product.user)
   end
 
