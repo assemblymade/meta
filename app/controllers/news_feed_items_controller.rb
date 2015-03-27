@@ -1,5 +1,5 @@
 class NewsFeedItemsController < ProductController
-  before_action :find_product!
+  before_action :find_product!, except: :update_task
   before_action :find_news_feed_item!, except: :index
 
   def show
@@ -56,10 +56,21 @@ class NewsFeedItemsController < ProductController
     render nothing: true, status: 200
   end
 
+  def update_task
+    return head(:forbidden) unless can? :update, @news_feed_item
+
+    @news_feed_item.update_task!(
+      params[:index].to_i,
+      params[:checked] == 'true',
+    )
+
+    render nothing: true, status: 200
+  end
+
   private
 
   def find_news_feed_item!
-    @news_feed_item = NewsFeedItem.find(params[:id] || params[:update_id])
+    @news_feed_item = NewsFeedItem.find(params[:id] || params[:update_id] || params[:news_feed_item_id])
   end
 
   def news_feed_item_params

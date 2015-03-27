@@ -223,6 +223,23 @@ exports.heartables_lovers_path = function(options){
   }
 }
 
+exports.news_feed_item_update_task_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/news_feed_items/' + params.news_feed_item_id + '/update_task?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/news_feed_items/' + params.news_feed_item_id + '/update_task'
+  } else {
+    var params = options;
+    return '/news_feed_items/' + params.news_feed_item_id + '/update_task'
+  }
+}
+
 exports.discussion_comments_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -308,6 +325,23 @@ exports.product_unfollow_path = function(options){
   }
 }
 
+exports.product_people_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/people?' + op_params.join('&');
+  } else if(options && options.params) {
+    var params = options.params;
+    return '/' + params.product_id + '/people'
+  } else {
+    var params = options;
+    return '/' + params.product_id + '/people'
+  }
+}
+
 exports.product_assets_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -356,23 +390,6 @@ exports.product_screenshots_path = function(options){
   } else {
     var params = options;
     return '/' + params.product_id + '/screenshots'
-  }
-}
-
-exports.product_people_path = function(options){
-  if (options && options.data) {
-    var op_params = []
-    for(var key in options.data){
-      op_params.push([key, options.data[key]].join('='));
-    }
-    var params = options.params;
-    return '/' + params.product_id + '/people?' + op_params.join('&');
-  } else if(options && options.params) {
-    var params = options.params;
-    return '/' + params.product_id + '/people'
-  } else {
-    var params = options;
-    return '/' + params.product_id + '/people'
   }
 }
 

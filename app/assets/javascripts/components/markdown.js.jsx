@@ -2,6 +2,9 @@
 
 const Classnames = require('classnames');
 
+// components that get mounted after dangerously inserting html
+window.TaskListItem = require('./task_list_item.js.jsx')
+
 var Markdown = React.createClass({
 
   propTypes: {
@@ -41,7 +44,7 @@ var Markdown = React.createClass({
       return (
         <div className={cs}>
           {this.props.content}
-        </div>
+      </div>
       )
     }
 

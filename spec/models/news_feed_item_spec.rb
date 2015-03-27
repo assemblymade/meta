@@ -20,6 +20,31 @@ describe NewsFeedItem do
     end
   end
 
+  describe '#update_task' do
+    it '' do
+      bounty = Task.make!(description: %Q{
+        Some stuff
+
+        - [ ] first task
+        - [x] second task
+
+        More stuff
+      })
+      nfi = NewsFeedItem.create_with_target(bounty)
+
+      nfi.update_task!(1, false)
+
+      expect(bounty.reload.description).to eq(%Q{
+        Some stuff
+
+        - [ ] first task
+        - [ ] second task
+
+        More stuff
+      })
+    end
+  end
+
   describe 'followings' do
     it 'adds source on create' do
       nfi = NewsFeedItem.make!
