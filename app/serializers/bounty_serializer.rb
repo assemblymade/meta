@@ -50,7 +50,7 @@ class BountySerializer < ApplicationSerializer
   end
 
   def markdown_description
-    product_markdown(product, bounty.description)
+    bounty_markdown(product, bounty.description)
   end
 
   def most_recent_other_wip_worker

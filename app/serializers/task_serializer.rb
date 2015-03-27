@@ -37,7 +37,7 @@ class TaskSerializer < ApplicationSerializer
   end
 
   def markdown_description
-    product_markdown(product, object.description)
+    bounty_markdown(product, object.description)
   end
 
   def product
