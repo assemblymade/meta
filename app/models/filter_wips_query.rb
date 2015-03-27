@@ -26,7 +26,7 @@ class FilterWipsQuery
   end
 
   def filter_clauses
-    [state_filter, tag_filter, mark_filter, doing_filter, created_filter,
+    [state_filter, tag_filter, mark_filter, assigned_filter, created_filter,
      commented_filter, mentioned_filter, query_filter, user_filter, sort_order,
      page_selection].compact
   end
@@ -37,12 +37,12 @@ class FilterWipsQuery
     expanded_states = states.flat_map do |state|
       case state
       when 'open'
-        ['open', 'awarded']
+        ['open', 'awarded', 'allocated', 'reviewing']
       when 'doing'
         ['allocated']
       when 'reviewing'
         'reviewing'
-      when 'done'
+      when 'done', 'closed'
         ['closed', 'resolved']
       end
     end
@@ -62,11 +62,11 @@ class FilterWipsQuery
     Wip.joins(:marks).where(marks: { name: marks }).uniq
   end
 
-  def doing_filter
-    return unless doing.present?
+  def assigned_filter
+    return unless assigned.present?
 
-    doing_ids = User.where(username: doing).pluck(:id)
-    Task.joins(:wip_workers).where(wip_workers: { user_id: doing_ids }).uniq
+    assigned_ids = User.where(username: assigned).pluck(:id)
+    Task.joins(:wip_workers).where(wip_workers: { user_id: assigned_ids }).uniq
   end
 
   def created_filter
@@ -80,14 +80,14 @@ class FilterWipsQuery
     return unless commented.present?
 
     commented_ids = User.where(username: commented).pluck(:id)
-    Wip.joins(:comments).where(user_id: commented_ids).uniq
+    Wip.joins(news_feed_item: :comments).where(user_id: commented_ids).uniq
   end
 
   def mentioned_filter
     return unless mentioned.present?
 
     mentioned_wildcards = mentioned.map { |m| "%@#{m}%" }
-    Wip.joins(:comments).where('body ILIKE ANY (ARRAY[?])', mentioned_wildcards).uniq
+    Wip.joins(news_feed_item: :comments).where('body ILIKE ANY (ARRAY[?])', mentioned_wildcards).uniq
   end
 
   def query_filter
@@ -153,8 +153,8 @@ class FilterWipsQuery
     Array.wrap(filters[:mark])
   end
 
-  def doing
-    Array.wrap(filters[:doing])
+  def assigned 
+    Array.wrap(filters[:assigned])
   end
 
   def created
