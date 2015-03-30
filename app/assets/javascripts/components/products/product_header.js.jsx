@@ -59,20 +59,22 @@ const ProductHeader = React.createClass({
   },
 
   render() {
-    let product = this.state.product;
+    let product = this.state.product
+    let homepageUrl = null
 
     if (!product) {
       return null;
     }
 
-    let createBountyButton = null
-    if (UserStore.isSignedIn()) {
-      // createBountyButton =
+    if (product.homepage_url) {
+      homepageUrl = <a className="mr1" href={product.homepage_url} rel="nofollow">
+        {url.parse(product.homepage_url).hostname}
+      </a>
     }
 
     return (
       <div className="bg-white shadow-light">
-        
+
         <div className="container py3">
           <div className="clearfix">
 
@@ -85,7 +87,7 @@ const ProductHeader = React.createClass({
                 <a className="black" href={product.url}>{product.name}</a>
               </h2>
               <h4 className="m0 regular gray-2">
-                {product.pitch.substr(0, 60)}
+                {product.pitch.substr(0, 60)} {homepageUrl}
               </h4>
             </div>
 
