@@ -170,7 +170,7 @@ class Idea < ActiveRecord::Base
     name = self.name.present? && (self.name != "Discuss potential names in the comments")
     comments = self.comments.count >= COMMENT_MINIMUM
 
-    hearts && name && comments
+    hearts && name && comments && !self.product_id.present?
   end
 
   def unhearted(heart)
@@ -229,7 +229,18 @@ class Idea < ActiveRecord::Base
       score: lovescore
     })
 
-    greenlight! if should_greenlight?
+    if self.love == DEFAULT_TILTING_THRESHOLD && self.comments.count >= COMMENT_MINIMUM
+      send_tilt_email
+    end
+  end
+
+  def send_tilt_email
+    the_key = "tilt_notification_"+self.slug  + Time.now.strftime("%d%b%Y")
+    recipient_id = self.user.id
+    EmailLog.send_once(recipient_id, the_key) do
+      TiltMailer.delay(queue: 'mailer').create(recipient_id, self.id)
+    end
+    self.update!({last_tilt_email_sent: DateTime.now})
   end
 
   def decrement_score(heart)

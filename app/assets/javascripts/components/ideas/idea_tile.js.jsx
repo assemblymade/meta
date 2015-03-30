@@ -72,7 +72,6 @@ var Idea = React.createClass({
             </OverflowFade>
           </a>
 
-
         </div>
       </Tile>
 
