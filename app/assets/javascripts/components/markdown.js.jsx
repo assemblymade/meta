@@ -2,6 +2,9 @@
 
 const Classnames = require('classnames');
 
+// components that get mounted after dangerously inserting html
+window.TaskListItem = require('./task_list_item.js.jsx')
+
 var Markdown = React.createClass({
 
   propTypes: {
@@ -14,14 +17,16 @@ var Markdown = React.createClass({
       React.PropTypes.bool,
       React.PropTypes.string
     ]),
-    safelySetHtml: React.PropTypes.bool
+    safelySetHtml: React.PropTypes.bool,
+    lead: React.PropTypes.bool
   },
 
   getDefaultProps: function() {
     return {
       color: "gray-1",
       normalized: false,
-      safelySetHtml: false
+      safelySetHtml: false,
+      lead: false
     }
   },
 
@@ -34,14 +39,15 @@ var Markdown = React.createClass({
 
   render: function() {
     var cs = Classnames('markdown', this.props.color, {
-      'markdown-normalized': !!this.props.normalized,
+      'markdown--normalized': !!this.props.normalized,
+      'markdown--lead': this.props.lead,
     })
 
     if (this.props.safelySetHtml) {
       return (
         <div className={cs}>
           {this.props.content}
-        </div>
+      </div>
       )
     }
 

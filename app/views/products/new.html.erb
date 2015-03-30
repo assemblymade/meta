@@ -40,17 +40,20 @@
             <p class="h6 gray-2">How did you come up with the idea? What makes it great? Describe your vision, the problem it's solving and your advantage over the competition.</p>
             <%= f.text_area :description, class: 'form-control',  value: params[:blurb] || '', rows: 8 %>
           <% end %>
+          <% if params[:idea_id] %>
+            <h5>Reward early supporters</h5>
+            <p class="h6 gray-2">
+              Coins are how Assembly tracks ownership. Reward the people who supported your idea through hearts or comments by awarding them ten coins in your product.
+            </p>
 
-          <h5>Invite People</h5>
-          <p class="h6 gray-2">Let people know about this product.  It's crucial to start finding collaborators early.</p>
+            <%= react_component 'CreateProduct', participants: @participants %>
+          <% else %>
+            <h5>Ownership</h5>
+            <p class="h6 gray-2 mb3">
+              You will start off with 100% of the ownership of this product. You will be able to distribute ownership to contributors and other people after your product is created.
+            </p>
+          <% end %>
 
-          <h5>Reward early supporters</h5>
-
-          <p class="h6 gray-2">
-            Coins are how Assembly tracks ownership. Reward the people who supported your idea through hearts or comments by awarding them ten coins in your product.
-          </p>
-
-          <%= react_component 'CreateProduct', participants: @participants %>
 
           <div class="left-align">
 

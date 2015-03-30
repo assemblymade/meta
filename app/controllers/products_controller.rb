@@ -36,7 +36,28 @@ class ProductsController < ProductController
     render layout: 'application'
   end
 
-  def checklistitem
+  def checklistitems
+    find_product!
+    ordered_tasks = @product.tasks.where.not(display_order: nil).order(display_order: :asc)
+    completed_ordered_tasks = ordered_tasks.where.not(state: ["open", "allocated"]).count
+
+    if ordered_tasks.count == 0
+      completion = 0
+    else
+      completion = ((completed_ordered_tasks.to_f / ordered_tasks.count.to_f)*100).round(2)
+    end
+
+    ordered_tasks = ActiveModel::ArraySerializer.new(ordered_tasks.take(6))
+
+    render json: {tasks: ordered_tasks, percent_completion: completion}
+  end
+
+  def greenlight
+    find_product!
+    authorize! :update, @product
+
+    @product.update!({state: "greenlit", greenlit_at: Time.now})
+    render json: {message: "Success"}
   end
 
   def ownership
@@ -71,7 +92,7 @@ class ProductsController < ProductController
 
       chosen_ids = params[:product][:partner_ids] || ''
       chosen_ids = chosen_ids.split(',').flatten
-      GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)
+      GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)   #TO DO  --> Make this asynchronous.  Currently will cause tests to fail if asynchronous.
 
       if @idea
         the_key = @idea.slug.to_sym
@@ -81,11 +102,16 @@ class ProductsController < ProductController
           end
         end
 
-        tweet_text = "The idea #{@idea.name} just became a product called #{@product.name} #{product_path(@product)}"
+        mention = @product.user.twitter_nickname
+        if !mention
+          mention = " "
+        else
+          mention = " @"+mention+" "
+        end
+        tweet_text = "The idea #{@idea.name} just became a product called #{@product.name}#{mention}#{product_url(@product)}"
         TweetWorker.perform_async(tweet_text)
       end
 
-      AutoPost.new.generate_idea_product_transition_post(@product)
       AutoBounty.new.product_initial_bounties(@product)
       current_user.touch
       @product.reload
@@ -217,8 +243,6 @@ class ProductsController < ProductController
         product.core_team_memberships.create(user: user)
       end
 
-      product.state = 'greenlit'
-      product.greenlit_at = Time.now
       product.update_partners_count_cache
 
       product.save!
@@ -326,7 +350,9 @@ class ProductsController < ProductController
       :lead,
       :description,
       :tags_string,
+      :greenlit_at,
       :poster,
+      :state,
       :homepage_url,
       :try_url,
       :you_tube_video_url,

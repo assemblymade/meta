@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324205010) do
+ActiveRecord::Schema.define(version: 20150327013821) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "hstore"
-  enable_extension "uuid-ossp"
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pg_stat_statements"
+  enable_extension "uuid-ossp"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -128,22 +128,6 @@ ActiveRecord::Schema.define(version: 20150324205010) do
   end
 
   add_index "chat_rooms", ["slug"], name: "index_chat_rooms_on_slug", unique: true, using: :btree
-
-  create_table "checklist_items", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.string   "state"
-    t.uuid     "user_id"
-    t.uuid     "product_id"
-    t.uuid     "checklist_type_id"
-    t.uuid     "idea_id"
-  end
-
-  create_table "checklist_types", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.uuid   "stage_id"
-  end
 
   create_table "choices", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.float    "value"
@@ -740,7 +724,6 @@ ActiveRecord::Schema.define(version: 20150324205010) do
     t.text     "asmlytics_key"
     t.integer  "total_visitors",                                default: 0,    null: false
     t.text     "analytics_category"
-    t.uuid     "stage_id"
   end
 
   add_index "products", ["asmlytics_key"], name: "index_products_on_asmlytics_key", unique: true, using: :btree
@@ -749,7 +732,6 @@ ActiveRecord::Schema.define(version: 20150324205010) do
   add_index "products", ["profitable_at"], name: "index_products_on_profitable_at", using: :btree
   add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
-  add_index "products", ["stage_id"], name: "index_products_on_stage_id", using: :btree
   add_index "products", ["started_team_building_at"], name: "index_products_on_started_team_building_at", using: :btree
   add_index "products", ["state"], name: "index_products_on_state", using: :btree
 
@@ -811,13 +793,6 @@ ActiveRecord::Schema.define(version: 20150324205010) do
   end
 
   add_index "showcases", ["ended_at"], name: "index_showcases_on_ended_at", using: :btree
-
-  create_table "stages", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "description"
-  end
 
   create_table "status_messages", id: :uuid, force: :cascade do |t|
     t.uuid     "product_id",             null: false
@@ -1231,6 +1206,7 @@ ActiveRecord::Schema.define(version: 20150324205010) do
     t.integer  "priority"
     t.integer  "hearts_count",                     default: 0,       null: false
     t.datetime "deleted_at"
+    t.integer  "display_order"
   end
 
   add_index "wips", ["deleted_at"], name: "index_wips_on_deleted_at", using: :btree
@@ -1256,6 +1232,7 @@ ActiveRecord::Schema.define(version: 20150324205010) do
     t.datetime "created_at"
   end
 
+  add_foreign_key "daily_metrics", "products"
   add_foreign_key "hearts", "products"
   add_foreign_key "markings", "marks"
   add_foreign_key "monthly_metrics", "products"
@@ -1263,4 +1240,5 @@ ActiveRecord::Schema.define(version: 20150324205010) do
   add_foreign_key "screenshots", "assets"
   add_foreign_key "showcase_entries", "products"
   add_foreign_key "showcase_entries", "showcases"
+  add_foreign_key "weekly_metrics", "products"
 end

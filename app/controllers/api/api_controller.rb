@@ -1,4 +1,4 @@
-class ApiController < ApplicationController
+class Api::ApiController < ApplicationController
   respond_to :json
   skip_before_filter :verify_authenticity_token
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
@@ -14,6 +14,10 @@ class ApiController < ApplicationController
       true
     end
     authenticate_user!
+  end
+
+  def root
+    render nothing: true, status: :ok
   end
 
   # private

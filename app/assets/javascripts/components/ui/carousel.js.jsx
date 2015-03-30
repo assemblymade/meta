@@ -62,9 +62,7 @@ let Carousel = React.createClass({
       return <img src={image} style={style} />;
     }
 
-    image.props.style = style;
-
-    return image;
+    return <img {...image.props} style={style} />;
   },
 
   renderThumbnails() {

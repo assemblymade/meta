@@ -1,6 +1,6 @@
 module Api
   module Chat
-    class UsersController < ApiController
+    class UsersController < Api::ApiController
       before_action :authenticate
 
       def index

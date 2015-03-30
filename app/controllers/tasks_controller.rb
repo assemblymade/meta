@@ -14,6 +14,14 @@ class TasksController < WipsController
       end
 
       format.json do
+        if params[:count]
+          tasks_count = {
+            total: @product.tasks.where(state: ['open', 'awarded']).count
+          }
+          render json: tasks_count
+          return
+        end
+
         # TODO Figure out a better way to do this by manually setting params to FilterWipsQuery
         if params.fetch(:format, 'html') == 'html'
           params.merge!(sort: 'priority', state: 'open')
@@ -119,7 +127,7 @@ class TasksController < WipsController
     respond_to do |format|
       format.html { render 'bounties/show' }
       format.json do
-        response = Rails.cache.fetch([@bounty.id], expires_in: 5.minutes) do
+        response = Rails.cache.fetch(@bounty) do
           {
             tags: Wip::Tag.suggested_tags,
             product: ProductSerializer.new(@product, scope: current_user),
@@ -142,10 +150,7 @@ class TasksController < WipsController
             @bounty,
             scope: current_user
           ),
-          item: NewsFeedItemSerializer.new(
-            @bounty.news_feed_item,
-            scope: current_user
-          ),
+          item: NewsFeedItemSerializer.new(@bounty.news_feed_item),
           heartables: @heartables,
           user_hearts: @user_hearts
         )

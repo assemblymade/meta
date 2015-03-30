@@ -12,5 +12,14 @@ module.exports = {
         )
       }
     })
+  },
+
+  patch(url, data) {
+    $.ajax({
+      type: "PATCH",
+      url: url,
+      dataType: 'json',
+      data: data
+    })
   }
 }

@@ -1,5 +1,5 @@
 module Api
-  class SlackBridgeController < ApiController
+  class SlackBridgeController < Api::ApiController
     before_action :verify_auth
 
     def receive

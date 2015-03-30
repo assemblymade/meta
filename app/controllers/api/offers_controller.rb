@@ -1,5 +1,5 @@
 module Api
-  class OffersController < ApiController
+  class OffersController < Api::ApiController
     before_action :authenticate_user!
 
     def create

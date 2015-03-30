@@ -1,6 +1,5 @@
 'use strict'
 
-const _ = require('underscore')
 const moment  = require('moment')
 const Markdown  = require('../markdown.js.jsx')
 const Label = require('./label.js.jsx')

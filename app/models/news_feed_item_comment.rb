@@ -48,7 +48,7 @@ class NewsFeedItemComment < ActiveRecord::Base
   end
 
   def product
-    news_feed_item.product
+    news_feed_item.try(:product) || news_feed_item.target.try(:product)
   end
 
   def author_id

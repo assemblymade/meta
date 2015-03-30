@@ -20,7 +20,7 @@ class Task < Wip
   scope :won_by,      -> (user) { won.where('awards.winner_id = ?', user.id) }
   scope :won_by_after, -> (user, time) { won.where('awards.winner_id = ?', user.id).where('awards.created_at >= ?', time) }
 
-  AUTHOR_TIP = 0.05
+  AUTHOR_TIP = 0
   IN_PROGRESS = 'allocated'
 
   workflow_column :state
@@ -124,10 +124,14 @@ class Task < Wip
   alias_method :calculate_current_value, :value
 
   def on_open_entry(prev_state, event, *args)
-    assign_top_priority
+    assign_lowest_priority
   end
 
-  def on_open_exit(prev_state, event, *args)
+  def on_closed_entry(prev_state, event, *args)
+    remove_priority
+  end
+
+  def on_resolved_entry(prev_state, event, *args)
     remove_priority
   end
 
@@ -140,7 +144,7 @@ class Task < Wip
 
   def assign_lowest_priority
     ActiveRecord::Base.transaction do
-      lowest_priority = product.tasks.where(state: 'open').where.not(priority: nil).order(priority: :desc).limit(1).pluck(:priority).first
+      lowest_priority = product.tasks.where.not(state: ['closed', 'resolved'], priority: nil).order(priority: :desc).limit(1).pluck(:priority).first
       lowest_priority ||= 0
       update(priority: lowest_priority + 1)
     end
@@ -154,7 +158,7 @@ class Task < Wip
   end
 
   def recalculate_sibling_priorities
-    tasks = self.product.tasks.where(state: 'open').where.not(priority: nil)
+    tasks = self.product.tasks.where.not(state: ['closed', 'resolved'], priority: nil)
     rankings_query = tasks.select('id, row_number() OVER (ORDER BY priority ASC) AS priority').to_sql
     tasks.where('wips.id = rankings.id').update_all("priority = rankings.priority FROM (#{rankings_query}) rankings")
   end
@@ -319,6 +323,7 @@ class Task < Wip
 
   def contracts
     WipContracts.new(self)
+    # raise "#{WipContracts.new(self).inspect}"
   end
 
   def update_coins_cache!

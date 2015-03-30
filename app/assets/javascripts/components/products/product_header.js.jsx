@@ -72,37 +72,27 @@ const ProductHeader = React.createClass({
 
     return (
       <div className="bg-white shadow-light">
-        <div className="border-bottom border-gray">
-          <div className="container py3">
-            <div className="clearfix">
-                <a className="block left mr2 sm-mr3" href={product.url} style={{ maxWidth: 60 }}>
-                  <AppIcon app={product} size={60} />
-                </a>
+        
+        <div className="container py3">
+          <div className="clearfix">
 
-                <div className="sm-show right py2 ml3">
-                  {this.renderTryButton()}
-                </div>
+            <a className="block left mr2 sm-mr3" href={product.url} style={{ maxWidth: 60 }}>
+              <AppIcon app={product} size={60} />
+            </a>
 
-                <div className="overflow-hidden">
-                  <h2 className="mt0 mb0">
-                    <a className="black" href={product.url}>{product.name}</a>
-                  </h2>
-                  <h4 className="m0 regular gray-2">
-                    {product.pitch.substr(0, 60)}
-                  </h4>
-
-                  <div className="clearfix">
-                    <ul className="left sm-show list-inline px0 mt1 mb0">
-                      {this.renderTags()}
-                    </ul>
-                  </div>
-                </div>
-
+            <div className="overflow-hidden">
+              <h2 className="mt0 mb0">
+                <a className="black" href={product.url}>{product.name}</a>
+              </h2>
+              <h4 className="m0 regular gray-2">
+                {product.pitch.substr(0, 60)}
+              </h4>
             </div>
+
           </div>
         </div>
 
-        <div className="container">
+        <div className="container border-top">
           <div className="clearfix">
 
             <div className="sm-right">

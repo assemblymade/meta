@@ -41,7 +41,8 @@ class BountySerializer < ApplicationSerializer
   end
 
   def comments_count
-    object.news_feed_item.comments_count
+    object.news_feed_item &&
+      object.news_feed_item.comments_count
   end
 
   def following
@@ -49,7 +50,7 @@ class BountySerializer < ApplicationSerializer
   end
 
   def markdown_description
-    product_markdown(product, bounty.description)
+    bounty_markdown(product, bounty.description)
   end
 
   def most_recent_other_wip_worker

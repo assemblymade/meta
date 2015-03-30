@@ -1,6 +1,6 @@
 'use strict'
 
-const Icon = require('./icon.js.jsx')
+import Icon from './icon.js.jsx'
 
 const Accordion = React.createClass({
 
@@ -15,24 +15,26 @@ const Accordion = React.createClass({
   },
 
   render() {
-    let content
-    let chevron
+    let content = null,
+        chevron = null
 
     if (this.state.open) {
       content = <div className="px3">{this.props.children}</div>
     }
 
     if (this.state.open) {
-      chevron = <Icon icon="chevron-up" />
+      chevron = <Icon icon="angle-up" />
     } else {
-      chevron = <Icon icon="chevron-down" />
+      chevron = <Icon icon="angle-down" />
     }
 
     return (
       <div>
-        <a className="pill block black black-hover pointer px3 py1 mb1 h5 mt0 mb0 bg-gray-5-hover" onClick={this.toggleOpen}>
-          <div className="right gray-2">{chevron}</div>
-          <strong>{this.props.title}</strong>
+        <a className="pill block black black-hover pointer px3 py1 mb1 h5 mt0 mb0 visible-hover-wrapper" onClick={this.toggleOpen}>
+          <div className="visible-hover right gray-2">
+            {chevron}
+          </div>
+          {this.props.title}
         </a>
         {content}
       </div>
@@ -44,4 +46,5 @@ const Accordion = React.createClass({
   }
 })
 
-module.exports = window.Accordion = Accordion
+export default Accordion
+window.Accordion = Accordion

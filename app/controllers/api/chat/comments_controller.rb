@@ -1,6 +1,6 @@
 module Api
   module Chat
-    class CommentsController < ApiController
+    class CommentsController < Api::ApiController
       before_action :authenticate
 
       def create

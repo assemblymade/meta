@@ -376,7 +376,9 @@ let DashboardIndex = React.createClass({
             return (
               <a className="block mb2" href={bounty.url}>
                 <Tile>
-                  <BountyCard bounty={bounty} />
+                  <div className="px3 py2">
+                    <BountyCard bounty={bounty} />
+                  </div>
                 </Tile>
               </a>
             )
@@ -394,7 +396,9 @@ let DashboardIndex = React.createClass({
             return (
               <a className="block mb2" href={bounty.url}>
                 <Tile>
-                  <BountyCard bounty={bounty} />
+                  <div className="px3 py2">
+                    <BountyCard bounty={bounty} />
+                  </div>
                 </Tile>
               </a>
             )

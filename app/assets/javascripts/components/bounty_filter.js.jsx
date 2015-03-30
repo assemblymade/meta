@@ -9,7 +9,7 @@ var BountyFilter = React.createClass({
 
     if(username) {
       filters = filters.concat([
-        { name: "You're working on",    query: 'is:doing is:reviewing doing:' + username },
+        { name: "You're assigned",      query: 'is:open assigned:' + username },
         { name: "You created",          query: 'by:' + username },
         { name: "You commented on",     query: 'commented:' + username },
         { name: "You're mentioned in",  query: 'mentioned:' + username },
@@ -18,10 +18,8 @@ var BountyFilter = React.createClass({
     }
 
     filters = filters.concat([
-      { name: 'Open',              query: 'is:open' },
-      { name: 'Doing',             query: 'is:doing' },
-      { name: 'Reviewing',         query: 'is:reviewing' },
-      { name: 'Done',              query: 'is:done' }
+      { name: 'Open',   query: 'is:open' },
+      { name: 'Closed', query: 'is:closed' }
     ])
 
     return (

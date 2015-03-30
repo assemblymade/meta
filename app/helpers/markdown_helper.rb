@@ -7,41 +7,26 @@ module MarkdownHelper
     TextFilters::ImgThumbnailFilter,
     TextFilters::UserMentionFilter,
     HTML::Pipeline::EmojiFilter,
-    TextFilters::NoFollowLinksFilter
+    TextFilters::NoFollowLinksFilter,
   ]
 
-  PRODUCT_FILTERS = [
-    TextFilters::MarkdownFilter,
-    HTML::Pipeline::SanitizationFilter,
+  PRODUCT_FILTERS = DEFAULT_FILTERS + [
     TextFilters::ShortcutFilter,
     TextFilters::AssetInlineFilter,
-    TextFilters::ImgThumbnailFilter,
-    TextFilters::UserMentionFilter,
-    HTML::Pipeline::EmojiFilter,
-    TextFilters::NoFollowLinksFilter
+  ]
+
+  BOUNTY_FILTERS = PRODUCT_FILTERS + [
+    TextFilters::TaskListFilter,
   ]
 
   def markdown(text)
-    @default_pipeline ||= HTML::Pipeline.new(DEFAULT_FILTERS,
-      asset_root: 'https://a248.e.akamai.net/assets.github.com/images/icons',
-      firesize_url: ENV['FIRESIZE_URL'],
-      users_base_url: File.join(EXTENDER.root_url, 'users')
-    )
+    @default_pipeline ||= HTML::Pipeline.new(DEFAULT_FILTERS, pipeline_context)
     @default_pipeline.call(text)[:output].to_s.html_safe
   end
 
   # this is used in mailers, so use full urls
   def product_markdown(product, text)
-    @product_pipeline ||= HTML::Pipeline.new(PRODUCT_FILTERS,
-      asset_root: 'https://a248.e.akamai.net/assets.github.com/images/icons',
-      shortcut_root_url:  EXTENDER.product_url(product),
-      firesize_url: ENV['FIRESIZE_URL'],
-      # FIXME There is no route "users_path"
-      product: product,
-      users_base_url: File.join(EXTENDER.root_url, 'users'),
-      people_base_url: EXTENDER.product_people_url(product),
-      whitelist: html_whitelist
-    )
+    @product_pipeline ||= HTML::Pipeline.new(PRODUCT_FILTERS, product_context(product))
 
     begin
       result = @product_pipeline.call(text)
@@ -50,6 +35,11 @@ module MarkdownHelper
       Rails.logger.error("pipeline=#{e.message} text=#{text}")
       text
     end
+  end
+
+  def bounty_markdown(product, text)
+    @default_pipeline ||= HTML::Pipeline.new(BOUNTY_FILTERS, product_context(product))
+    @default_pipeline.call(text)[:output].to_s.html_safe
   end
 
   def highlighted_mentions(text, user, product=nil)
@@ -81,6 +71,24 @@ module MarkdownHelper
     whitelist[:elements] << 'iframe'
     whitelist[:attributes]['iframe'] = %w(src webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder)
     whitelist
+  end
+
+  def pipeline_context
+    {
+      asset_root: 'https://a248.e.akamai.net/assets.github.com/images/icons',
+      firesize_url: ENV['FIRESIZE_URL'],
+      # FIXME There is no route "users_path"
+      users_base_url: File.join(EXTENDER.root_url, 'users')
+    }
+  end
+
+  def product_context(product)
+    pipeline_context.merge(
+      product: product,
+      people_base_url: EXTENDER.product_people_url(product),
+      shortcut_root_url:  EXTENDER.product_url(product),
+      whitelist: html_whitelist,
+    )
   end
 
 end

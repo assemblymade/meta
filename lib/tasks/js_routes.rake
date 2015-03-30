@@ -20,6 +20,7 @@ namespace :js do
     'new_product_post',
     'new_product_wip',
     'new_user_session',
+    'news_feed_item_update_task',
     'notifications',
     'product',
     'product_activity',

@@ -21,8 +21,8 @@ var OverflowFade = React.createClass({
 
     if (dimension === 'vertical') {
       fadeStyle = {
-        height: '2rem',
-        backgroundImage: 'linear-gradient(rgba(255,255,255,0), white 50%)'
+        height: '4rem',
+        backgroundImage: 'linear-gradient(rgba(255,255,255,0), white)'
       }
     }
 

@@ -311,11 +311,6 @@
 			<%= render 'analytics/identify' %>
 			<% analytics_track_events %>
 
-			<% unless Rails.env.development? %>
-				<%= render 'shared/perfect_audience' %>
-			<% end %>
-			<%= render 'shared/inspectlet' %>
-			<%= render 'shared/bugs' %>
 			<%= render 'shared/twitter' %>
 
 			<%= yield :javascript %>
