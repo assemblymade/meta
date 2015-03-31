@@ -315,8 +315,16 @@ class Product < ActiveRecord::Base
     not NON_PROFIT.include?(slug)
   end
 
-  def partners
-    entries = TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
+  def partners(limit=nil)
+    entries = if limit.nil?
+      TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
+    else
+      TransactionLogEntry.where(product_id: self.id).
+        with_cents.
+        order('sum(cents) desc').
+        limit(limit).
+        group(:wallet_id).sum(:cents)
+    end
     User.where(id: entries.keys)
   end
 
@@ -416,7 +424,7 @@ class Product < ActiveRecord::Base
   end
 
   def love
-    
+
   end
 
   def event_creator_ids

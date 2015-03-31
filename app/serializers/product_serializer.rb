@@ -14,7 +14,6 @@ class ProductSerializer < ApplicationSerializer
   has_many :most_active_contributors, serializer: UserSerializer
 
   has_many :core_team, serializer: AvatarSerializer
-  has_many :partners, serializer: AvatarSerializer
 
   def bounty_valuation_steps
     BountyGuidance::Valuations.suggestions(object)
