@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330222515) do
+ActiveRecord::Schema.define(version: 20150314000058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "uuid-ossp"
-  enable_extension "hstore"
   enable_extension "plpgsql"
+  enable_extension "hstore"
   enable_extension "pg_stat_statements"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -339,34 +339,31 @@ ActiveRecord::Schema.define(version: 20150330222515) do
     t.datetime "created_at",                 null: false
     t.datetime "sent_at"
     t.uuid     "target_user_id"
-    t.uuid     "product_id"
   end
 
   add_index "hearts", ["sent_at"], name: "index_hearts_on_sent_at", using: :btree
   add_index "hearts", ["user_id", "heartable_id"], name: "index_hearts_on_user_id_and_heartable_id", unique: true, using: :btree
 
   create_table "ideas", id: :uuid, force: :cascade do |t|
-    t.string   "slug",                 limit: 255,                                 null: false
-    t.string   "name",                 limit: 255,                                 null: false
+    t.string   "slug",               limit: 255,                                 null: false
+    t.string   "name",               limit: 255,                                 null: false
     t.text     "body"
-    t.uuid     "user_id",                                                          null: false
-    t.boolean  "claimed",                          default: false
+    t.uuid     "user_id",                                                        null: false
+    t.boolean  "claimed",                        default: false
     t.uuid     "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "score",                            default: 0.0
-    t.datetime "last_score_update",                default: '2013-06-06 00:00:00'
+    t.float    "score",                          default: 0.0
+    t.datetime "last_score_update",              default: '2013-06-06 00:00:00'
     t.datetime "greenlit_at"
     t.boolean  "founder_preference"
     t.integer  "tilting_threshold"
     t.datetime "flagged_at"
-    t.text     "topics",                           default: [],                                 array: true
-    t.text     "categories",                       default: [],                                 array: true
+    t.text     "topics",                         default: [],                                 array: true
+    t.text     "categories",                     default: [],                                 array: true
     t.datetime "deleted_at"
     t.datetime "last_tweeted_at"
     t.string   "tentative_name"
-    t.datetime "last_tilt_email_sent"
-    t.integer  "total_visitors",                   default: 0,                     null: false
   end
 
   add_index "ideas", ["deleted_at"], name: "index_ideas_on_deleted_at", using: :btree
@@ -1224,7 +1221,6 @@ ActiveRecord::Schema.define(version: 20150330222515) do
     t.integer  "priority"
     t.integer  "hearts_count",                     default: 0,       null: false
     t.datetime "deleted_at"
-    t.integer  "display_order"
   end
 
   add_index "wips", ["deleted_at"], name: "index_wips_on_deleted_at", using: :btree

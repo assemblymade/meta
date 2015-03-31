@@ -48,7 +48,7 @@ module OpenAssets
         public_address: product.wallet_public_address,
         private_key: product.wallet_private_key,
         name: product.name,
-        metadata: "assembly.com/#{product.slug}/coin",
+        metadata: "u=https://assembly.com/#{product.slug}/coin",
         coins: total_coins
       }
 
