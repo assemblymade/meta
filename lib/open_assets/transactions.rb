@@ -26,7 +26,8 @@ module OpenAssets
         public_address: public_address,
         recipient_address: destination,
         private_key: private_key,
-        amount: amount
+        amount: amount,
+        identifier: destination+":"+amount.to_s+":"+DateTime.now.to_s
       }
 
       current_price = get_btc_spot_price_coinbase()*100
@@ -49,7 +50,8 @@ module OpenAssets
         private_key: product.wallet_private_key,
         name: product.name,
         metadata: "u=https://assembly.com/#{product.slug}/coin",
-        coins: total_coins
+        coins: total_coins,
+        identifier: Product.id.to_s+":"+DateTime.now.to_s
       }
 
       puts "Forging #{total_coins}  #{product.name} Coins for #{product.wallet_public_address}"
@@ -69,7 +71,8 @@ module OpenAssets
         recipient_address: user.wallet_public_address,
         private_key: product.wallet_private_key,
         amount: coins.to_s,
-        asset_address: product.coin_info.asset_address.to_s
+        asset_address: product.coin_info.asset_address.to_s,
+        identifier: product_id+":"+user_id+":"+DateTime.now.to_s
       }
 
       remote = OpenAssets::Remote.new("http://coins.assembly.com")
