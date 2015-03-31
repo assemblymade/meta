@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327013821) do
+ActiveRecord::Schema.define(version: 20150330222515) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-  enable_extension "hstore"
-  enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
+  enable_extension "hstore"
+  enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -150,6 +150,24 @@ ActiveRecord::Schema.define(version: 20150327013821) do
     t.uuid     "user_id",                null: false
     t.string   "url",        limit: 255, null: false
     t.datetime "created_at"
+  end
+
+  create_table "coin_infos", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "asset_address"
+    t.string   "contract_url"
+    t.string   "name"
+    t.string   "issuer"
+    t.string   "description"
+    t.string   "description_mime"
+    t.string   "coin_type"
+    t.string   "divisibility"
+    t.boolean  "link_to_website"
+    t.string   "icon_url"
+    t.string   "image_url"
+    t.string   "version"
+    t.uuid     "product_id"
   end
 
   create_table "completed_missions", id: :uuid, force: :cascade do |t|
@@ -1233,7 +1251,6 @@ ActiveRecord::Schema.define(version: 20150327013821) do
   end
 
   add_foreign_key "daily_metrics", "products"
-  add_foreign_key "hearts", "products"
   add_foreign_key "markings", "marks"
   add_foreign_key "monthly_metrics", "products"
   add_foreign_key "news_feed_item_comments", "news_feed_items"

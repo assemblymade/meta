@@ -40,21 +40,7 @@ class AssemblyAsset < ActiveRecord::Base
   end
 
   def get_key_pair
-    get "/v1/addresses"
-  end
-
-  def transfer_coins_to_user
-    body = {
-      from_public_address: self.product.wallet_public_address,
-      from_private_key: self.product.wallet_private_key,
-      transfer_amount: self.amount,
-      issuing_address: self.product.wallet_public_address,
-      to_public_address: self.user.wallet_public_address,
-      fee_each: 0.00005,
-      callback_url: Rails.application.routes.url_helpers.webhooks_assembly_assets_transaction_url(transaction: self.id)
-    }
-
-    post "/v1/transactions/transfer", body
+    get "/v2/addresses"
   end
 
   def get(url)

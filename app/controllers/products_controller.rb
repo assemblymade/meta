@@ -122,6 +122,15 @@ class ProductsController < ProductController
     end
   end
 
+  def coin
+    find_product!
+    hash = @product.coin_info.attributes
+    hash.merge!({'type' => @product.coin_info.coin_type })
+    hash.delete('coin_type')
+
+    render json: hash
+  end
+
   def welcome
     find_product!
     authorize! :update, @product

@@ -4,7 +4,7 @@ module OpenAssets
     def color_url(product)
       if wallet_public_address = product.wallet_public_address
         if product.state == 'greenlit' || product.state == 'profitable'
-          "https://coins.assembly.com/colors/#{wallet_public_address}"
+          "http://coins.assembly.com/colors/#{wallet_public_address}"
         end
       end
     end
