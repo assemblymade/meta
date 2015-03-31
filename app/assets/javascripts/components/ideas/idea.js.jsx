@@ -13,7 +13,7 @@ const SvgIcon = require('../ui/svg_icon.js.jsx');
 const TextPost = require('../ui/text_post.js.jsx');
 const UserStore = require('../../stores/user_store');
 const CircleIcon = require('../ui/circle_icon.js.jsx');
-
+const LoveStore = require('../../stores/love_store')
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
 let Idea = React.createClass({
@@ -36,6 +36,20 @@ let Idea = React.createClass({
         hearted: false
       }
     )
+  },
+
+  componentDidMount: function() {
+    LoveStore.addListener('change', this._onHeartChange)
+  },
+
+  componentWillUnmount: function() {
+    LoveStore.removeListener('change', this._onHeartChange)
+  },
+
+  _onHeartChange: function() {
+    this.setState({
+      hearted: !!(LoveStore.get(this.props.idea.news_feed_item.id) || {}).user_heart
+    })
   },
 
   render() {
@@ -180,7 +194,7 @@ let Idea = React.createClass({
         <div className="right py3 center">
           <div onClick={this.heartClick}>
             <Heart
-              size="huge"
+              size="button"
               heartable_id={idea.news_feed_item.id}
               heartable_type="NewsFeedItem" />
           </div>
