@@ -181,7 +181,7 @@ let Idea = React.createClass({
       leftSideText = function() {
         return (
           <div className="overflow-hidden">
-            <h4 className="gray-2">Heart this idea and the community will build it</h4>
+            <h4 className="gray-2">Should this idea become a product?</h4>
             <p className="h5 gray-2">
               If this product gets enough hearts, it will advance to the next stage of development.
             </p>
