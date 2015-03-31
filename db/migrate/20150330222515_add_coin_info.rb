@@ -15,7 +15,6 @@ class AddCoinInfo < ActiveRecord::Migration
       t.string :icon_url
       t.string :image_url
       t.string :version
-      t.string :asset_address
       t.uuid :product_id
     end
 

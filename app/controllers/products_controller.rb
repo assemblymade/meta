@@ -126,11 +126,13 @@ class ProductsController < ProductController
 
   def coin
     find_product!
-    hash = @product.coin_info.attributes
-    hash.merge!({'type' => @product.coin_info.coin_type })
-    hash.delete('coin_type')
-
-    render json: hash
+    if @product
+      if @product.coin_info
+        render json: CoinInfoSerializer.new(@product.coin_info)
+      else
+        render json: {}
+      end
+    end
   end
 
   def set_up_chat
