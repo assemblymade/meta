@@ -48,12 +48,12 @@ var IdeaLovers = React.createClass({
     var limit = this.props.limit;
 
     if (!lovers || !lovers.length) {
-      return <span className="gray-1">No love just yet &mdash; be the first to heart this idea!</span>;
+      return <span />;
     }
 
     var renderedLovers = lovers.slice(0, limit).map((lover) => {
       return (
-        <li className="left px1" key={lover.id}>
+        <li className="left mr1 mt1" key={lover.id}>
           <Avatar user={lover} size={24} />
         </li>
       );
@@ -61,8 +61,8 @@ var IdeaLovers = React.createClass({
 
     if (lovers.length > limit) {
       renderedLovers.push(
-        <li className="right bold gray-2 px1">
-          +{lovers.length - limit}
+        <li className="left py1 h6 gray-2 mt1">
+          and {lovers.length - limit} more
         </li>
       );
     }
