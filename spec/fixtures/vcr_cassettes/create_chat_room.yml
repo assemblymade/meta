@@ -1,0 +1,11 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://0.0.0.0:3000/teams/assembly/rooms
+    body:
+    headers:
+  response:
+    status:
+      code: 200
+      message: OK

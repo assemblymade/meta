@@ -1,4 +1,8 @@
 class ChatMigrator < OpenAssets::Remote
+  def initialize
+    @root_url = ENV["LANDLINE_URL"] || "http://0.0.0.0:3000"
+  end
+
   def request(method, url, body)
     resp = connection.send(method) do |req|
       auth_hash = Base64.encode64("#{ENV['LANDLINE_SECRET']}:")
