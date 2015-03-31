@@ -83,7 +83,6 @@ class ProductsController < ProductController
     if @product.valid?
 
       Karma::Kalkulate.new.award_for_product_to_stealth(@product)
-
       @product.retrieve_key_pair
 
       if @idea
@@ -116,9 +115,18 @@ class ProductsController < ProductController
       current_user.touch
       @product.reload
 
+      # Set up a room on Landline
+      set_up_chat
+
       respond_with(@product, location: product_path(@product))
     else
       render action: :new, layout: 'application'
+    end
+  end
+
+  def set_up_chat
+    if room = ChatRoom.find_by(product: @product)
+      room.migrate_to(ChatMigrator.new(ENV["LANDLINE_URL"]), '/teams/assembly/rooms')
     end
   end
 
