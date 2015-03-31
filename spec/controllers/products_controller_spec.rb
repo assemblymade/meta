@@ -70,7 +70,7 @@ describe ProductsController do
     context 'with good params' do
       before { post :create, product: { name: 'KJDB', pitch: 'Manage your karaoke life' } }
 
-      it "create's product" do
+      it "creates product" do
         expect(assigns(:product)).to be_a(Product)
         expect(assigns(:product)).to be_persisted
       end

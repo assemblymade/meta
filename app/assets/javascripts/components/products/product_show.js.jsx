@@ -226,7 +226,6 @@ let ProductShow = React.createClass({
     var coreTeamIds = _.pluck(this.state.product.core_team, 'id')
     var isCoreTeam = _.contains(coreTeamIds, UserStore.getId())
 
-    console.log(isCoreTeam)
     if (UserStore.isSignedIn() && isCoreTeam && this.state.product.state === 'stealth') {
       return (
         <ProductProgressWidget product={this.state.product} />

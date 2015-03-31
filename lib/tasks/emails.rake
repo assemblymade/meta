@@ -253,12 +253,7 @@ namespace :emails do
     should_notify = tiltable_ideas.select{ |a| (DateTime.now - a.last_tilt_email_sent) >= notification_interval }
 
     should_notify.each do |idea|
-      the_key = "tilt_notification_"+idea.slug  + Time.now.strftime("%d%b%Y")
-      recipient_id = idea.user.id
-      EmailLog.send_once(recipient_id, the_key) do
-        TiltMailer.delay(queue: 'mailer').create(recipient_id, idea.id)
-      end
-      idea.update!({last_tilt_email_sent: DateTime.now})
+      idea.send_tilt_email
     end
   end
 
