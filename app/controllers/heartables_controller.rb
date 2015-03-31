@@ -1,5 +1,5 @@
 class HeartablesController < ApplicationController
-  before_action :authenticate_user!, except: :hearts
+  before_action :authenticate_user!, except: [:hearts, :lovers]
 
   def index
     @hearts = Heart.includes(user).where(heartable_id: params[:heartable_id])
