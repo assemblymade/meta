@@ -125,6 +125,7 @@ class ProductsController < ProductController
   end
 
   def set_up_chat
+    return unless ENV["LANDLINE_URL"]
     if room = ChatRoom.find_by(product: @product)
       room.migrate_to(ChatMigrator.new, '/teams/assembly/rooms')
     end

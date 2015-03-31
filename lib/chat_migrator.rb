@@ -1,6 +1,6 @@
 class ChatMigrator < OpenAssets::Remote
   def initialize
-    @root_url = ENV["LANDLINE_URL"] || "http://0.0.0.0:3000"
+    @root_url = ENV["LANDLINE_URL"]
   end
 
   def request(method, url, body)
