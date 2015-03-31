@@ -229,7 +229,7 @@ class Idea < ActiveRecord::Base
       score: lovescore
     })
 
-    if self.love == DEFAULT_TILTING_THRESHOLD && self.comments.count >= COMMENT_MINIMUM
+    if self.love == DEFAULT_TILTING_THRESHOLD
       send_tilt_email
     end
   end
