@@ -30,7 +30,17 @@
         },
         dataType: 'json',
         success: function(result) {
-          console.log(result);
+          var memberships = result.memberships;
+          var rooms = result.rooms;
+          var unreadRooms = result.unread_rooms;
+
+          Dispatcher.dispatch({
+            type: CONSTANTS.ActionTypes.CHAT_ROOMS_RECEIVE,
+            chatRooms: _.filter(rooms, function(room) {
+              return memberships.indexOf(room.id) > -1;
+            }),
+            unreadRooms: unreadRooms
+          });
         },
         error: function(jqXhr, textStatus) {
           console.log(textStatus);

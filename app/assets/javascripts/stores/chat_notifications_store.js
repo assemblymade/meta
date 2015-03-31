@@ -2,7 +2,7 @@
 
 const ActionTypes = require('../constants').ActionTypes
 const Dispatcher = require('../dispatcher');
-const { List } = require('immutable');
+const { List, Map } = require('immutable');
 const Store = require('./es6_store');
 
 let chatRooms = List();
@@ -25,8 +25,6 @@ class ChatNotificationsStore extends Store {
           break;
         case ActionTypes.CHAT_ROOMS_RECEIVE:
           chatRooms = List(action.chatRooms);
-          break;
-        case ActionTypes.CHAT_ROOMS_UNREAD_RECEIVE:
           unreadRooms = List(action.unreadRooms);
           break;
         default:
@@ -43,11 +41,12 @@ class ChatNotificationsStore extends Store {
 
   getChatRoomsWithUnreadMarked() {
     return chatRooms.map((room) => {
-      if (unreadRooms.contains(room.id)) {
-        return room.set('unread', true);
+      let r = Map(room);
+      if (unreadRooms.map(func.dot('key')).contains(room.id)) {
+        return r.set('unread', true);
       }
 
-      return room.set('unread', false);
+      return r.set('unread', false);
     });
   }
 };

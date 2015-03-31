@@ -4,25 +4,25 @@ const { List } = require('immutable');
 
 const renderRooms = (room) => {
   let badge;
-  if (room.unread) {
+  if (room.get('unread')) {
     badge = <span
         className="indicator indicator-danger pull-right"
         style={{ 'position': 'relative', 'top': '10px' }} />;
   }
 
   return (
-    <a href={room.url}
-        key={room.slug}
+    <a href={room.get('url')}
+        key={room.get('slug')}
         className="list-group-item"
         style={{ border: 'none' }}>
-      {badge} #{room.slug}
+      {badge} #{room.get('slug')}
     </a>
   );
 };
 
 const ChatNotificationsList = React.createClass({
   propTypes: {
-    chatRooms: React.PropTypes.array
+    chatRooms: React.PropTypes.object
   },
 
   getDefaultProps() {
