@@ -198,11 +198,6 @@
       $(document).ready(function() {
         var dataTag = document.getElementById('ChatMessageStore')
         var activityStream = new ActivityStream(JSON.parse(dataTag.innerHTML));
-        window.Landline = new LandlineMigration(
-          "<%= ENV['LANDLINE_URL'] %>",
-          "<%= ENV['LANDLINE_TEAM'] %>",
-          "<%= current_user.authentication_token %>"
-        );
         activityStream.url = '<%= api_chat_room_comments_path(@chat_room) %>';
         activityStream.id = '<%= @chat_room.id %>'
         activityStream.product = app.product

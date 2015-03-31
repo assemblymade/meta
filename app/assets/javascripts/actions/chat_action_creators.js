@@ -22,23 +22,11 @@ var chatActionCreators = {
             rawMember: rawMember
           })
 
-          // Slight hack to prevent multiple join messages
-          // for one person
           if (alreadyJoined[rawMember.id] === 1) {
             return;
           }
 
           alreadyJoined[rawMember.id] = 1;
-
-          // var activity = new Activity({
-          //   id: rawMember.id + rand(10000),
-          //   actor: rawMember.info,
-          //   // TODO: change 'type' to 'verb'
-          //   type: 'activities/join',
-          //   created_at: moment().toISOString()
-          // });
-          //
-          // activityStream.add(activity);
         }
       );
     });

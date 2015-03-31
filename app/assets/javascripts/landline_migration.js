@@ -3,14 +3,54 @@
     this.url = url;
     this.team = team;
     this.uid = uid;
+    this.socket = io(this.url);
 
     var token = retrieveToken();
 
     if (token) {
-      return this;
+      return this.initializeSocket.call(this);
     }
 
-    this.logIn();
+    this.logIn(this.initializeSocket.bind(this));
+  };
+
+  LandlineMigration.prototype.authorizeSocket = function() {
+    this.socket.emit('auth', retrieveToken(), this.handleAuthorizationResponse.bind(this));
+  };
+
+  LandlineMigration.prototype.handleAuthorizationResponse = function(response) {
+    if (response.success) {
+      this.socket.on('room.unread', this.handleUnread.bind(this));
+      $.ajax({
+        url: this.url + '/rooms',
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + retrieveToken(),
+          'Content-Type': 'application/json',
+        },
+        dataType: 'json',
+        success: function(result) {
+          console.log(result);
+        },
+        error: function(jqXhr, textStatus) {
+          console.log(textStatus);
+        }
+      });
+    } else {
+      this.handleFailure.call(this, response);
+    }
+  };
+
+  LandlineMigration.prototype.handleFailure = function() {
+    console.error(response.message);
+  };
+
+  LandlineMigration.prototype.handleUnread = function(room) {
+    console.log(room);
+  };
+
+  LandlineMigration.prototype.initializeSocket = function() {
+    this.socket.on('connect', this.authorizeSocket.bind(this));
   };
 
   LandlineMigration.prototype.logIn = function(callback) {

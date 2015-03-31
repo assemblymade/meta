@@ -27,7 +27,7 @@ var ChatNotificationsToggler = React.createClass({
   },
 
   badgeCount: function() {
-    return this.shouldRead() ? ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt) : 0;
+    return this.shouldRead() ? 1 : 0 // ChatNotificationsStore.getUnreadCount(this.state.acknowledgedAt) : 0;
   },
 
   componentDidMount: function() {
@@ -58,6 +58,7 @@ var ChatNotificationsToggler = React.createClass({
   },
 
   shouldRead: function() {
+    return true;
     var chatRoom = ChatNotificationsStore.mostRecentlyUpdatedChatRoom();
 
     return chatRoom && (chatRoom.updated > chatRoom.last_read_at);

@@ -79,6 +79,11 @@
               })
             });
         }
+        window.Landline = new LandlineMigration(
+          "<%= ENV['LANDLINE_URL'] %>",
+          "<%= ENV['LANDLINE_TEAM'] %>",
+          "<%= current_user.authentication_token %>"
+        );
       </script>
       <%= track_readraptor(@stories_to_mark_as_read) if @stories_to_mark_as_read %>
     <% end %>

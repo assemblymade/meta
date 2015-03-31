@@ -1,16 +1,60 @@
-var ActionTypes = require('../constants').ActionTypes
-var Dispatcher = require('../dispatcher');
-var moment = require('moment');
-var ReadTimesMixin = require('../mixins/read_times');
-var Store = require('./store');
-var UserStore = require('./user_store');
-var xhr = require('../xhr');
+'use strict';
 
-var _chatRooms = {};
-var _sortKeys = [];
-var _optimisticChatRooms = {};
-var _store = Object.create(Store);
-var noop = function() {};
+const ActionTypes = require('../constants').ActionTypes
+const Dispatcher = require('../dispatcher');
+const { List } = require('immutable');
+const Store = require('./es6_store');
+
+let chatRooms = List();
+let unreadRooms = List();
+
+let matchId = (roomId) => {
+  return (id) => {
+    return id === roomId;
+  };
+};
+
+class ChatNotificationsStore extends Store {
+  constructor() {
+    super();
+
+    this.dispatchToken = Dispatcher.register((action) => {
+      switch (action.type) {
+        case ActionTypes.CHAT_ROOM_MARKED_AS_READ:
+          unreadRooms = unreadRooms.filterNot(matchId(action.id));
+          break;
+        case ActionTypes.CHAT_ROOMS_RECEIVE:
+          chatRooms = List(action.chatRooms);
+          break;
+        case ActionTypes.CHAT_ROOMS_UNREAD_RECEIVE:
+          unreadRooms = List(action.unreadRooms);
+          break;
+        default:
+          return;
+      }
+
+      this.emitChange();
+    });
+  }
+
+  getChatRooms() {
+    return chatRooms;
+  }
+
+  getChatRoomsWithUnreadMarked() {
+    return chatRooms.map((room) => {
+      if (unreadRooms.contains(room.id)) {
+        return room.set('unread', true);
+      }
+
+      return room.set('unread', false);
+    });
+  }
+};
+
+module.exports = new ChatNotificationsStore();
+
+/*
 
 var ChatNotificationsStore = _.extend(_store, ReadTimesMixin, {
   'chat:acknowledge': noop,
@@ -162,3 +206,4 @@ ChatNotificationsStore.dispatchToken = Dispatcher.register(function(payload) {
 });
 
 module.exports = ChatNotificationsStore;
+*/

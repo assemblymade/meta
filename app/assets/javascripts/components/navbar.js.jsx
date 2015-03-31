@@ -1,7 +1,7 @@
 'use strict';
 
 var Avatar = require('./ui/avatar.js.jsx');
-var ChatNotifications = require('./chat_notifications.js.jsx');
+var ChatNotifications = require('./chat/chat_notifications.js.jsx');
 var ChatNotificationsToggler = require('./chat_notifications_toggler.js.jsx');
 var DropdownMenu = require('./ui/dropdown_menu.js.jsx')
 var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
