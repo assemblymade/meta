@@ -15,7 +15,7 @@ class PartnershipMailer < BaseMailer
     prevent_delivery_to_unsubscribed_users
 
     mail to: @user.email_address,
-    subject: "You're now an owner of " + @product.name
+    subject: "You're now a partner of " + @product.name
   end
 
 end

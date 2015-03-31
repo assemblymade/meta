@@ -1,8 +1,9 @@
 <h3><%= @name %> is ready for something more.</h3>
-<p>The other day, <%= @name %> was just an idea of yours.  Now 20 people have jumped
+<p>The other day, <%= @name %> was just an idea of yours.  Now 15 people have jumped
   on board to build it with you.</p>
 
-<p>Let's keep this momentum up and turn <%= @name %> into a product.</p>
+<h4>As the creator of this idea, it is up to <b>you</b> to take it to the next level.</h4>
+<p>Check out <a href="<%= idea_url(@idea) %>"><%= @idea.name %></a>.  Make sure you've gotten
+  feedback from other users and you've set a tentative name.</p>
 
-<h4>As the creator of this idea, it is up to <b>you</b> to take the fateful, last step.</h4>
-<p>Check out <a href="<%= idea_url(@idea) %>"><%= @idea.name %></a> and click <b>Build a Product</b>.
+<p>Only you can take the last, fateful step.  Once you're ready, click <b>Build a Product</b></p>

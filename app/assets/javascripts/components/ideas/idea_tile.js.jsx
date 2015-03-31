@@ -10,6 +10,7 @@ var Share = require('../ui/share.js.jsx');
 var SvgIcon = require('../ui/svg_icon.js.jsx');
 var Tile = require('../ui/tile.js.jsx');
 var UserStore = require('../../stores/user_store');
+var SignupActions = require ('../../actions/signup_actions');
 
 var Idea = React.createClass({
   displayName: 'Idea',

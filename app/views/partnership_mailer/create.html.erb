@@ -1,14 +1,13 @@
 <h3><%= @idea.name %> just became an Assembly Product</h3>
 
 You were listed as a contributor on <a href="<%= idea_url(@idea) %>"><b><%= @idea.name %></b></a>, which has just become a
-product called <a href="<%= product_url(@product) %>"><b><%= @product.name %></b></a>.  It's on its way to becoming a real
-product.</p>
+product called <a href="<%= product_url(@product) %>"><b><%= @product.name %></b></a>.  It's on its way to becoming something huge.</p>
 
 <p>For your early participation, <a href="<%= user_url(@product.user) %>"><b><%= @product.user.username %></b></a> gave you
 10 coins.  These coins represent ownership in <%= @product.name %>.</p>
 
 <p><a href="<%= product_url(@product) %>"><b><%= @product.name %></b></a> is currently building its founding team.  Participate
-early to earn more ownership. </p>
+early to earn more ownership: a greater stake in the future of the product.</p>
 
 <div align="center">
   <table class="button success radius" style="width: 200px">
