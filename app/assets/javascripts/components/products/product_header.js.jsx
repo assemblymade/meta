@@ -94,23 +94,25 @@ const ProductHeader = React.createClass({
           </div>
         </div>
 
-        <div className="container border-top">
-          <div className="clearfix">
+        <div className="border-top">
+          <div className="container">
+            <div className="clearfix">
 
-            <div className="sm-right">
-              <div className="center sm-right-align py1">
-                <ProductFollowers product_id={product.id} />
+              <div className="sm-right">
+                <div className="center sm-right-align py1">
+                  <ProductFollowers product_id={product.id} />
+                </div>
               </div>
-            </div>
 
-            <div className="sm-left">
-              <Nav type="tabs">
-                <Nav.Item active={this.isActive('overview')} href={product.url} label="Overview" />
-                <Nav.Item active={this.isActive('bounties')} href={product.url + '/bounties'} label="Bounties" />
-                <Nav.Item active={this.isActive('partners')} href={product.url + '/partners'} label="Partners" />
-                <Nav.Item active={this.isActive('activity')} href={product.url + '/activity'} label="Activity" />
-                <Nav.Item href={product.url + '/chat'} label="Chat" />
-              </Nav>
+              <div className="sm-left">
+                <Nav type="tabs">
+                  <Nav.Item active={this.isActive('overview')} href={product.url} label="Overview" />
+                  <Nav.Item active={this.isActive('bounties')} href={product.url + '/bounties'} label="Bounties" />
+                  <Nav.Item active={this.isActive('partners')} href={product.url + '/partners'} label="Partners" />
+                  <Nav.Item active={this.isActive('activity')} href={product.url + '/activity'} label="Activity" />
+                  <Nav.Item href={product.url + '/chat'} label="Chat" />
+                </Nav>
+              </div>
             </div>
           </div>
         </div>

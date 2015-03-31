@@ -54,7 +54,7 @@ class AutoBounty
 
   def make_someone_core(product)
     description = "Core team members are vested with enormous powers within a Product.  They can value and award bounties.  This gives them enormous influence over the total ownership distribution.  They can write posts for which the entire team is notified.  They guide and lead the team.  It's an incredibly important position."
-    description = description + "  So it's especially important to pick someone excellent.  Pick someone you really trust.  Pick someone you respect to make the right choices in your absence.  Don't pick someone to be Core in a hurry.  If you're not sure, save this bounty for later."
+    description = description + "\n\n  So it's especially important to pick someone excellent.  Pick someone you really trust.  Pick someone you respect to make the right choices in your absence.  Don't pick someone to be Core in a hurry.  If you're not sure, save this bounty for later."
     value = 5000
     title = "Find another Core Team Member"
     make_bounty(product, description, title , value)
