@@ -30,6 +30,7 @@ class Product < ActiveRecord::Base
 
   has_one :product_trend
   has_one :idea
+  has_one :coin_info
 
   has_many :activities
   has_many :assets
@@ -140,6 +141,7 @@ class Product < ActiveRecord::Base
 
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }, on: :create
+  after_commit -> { create_coin_info }, on: :create
 
   after_update :update_elasticsearch
 
@@ -476,6 +478,38 @@ class Product < ActiveRecord::Base
 
   def combined_watchers_and_voters
     (votes.map {|vote| vote.user } + watchers).uniq
+  end
+
+  def create_coin_info
+    name = "#{self.name} Coin"
+    description = "#{self.description}"
+    description_mime = "text/x-markdown; charset=UTF-8"
+    coin_type = "Ownership"
+    divisibility = 1
+    link_to_website = true
+    icon_url = full_logo_url
+    image_url = full_logo_url
+    version = "1.0"
+    asset_address = ""
+
+    CoinInfo.create!({name: name, description: description, description_mime: description_mime, coin_type: coin_type, divisibility: divisibility,
+      link_to_website: link_to_website,
+      icon_url: icon_url,
+      image_url: image_url,
+      version: version,
+      product_id: self.id,
+      asset_address: asset_address
+      })
+  end
+
+  def asset_address
+    self.coin_info.asset_address
+  end
+
+  def assign_asset_address
+    if !self.coin_info.asset_address.present?
+      OpenAssets::Transactions.new.get_asset_address(self.wallet_public_address)
+    end
   end
 
   def tags_with_count

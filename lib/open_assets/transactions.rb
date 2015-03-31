@@ -24,9 +24,10 @@ module OpenAssets
 
       params = {
         public_address: public_address,
-        destination: destination,
+        recipient_address: destination,
         private_key: private_key,
-        amount: amount
+        amount: amount,
+        identifier: destination+":"+amount.to_s+":"+DateTime.now.to_s
       }
 
       current_price = get_btc_spot_price_coinbase()*100
@@ -36,8 +37,8 @@ module OpenAssets
       recipient_address = destination
       BtcPayment.create!({btcusdprice_at_moment: current_price, created_at: DateTime.now, action: "Sent BTC", sender: sender, recipient: recipient, sender_address: sender_address, recipient_address: recipient_address, btc_change: amount*-100000000})
 
-      remote = OpenAssets::Remote.new("https://coins.assembly.com")
-      end_url="v1/btc"
+      remote = OpenAssets::Remote.new("http://coins.assembly.com")
+      end_url="v2/btc/transfer"
       remote.post end_url, params.to_json
     end
 
@@ -47,17 +48,16 @@ module OpenAssets
       body = {
         public_address: product.wallet_public_address,
         private_key: product.wallet_private_key,
-        fee_each: ENV.fetch("STANDARD_BTC_FEE"),
-        name: product.name + " Coins",
-        email: "barisser@assembly.com",
-        description: "",
-        initial_coins: total_coins.to_s
+        name: product.name,
+        metadata: "u=https://assembly.com/#{product.slug}/coin",
+        coins: total_coins,
+        identifier: Product.id.to_s+":"+DateTime.now.to_s
       }
 
       puts "Forging #{total_coins}  #{product.name} Coins for #{product.wallet_public_address}"
 
-      remote = OpenAssets::Remote.new("https://coins.assembly.com")
-      end_url="v1/colors"
+      remote = OpenAssets::Remote.new("http://coins.assembly.com")
+      end_url="v2/colors/issue"
       remote.post end_url, body.to_json
     end
 
@@ -67,47 +67,31 @@ module OpenAssets
       user = User.find(user_id)
 
       body = {
-        from_public_address: product.wallet_public_address,
-        to_public_address: user.wallet_public_address,
-        fee_each: ENV.fetch("STANDARD_BTC_FEE"),
-        from_private_key: product.wallet_private_key,
-        issuing_address: product.wallet_public_address,
-        transfer_amount: coins.to_s,
-        type: ""
+        public_address: product.wallet_public_address,
+        recipient_address: user.wallet_public_address,
+        private_key: product.wallet_private_key,
+        amount: coins.to_s,
+        asset_address: product.coin_info.asset_address.to_s,
+        identifier: product_id+":"+user_id+":"+DateTime.now.to_s
       }
 
-      remote = OpenAssets::Remote.new("https://coins.assembly.com")
-      end_url="v1/transactions/transfer"
+      remote = OpenAssets::Remote.new("http://coins.assembly.com")
+      end_url="v2/colors/transfer"
       remote.post end_url, body.to_json
     end
 
-    def transfer_coins(sender, receiver, coins, product, type)
+    def get_asset_address(btc_address)
+      url = "http://coins.assembly.com"
+      remote = OpenAssets::Remote.new(url)
+      end_url = "/v2/colors/asset_address/#{btc_address}"
 
-      issuing_address = product.wallet_public_address
-      from_public_address = sender.wallet_public_address
-      from_private_key = sender.wallet_private_key
-      to_public_address = receiver.wallet_public_address
-
-      body = {
-        issuing_address: issuing_address,
-        to_public_address: to_public_address,
-        fee_each: ENV.fetch("STANDARD_BTC_FEE"),
-        from_public_address: from_public_address,
-        from_private_key: from_private_key,
-        transfer_amount: coins.to_s,
-        type: type
-      }
-
-      remote = OpenAssets::Remote.new("https://coins.assembly.com")
-      end_url="v1/transactions/transfer"
-      remote.post end_url, body.to_json
-
+      asset_address = remote.get end_url
     end
 
     def get_btc_pair()
       url = "https://coins.assembly.com"
       remote = OpenAssets::Remote.new(url)
-      end_url="/v1/addresses"
+      end_url="/v2/addresses"
 
       pair = remote.get end_url
     end

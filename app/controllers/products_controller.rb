@@ -126,6 +126,17 @@ class ProductsController < ProductController
     end
   end
 
+  def coin
+    find_product!
+    if @product
+      if @product.coin_info
+        render json: CoinInfoSerializer.new(@product.coin_info)
+      else
+        render json: {}
+      end
+    end
+  end
+
   def set_up_chat
     return unless ENV["LANDLINE_URL"]
     if room = ChatRoom.find_by(product: @product)

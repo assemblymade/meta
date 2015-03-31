@@ -326,6 +326,7 @@ ASM::Application.routes.draw do
     get '/checklistitems' => 'products#checklistitems'
     get '/ownership' => 'products#ownership'
     get '/people' => 'products#people'
+    get '/coin' => 'products#coin'
 
     get 'log' => 'stakes#show'
     get 'search' => 'search#index'

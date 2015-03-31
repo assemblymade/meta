@@ -5,7 +5,7 @@ module OpenAssets
     end
 
     def retrieve_key_pair
-      @remote.get "/v1/addresses"
+      @remote.get "/v2/addresses"
     end
   end
 end

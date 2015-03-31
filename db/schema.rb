@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150327013821) do
+ActiveRecord::Schema.define(version: 20150331180623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20150327013821) do
     t.integer  "cents"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "transaction_hash"
   end
 
   create_table "bounty_postings", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
@@ -150,6 +151,24 @@ ActiveRecord::Schema.define(version: 20150327013821) do
     t.uuid     "user_id",                null: false
     t.string   "url",        limit: 255, null: false
     t.datetime "created_at"
+  end
+
+  create_table "coin_infos", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "asset_address"
+    t.string   "contract_url"
+    t.string   "name"
+    t.string   "issuer"
+    t.string   "description"
+    t.string   "description_mime"
+    t.string   "coin_type"
+    t.string   "divisibility"
+    t.boolean  "link_to_website"
+    t.string   "icon_url"
+    t.string   "image_url"
+    t.string   "version"
+    t.uuid     "product_id"
   end
 
   create_table "completed_missions", id: :uuid, force: :cascade do |t|
