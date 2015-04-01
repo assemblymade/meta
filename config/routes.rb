@@ -255,6 +255,7 @@ ASM::Application.routes.draw do
 
       resources :bounties, only: [:index, :create] do
         resources :offers, only: [:create, :show]
+        resources :awards, only: [:create, :show]
       end
 
       resources :updates, only: [:index] do
