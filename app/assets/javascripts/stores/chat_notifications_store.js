@@ -3,6 +3,7 @@
 const ActionTypes = require('../constants').ActionTypes
 const Dispatcher = require('../dispatcher');
 const { List, Map } = require('immutable');
+const moment = require('moment');
 const Store = require('./es6_store');
 
 let chatRooms = List();
@@ -47,6 +48,12 @@ class ChatNotificationsStore extends Store {
       }
 
       return r.set('unread', false);
+    });
+  }
+
+  getUnreadCount(ack) {
+    return unreadRooms.count((room) => {
+      return moment(room.updated).unix() > ack;
     });
   }
 };

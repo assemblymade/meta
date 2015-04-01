@@ -4,7 +4,6 @@ var CONSTANTS = {
   CHANGE_EVENT: 'change',
   CHAT_NOTIFICATIONS: {
     ACTIONS: {
-      ACKNOWLEDGE: 'chat:acknowledge',
       FETCH_CHAT_ROOMS: 'chat:fetchChatRooms',
       MARK_ROOM_AS_READ: 'chat:markRoomAsRead'
     }
@@ -130,6 +129,7 @@ var CONSTANTS = {
 
     CHAT_ADDED: null,
     CHAT_MESSAGE_RECEIVE_ACTIVITIES: null,
+    CHAT_NOTIFICATIONS_ACKNOWLEDGE: null,
     CHAT_ROOM_MARKED_AS_READ: null,
     CHAT_ROOMS_RECEIVE: null,
     CHAT_USER_ONLINE: null,
