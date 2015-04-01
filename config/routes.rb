@@ -4,9 +4,12 @@ ASM::Application.routes.draw do
 
   # api
   # ◕ᴥ◕
-  namespace :api, path: '/', constraints: { subdomain: 'api' } do
+  namespace :api, path: '/', constraints: { subdomain: 'api' }, defaults: { format: 'json' } do
     get '/' => 'api#root'
-    resource :user
+    resource :user, only: [:show]
+    resources :orgs, only: [:show] do
+      resources :bounties, only: [:index, :show, :create, :update]
+    end
   end
 
   authenticate :user, lambda { |u| u.staff? } do

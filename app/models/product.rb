@@ -369,6 +369,11 @@ class Product < ActiveRecord::Base
     team_memberships.active.find_by(user_id: user.id)
   end
 
+  def partner?(user)
+    return false if user.nil?
+    TransactionLogEntry.balance(product, user.id) > 0
+  end
+
   def finished_first_steps?
     posts.exists? && tasks.count >= 3 && repos.present?
   end

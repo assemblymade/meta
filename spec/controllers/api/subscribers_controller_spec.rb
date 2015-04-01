@@ -19,5 +19,3 @@ describe Api::SubscribersController do
     end
   end
 end
-
-
