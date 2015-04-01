@@ -7,7 +7,7 @@ module AssemblyCoin
       if product.state == 'greenlit' or product.state == 'profitable'
         destination = product.wallet_public_address
 
-        current_btc=OpenAssets::Transactions.new.get_btc_balance(destination)
+        current_btc = OpenAssets::Transactions.new.get_btc_balance(destination)
         current_time =  Time.now
 
         last_checked_time = product.last_checked_btc
@@ -18,7 +18,7 @@ module AssemblyCoin
         time_since_last_checked = current_time.to_i - last_checked_time.to_i
 
         if ENV['MIN_PRODUCT_BTC'].to_f > current_btc and time_since_last_checked > 3600 then
-          amount = ENV['MIN_PRODUCT_BTC'].to_f - current_btc + ENV['STANDARD_BTC_FEE'].to_f*4
+          amount = ENV['MIN_PRODUCT_BTC'].to_f - current_btc + ENV['STANDARD_BTC_FEE'].to_f
 
           product.update!(last_checked_btc: current_time)
 

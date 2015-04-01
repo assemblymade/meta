@@ -51,7 +51,7 @@ module OpenAssets
         name: product.name,
         metadata: "u=https://assembly.com/#{product.slug}/coin",
         coins: total_coins,
-        identifier: product.id.to_s+":"+DateTime.now.to_s
+        identifier: product_id.to_s+":"+DateTime.now.to_s
       }
 
       puts "Forging #{total_coins}  #{product.name} Coins for #{product.wallet_public_address}"
