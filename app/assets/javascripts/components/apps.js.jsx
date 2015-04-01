@@ -53,12 +53,10 @@ const Apps = React.createClass({
 
     if (!showcase) {
       header = <Jumbotron bg="ideas/ideas-header-bg-lg.jpg">
-        <div className="container px2" style={{paddingTop: '8rem', paddingBottom: '8rem'}}>
+        <div className="container px2">
           <div className="center white">
-            <h1 className="mt0 mb2">Find a product you&nbsp;
-              <Icon icon="heart" />
-            </h1>
-            <h3 className="regular mt0 mb0">Join a team, or <a className="underline white white-hover" href="/start">pitch your own idea</a></h3>
+            <h1 className="mt0 mb2">Find a product you&#39;d like to work on,</h1>
+            <h3 className="regular mt0 mb0">or <a className="underline white white-hover" href="/start">start your own</a> that others can work on with you.</h3>
           </div>
         </div>
       </Jumbotron>
