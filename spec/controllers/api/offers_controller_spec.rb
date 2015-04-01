@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe Api::OffersController do
   let(:bounty) { Task.make! }

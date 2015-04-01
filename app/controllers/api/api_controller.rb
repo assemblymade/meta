@@ -3,6 +3,7 @@ class Api::ApiController < ApplicationController
 
   skip_before_action :verify_authenticity_token
   after_filter :strip_cookie
+  after_filter :add_cors
 
   rescue_from StandardError, with: :standard_error
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
@@ -28,6 +29,13 @@ class Api::ApiController < ApplicationController
 
   def access_denied
     render json: { message: "Access to this resource denied" }, status: :forbidden
+  end
+
+  def add_cors
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Max-Age'] = 600
+    headers['Access-Control-Allow-Credentials'] = true
   end
 
   def bad_request(error)
