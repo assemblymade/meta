@@ -7,6 +7,7 @@ module AssemblyCoin
       product.assign_asset_address
 
       distinct_txs = product.distinct_wallets_unqueued
+      product.mark_all_transactions_as_queued
 
       distinct_txs.each do |user_id, coins|
 
