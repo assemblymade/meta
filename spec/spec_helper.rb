@@ -12,6 +12,7 @@ require 'email_spec'
 require 'sidekiq/testing'
 require 'webmock/rspec'
 require 'codeclimate-test-reporter'
+require 'pry'
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(

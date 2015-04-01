@@ -108,8 +108,7 @@ group :development, :test do
   # gem 'i18n-debug'
   gem 'machinist', '~> 2'
   gem 'poltergeist'
-  # gem 'pry'
-  # gem 'pry-rails'
+  gem 'pry', require: false
   gem 'quiet_assets'
   gem 'rest_client'
   gem 'rspec-rails'
