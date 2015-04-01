@@ -54,13 +54,6 @@
       </a>
     <% end %>
 
-    <% if @user.wallet_public_address %>
-      <a class="block px1 py2 border-top gray-2 center" style="font-size: 80%;" href="<%= @user.coinprism_url %>" title="<%= @user.wallet_public_address %>">
-        Crypto Assets
-        <%= @user.wallet_public_address %>
-      </a>
-    <% end %>
-
   </div>
 </div>
 
