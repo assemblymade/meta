@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331180623) do
+ActiveRecord::Schema.define(version: 20150331194114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -1227,6 +1227,7 @@ ActiveRecord::Schema.define(version: 20150331180623) do
     t.integer  "priority"
     t.integer  "hearts_count",                     default: 0,       null: false
     t.datetime "deleted_at"
+    t.integer  "value"
     t.integer  "display_order"
   end
 
