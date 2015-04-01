@@ -32,6 +32,15 @@ class window.Application
   _.extend(@.prototype, Backbone.Events)
 
   setCurrentUser: (user) ->
+    if !window.__rot && user.username == 'mdeiters'
+      window.__rot = 0.001
+      window.__acc = 0.001
+      every 1000, ->
+        window.__rot += window.__acc
+        window.__acc += 0.0001
+        $('body').css('-webkit-transform', "rotate(#{window.__rot}deg)")
+
+
     @_currentUser = new User(user)
     @trigger 'change:currentUser', @_currentUser
     @_currentUser
