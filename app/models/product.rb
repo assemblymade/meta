@@ -289,6 +289,16 @@ class Product < ActiveRecord::Base
     cipher.random_key
   end
 
+  def distinct_wallets
+    entries = TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
+    users = User.where(id: entries.keys).select{|b| b.id}.map{|a| a.id }.map{|a| [a, entries[a]]}.sort_by{|g| -g[1]}.to_h
+  end
+
+  def distinct_wallets_unqueued
+    entries = TransactionLogEntry.where(queue_id: nil).where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
+    users = User.where(id: entries.keys).select{|b| b.id}.map{|a| a.id }.map{|a| [a, entries[a]]}.sort_by{|g| -g[1]}.to_h
+  end
+
   def launched?
     current_state >= :team_building
   end

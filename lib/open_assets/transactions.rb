@@ -51,7 +51,7 @@ module OpenAssets
         name: product.name,
         metadata: "u=https://assembly.com/#{product.slug}/coin",
         coins: total_coins,
-        identifier: Product.id.to_s+":"+DateTime.now.to_s
+        identifier: product_id.to_s+":"+DateTime.now.to_s
       }
 
       puts "Forging #{total_coins}  #{product.name} Coins for #{product.wallet_public_address}"
@@ -65,13 +65,18 @@ module OpenAssets
     def award_coins(product_id, user_id, coins)
       product = Product.find(product_id)
       user = User.find(user_id)
+      if product.coin_info
+        asset_address = product.coin_info.asset_address.to_s
+      else
+        asset_address = ""
+      end
 
       body = {
         public_address: product.wallet_public_address,
         recipient_address: user.wallet_public_address,
         private_key: product.wallet_private_key,
         amount: coins.to_s,
-        asset_address: product.coin_info.asset_address.to_s,
+        asset_address: asset_address,
         identifier: product_id+":"+user_id+":"+DateTime.now.to_s
       }
 
