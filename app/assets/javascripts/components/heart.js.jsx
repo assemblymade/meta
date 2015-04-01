@@ -128,7 +128,7 @@ var Heart = React.createClass({
       return <Button block={true}><SvgIcon type="heart" /> Loved</Button>
     } else {
       return <Button block={true} type="default" action={this.handleClick}>
-        <Icon icon="heart" verticalAlign={0} extraClasses="red" /> Love this idea
+        <Icon icon="heart" verticalAlign={0} extraClasses="red" /> Heart this idea
       </Button>
     }
   },
