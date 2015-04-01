@@ -305,6 +305,12 @@ class User < ActiveRecord::Base
     mail_preference == 'never'
   end
 
+  def coinprism_url
+    if self.wallet_public_address
+      "https://www.coinprism.info/address/#{self.wallet_public_address}"
+    end
+  end
+
   # cancan
 
   def ability

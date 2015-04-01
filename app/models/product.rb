@@ -296,7 +296,13 @@ class Product < ActiveRecord::Base
 
   def distinct_wallets_unqueued
     entries = TransactionLogEntry.where(queue_id: nil).where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
-    users = User.where(id: entries.keys).select{|b| b.id}.map{|a| a.id }.map{|a| [a, entries[a]]}.sort_by{|g| -g[1]}.to_h
+    users = User.where(id: entries.keys).select{|b| b.id}.map{|a| a.id }.map{|a| [a, entries[a]]}.select{|q| q[1] > 0 }.sort_by{|g| -g[1]}.to_h
+  end
+
+  def mark_all_transactions_as_queued
+    TransactionLogEntry.where(product_id: self.id).where(queue_id: nil).all.each do |a|
+      a.update!({queue_id: Time.now.to_s})
+    end
   end
 
   def launched?
@@ -522,8 +528,12 @@ class Product < ActiveRecord::Base
   end
 
   def assign_asset_address
-    if !self.coin_info.asset_address.present?
-      OpenAssets::Transactions.new.get_asset_address(self.wallet_public_address)
+    if self.coin_info
+      if self.coin_info.asset_address == "" || !self.coin_info.asset_address.present?
+        a = OpenAssets::Transactions.new.get_asset_address(self.wallet_public_address)
+        self.coin_info.update!({asset_address: a['asset_address']})
+        puts 'hasd'
+      end
     end
   end
 
