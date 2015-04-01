@@ -14,6 +14,7 @@
           <li><a href="#account" data-toggle="tab">Account Settings</a></li>
           <li><a href="#notifications" data-toggle="tab">Notifications</a></li>
           <li><a href="#payments" data-toggle="tab">Payments</a></li>
+          <li><a href="#api" data-toggle="tab">API Access</a></li>
         </ul>
       </div>
 
@@ -192,6 +193,10 @@
             </div>
           <% end %>
 
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="api">
+          <%= react_component 'ApiSettings', authentication_token: current_user.authentication_token %>
         </div>
       </div>
 

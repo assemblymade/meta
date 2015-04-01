@@ -21,11 +21,7 @@ class ChecklistHandler
     end
 
     hearts['complete'] = love >= DEFAULT_TILTING_THRESHOLD
-    if hearts['complete']
-      hearts['subtext'] = "#{love} hearts"
-    else
-      hearts['subtext'] = "#{love} / #{DEFAULT_TILTING_THRESHOLD} hearts from the community"
-    end
+    hearts['subtext'] = "#{love} / #{DEFAULT_TILTING_THRESHOLD} hearts received"
     hearts
   end
 

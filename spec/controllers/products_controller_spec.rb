@@ -29,17 +29,6 @@ describe ProductsController do
         get :show, id: product.slug
         expect(response).to be_success
       end
-
-      it "does not show archived items" do
-        get :show, id: product.slug, format: :json
-
-        items = JSON.parse(response.body)["items"]
-        expect(items.count).to eq(1)
-
-        item = items.first
-        expect(item["id"]).to eq(nfi.id)
-        expect(item["archived_at"]).to eq(nil)
-      end
     end
 
     context 'product in stealth' do
@@ -158,6 +147,22 @@ describe ProductsController do
 
       patch :update, id: product, product: attrs
       expect(product.reload).to have_attributes(attrs)
+    end
+  end
+
+  describe '#activity' do
+    let!(:nfi) { NewsFeedItem.make!(product: product) }
+    let!(:archived_nfi) { NewsFeedItem.make!(product:product, archived_at: Time.now) }
+
+    it "does not show archived items" do
+      get :activity, product_id: product.slug, format: :json
+
+      items = JSON.parse(response.body)["items"]
+      expect(items.count).to eq(1)
+
+      item = items.first
+      expect(item["id"]).to eq(nfi.id)
+      expect(item["archived_at"]).to eq(nil)
     end
   end
 

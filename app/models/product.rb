@@ -327,8 +327,16 @@ class Product < ActiveRecord::Base
     not NON_PROFIT.include?(slug)
   end
 
-  def partners
-    entries = TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
+  def partners(limit=nil)
+    entries = if limit.nil?
+      TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
+    else
+      TransactionLogEntry.where(product_id: self.id).
+        with_cents.
+        order('sum(cents) desc').
+        limit(limit).
+        group(:wallet_id).sum(:cents)
+    end
     User.where(id: entries.keys)
   end
 
@@ -369,6 +377,11 @@ class Product < ActiveRecord::Base
   def member?(user)
     return false if user.nil?
     team_memberships.active.find_by(user_id: user.id)
+  end
+
+  def partner?(user)
+    return false if user.nil?
+    TransactionLogEntry.balance(product, user.id) > 0
   end
 
   def finished_first_steps?

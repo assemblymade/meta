@@ -36,6 +36,10 @@ class Ability
       current_user.staff?
     end
 
+    can [:create_bounty], Product do |product|
+      product.core_team?(current_user) || product.partner?(current_user)
+    end
+
     # The creator has edit privileges until a core team is established.
     can [:update, :status_update], Product do |product|
       product.core_team?(current_user) || (product.core_team.empty? && product.user == current_user)

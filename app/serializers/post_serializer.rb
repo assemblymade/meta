@@ -6,7 +6,7 @@ class PostSerializer < ApplicationSerializer
   attributes :markdown_body, :url, :summary, :title, :news_feed_item_id, :created_at
   attributes :comments_count, :hearts_count, :short_body
 
-  has_one :product, serializer: ProductSerializer
+  has_one :product, serializer: ProductShallowSerializer
   has_one :user
 
   has_many :marks
@@ -57,6 +57,6 @@ class PostSerializer < ApplicationSerializer
   cached
 
   def cache_key
-    [object]
+    ['v2', object]
   end
 end

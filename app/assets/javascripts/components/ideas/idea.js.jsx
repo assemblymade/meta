@@ -13,7 +13,7 @@ const SvgIcon = require('../ui/svg_icon.js.jsx');
 const TextPost = require('../ui/text_post.js.jsx');
 const UserStore = require('../../stores/user_store');
 const CircleIcon = require('../ui/circle_icon.js.jsx');
-
+const LoveStore = require('../../stores/love_store');
 const TWO_DAYS = 2 * 24 * 60 * 60 * 1000;
 
 let Idea = React.createClass({
@@ -36,6 +36,20 @@ let Idea = React.createClass({
         hearted: false
       }
     )
+  },
+
+  componentDidMount: function() {
+    LoveStore.addListener('change', this._onHeartChange)
+  },
+
+  componentWillUnmount: function() {
+    LoveStore.removeListener('change', this._onHeartChange)
+  },
+
+  _onHeartChange: function() {
+    this.setState({
+      hearted: !!(LoveStore.get(this.props.idea.news_feed_item.id) || {}).user_heart
+    })
   },
 
   render() {
@@ -167,7 +181,7 @@ let Idea = React.createClass({
       leftSideText = function() {
         return (
           <div className="overflow-hidden">
-            <h4 className="gray-2">Heart this idea and the community will build it</h4>
+            <h4 className="gray-2">Should this idea become a product?</h4>
             <p className="h5 gray-2">
               If this product gets enough hearts, it will advance to the next stage of development.
             </p>
@@ -176,21 +190,26 @@ let Idea = React.createClass({
       }
     }
     return (
-      <div className="clearfix">
-        <div className="right py3 center">
-          <div onClick={this.heartClick}>
-            <Heart
-              size="huge"
-              heartable_id={idea.news_feed_item.id}
-              heartable_type="NewsFeedItem" />
+      <div>
+        <div className="clearfix">
+          <div className="right py3 center">
+            <div onClick={this.heartClick}>
+              <Heart
+                size="button"
+                heartable_id={idea.news_feed_item.id}
+                heartable_type="NewsFeedItem" />
+            </div>
           </div>
-          <p>
-            <small className="gray-2 bold mt1 px2">
-              {idea.hearts_count} / {idea.tilting_threshold} hearts
-            </small>
-          </p>
+          {leftSideText()}
         </div>
-        {leftSideText()}
+        <div className="clearfix mb1">
+          <div className="right h6 gray-2 bold center py1">
+            {idea.hearts_count} / {idea.tilting_threshold} hearts
+          </div>
+          <div className="px1 overflow-hidden">
+            <IdeaLovers heartableId={this.props.idea.news_feed_item.id} limit={28} />
+          </div>
+        </div>
       </div>
       )
   },

@@ -6,6 +6,7 @@ var IconToggler = require('./ui/icon_toggler.js.jsx')
 var IconWithNumber = require('./ui/icon_with_number.js.jsx')
 var SvgIcon = require('./ui/svg_icon.js.jsx');
 var UserStore = require('../stores/user_store')
+var SignupActions = require ('../actions/signup_actions')
 
 var Heart = React.createClass({
   propTypes: {
@@ -78,10 +79,6 @@ var Heart = React.createClass({
       {count}
     </div>
 
-    if (!UserStore.isSignedIn()) {
-      return heartWithCount
-    }
-
     return (
       <a className="inline-block valign-top fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
         {heartWithCount}
@@ -108,7 +105,7 @@ var Heart = React.createClass({
      }
 
      if (!UserStore.isSignedIn()) {
-       return <div className={"gray huge-heart"}>
+       return <div className={"gray huge-heart"} onClick={this.handleClick}>
          <SvgIcon type="huge-heart" />
        </div>
      }
@@ -128,10 +125,10 @@ var Heart = React.createClass({
     }
 
     if (this.state.user_heart) {
-      return <Button block={true}>Loved</Button>
+      return <Button block={true}><SvgIcon type="heart" /> Loved</Button>
     } else {
-      return <Button block={true} type="primary" action={this.handleClick}>
-        Love this idea
+      return <Button block={true} type="default" action={this.handleClick}>
+        <Icon icon="heart" verticalAlign={0} extraClasses="red" /> Heart this idea
       </Button>
     }
   },
@@ -156,8 +153,9 @@ var Heart = React.createClass({
     } else {
       // (@chrislloyd) horrible hack, couldn't think through how to do
       // this with actions etc.
-      window.location = '/signup'
+      SignupActions.showModal()
     }
+    return
   },
 
   getStateFromStore: function() {

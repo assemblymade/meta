@@ -6,6 +6,7 @@ var Tile = require('./ui/tile.js.jsx')
 var Label = require('./ui/label.js.jsx')
 
 // root level components
+window.ApiSettings = require('./user/api_settings.js.jsx')
 window.Hello = require('./user/hello.js.jsx')
 window.ProfileProductBadges = require('./user/profile_product_badges.js.jsx')
 window.StartPage = require('./start_page.js.jsx')

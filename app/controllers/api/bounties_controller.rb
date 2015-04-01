@@ -1,19 +1,29 @@
 class Api::BountiesController < Api::ApiController
   respond_to :json
-
-  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
-
   before_action :authenticate, only: [:create]
 
+=begin
+  @api {post} /orgs/:org_id/bounties Create new bounty
+  @apiName CreateBounty
+  @apiDescription This operation is only available to Partners in the organization
+  @apiGroup Bounties
+
+  @apiParam {String} title        Mandatory A short title
+  @apiParam {String} description  Mandatory Detailed description
+  @apiParam {Number} coins        Optional  Amount of coins available. Only core team members can set this
+=end
+
   def index
-    @product = Product.find_by_slug(params[:product_id])
+    @product = Product.find_by!(slug: params[:org_id])
     @bounties = @product.tasks.where.not(state: [:closed, :resolved]).order('priority ASC NULLS LAST').limit(3)
 
     respond_with(@bounties, each_serializer: BountyShallowSerializer)
   end
 
   def create
-    @product = Product.find_by_slug(params[:product_id])
+    @product = Product.find_by!(slug: params[:org_id])
+
+    authorize! :create_bounty, @product
     @bounty = WipFactory.create(
       @product,
       product_wips,
@@ -24,12 +34,26 @@ class Api::BountiesController < Api::ApiController
     )
 
     if @bounty.valid?
-      if (amount = params[:offer].to_i) > 0
+      if @product.core_team?(current_user) && (amount = params[:coins].to_i) > 0
         @offer = @bounty.offers.create(user: current_user, amount: amount, ip: request.ip)
       end
-    end
+      @bounty.reload
 
-    respond_with({}, status: 201, location: product_wips_path(@product))
+      render json: @bounty, serializer: BountyApiSerializer, status: 201
+    else
+
+      render json: {
+        message: "Validation Failed",
+        errors: @bounty.errors
+      }, status: :unprocessable_entity
+    end
+  end
+
+  def show
+    @product = Product.find_by!(slug: params[:org_id])
+    @bounty = @product.tasks.find_by!(number: params[:id])
+
+    render json: @bounty, serializer: BountyApiSerializer
   end
 
   private
@@ -39,6 +63,8 @@ class Api::BountiesController < Api::ApiController
   end
 
   def wip_params
-    params.require(:task).permit(:title, :description, :deliverable, tag_list: [])
+    params.require(:title)
+    params.require(:description)
+    params.permit(:description, :title, tag_list: [])
   end
 end

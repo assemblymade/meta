@@ -41,7 +41,7 @@ let ProductShow = React.createClass({
     ProductStore.addChangeListener(this.onProductChange);
 
     // This splendor is @chrislloyd. I'm sorry future maintainers!
-    $.getJSON(`/api/products/${this.state.product.slug}/updates/paged.json`, function(data) {
+    $.getJSON(`/api/products/${this.state.product.slug}/updates/paged.json?per=1`, function(data) {
       this.setState({
         updates: data.posts,
         updateCount: data.meta.count
@@ -169,7 +169,7 @@ let ProductShow = React.createClass({
                   <div className="py3">
                     <div className="clearfix py2">
                       <h6 className="left gray-2 caps mt0 mb0">
-                        Partners ({team.size})
+                        Partners ({product.partners_count})
                       </h6>
 
                       <a className="right h6" href={`${product.url}/partners`}>View all</a>

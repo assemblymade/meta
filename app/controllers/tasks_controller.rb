@@ -76,13 +76,7 @@ class TasksController < WipsController
 
     if @bounty.valid?
       if @product.core_team?(current_user)
-        if (amount = params[:offer].to_i) > 0
-          @offer = @bounty.offers.create(user: current_user, amount: amount, ip: request.ip)
-        elsif (earnable = params[:earnable].to_i) > 0
-          @offer = Offer.create(user: current_user, bounty: @bounty, earnable: earnable, ip: request.ip)
-        end
-      else
-        @offer = Offer.create(user: current_user, bounty: @bounty, earnable: 0, ip: request.ip)
+        @bounty.update(value: params.fetch(:earnable, 0).to_i)
       end
 
       @bounty.watch!(current_user)

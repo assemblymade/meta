@@ -67,7 +67,7 @@ let IdeasIndex = React.createClass({
               <h3 className="mt2 mb1">
                 Turn ideas into great products
               </h3>
-              <h4 className="mt0 mb0 regular gray-2">The ideas with the most hearts will be built by the community.</h4>
+              <h4 className="mt0 mb0 regular gray-2">Heart an idea to show your support.</h4>
             </div>
             <div className="center right py1">
               <Button type="primary" action={function() { page('/ideas/new'); }}>

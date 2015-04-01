@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331180623) do
+ActiveRecord::Schema.define(version: 20150331194114) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "plpgsql"
   enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
 
@@ -743,6 +743,7 @@ ActiveRecord::Schema.define(version: 20150331180623) do
     t.text     "asmlytics_key"
     t.integer  "total_visitors",                                default: 0,    null: false
     t.text     "analytics_category"
+    t.uuid     "stage_id"
   end
 
   add_index "products", ["asmlytics_key"], name: "index_products_on_asmlytics_key", unique: true, using: :btree
@@ -751,6 +752,7 @@ ActiveRecord::Schema.define(version: 20150331180623) do
   add_index "products", ["profitable_at"], name: "index_products_on_profitable_at", using: :btree
   add_index "products", ["repos"], name: "index_products_on_repos", using: :btree
   add_index "products", ["slug"], name: "index_products_on_slug", unique: true, using: :btree
+  add_index "products", ["stage_id"], name: "index_products_on_stage_id", using: :btree
   add_index "products", ["started_team_building_at"], name: "index_products_on_started_team_building_at", using: :btree
   add_index "products", ["state"], name: "index_products_on_state", using: :btree
 
@@ -1225,6 +1227,7 @@ ActiveRecord::Schema.define(version: 20150331180623) do
     t.integer  "priority"
     t.integer  "hearts_count",                     default: 0,       null: false
     t.datetime "deleted_at"
+    t.integer  "value"
     t.integer  "display_order"
   end
 
@@ -1251,13 +1254,10 @@ ActiveRecord::Schema.define(version: 20150331180623) do
     t.datetime "created_at"
   end
 
-  add_foreign_key "daily_metrics", "products"
-  add_foreign_key "hearts", "products"
   add_foreign_key "markings", "marks"
   add_foreign_key "monthly_metrics", "products"
   add_foreign_key "news_feed_item_comments", "news_feed_items"
   add_foreign_key "screenshots", "assets"
   add_foreign_key "showcase_entries", "products"
   add_foreign_key "showcase_entries", "showcases"
-  add_foreign_key "weekly_metrics", "products"
 end

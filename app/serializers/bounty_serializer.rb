@@ -132,4 +132,8 @@ class BountySerializer < ApplicationSerializer
   def current_user
     scope
   end
+
+  def value
+    object[:value]
+  end
 end

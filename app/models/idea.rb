@@ -44,7 +44,7 @@ class Idea < ActiveRecord::Base
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
   EPOCH_START = Time.new(2013, 6, 6)
 
-  DEFAULT_TILTING_THRESHOLD = 20
+  DEFAULT_TILTING_THRESHOLD = 15
   COMMENT_MINIMUM = 5
 
   CATEGORY_NAMES = [
@@ -229,7 +229,7 @@ class Idea < ActiveRecord::Base
       score: lovescore
     })
 
-    if self.love == DEFAULT_TILTING_THRESHOLD && self.comments.count >= COMMENT_MINIMUM
+    if self.love == DEFAULT_TILTING_THRESHOLD
       send_tilt_email
     end
   end
