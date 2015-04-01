@@ -3,6 +3,7 @@
 desc "Generate a JavaScript file that contains your Rails routes"
 namespace :js do
   ROUTES = [
+    'api_org_bounties',
     'award_product_wip',
     'awarded_bounties_user',
     'daily_product_metrics',
@@ -64,7 +65,7 @@ var exports = module.exports = {};
     EOS
 
     routes.each do |route|
-      javascript << generate_method(route[:name], route[:path]) + "\n"
+      javascript << generate_method(route[:name], route[:path], route[:subdomain]) + "\n"
     end
 
     File.open(save_path, "w") { |f| f.write(javascript) }
@@ -72,11 +73,12 @@ var exports = module.exports = {};
   end
 end
 
-def generate_method(name, path)
+def generate_method(name, path, subdomain)
   compare = /:(.*?)(\/|$)/
   path.sub!(compare, "' + params.#{$1} + '#{$2}") while path =~ compare
 
-  <<-EOS
+  if subdomain.nil?
+<<-EOS
 exports.#{name}_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -85,15 +87,28 @@ exports.#{name}_path = function(options){
     }
     var params = options.params;
     return '#{path}?' + op_params.join('&');
-  } else if(options && options.params) {
-    var params = options.params;
-    return '#{path}'
-  } else {
-    var params = options;
-    return '#{path}'
   }
+  var params = options;
+  return '#{path}'
 }
 EOS
+  else
+<<-EOS
+exports.#{name}_path = function(options){
+  var host = document.getElementsByName('asm-api-url')[0].content
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return host + '#{path}?' + op_params.join('&');
+  }
+  var params = options;
+  return host + '#{path}'
+}
+EOS
+  end
 end
 
 def routes
@@ -102,7 +117,7 @@ def routes
     if ROUTES.include?(route.name)
       path = route.path.spec.to_s.split("(")[0]
       puts "#{route.name.rjust(40)}   #{path}"
-      {name: route.name, path: path}
+      {name: route.name, path: path, subdomain: route.defaults[:subdomain]}
     end
 
   end.compact

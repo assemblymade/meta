@@ -47,7 +47,7 @@ let ProductShow = React.createClass({
         updateCount: data.meta.count
       })
     }.bind(this))
-    $.getJSON(`https://api.assembly.com/orgs/${this.state.product.slug}/bounties.json?limit=3`, function(data) {
+    $.getJSON(Routes.api_org_bounties_path({params: {org_id: this.state.product.slug}, data: {limit: 3}}), function(data) {
       this.setState({
         bounties: data
       })

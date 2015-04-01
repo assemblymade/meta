@@ -10,12 +10,13 @@
     <%= yield(:head) %>
 
     <%= csrf_meta_tags %>
-    <meta name="pusher-key" content="<%= Pusher.key %>" >
-    <meta name="attachment-upload-url" content="<%= ATTACHMENT_UPLOAD_URL %>" >
-    <meta name="read-raptor-url" content='<%= ENV["READRAPTOR_URL"] %>'>
-    <meta name="firesize-url" content='<%= ENV["FIRESIZE_URL"] %>'>
-    <meta name="es-url" content='<%= File.join(root_url, '_es') %>'>
     <meta name="assets-url" content='<%= image_path('/') %>'>
+    <meta name="asm-api-url" content='<%= ENV.fetch('ASM_API_URL') %>'>
+    <meta name="attachment-upload-url" content="<%= ATTACHMENT_UPLOAD_URL %>" >
+    <meta name="es-url" content='<%= File.join(root_url, '_es') %>'>
+    <meta name="firesize-url" content='<%= ENV["FIRESIZE_URL"] %>'>
+    <meta name="pusher-key" content="<%= Pusher.key %>" >
+    <meta name="read-raptor-url" content='<%= ENV["READRAPTOR_URL"] %>'>
 
     <% if signed_in? %>
       <meta name="user-username" content="<%= current_user.username %>" >
