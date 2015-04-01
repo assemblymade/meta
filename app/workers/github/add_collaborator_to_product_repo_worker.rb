@@ -28,7 +28,7 @@ module Github
     end
 
     def create_repo_team(repo)
-      post "/orgs/#{org}/teams",
+      post "/orgs/#{repo.username}/teams",
                 name: repo.name,
                 repo_names: [repo.name],
                 permission: 'push'
@@ -41,7 +41,7 @@ module Github
     end
 
     def add_team_to_repo(team_id, repo)
-      put "/teams/#{team_id}/repos/#{org}/#{repo.name}"
+      put "/teams/#{team_id}/repos/#{repo.username}/#{repo.name}"
     end
 
     def org
