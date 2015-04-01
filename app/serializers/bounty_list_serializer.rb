@@ -1,16 +1,10 @@
 class BountyListSerializer < ApplicationSerializer
   include MarkdownHelper
 
-  attributes :closed_at,
-             :earnable_coins_cache,
-             :news_feed_item_id,
-             :comments_count,
-             :number,
-             :priority,
-             :product_slug,
-             :title,
-             :url,
-             :hearts_count
+  attributes :closed_at, :earnable_coins_cache,
+    :news_feed_item_id, :comments_count, :number,
+    :priority, :product_slug, :title, :url,
+    :hearts_count, :value
 
   has_one :locker
   has_one :user
@@ -37,5 +31,9 @@ class BountyListSerializer < ApplicationSerializer
 
   def news_feed_item_id
     object.news_feed_item && object.news_feed_item.id
+  end
+
+  def value
+    object[:value]
   end
 end
