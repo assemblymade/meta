@@ -202,7 +202,7 @@ let Idea = React.createClass({
             {idea.hearts_count} / {idea.tilting_threshold} hearts
           </div>
           <div className="px1 overflow-hidden">
-            <IdeaLovers heartableId={this.props.idea.news_feed_item.id} limit={27} />
+            <IdeaLovers heartableId={this.props.idea.news_feed_item.id} limit={26} />
           </div>
         </div>
       </div>
