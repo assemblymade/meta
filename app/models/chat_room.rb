@@ -11,6 +11,17 @@ class ChatRoom < ActiveRecord::Base
     find_by(slug: 'general')
   end
 
+  def self.create_for(product)
+    main_thread = product.discussions.create!(title: Discussion::MAIN_TITLE, user: product.user, number: 0)
+    product.update(main_thread: main_thread)
+    room = product.chat_rooms.create!(wip: main_thread, slug: product.slug)
+    
+    if ENV["LANDLINE_URL"]
+      room.migrate_to(ChatMigrator.new, '/teams/assembly/rooms')
+    end
+    room
+  end
+
   def follower_ids
     if product
       product.follower_ids

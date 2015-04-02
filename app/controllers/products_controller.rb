@@ -75,51 +75,13 @@ class ProductsController < ProductController
   end
 
   def create
-    if idea_id = params[:product].delete(:idea_id)
+    if idea_id = params[:product]
       @idea = Idea.find(idea_id)
-
-      return redirect_to action: :new, layout: 'application' unless @idea.user == current_user
+      authorize! :update, @idea
     end
 
-    @product = create_product_with_params
+    @product = create_product_with_params(@idea)
     if @product.valid?
-
-      Karma::Kalkulate.new.award_for_product_to_stealth(@product)
-      @product.retrieve_key_pair
-
-      if @idea
-        @idea.update(product_id: @product.id)
-      end
-
-      chosen_ids = params[:product][:partner_ids] || ''
-      chosen_ids = chosen_ids.split(',').flatten
-      GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)   #TO DO  --> Make this asynchronous.  Currently will cause tests to fail if asynchronous.
-
-      if @idea
-        the_key = @idea.slug.to_sym
-        chosen_ids.each do |chosen_id|
-          EmailLog.send_once(chosen_id, the_key) do
-            PartnershipMailer.delay(queue: 'mailer').create(chosen_id, @product.id, @idea.id)
-          end
-        end
-
-        mention = @product.user.twitter_nickname
-        if !mention
-          mention = " "
-        else
-          mention = " @"+mention+" "
-        end
-        tweet_text = "The idea #{@idea.name} just became a product called #{@product.name}#{mention}#{product_url(@product)}"
-        TweetWorker.perform_async(tweet_text)
-      end
-
-      AutoBounty.new.product_initial_bounties(@product)
-      current_user.touch
-      @product.reload
-
-      # Set up a room on Landline
-      set_up_chat
-
       respond_with(@product, location: product_path(@product))
     else
       render action: :new, layout: 'application'
@@ -134,13 +96,6 @@ class ProductsController < ProductController
       else
         render json: {}
       end
-    end
-  end
-
-  def set_up_chat
-    return unless ENV["LANDLINE_URL"]
-    if room = ChatRoom.find_by(product: @product)
-      room.migrate_to(ChatMigrator.new, '/teams/assembly/rooms')
     end
   end
 
@@ -287,37 +242,47 @@ class ProductsController < ProductController
 
   # private
 
-  def create_product_chat(product)
-    main_thread = product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
-    product.update(main_thread: main_thread)
-    product.chat_rooms.create!(wip: main_thread, slug: product.slug)
-  end
-
-  def create_product_with_params
+  def create_product_with_params(idea)
     product = current_user.products.create(product_params)
     if product.valid?
-      product.team_memberships.create!(user: current_user, is_core: true)
+      ChatRoom.create_for(product)
+      Karma::Kalkulate.new.award_for_product_to_stealth(product)
 
-      product.watch!(current_user)
+      if idea
+        idea.update(product_id: product.id)
+        product.reload
 
-      create_product_chat(product)
-
-      ownership = params[:ownership] || {}
-      core_team_ids = Array(params[:core_team])
-
-      core_team_members = User.where(id: core_team_ids.select(&:uuid?))
-
-      core_team_members.each do |user|
-        product.core_team_memberships.create(user: user)
+        chosen_ids = (params[:product][:partner_ids] || '').split(',').flatten
+        upgrade_idea_to_product(idea, product, chosen_ids)
       end
 
-      product.update_partners_count_cache
-
-      product.save!
-
-      flash[:new_product_callout] = true
+      AutoBounty.new.product_initial_bounties(product)
     end
     product
+  end
+
+  def upgrade_idea_to_product(idea, product, initial_partner_ids)
+    # TODO (barisser) --> Make this asynchronous.  Currently will cause tests to fail if asynchronous.
+    GiveCoinsToParticipants.new.perform(chosen_ids, product.id)
+
+    chosen_ids.each do |chosen_id|
+      EmailLog.send_once(chosen_id, idea.slug) do
+        # TODO (whatupdave): remove queue when we upgrade to activejob
+        PartnershipMailer.delay(queue: 'mailer').create(chosen_id, product.id, idea.id)
+      end
+    end
+
+    # TODO (whatupdave): barisser knows where to put this
+    mention = product.user.twitter_nickname
+    if !mention
+      mention = " "
+    else
+      mention = " @"+mention+" "
+    end
+    tweet_text = "The idea #{idea.name} just became a product called #{product.name}#{mention}#{product_url(product)}"
+    TweetWorker.perform_async(tweet_text)
+    # ---
+
   end
 
   def show_product

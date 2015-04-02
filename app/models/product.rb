@@ -1,10 +1,8 @@
-require 'activerecord/uuid'
 require 'money'
 require './lib/poster_image'
 require 'elasticsearch/model'
 
 class Product < ActiveRecord::Base
-  include ActiveRecord::UUID
   include Kaminari::ActiveRecordModelExtension
   include Elasticsearch::Model
   include GlobalID::Identification
@@ -64,7 +62,6 @@ class Product < ActiveRecord::Base
   has_many :showcase_entries
   has_many :showcases, through: :showcase_entries
   has_many :status_messages
-
   has_many :stream_events
   has_many :subscribers
   has_many :tasks
@@ -142,6 +139,9 @@ class Product < ActiveRecord::Base
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }, on: :create
   after_commit -> { create_coin_info }, on: :create
+  after_commit :add_creator_to_core_team!, on: :create
+  after_commit :add_creator_to_watchers!, on: :create
+  after_commit :retrieve_key_pair, on: :create
 
   after_update :update_elasticsearch
 
@@ -206,39 +206,6 @@ class Product < ActiveRecord::Base
     Viewing.where(viewable: self).count
   end
 
-  def wip_marks
-    wips_won = self.wips
-
-    results = {}
-    wips_won.each do |w|
-      marks = w.marks
-      marks.each do |m|
-        mark_name = m.name
-        if results.has_key?(mark_name)
-          results[mark_name] = results[mark_name] + 1
-        else
-          results[mark_name] = 1
-        end
-      end
-    end
-    results = Hash[results.sort_by{|k, v| v}.reverse]
-  end
-
-  def mark_fractions
-    marks = self.wip_marks
-    answer = {}
-    sum_marks = marks.values.sum.to_f
-
-    if sum_marks == 0
-      sum_marks = 1
-    end
-
-    marks.each do |k, v|
-      answer[k] = (v.to_f / sum_marks).round(3)
-    end
-    return answer
-  end
-
   def most_active_contributor_ids(limit=6)
     activities.group('actor_id').order('count_id desc').limit(limit).count('id').keys
   end
@@ -246,7 +213,6 @@ class Product < ActiveRecord::Base
   def most_active_contributors(limit=6)
     User.where(id: most_active_contributor_ids(limit))
   end
-
 
   def on_stealth_entry(prev_state, event, *args)
     update!(
@@ -289,14 +255,12 @@ class Product < ActiveRecord::Base
     cipher.random_key
   end
 
-  def distinct_wallets
-    entries = TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
-    users = User.where(id: entries.keys).select{|b| b.id}.map{|a| a.id }.map{|a| [a, entries[a]]}.sort_by{|g| -g[1]}.to_h
+  def partners(limit=nil)
+    TransactionLogEntry.product_partners(self.id).order('sum(cents) desc').limit(limit)
   end
 
   def distinct_wallets_unqueued
-    entries = TransactionLogEntry.where(queue_id: nil).where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
-    users = User.where(id: entries.keys).select{|b| b.id}.map{|a| a.id }.map{|a| [a, entries[a]]}.sort_by{|g| -g[1]}.to_h
+    partners.where(queue_id: nil)
   end
 
   def launched?
@@ -327,28 +291,12 @@ class Product < ActiveRecord::Base
     not NON_PROFIT.include?(slug)
   end
 
-  def partners(limit=nil)
-    entries = if limit.nil?
-      TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
-    else
-      TransactionLogEntry.where(product_id: self.id).
-        with_cents.
-        order('sum(cents) desc').
-        limit(limit).
-        group(:wallet_id).sum(:cents)
-    end
-    User.where(id: entries.keys)
-  end
-
   def partners_before_date(date)
-    entries = TransactionLogEntry.where('created_at < ?', date).where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
-    User.where(id: entries.keys)
+    partners.where('tle.created_at < ?', date)
   end
 
   def partner_ids
-    User.joins(:transaction_log_entries).
-         where('transaction_log_entries.product_id' => id).
-         group('users.id').pluck('users.id')
+    partners.pluck(:id)
   end
 
   def has_metrics?
@@ -381,7 +329,7 @@ class Product < ActiveRecord::Base
 
   def partner?(user)
     return false if user.nil?
-    TransactionLogEntry.balance(product, user.id) > 0
+    partners.where(id: user.id).exists?
   end
 
   def finished_first_steps?
@@ -441,7 +389,6 @@ class Product < ActiveRecord::Base
   end
 
   def love
-
   end
 
   def event_creator_ids
@@ -496,25 +443,7 @@ class Product < ActiveRecord::Base
   end
 
   def create_coin_info
-    name = "#{self.name} Coin"
-    description = "#{self.description}"
-    description_mime = "text/x-markdown; charset=UTF-8"
-    coin_type = "Ownership"
-    divisibility = 1
-    link_to_website = true
-    icon_url = full_logo_url
-    image_url = full_logo_url
-    version = "1.0"
-    asset_address = ""
-
-    CoinInfo.create!({name: name, description: description, description_mime: description_mime, coin_type: coin_type, divisibility: divisibility,
-      link_to_website: link_to_website,
-      icon_url: icon_url,
-      image_url: image_url,
-      version: version,
-      product_id: self.id,
-      asset_address: asset_address
-      })
+    CoinInfo.create_from_product!(self)
   end
 
   def asset_address
@@ -617,7 +546,13 @@ class Product < ActiveRecord::Base
     self.asmlytics_key = Digest::SHA1.hexdigest(ENV['ASMLYTICS_SECRET'].to_s + SecureRandom.uuid)
   end
 
+  # TODO: (whatupdave) do we need this?
   def product
+    # instrument to see if this is used
+    self
+  end
+
+  def url_params
     self
   end
 
@@ -686,10 +621,6 @@ class Product < ActiveRecord::Base
     BountyPosting.joins(:bounty).where('wips.product_id = ?', id)
   end
 
-  def url_params
-    self
-  end
-
   # elasticsearch
   def update_elasticsearch
     return unless (['name', 'pitch', 'description'] - self.changed).any?
@@ -751,7 +682,11 @@ class Product < ActiveRecord::Base
   def full_logo_url
     # this is a hack to get a full url into elasticsearch, so firesize can resize it correctly.
     # DEFAULT_IMAGE_PATH is a relative image path
-    logo_url == DEFAULT_IMAGE_PATH ? File.join(Rails.application.routes.url_helpers.root_url, DEFAULT_IMAGE_PATH) : logo_url
+    if logo_url == DEFAULT_IMAGE_PATH
+      File.join(Rails.application.routes.url_helpers.root_url, DEFAULT_IMAGE_PATH)
+    else
+      logo_url
+    end
   end
 
   def tech
@@ -799,15 +734,19 @@ class Product < ActiveRecord::Base
   end
 
   def unvested_coins
-    [10_000_000, transaction_log_entries.sum(:cents)].max
+    [10_000_000, vested_coins].max
+  end
+
+  def vested_coins
+    transaction_log_entries.sum(:cents)
   end
 
   def mark_vector
-    my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
+    QueryMarks.new.mark_vector_for_object(self)
   end
 
-  def normalized_mark_vector()
-    QueryMarks.new.normalize_mark_vector(self.mark_vector())
+  def normalized_mark_vector
+    QueryMarks.new.normalize_mark_vector(mark_vector)
   end
 
   def majority_owner
@@ -827,29 +766,15 @@ class Product < ActiveRecord::Base
   end
 
   def active_contracts
-    passed_proposals = self.proposals.where(state: ["passed", "expired"])
-    contracts = []
-    passed_proposals.each do |p|
-      p.contracts.each do |c|
-        if !c.expired?
-          contracts.append(c)
-        end
-      end
-    end
-    contracts
+    Vesting.active.
+      joins(:proposals).
+      where(proposals: {state: ["passed", "expired"], contract_type: 'vesting', product_id: self.id})
   end
 
   def expired_contracts
-    passed_proposals = self.proposals.where(state: ["passed", "expired"])
-    contracts = []
-    passed_proposals.each do |p|
-      p.contracts.each do |c|
-        if c.expired?
-          contracts.append(c)
-        end
-      end
-    end
-    contracts
+    Vesting.expired.
+      joins(:proposals).
+      where(proposals: {state: ["passed", "expired"], contract_type: 'vesting', product_id: self.id})
   end
 
   def try_url=(new_try_url)
@@ -860,5 +785,13 @@ class Product < ActiveRecord::Base
 
   def add_to_event_stream
     StreamEvent.add_create_event!(actor: user, subject: self)
+  end
+
+  def add_creator_to_core_team!
+    team_memberships.create!(user: user, is_core: true)
+  end
+
+  def add_creator_to_watchers!
+    watch!(user)
   end
 end

@@ -49,6 +49,14 @@ class TransactionLogEntry < ActiveRecord::Base
          group('users.id')
   end
 
+  def self.product_partners(product_id)
+    User.select('users.*, sum(cents) as balance').
+         where(tle: {product_id: product_id}).
+         joins('inner join transaction_log_entries tle on tle.wallet_id = users.id').
+         group('users.id').
+         having('sum(cents) > 0')
+  end
+
   def self.end_of_month(time)
     ActiveSupport::TimeZone["Hawaii"].parse(
       time.end_of_month.strftime("%Y-%m-%dT%T")
