@@ -64,7 +64,6 @@ class Product < ActiveRecord::Base
   has_many :showcase_entries
   has_many :showcases, through: :showcase_entries
   has_many :status_messages
-
   has_many :stream_events
   has_many :subscribers
   has_many :tasks
@@ -210,7 +209,7 @@ class Product < ActiveRecord::Base
     wips_won = self.wips
 
     results = {}
-    wips_won.each do |w|
+    wips.each do |w|
       marks = w.marks
       marks.each do |m|
         mark_name = m.name
@@ -503,20 +502,10 @@ class Product < ActiveRecord::Base
 
   def create_coin_info
     name = "#{self.name} Coin"
-    description = "#{self.description}"
-    description_mime = "text/x-markdown; charset=UTF-8"
-    coin_type = "Ownership"
-    divisibility = 1
-    link_to_website = true
-    icon_url = full_logo_url
-    image_url = full_logo_url
     version = "1.0"
     asset_address = ""
 
-    CoinInfo.create!({name: name, description: description, description_mime: description_mime, coin_type: coin_type, divisibility: divisibility,
-      link_to_website: link_to_website,
-      icon_url: icon_url,
-      image_url: image_url,
+    CoinInfo.create!({name: name,
       version: version,
       product_id: self.id,
       asset_address: asset_address
@@ -532,7 +521,6 @@ class Product < ActiveRecord::Base
       if self.coin_info.asset_address == "" || !self.coin_info.asset_address.present?
         a = OpenAssets::Transactions.new.get_asset_address(self.wallet_public_address)
         self.coin_info.update!({asset_address: a['asset_address']})
-        puts 'hasd'
       end
     end
   end

@@ -2,6 +2,31 @@ class CoinInfoSerializer < ApplicationSerializer
   attributes :type, :asset_address, :contract_url, :name, :issuer, :description, :description_mime, :divisibility, :link_to_website, :icon_url, :image_url, :version
 
   def type
-    object.coin_type
+    "Ownership"
   end
+
+  def description
+    object.product.description
+  end
+
+  def description_mime
+    "text/x-markdown; charset=UTF-8"
+  end
+
+  def divisibility
+    1
+  end
+
+  def link_to_website
+    true
+  end
+
+  def icon_url
+    object.product.full_logo_url
+  end
+
+  def image_url
+    object.product.full_logo_url
+  end
+
 end

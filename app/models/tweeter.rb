@@ -17,8 +17,7 @@ class Tweeter
     end
 
     n = 3
-    random_owners =
-    TransactionLogEntry.where(
+    random_owners = TransactionLogEntry.where(
       product: product)
       .with_cents.group(:wallet_id).sum(:cents)
       .sort_by{|a, b| -b}
