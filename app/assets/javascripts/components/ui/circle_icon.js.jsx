@@ -46,6 +46,8 @@ function _determineColor(icon) {
       return '#d34836';
     case 'twitter':
       return '#4099ff';
+    case 'envelope':
+      return '#8B909A';
     default:
       return '#333';
   }

@@ -124,20 +124,22 @@ var IdeaSharePanel = React.createClass({
               <span className="gray-2 bold">Share</span>
             </a>
 
-            <a href="javascript:void(0);" className="mr1" onClick={this.handleGooglePlusClick} key="google-button">
-              <CircleIcon icon="google-plus" margin={5} />
-              <span className="gray-2 bold">Plus</span>
-            </a>
-          </div>
-
-          <div className="right gray-2 mt1" key="link-button">
-            <a href="javascript:void(0);" className="gray-2" onClick={this.handleCopyClick} ref="copy">
-              <Icon icon="link" /> {this.state.copyText}
+            <a href={this.mailToLink()} className="mr1" key="mail-button">
+              <CircleIcon icon="envelope" margin={5} />
+              <span className="gray-2 bold">Email</span>
             </a>
           </div>
         </div>
       </div>
     );
+  },
+
+  shareUrl() {
+    return this.props.idea.url
+  },
+
+  mailToLink() {
+    return "mailto:?subject=Check this out&body=Check out this on Assembly: " + this.shareUrl()
   },
 
   render() {

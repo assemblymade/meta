@@ -137,6 +137,8 @@ class QueryMarks
 
   #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
 
+  #def wips_from_greenlit_pr
+
   def get_all_wip_vectors
     wips = Wip.joins(:product).where(products: {state: ['profitable','greenlit']}).where(closed_at: nil).where(type: "Task").where('wips.created_at > ?', 90.days.ago).where.not(product_id: "846ea827-f1d1-48f4-9409-ebae81f868a0")
     data = wips.joins(:marks).group('wips.id').group('marks.id').pluck("wips.id, marks.id, SUM(markings.weight)")
