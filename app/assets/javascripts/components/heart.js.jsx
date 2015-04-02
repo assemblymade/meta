@@ -118,19 +118,38 @@ var Heart = React.createClass({
    },
 
   renderButton: function() {
-    var heartsCount = this.state.hearts_count;
-    // Dammit, JavaScript
-    if (heartsCount == null) {
-      return <div />
+    var heartsCount = this.state.hearts_count || 0;
+    var classes = React.addons.classSet({
+      'heart-medium': true,
+      'action-icon': true,
+      'hover-red': UserStore.isSignedIn(),
+      gray: !this.state.user_heart,
+      'inline-block': true,
+      red: this.state.user_heart
+    });
+
+    var count = null
+
+    if (heartsCount > 0) {
+      count = (
+        <span className="h6 mt2 mb0 gray-2 ml1">{heartsCount}</span>
+      )
     }
 
-    if (this.state.user_heart) {
-      return <Button block={true}><SvgIcon type="heart" /> Loved</Button>
-    } else {
-      return <Button block={true} type="default" action={this.handleClick}>
-        <Icon icon="heart" verticalAlign={0} extraClasses="red" /> Heart this idea
+    var heartWithCount = <div>
+      <div className={classes}>
+        <SvgIcon type="heart" />
+      </div>
+      {count}
+    </div>
+
+    return (
+      <Button action={this.handleClick}>
+        <div className="inline-block valign-top fs6 gray no-focus">
+          {heartWithCount}
+        </div>
       </Button>
-    }
+    );
   },
 
   getInitialState: function() {

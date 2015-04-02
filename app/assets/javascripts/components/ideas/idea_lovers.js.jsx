@@ -61,8 +61,8 @@ var IdeaLovers = React.createClass({
 
     if (lovers.length > limit) {
       renderedLovers.push(
-        <li className="left py1 h6 gray-2 mt1">
-          and {lovers.length - limit} more
+        <li className="left py1 h6 bold gray-2 mt1">
+          + {lovers.length - limit}
         </li>
       );
     }

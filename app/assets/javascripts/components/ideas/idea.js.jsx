@@ -165,9 +165,9 @@ let Idea = React.createClass({
     var idea = this.props.idea;
     var shareMessage = 'We need help with ' + idea.name + '! via @asm';
     var hearted = this.state.hearted
-    var leftSideText
+    var rightSideText
     if (hearted) {
-      leftSideText = function() {
+      rightSideText = function() {
         return (
           <div className="overflow-hidden">
             <div className="py2">
@@ -178,7 +178,7 @@ let Idea = React.createClass({
       }
     }
     else {
-      leftSideText = function() {
+      rightSideText = function() {
         return (
           <div className="overflow-hidden">
             <h4 className="gray-2">Should this idea become a product?</h4>
@@ -192,22 +192,17 @@ let Idea = React.createClass({
     return (
       <div>
         <div className="clearfix">
-          <div className="right py3 center">
-            <div onClick={this.heartClick}>
-              <Heart
-                size="button"
-                heartable_id={idea.news_feed_item.id}
-                heartable_type="NewsFeedItem" />
-            </div>
+          <div className="left py3 center mr2">
+            <Heart size="button" heartable_id={idea.news_feed_item.id} heartable_type="NewsFeedItem" />
           </div>
-          {leftSideText()}
+          {rightSideText()}
         </div>
         <div className="clearfix mb1">
           <div className="right h6 gray-2 bold center py1">
             {idea.hearts_count} / {idea.tilting_threshold} hearts
           </div>
           <div className="px1 overflow-hidden">
-            <IdeaLovers heartableId={this.props.idea.news_feed_item.id} limit={28} />
+            <IdeaLovers heartableId={this.props.idea.news_feed_item.id} limit={27} />
           </div>
         </div>
       </div>
