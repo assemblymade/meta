@@ -164,6 +164,31 @@ class Tweeter
     end
   end
 
+  def construct_tweet_data_post(news_feed_item)
+    if news_feed_item.target.user.twitter_nickname
+      authors = [news_feed_item.target.user.twitter_nickname]
+    else
+      authors = []
+    end
+
+    data = {
+      title: news_feed_item.target.title,
+      authors: authors,
+      link: PostSerializer.new(news_feed_item.target).full_url,
+      hashtags: [],
+      proceed: true
+      }
+  end
+
+  def construct_tweet_data_idea(news_feed_item)
+    data = {
+      title: news_feed_item.target.name,
+      authors: idea_participants(news_feed_item.target),
+      url: IdeaSerializer.new(news_feed_item.target).url,
+      hashtags: idea_marks(news_feed_item.target)
+    }
+  end
+
   def tweet_loved_news_feed_item(news_feed_item)
     password = compute_password
     url = "https://asm-tweeter.herokuapp.com/love/" + password
@@ -171,29 +196,14 @@ class Tweeter
     proceed = false
 
     if news_feed_item.target_type == "Post"
-      title = news_feed_item.target.title
-      if news_feed_item.target.user.twitter_nickname
-        participants.append(news_feed_item.target.user.twitter_nickname)
-      end
-      link = PostSerializer.new(news_feed_item.target).full_url
-      hashtags = []
+      the_data = construct_tweet_data_post
       proceed=true
     elsif news_feed_item.target_type == "Idea"
-      idea = news_feed_item.target
-      title = news_feed_item.target.name
-      participants = idea_participants(idea)
-      link = IdeaSerializer.new(idea).url
-      hashtags = idea_marks(idea)
+      the_data = construct_tweet_data_idea
       proceed=true
     end
 
     if proceed
-      the_data = {
-        title: title,
-        authors: participants,
-        url: link,
-        hashtags: hashtags
-      }
       request :post, url, the_data
     end
   end

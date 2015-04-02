@@ -2,27 +2,7 @@ module Karma
   class Kronikler
 
     def deed_date(deed)
-      answer = nil
-      if deed.karma_event_type == "Wip"
-        awarded = Award.find_by(wip_id: deed.karma_event_id)
-        if not awarded.nil?
-          answer = awarded.created_at.to_date
-        end
-      elsif deed.karma_event_type == "Product"
-        product = Product.find_by(id: deed.karma_event_id)
-        if not product.nil?
-          answer = product.created_at.to_date
-        end
-      elsif deed.karma_event_type == "Tip"
-        tip = Tip.find_by(id: deed.karma_event_id)
-        if not tip.nil?
-          answer = tip.created_at.to_date
-        end
-      end
-      if answer.nil?
-        answer = DateTime.now.to_date
-      end
-      return answer
+      deed.karma_event.created_at
     end
 
     def deeds_by_user(user_id)
@@ -59,22 +39,11 @@ module Karma
     end
 
     def product_of_deed(deed)
-      answer = nil
       if deed.karma_event_type == "Product"
-        answer = Product.find(deed.karma_event_id).name
-      elsif deed.karma_event_type == "Wip"
-        answer = Product.find(Wip.find(deed.karma_event_id).product_id).name
-      elsif deed.karma_event_type == "Tip"
-        answer = Product.find(Tip.find(deed.karma_event_id).product_id).name
-      elsif deed.karma_event_type =="Invite"
-        invite = Invite.find(deed.karma_event_id)
-        if invite.via_type == "Product"
-          answer = Product.find(invite.via_id).name
-        elsif invite.via_type == "Wip"
-          answer = Product.find(Wip.find(invite.via_id).product_id).name
-        end
+        deed.karma_event.name
+      elsif deed.karma_event
+        deed.karma_event.product.name
       end
-      return answer
     end
 
     def karma_product_associations_by_user(user_id)
