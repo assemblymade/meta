@@ -39,7 +39,8 @@ class AutoBounty
   end
 
   def introduce_yourself_bounty(product)
-    description = "Introduce yourself on #{product.name}.  What do you want to work on?  What are your skills and interests?  What are your thoughts about the product?"
+    description = "We're always looking for more team members on #{product.name}.  If you're interested in getting involved, in any capacity, please introduce yourself in the comments below.  Here are a few things you might want to mention:"
+    description = description+"\n\n- What do you want to work on?\n\n- What are your skills and interests?\n\n- How would you like to be involved?\n\n- What else have you worked on?\n\n- What do you find compelling about #{product.name}?"
     title = "Introduce yourself to the team"
     value = 10
     make_bounty(product, description, title, value)
