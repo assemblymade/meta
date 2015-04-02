@@ -3,12 +3,14 @@
 $white:  #FFF;
 $black:  #353941;
 
-$gray-6: #F4F4F5;
 $gray-5: #ECEDEF;
-$gray-4: #DBDEE3;
-$gray-3: #C2C7D0;
+$gray-6: lighten($gray-5, 2.5%);
+$gray-4: darken($gray-5, 2.5%);
+
+
 $gray-2: #8B909A;
-$gray-1: #666D78;
+$gray-3: lighten($gray-2, 20%);
+$gray-1: darken($gray-2, 15%);
 
 $gray-green:   #678b92;
 
