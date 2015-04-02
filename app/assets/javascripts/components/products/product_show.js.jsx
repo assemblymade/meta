@@ -187,9 +187,7 @@ let ProductShow = React.createClass({
             </div>
 
             <div className="sm-col sm-col-4 px3">
-              <div className="mb3">
-                {this.renderProductProgressWidget()}
-              </div>
+              {this.renderProductProgressWidget()}
 
               <div className="mb3">
                 <Accordion title="Get started">
@@ -228,7 +226,9 @@ let ProductShow = React.createClass({
 
     if (UserStore.isSignedIn() && isCoreTeam && this.state.product.state === 'stealth') {
       return (
-        <ProductProgressWidget product={this.state.product} />
+        <div className="mb3">
+          <ProductProgressWidget product={this.state.product} />
+        </div>
       )
     } else {
       return null
