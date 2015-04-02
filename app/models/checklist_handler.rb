@@ -20,8 +20,14 @@ class ChecklistHandler
       love = 0
     end
 
-    hearts['complete'] = love >= DEFAULT_TILTING_THRESHOLD
-    hearts['subtext'] = "#{love} / #{DEFAULT_TILTING_THRESHOLD} hearts received"
+    hearts_remaining = DEFAULT_TILTING_THRESHOLD - love
+
+    if hearts['complete'] = love >= DEFAULT_TILTING_THRESHOLD
+      subtext = "#{DEFAULT_TILTING_THRESHOLD} or more hearts received"
+    else
+      subtext = "Get #{hearts_remaining} more #{"heart".pluralize(hearts_remaining)}"
+    end
+    hearts['subtext'] = subtext
     hearts
   end
 
@@ -59,9 +65,14 @@ class ChecklistHandler
         comments = 0
       end
     end
-    checklistitem['complete'] = comments >= COMMENT_MINIMUM
+    comments_remaining = COMMENT_MINIMUM - comments
 
-    checklistitem['subtext'] = "#{comments} / #{COMMENT_MINIMUM} comments"
+    if checklistitem['complete'] = comments >= COMMENT_MINIMUM
+      subtext = "#{COMMENT_MINIMUM} or more comments received"
+    else
+      subtext = "Get #{comments_remaining} more #{"comment".pluralize(comments_remaining)}"
+    end
+    checklistitem['subtext'] = subtext
     checklistitem
   end
 
