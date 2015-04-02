@@ -5,7 +5,7 @@ class CoinInfo < ActiveRecord::Base
     CoinInfo.create!({
       name: "#{self.name} Coin",
       version: "1.0",
-      product_id: self.id,
+      product_id: product.id,
       asset_address: ""
     })
   end
