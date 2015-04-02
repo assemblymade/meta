@@ -28,9 +28,9 @@ class Product < ActiveRecord::Base
   belongs_to :main_thread, class_name: 'Discussion'
   belongs_to :logo, class_name: 'Asset', foreign_key: 'logo_id'
 
-  has_one :product_trend
-  has_one :idea
   has_one :coin_info
+  has_one :idea
+  has_one :product_trend
 
   has_many :activities
   has_many :assets
@@ -140,7 +140,7 @@ class Product < ActiveRecord::Base
 
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }, on: :create
-  after_commit -> { create_coin_info }, on: :create
+  after_commit -> { CoinInfo.create_from_product!(self) }, on: :create
 
   after_update :update_elasticsearch
 
@@ -206,8 +206,6 @@ class Product < ActiveRecord::Base
   end
 
   def wip_marks
-    wips_won = self.wips
-
     results = {}
     wips.each do |w|
       marks = w.marks
@@ -498,18 +496,6 @@ class Product < ActiveRecord::Base
 
   def combined_watchers_and_voters
     (votes.map {|vote| vote.user } + watchers).uniq
-  end
-
-  def create_coin_info
-    name = "#{self.name} Coin"
-    version = "1.0"
-    asset_address = ""
-
-    CoinInfo.create!({name: name,
-      version: version,
-      product_id: self.id,
-      asset_address: asset_address
-      })
   end
 
   def asset_address
