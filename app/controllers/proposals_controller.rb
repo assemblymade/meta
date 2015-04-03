@@ -26,7 +26,21 @@ class ProposalsController < ProductController
       description = params['description']
       proposal_duration = STANDARD_PROPOSAL_DURATION
       recipient_user = recipient
-      Governance.new.create_vesting_proposal(author_user, product, total_coins, intervals, start_date, expiration_date, name, description, proposal_duration, recipient_user)
+
+      proposal_params = {
+        author_user: current_user,
+        product: @product,
+        total_coins: params['coins'],
+        intervals: 1,
+        start_date: 0.days.from_now,
+        expiration_date: date,
+        name: params['name'],
+        description: params['description'],
+        proposal_duration: STANDARD_PROPOSAL_DURATION,
+        recipient_user: recipient
+      }
+
+      Governance.new.create_vesting_proposal(proposal_params)
     end
     redirect_to product_governance_index_path(@product)
 
@@ -34,7 +48,6 @@ class ProposalsController < ProductController
 
   def show
     @proposal = Proposal.find(params[:id])
-    @proposal_n = Proposal.all.find_index(@proposal)+1
 
     @heartables = Heart.store_data([@proposal].map(&:news_feed_item))
     store_data heartables: @heartables

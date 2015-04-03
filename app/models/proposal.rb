@@ -47,14 +47,15 @@ class Proposal < ActiveRecord::Base
 
   def update_state
     if self.won? && !self.expired?
-      self.update!({state: "passed"})
+      newstate = "passed"
     elsif !self.won? && !self.expired?
-      self.update!({state: "open"})
+      newstate = "open"
     elsif !self.won? && !self.expired? && self.state != "passed"
-      self.update({state: "failed"})
+      newstate = "failed"
     elsif self.expired? && self.state=="open"
-      self.update({state: "expired"})
+      newstate = "expired"
     end
+    self.update!({state: newstate})
   end
 
   def win_criteria_text #update this also with win criteria
@@ -101,11 +102,8 @@ class Proposal < ActiveRecord::Base
   end
 
   def time_left_text
-    days = ((self.expiration - Time.now)/86400).to_i
-    if days < 0
-      days = -days
-    end
-    s = ""
+    days = ((self.expiration - Time.now)/86400).to_i.abs
+
     if days == 0
       days = ((self.expiration - Time.now)/3600).to_i
       days = days.to_s + " hours"

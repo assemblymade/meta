@@ -1,11 +1,16 @@
 class TagsController < ApplicationController
+
+  def find_tag_by_id(params)
+    Wip::Tag.find_by!(name: params[:tag_id])
+  end
+
   def follow
-    Wip::Tag.find_by!(name: params[:tag_id]).follow! current_user
+    find_tag_by_id(params).follow! current_user
     render nothing: true, status: 200
   end
 
   def unfollow
-    Wip::Tag.find_by!(name: params[:tag_id]).unfollow! current_user
+    find_tag_by_id(params).unfollow! current_user
     render nothing: true, status: 200
   end
 end
