@@ -20,28 +20,28 @@ var IdeaSharePanel = React.createClass({
   },
 
   componentDidMount() {
-    var self = this;
-    var client = new ZeroClipboard(this.refs.copy.getDOMNode());
+    // var self = this;
+    // var client = new ZeroClipboard(this.refs.copy.getDOMNode());
 
-    client.on('ready', function(event) {
-      client.on('copy', function(event) {
-        event.clipboardData.setData('text/plain', self.state.shortUrl);
-      });
+    // client.on('ready', function(event) {
+    //   client.on('copy', function(event) {
+    //     event.clipboardData.setData('text/plain', self.state.shortUrl);
+    //   });
 
-      client.on('aftercopy', function(event) {
-        self.setState({
-          copyIcon: 'check',
-          copyText: 'Copied!'
-        });
+    //   client.on('aftercopy', function(event) {
+    //     self.setState({
+    //       copyIcon: 'check',
+    //       copyText: 'Copied!'
+    //     });
 
-        setTimeout(function() {
-          self.setState({
-            copyIcon: 'link',
-            copyText: self.shortUrl().substr(0, 120) + '...'
-          });
-        }, 1500);
-      });
-    });
+    //     setTimeout(function() {
+    //       self.setState({
+    //         copyIcon: 'link',
+    //         copyText: self.shortUrl().substr(0, 120) + '...'
+    //       });
+    //     }, 1500);
+    //   });
+    // });
   },
 
   getDefaultProps() {

@@ -86,7 +86,7 @@ sendUpdate: function(editable_type, path) {
       }
       return (
         <Button type="primary" block={true} action={buttonAction}>
-          {buttonAction === null ? <Icon fw="true" icon="lock" /> : ''}
+          {buttonAction === null ? <Icon fw={true} icon="lock" /> : ''}
           {this.props.buttonText}
         </Button>
       )
