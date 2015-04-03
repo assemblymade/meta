@@ -1,0 +1,52 @@
+<% title 'Award', "##{@bounty.number}", @bounty.product.name %>
+<% description Nokogiri::HTML(product_markdown(@bounty.product, @bounty.description)).text %>
+<% activate_nav! :bounties %>
+
+<div class="flex flex-center p4" style="min-height:128px">
+  <div class="bg-white mx-auto border border-gray-5 rounded shadow col-5">
+    <div class="clearfix pt3 px3">
+      <a class="block left mr2" href="<%= product_path @product %>" style="max-width:60px;">
+        <div class="vignette vignette--rounded vignette--dark" style="max-width:60px;max-height:60px;">
+          <%= firesize_img @product.logo_url, 120, 120, 'g_center' %>
+        </div>
+      </a>
+      <div class="overflow-hidden">
+        <h2 class="mt0 mb0">
+          <a class="black" href="<%= product_path @product %>"><%= @product.name %></a>
+        </h2>
+        <h4 class="m0 regular gray-2">
+          <span>Hosted, flexible chat for your product</span><span> </span>
+        </h4>
+      </div>
+
+      <div class="mt2">
+        <p>@chrislloyd has awarded you <span class="yellow">500</span> coins for completing the Bounty:
+           <b>#78 – Create a Helpful Account</b></p>
+        <p>
+          <b>Congratulations!</b> Holding Helpful coins makes you a partner in the organization.
+          Partners have a voice in the future direction of the organization.
+        </p>
+      </div>
+    </div>
+
+    <div class="clearfix p3 border-top border-gray-5">
+      <div class="left">
+        <span>Share this achievement</span>
+        <%= react_component 'SharePanel',
+              shareText: 'I got this award',
+              title: 'Award!',
+              url: product_task_award_url(@product, @bounty, 1)
+         %>
+      </div>
+
+      <div class="right">
+        <%= image_tag 'flag.svg', width: 27, height: 17, class: 'logo', style: 'vertical-align: -3px' %>
+      </div>
+
+    </div>
+
+    <div class="clearfix px3 pb3">
+      <a href="<%= product_tasks_path(@product) %>">View more <%= @product.name %> bounties</a>
+    </div>
+  </div>
+</div>
