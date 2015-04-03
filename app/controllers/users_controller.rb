@@ -58,9 +58,9 @@ class UsersController < ApplicationController
     @karma_history = Karma::Kronikler.new.karma_history_by_user(@user.id)
     @karma_product_history = Karma::Kronikler.new.karma_product_history_by_user(@user.id)
 
-    @pi_chart_data = Karma.assemble_karma_pie_chart(@karma_product_history)
+    @pi_chart_data = Karma::Kalkulate.assemble_karma_pie_chart(@karma_product_history)
 
-    @karma_product_data = Karma.assemble_karma_product_history(@karma_product_history)
+    @karma_product_data = Karma::Kalkulate.assemble_karma_product_history(@karma_product_history)
     @karma_total_history = [['Date' ,'Bounties', 'Tips', 'Invites', 'Products']]
     @karma_total_history = @karma_total_history + @karma_history
     @karma_aggregate_data = Karma::Kronikler.new.aggregate_karma_info_per_user(@user.id)
