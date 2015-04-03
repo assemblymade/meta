@@ -30,18 +30,19 @@ module Karma
       end
     end
 
-    def karma_from_invite(invite)
-
+    def find_product_name_on_invite(invite)
       if invite.via_type == "Product"
-        productname = Product.find(invite.via_id).name
+        Product.find(invite.via_id).name
       elsif invite.via_type == "Wip"
-        productname = Product.find(Wip.find(invite.via_id).product_id).name
+        Product.find(Wip.find(invite.via_id).product_id).name
       end
+    end
 
+    def karma_from_invite(invite)
+      productname = find_product_name_on_invite(invite)
       if productname !="Assembly" and productname != "Assembly Meta"
-        recipient_id = invite.invitor_id
-        chronicle_id = get_chronicle_id(recipient_id)
-        Deed.create!({karma_value: KARMA_FROM_INVITE, karma_event: invite, user_id: recipient_id, chronicle_id: chronicle_id})
+        chronicle_id = get_chronicle_id(invite.invitor_id)
+        Deed.create!({karma_value: KARMA_FROM_INVITE, karma_event: invite, user_id: invite.invitor_id, chronicle_id: chronicle_id})
       end
     end
 

@@ -9,23 +9,20 @@ class Tweeter
   end
 
   def product_participants(product)
-    participants = []
     if product.user.twitter_nickname
-      participants = participants + [product.user.twitter_nickname]
+      participants = [product.user.twitter_nickname]
     else
-      participants = participants + ["asm"]
+      participants = ["asm"]
     end
 
-    n = 3
     random_owners = TransactionLogEntry.where(
       product: product)
       .with_cents.group(:wallet_id).sum(:cents)
       .sort_by{|a, b| -b}
       .take(15).map{|a, b| User.find_by(id: a)}
-      .select{|a| a}.map{|a| a.twitter_nickname}.select{|a| a}.sample(n)
+      .select{|a| a}.map{|a| a.twitter_nickname}.select{|a| a}.sample(3)
 
-    participants = participants + random_owners
-    participants.uniq
+    participants = (participants + random_owners).uniq
   end
 
   def idea_marks(idea)
@@ -52,12 +49,18 @@ class Tweeter
     QueryMarks.new.legible_mark_vector(bounty.mark_vector).sort_by{|a, b| -b}.map{|a, b| a}.take(4)
   end
 
+  def top_products_by_activity
+    ProductStats.top_products_by_activity(limit: 12).select{|a, b| a != "meta"}.map{|a, b| Product.find_by(slug: a)}
+  end
+
+  def bounties_from_top_products
+    top_products_by_activity.map{|a| a.tasks}.flatten.select{|a| a.state == "open"}
+  end
+
   def worthy_bounties(n)
     bounty_suggestion_fraction = 0.5
-    top_products = ProductStats.top_products_by_activity(limit: 12).select{|a, b| a != "meta"}.map{|a, b| Product.find_by(slug: a)}
-    top_bountys = top_products.map{|a| a.tasks}.flatten.select{|a| a.state == "open"}
-    top_bountys = top_bountys.select{|a| a.earnable_coins_cache}.sort_by{|a| -a.earnable_coins_cache}
-    top_bountys = top_bountys.take(top_bountys.count * bounty_suggestion_fraction)
+    sorted_top_bountys = bounties_from_top_products.select{|a| a.earnable_coins_cache}.sort_by{|a| -a.earnable_coins_cache}
+    top_bountys = sorted_top_bountys.take(top_bountys.count * bounty_suggestion_fraction)
     top_bountys.sample(n).uniq
   end
 
@@ -164,6 +167,31 @@ class Tweeter
     end
   end
 
+  def construct_tweet_data_post(news_feed_item)
+    if news_feed_item.target.user.twitter_nickname
+      authors = [news_feed_item.target.user.twitter_nickname]
+    else
+      authors = []
+    end
+
+    data = {
+      title: news_feed_item.target.title,
+      authors: authors,
+      link: PostSerializer.new(news_feed_item.target).full_url,
+      hashtags: [],
+      proceed: true
+      }
+  end
+
+  def construct_tweet_data_idea(news_feed_item)
+    data = {
+      title: news_feed_item.target.name,
+      authors: idea_participants(news_feed_item.target),
+      url: IdeaSerializer.new(news_feed_item.target).url,
+      hashtags: idea_marks(news_feed_item.target)
+    }
+  end
+
   def tweet_loved_news_feed_item(news_feed_item)
     password = compute_password
     url = "https://asm-tweeter.herokuapp.com/love/" + password
@@ -171,29 +199,14 @@ class Tweeter
     proceed = false
 
     if news_feed_item.target_type == "Post"
-      title = news_feed_item.target.title
-      if news_feed_item.target.user.twitter_nickname
-        participants.append(news_feed_item.target.user.twitter_nickname)
-      end
-      link = PostSerializer.new(news_feed_item.target).full_url
-      hashtags = []
+      the_data = construct_tweet_data_post
       proceed=true
     elsif news_feed_item.target_type == "Idea"
-      idea = news_feed_item.target
-      title = news_feed_item.target.name
-      participants = idea_participants(idea)
-      link = IdeaSerializer.new(idea).url
-      hashtags = idea_marks(idea)
+      the_data = construct_tweet_data_idea
       proceed=true
     end
 
     if proceed
-      the_data = {
-        title: title,
-        authors: participants,
-        url: link,
-        hashtags: hashtags
-      }
       request :post, url, the_data
     end
   end

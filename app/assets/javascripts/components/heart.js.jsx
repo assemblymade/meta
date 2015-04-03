@@ -125,30 +125,32 @@ var Heart = React.createClass({
       'hover-red': UserStore.isSignedIn(),
       gray: !this.state.user_heart,
       'inline-block': true,
-      red: this.state.user_heart
+      red: this.state.user_heart,
+      'center': true
     });
 
     var count = null
 
     if (heartsCount > 0) {
       count = (
-        <span className="h6 mt2 mb0 gray-2 ml1">{heartsCount}</span>
+        <span className="h6 mt2 mb0 gray-2">{heartsCount}</span>
       )
     }
 
     var heartWithCount = <div>
       <div className={classes}>
         <SvgIcon type="heart" />
+        <br />
+        {count}
       </div>
-      {count}
     </div>
 
     return (
-      <Button action={this.handleClick}>
+      <div onClick={this.handleClick} className="border rounded py1 px2">
         <div className="inline-block valign-top fs6 gray no-focus">
           {heartWithCount}
         </div>
-      </Button>
+      </div>
     );
   },
 
