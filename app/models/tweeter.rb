@@ -15,7 +15,7 @@ class Tweeter
     else
       mention = " @"+mention+" "
     end
-    tweet_text = "The idea #{idea.name} just became a product called #{product.name}#{mention}#{product_url(product)}"
+    tweet_text = "The idea #{idea.name} just became a product called #{product.name}#{mention}#{ProductSerializer.new(product).full_url}"
     TweetWorker.perform_async(tweet_text)
   end
 
@@ -26,14 +26,7 @@ class Tweeter
       participants = ["asm"]
     end
 
-    random_owners = TransactionLogEntry.where(
-      product: product)
-      .with_cents.group(:wallet_id).sum(:cents)
-      .sort_by{|a, b| -b}
-      .take(15).map{|a, b| User.find_by(id: a)}
-      .select{|a| a}.map{|a| a.twitter_nickname}.select{|a| a}.sample(3)
-
-    participants = (participants + random_owners).uniq
+    TransactionLogEntry.product_partners(product.id).order('sum(cents) desc').take(15).sample(3)
   end
 
   def idea_marks(idea)
