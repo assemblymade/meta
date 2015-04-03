@@ -1,8 +1,32 @@
-class CoinInfoSerializer < ApplicationSerializer
+class CoinInfoSerializer < ActiveModel::Serializer
   attributes :type, :asset_ids, :contract_url, :name, :issuer, :description, :description_mime, :divisibility, :link_to_website, :icon_url, :image_url, :version
 
   def type
     "Ownership"
+  end
+
+  def contract_url
+    if !object.contract_url
+      ""
+    else
+      object.contract_url
+    end
+  end
+
+  def name
+    if !object.name
+      ""
+    else
+      object.name
+    end
+  end
+
+  def issuer
+    if !object.issuer
+      "Assembly"
+    else
+      object.issuer
+    end
   end
 
   def asset_ids
