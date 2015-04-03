@@ -80,11 +80,9 @@ class Withholding
 
   def intl_with_form(amount, country)
     country = country.downcase.gsub(" ", "")
-    withholding = {}
+    withholding = {"state" => 0}
     if amount > 150000 # $1500 threshold
       withholding['state'] = ((amount - 150000) * 0.07).to_i
-    else
-      withholding['state'] = 0
     end
     federal_rate = 0.3
     if intl_withholding.has_key?(country)
@@ -95,13 +93,7 @@ class Withholding
   end
 
   def intl_no_form(amount)
-    withholding = {}
-    withholding['federal'] = (amount * 0.28).to_i
-    if amount > 150000 # $1500 threshold
-      withholding['state'] = ((amount - 150000) * 0.07).to_i
-    else
-      withholding['state'] = 0
-    end
+    domestic_no_form(amount)
   end
 
 end

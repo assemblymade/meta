@@ -145,7 +145,8 @@ module OpenAssets
     end
 
     def dollars_spent_on_btc_per_month(date)
-      BtcPayment.where('created_at < ?', date).where('created_at > ?', date-1.month).where('btc_change > 0').sum('btc_change*btcusdprice_at_moment').to_f / 10000000000
+      payments_between_dates = BtcPayment.payments_before_data(data).where('created_at > ?', date-1.month)
+      payments_between_dates.where('btc_change > 0').sum('btc_change*btcusdprice_at_moment').to_f / 10000000000
     end
 
     def btc_dollar_value(date)
@@ -153,11 +154,11 @@ module OpenAssets
     end
 
     def dollar_outflows_as_btc(date)
-      BtcPayment.where('created_at < ?', date).where('btc_change < 0').sum('btc_change*-1*btcusdprice_at_moment').to_f/10000000000
+      BtcPayment.payments_before_data(data).where('btc_change < 0').sum('btc_change*-1*btcusdprice_at_moment').to_f/10000000000
     end
 
     def dollar_outflows_as_btc_per_month(date)
-      BtcPayment.where('created_at < ?', date).where('created_at > ?', date-1.month).where('btc_change < 0').sum('btc_change*-1*btcusdprice_at_moment').to_f/10000000000
+      BtcPayment.payments_before_data(data).where('created_at > ?', date-1.month).where('btc_change < 0').sum('btc_change*-1*btcusdprice_at_moment').to_f/10000000000
     end
 
     def average_bought_price_as_of_date(date)

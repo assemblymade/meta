@@ -411,60 +411,8 @@ class User < ActiveRecord::Base
     self.viewings.count
   end
 
-  def best_cluster
-    best_cluster = self.user_cluster
-    best_distance = 99999
-    UserCluster.all.each do |uc|
-      cluster_vector = uc.normalized_center
-      my_vector = self.user_identity.get_mark_vector
-      distance = QueryMarks.new.vector_square_distance(my_vector, cluster_vector)
-      if distance<best_distance
-        best_distance = distance
-        best_cluster = uc
-      end
-    end
-    return best_cluster
-  end
-
-  def assign_to_cluster
-    newcluster = self.best_cluster
-    newcluster.add_user(self)
-    newcluster
-  end
-
   def welcome_tweet
     Tweeter.new.tweet_welcome_user(self)
-  end
-
-  def cluster_score(mark_cluster)
-    s = 0
-    mark_cluster.marks.each do |m|
-      r = Marking.where(markable_id: self.user_identity.id).where(mark_id: m.id).sum(:weight)
-      s = s + r
-    end
-    s
-  end
-
-  def cluster_scores
-    MarkCluster.all.map{|a|
-      [a.name, self.cluster_score(a)]
-    }
-  end
-
-  def normalized_cluster_scores
-    s = self.cluster_scores
-    normalized_scores = []
-    s.each do |clustername, score|
-      m = [clustername]
-      markings_n = Marking.where(mark: MarkCluster.find_by(name: clustername).marks).sum(:weight)
-      multiplier = 1.0 / markings_n.to_f
-      newscore = score * multiplier #Here it is weighted but not normalized
-      m.append(newscore)
-      normalized_scores.append(m)
-    end
-    #normalize now that scores are weighted
-    t = Math.sqrt(normalized_scores.sum{|a,b| b*b})
-    normalized_scores.map{|a, b| [a, b/t]}
   end
 
   #governance
