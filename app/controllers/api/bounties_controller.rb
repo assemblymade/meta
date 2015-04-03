@@ -35,7 +35,7 @@ class Api::BountiesController < Api::ApiController
 
     if @bounty.valid?
       if @product.core_team?(current_user) && (amount = params[:coins].to_i) > 0
-        @offer = @bounty.offers.create(user: current_user, amount: amount, ip: request.ip)
+        @bounty.update(value: amount)
       end
       @bounty.reload
 

@@ -261,6 +261,33 @@ class Task < Wip
     award
   end
 
+  # TODO: fix API of above method and combine methods
+  def award_with_reason(closer, winner, reason)
+    stop_work!(winner)
+
+    minting = nil
+    award = nil
+    add_activity(closer, Activities::Award) do
+      win = ::Event::Win.new(user: closer, body: reason)
+      add_event(win) do
+        award = self.awards.create!(
+          awarder: closer,
+          winner: winner,
+          event: win,
+          wip: self,
+          cents: self.earnable_coins_cache
+        )
+
+        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, self.value)
+
+        milestones.each(&:touch)
+      end
+    end
+
+    CoinsMinted.new.perform(minting.id) if minting
+    award
+  end
+
   def work_submitted(submitter)
     review_me!(submitter) if can_review_me?
   end

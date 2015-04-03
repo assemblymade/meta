@@ -15,7 +15,7 @@ describe Api::AwardsController do
       sign_in user
 
       post :create,
-        product_id: product.slug,
+        org_id: product.slug,
         bounty_id: bounty.number,
         email: 'jimmy@assembly.com',
         reason: 'Tweeted about Helpful',
@@ -23,6 +23,7 @@ describe Api::AwardsController do
 
       expect(response).to be_successful
       expect(bounty.awards.size).to eq(1)
+      expect(bounty.awards.first.winner).to eq(winner)
     end
   end
 end

@@ -8,7 +8,9 @@ ASM::Application.routes.draw do
     get '/' => 'api#root'
     resource :user, only: [:show]
     resources :orgs, only: [:show] do
-      resources :bounties, only: [:index, :show, :create, :update]
+      resources :bounties, only: [:index, :show, :create, :update] do
+        resources :awards, only: [:create, :show]
+      end
     end
   end
 
