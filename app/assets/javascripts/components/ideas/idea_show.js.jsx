@@ -125,9 +125,9 @@ let IdeaShow = React.createClass({
           <div className="container clearfix">
             <div className="left">
               <h3 className="mt2 mb1">
-                Turn ideas into great products
+                Community requests for products
               </h3>
-              <h4 className="mt0 mb0 regular gray-2">Heart an idea to show your support.</h4>
+              <h4 className="mt0 mb0 regular gray-2">Turn ideas into great products with people around the world</h4>
             </div>
             <div className="center right py1">
               <Button type={"default"} action={function() { page('/ideas/new'); }}>
