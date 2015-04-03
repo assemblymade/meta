@@ -123,7 +123,7 @@ class ProductsController < ProductController
     find_product!
     data = {}
     data['asset_ids'] = [@product.coin_info.asset_address]
-    data['name_short'] = @product.name
+    data['name_short'] = @product.name[0,5]
     data['name'] = @product.name
     data['contract_url'] = ProductSerializer.new(@product).full_url
     data['issuer'] = "Assembly.com"
