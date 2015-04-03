@@ -179,39 +179,9 @@ class Idea < ActiveRecord::Base
 
   def checklist_state
     checklists = []
-    hearts = {}
-    hearts['title'] = "Get some love"
-    hearts['editable'] = false
-    hearts['state'] = self.love >= DEFAULT_TILTING_THRESHOLD
-    if hearts['state']
-      hearts['smalltext'] = self.love.to_s + " hearts"
-    else
-      hearts['smalltext'] = self.love.to_s + " / "+DEFAULT_TILTING_THRESHOLD.to_s+" hearts"
-    end
-    checklists.append(hearts)
-
-    name = {}
-    name['title'] = "Pick a name"
-    if self.tentative_name
-      name['smalltext'] = self.tentative_name
-      name['state'] = true
-    else
-      name['state'] = false
-      name['smalltext'] = "Unnamed"
-    end
-    name['editable'] = true
-    name['editable_type'] = 'tentative_name'
-    name['editable_button_text'] = "Name it"
-    checklists.append(name)
-
-    comments = {}
-    comments['title'] = "Get feedback"
-    comment_n = self.comments.count
-    comments['state'] = comment_n >= COMMENT_MINIMUM
-    comments['smalltext'] = comment_n.to_s + " comments"
-    comments['editable'] = false
-    checklists.append(comments)
-
+    checklists.append(ChecklistHandler.checklist_hearts_idea(idea))
+    checklists.append(ChecklistHandler.checklist_name_idea(idea))
+    checklists.append(ChecklistHandler.checklist_comments_idea(idea))
     checklists
   end
 
@@ -280,10 +250,13 @@ class Idea < ActiveRecord::Base
     if threshold < previous_threshold.to_i
       threshold = previous_threshold.to_i
     end
-
     threshold = DEFAULT_TILTING_THRESHOLD if threshold < DEFAULT_TILTING_THRESHOLD
-
     update(tilting_threshold: threshold)
+  end
+
+  def score_multiplier
+    time_since = Time.now - EPOCH_START
+    multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
   end
 
   # Top percentile is 0, not 100
@@ -292,9 +265,7 @@ class Idea < ActiveRecord::Base
 
     if last_idea = Idea.order(score: :desc).limit(index == 0 ? 1 : index).last
       expected_score = last_idea.score
-      time_since = Time.now - EPOCH_START
-      multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
-      hearts_missing = (expected_score - score) / multiplier
+      hearts_missing = (expected_score - score) / score_multiplier
       (hearts_missing + 0.999).to_i
     else
       DEFAULT_TILTING_THRESHOLD
@@ -309,9 +280,7 @@ class Idea < ActiveRecord::Base
     lovescore = 0
 
     news_feed_item.hearts.each do |h|
-      time_since = h.created_at - EPOCH_START
-      multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
-      lovescore = lovescore + multiplier
+      lovescore = lovescore + score_multiplier
     end
 
     update!({

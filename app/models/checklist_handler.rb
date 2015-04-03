@@ -195,4 +195,40 @@ class ChecklistHandler
     result
   end
 
+  def self.checklist_hearts_idea(idea)
+    hearts = {}
+    hearts['title'] = "Get some love"
+    hearts['editable'] = false
+    hearts['state'] = idea.love >= Idea::DEFAULT_TILTING_THRESHOLD
+    if hearts['state']
+      hearts['smalltext'] = idea.love.to_s + " hearts"
+    else
+      hearts['smalltext'] = idea.love.to_s + " / "+Idea::DEFAULT_TILTING_THRESHOLD.to_s+" hearts"
+    end
+    hearts
+  end
+
+  def self.checklist_name_idea(idea)
+    name = {}
+    name['title'] = "Pick a name"
+    if self.tentative_name
+      name['smalltext'] = idea.tentative_name
+      name['state'] = true
+    else
+      name['state'] = false
+      name['smalltext'] = "Unnamed"
+    end
+    name['editable'] = true
+    name['editable_type'] = 'tentative_name'
+    name['editable_button_text'] = "Name it"
+  end
+
+  def self.checklist_comments_idea(idea)
+    comments = {}
+    comments['title'] = "Get feedback"
+    comment_n = idea.comments.count
+    comments['state'] = comment_n >= Idea::COMMENT_MINIMUM
+    comments['smalltext'] = comment_n.to_s + " comments"
+    comments['editable'] = false
+  end
 end
