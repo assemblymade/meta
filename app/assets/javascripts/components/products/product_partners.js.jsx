@@ -49,7 +49,7 @@ const ProductPartners = React.createClass({
       return (
         <tr key={`partner-${partner.id}`}>
           <td>
-            <a className="bold" href={partner.url} title={'@' + partner.username}>
+            <a href={partner.url} title={'@' + partner.username}>
               <div className="left mr2">
                 <Partner user={partner} size={24} />
               </div>
