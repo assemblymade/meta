@@ -21,6 +21,10 @@ class CoinInfoSerializer < ActiveModel::Serializer
     end
   end
 
+  def name_short
+    name
+  end
+
   def issuer
     if !object.issuer
       "Assembly"
@@ -34,7 +38,7 @@ class CoinInfoSerializer < ActiveModel::Serializer
   end
 
   def description
-    object.product.description
+    ""#object.product.description
   end
 
   def description_mime
