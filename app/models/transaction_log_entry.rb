@@ -73,6 +73,14 @@ class TransactionLogEntry < ActiveRecord::Base
     )
   end
 
+  def self.product_partners(product_id)
+    User.select('users.*, sum(cents) as balance').
+         where(tle: {product_id: product_id}).
+         joins('inner join transaction_log_entries tle on tle.wallet_id = users.id').
+         group('users.id').
+         having('sum(cents) > 0')
+  end
+
   def self.transfer!(product, from_id, to_id, cents, via, created_at=Time.now)
     transaction do
       transaction_id = SecureRandom.uuid

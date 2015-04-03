@@ -8,6 +8,17 @@ class Tweeter
     end
   end
 
+  def self.tweet_new_product(idea, product)
+    mention = product.user.twitter_nickname
+    if !mention
+      mention = " "
+    else
+      mention = " @"+mention+" "
+    end
+    tweet_text = "The idea #{idea.name} just became a product called #{product.name}#{mention}#{product_url(product)}"
+    TweetWorker.perform_async(tweet_text)
+  end
+
   def product_participants(product)
     if product.user.twitter_nickname
       participants = [product.user.twitter_nickname]
