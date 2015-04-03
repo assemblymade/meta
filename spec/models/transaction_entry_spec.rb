@@ -6,7 +6,7 @@ describe 'log entries' do
   let(:bounty_creator) { User.make! }
 
   context 'bounty awarded' do
-    let(:bounty) { Task.make! product: product, user: bounty_creator }
+    let(:bounty) { Task.make! product: product, user: bounty_creator, value: 100 }
     let(:winning_event) { NewsFeedItemComment.make!(body: 'Dagron', user: bounty_creator) }
 
     before {

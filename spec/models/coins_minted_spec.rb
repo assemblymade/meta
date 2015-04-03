@@ -10,7 +10,7 @@ describe CoinsMinted do
 
 
   context 'work on wip' do
-    let(:work) { Task.make!(product: product, user: proposer) }
+    let(:work) { Task.make!(product: product, user: proposer, value: 10000) }
     let(:nfi) { NewsFeedItem.create_with_target(work) }
     let(:winning_event) { nfi.comments.make!(user: worker) }
 

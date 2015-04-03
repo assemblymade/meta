@@ -4,7 +4,7 @@ describe TasksController do
   let(:user) { User.make! }
   let(:worker) { User.make! }
   let(:product) { Product.make!(user: user, state: 'team_building') }
-  let!(:wips) { [Task.make!(user: user, product: product)].each{|t| NewsFeedItem.create_with_target(t) } }
+  let!(:wips) { [Task.make!(user: user, product: product, value: 100)].each{|t| NewsFeedItem.create_with_target(t) } }
   let!(:event) { NewsFeedItemComment.make!(user: worker) }
 
   describe '#create' do

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Wip do
   let(:owner) { User.make! }
   let(:product) { Product.make! }
-  let(:wip) { Task.make!(user: owner, product: product).tap{|t| NewsFeedItem.create_with_target(t) } }
+  let(:wip) { Task.make!(user: owner, product: product, value: 100).tap{|t| NewsFeedItem.create_with_target(t) } }
   let(:voter) { User.make! }
   let(:winner) { User.make! }
   let(:closer) { User.make! }
