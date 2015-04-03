@@ -103,14 +103,7 @@ class ProductsController < ProductController
           end
         end
 
-        mention = @product.user.twitter_nickname
-        if !mention
-          mention = " "
-        else
-          mention = " @"+mention+" "
-        end
-        tweet_text = "The idea #{@idea.name} just became a product called #{@product.name}#{mention}#{product_url(@product)}"
-        TweetWorker.perform_async(tweet_text)
+        Tweeter.tweet_new_product(@idea, @product)
       end
 
       AutoBounty.new.product_initial_bounties(@product)

@@ -1,8 +1,12 @@
 class CoinInfoSerializer < ApplicationSerializer
-  attributes :type, :asset_address, :contract_url, :name, :issuer, :description, :description_mime, :divisibility, :link_to_website, :icon_url, :image_url, :version
+  attributes :type, :asset_ids, :contract_url, :name, :issuer, :description, :description_mime, :divisibility, :link_to_website, :icon_url, :image_url, :version
 
   def type
     "Ownership"
+  end
+
+  def asset_ids
+    [object.asset_address]
   end
 
   def description

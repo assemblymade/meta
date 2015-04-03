@@ -3,6 +3,9 @@ class Vesting < ActiveRecord::Base
   belongs_to :product
   belongs_to :user
 
+  scope :active, -> { where('expiration_date > ?', Time.now) }
+  scope :expired, -> { where('expiration_date <= ?', Time.now) }
+
   def payout
     coins_each = self.coins / self.intervals
     to_id = self.user_id

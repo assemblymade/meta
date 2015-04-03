@@ -11,4 +11,8 @@ class BtcPayment < ActiveRecord::Base
     end
   end
 
+  def self.payments_before_date(date)
+    BtcPayment.where('created_at < ?', date)
+  end
+
 end

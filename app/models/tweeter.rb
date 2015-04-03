@@ -8,6 +8,17 @@ class Tweeter
     end
   end
 
+  def self.tweet_new_product(idea, product)
+    mention = product.user.twitter_nickname
+    if !mention
+      mention = " "
+    else
+      mention = " @"+mention+" "
+    end
+    tweet_text = "The idea #{idea.name} just became a product called #{product.name}#{mention}#{ProductSerializer.new(product).full_url}"
+    TweetWorker.perform_async(tweet_text)
+  end
+
   def product_participants(product)
     if product.user.twitter_nickname
       participants = [product.user.twitter_nickname]
@@ -15,14 +26,7 @@ class Tweeter
       participants = ["asm"]
     end
 
-    random_owners = TransactionLogEntry.where(
-      product: product)
-      .with_cents.group(:wallet_id).sum(:cents)
-      .sort_by{|a, b| -b}
-      .take(15).map{|a, b| User.find_by(id: a)}
-      .select{|a| a}.map{|a| a.twitter_nickname}.select{|a| a}.sample(3)
-
-    participants = (participants + random_owners).uniq
+    TransactionLogEntry.product_partners(product.id).order('sum(cents) desc').take(15).sample(3)
   end
 
   def idea_marks(idea)
@@ -32,8 +36,7 @@ class Tweeter
   def compute_password
     a = Time.now.to_i.to_s
     code = ENV['TWEETER_PASSWORD'].to_s + a
-    encoded = Digest::SHA256.new.hexdigest(code)
-    encoded
+    Digest::SHA256.new.hexdigest(code)
   end
 
   def bounty_participants(bounty)
@@ -100,25 +103,22 @@ class Tweeter
 
   def tweet_hot_products(top_n)
     top_growth = ProductStats.hottest_products.take(top_n)  #absolute growth not proportional
-    top_growth.each do |a|
-      growth = a[1][0]
-      product = Product.find_by(slug: a[0])
-      if growth > 10
-        tweet_hot_product(product, growth)
-      end
+    worthy_growth = top_growth.select{|a| a[1][0] > 10}
+    worthy_growth.each do |a|
+      tweet_hot_product(a[0], a[1][0])
     end
   end
 
-  def tweet_hot_product(product, growth)
+  def tweet_hot_product(product_slug, growth)
     password = compute_password
     url = "https://asm-tweeter.herokuapp.com/product/hot/" + password
+    name = Product.find_by(slug: product_slug).name
     the_data = {
-      product_name: product.name,
+      product_name: name,
       users: product_participants(product),
       url: ProductSerializer.new(product).full_url,
       growth: growth
     }
-
     request :post, url, the_data
   end
 
@@ -126,14 +126,11 @@ class Tweeter
     if user.twitter_nickname
       password = compute_password
       url = "https://asm-tweeter.herokuapp.com/friends/new_user/" + password
-
       suggested_link = 'https://www.assembly.com/discover'
-
       the_data = {
         friends: [user.twitter_nickname],
         link: suggested_link
       }
-
       request :post, url, the_data
     end
   end

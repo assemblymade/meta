@@ -138,9 +138,11 @@ class Product < ActiveRecord::Base
   before_create :generate_authentication_token
   before_validation :generate_asmlytics_key, on: :create
 
+  after_commit :retrieve_key_pair, on: :create
   after_commit -> { add_to_event_stream }, on: :create
   after_commit -> { Indexer.perform_async(:index, Product.to_s, self.id) }, on: :create
   after_commit -> { CoinInfo.create_from_product!(self) }, on: :create
+
 
   after_update :update_elasticsearch
 
@@ -205,37 +207,6 @@ class Product < ActiveRecord::Base
     Viewing.where(viewable: self).count
   end
 
-  def wip_marks
-    results = {}
-    wips.each do |w|
-      marks = w.marks
-      marks.each do |m|
-        mark_name = m.name
-        if results.has_key?(mark_name)
-          results[mark_name] = results[mark_name] + 1
-        else
-          results[mark_name] = 1
-        end
-      end
-    end
-    results = Hash[results.sort_by{|k, v| v}.reverse]
-  end
-
-  def mark_fractions
-    marks = self.wip_marks
-    answer = {}
-    sum_marks = marks.values.sum.to_f
-
-    if sum_marks == 0
-      sum_marks = 1
-    end
-
-    marks.each do |k, v|
-      answer[k] = (v.to_f / sum_marks).round(3)
-    end
-    return answer
-  end
-
   def most_active_contributor_ids(limit=6)
     activities.group('actor_id').order('count_id desc').limit(limit).count('id').keys
   end
@@ -243,7 +214,6 @@ class Product < ActiveRecord::Base
   def most_active_contributors(limit=6)
     User.where(id: most_active_contributor_ids(limit))
   end
-
 
   def on_stealth_entry(prev_state, event, *args)
     update!(
@@ -286,14 +256,12 @@ class Product < ActiveRecord::Base
     cipher.random_key
   end
 
-  def distinct_wallets
-    entries = TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
-    users = User.where(id: entries.keys).select{|b| b.id}.map{|a| a.id }.map{|a| [a, entries[a]]}.sort_by{|g| -g[1]}.to_h
+  def partners(limit=nil)
+    TransactionLogEntry.product_partners(self.id).order('sum(cents) desc').limit(limit)
   end
 
   def distinct_wallets_unqueued
-    entries = TransactionLogEntry.where(queue_id: nil).where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
-    users = User.where(id: entries.keys).select{|b| b.id}.map{|a| a.id }.map{|a| [a, entries[a]]}.select{|q| q[1] > 0 }.sort_by{|g| -g[1]}.to_h
+    self.partners.where(queue_id: nil)
   end
 
   def mark_all_transactions_as_queued
@@ -330,28 +298,12 @@ class Product < ActiveRecord::Base
     not NON_PROFIT.include?(slug)
   end
 
-  def partners(limit=nil)
-    entries = if limit.nil?
-      TransactionLogEntry.where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
-    else
-      TransactionLogEntry.where(product_id: self.id).
-        with_cents.
-        order('sum(cents) desc').
-        limit(limit).
-        group(:wallet_id).sum(:cents)
-    end
-    User.where(id: entries.keys)
-  end
-
   def partners_before_date(date)
-    entries = TransactionLogEntry.where('created_at < ?', date).where(product_id: self.id).with_cents.group(:wallet_id).sum(:cents)
-    User.where(id: entries.keys)
+    partners.where('tle.created_at < ?', date)
   end
 
   def partner_ids
-    User.joins(:transaction_log_entries).
-         where('transaction_log_entries.product_id' => id).
-         group('users.id').pluck('users.id')
+    partners.pluck(:id)
   end
 
   def has_metrics?
@@ -384,7 +336,7 @@ class Product < ActiveRecord::Base
 
   def partner?(user)
     return false if user.nil?
-    TransactionLogEntry.balance(product, user.id) > 0
+    partners.where(id: user.id).exists?
   end
 
   def finished_first_steps?
@@ -670,10 +622,6 @@ class Product < ActiveRecord::Base
     BountyPosting.joins(:bounty).where('wips.product_id = ?', id)
   end
 
-  def url_params
-    self
-  end
-
   # elasticsearch
   def update_elasticsearch
     return unless (['name', 'pitch', 'description'] - self.changed).any?
@@ -783,7 +731,11 @@ class Product < ActiveRecord::Base
   end
 
   def unvested_coins
-    [10_000_000, transaction_log_entries.sum(:cents)].max
+    unvested = 10_000_000 - transaction_log_entries.sum(:cents)
+    if unvested < 0
+      unvested = 0
+    end
+    unvested
   end
 
   def mark_vector
@@ -803,37 +755,19 @@ class Product < ActiveRecord::Base
 
   def proposals_sorted
     prod_proposals = Proposal.where(product: self).where.not(state: "hidden")
-    open_proposals = prod_proposals.where(state: "open").sort_by{|a| a.expiration}.reverse
-    passed_proposals = prod_proposals.where(state: "passed").sort_by{|a| a.expiration}.reverse
-    failed_proposals = prod_proposals.where(state: "failed").sort_by{|a| a.expiration}.reverse
-    expired_proposals = prod_proposals.where(state: "expired").sort_by{|a| a.expiration}.reverse
-    open_proposals + passed_proposals + failed_proposals + expired_proposals
+    prod_proposals.order('state desc, expiration desc').to_a
   end
 
   def active_contracts
-    passed_proposals = self.proposals.where(state: ["passed", "expired"])
-    contracts = []
-    passed_proposals.each do |p|
-      p.contracts.each do |c|
-        if !c.expired?
-          contracts.append(c)
-        end
-      end
-    end
-    contracts
+    Vesting.active.
+      joins(:proposals).
+      where(proposals: {state: ["passed", "expired"], contract_type: 'vesting', product_id: self.id})
   end
 
   def expired_contracts
-    passed_proposals = self.proposals.where(state: ["passed", "expired"])
-    contracts = []
-    passed_proposals.each do |p|
-      p.contracts.each do |c|
-        if c.expired?
-          contracts.append(c)
-        end
-      end
-    end
-    contracts
+    Vesting.expired.
+      joins(:proposals).
+      where(proposals: {state: ["passed", "expired"], contract_type: 'vesting', product_id: self.id})
   end
 
   def try_url=(new_try_url)
