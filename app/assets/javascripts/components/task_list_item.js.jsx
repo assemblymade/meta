@@ -14,8 +14,7 @@ module.exports = React.createClass({
   render() {
     return <div onClick={this.handleClick} className="pointer">
       <input type="checkbox" checked={this.state.checked} disabled={!this.state.canUpdate} />
-      <span className="checkbox-label">
-        {' ' + this.props.body}
+      <span className="checkbox-label" dangerouslySetInnerHTML={{__html: ' ' + this.props.body}}>
       </span>
     </div>
   },
@@ -34,8 +33,11 @@ module.exports = React.createClass({
     }
   },
 
-  handleClick() {
+  handleClick(e) {
     if (!this.state.canUpdate) { return }
+
+    // don't change check state if the target clicked was an anchor link
+    if (e.target.tagName === 'A') { return }
 
     this.setState({
       checked: !this.state.checked

@@ -339,7 +339,7 @@ class Task < Wip
   end
 
   def winners
-    awards.map(&:winner).uniq
+    awards.select(&:winner).map(&:winner).uniq
   end
 
   def open?
