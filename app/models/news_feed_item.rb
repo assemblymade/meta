@@ -87,7 +87,7 @@ class NewsFeedItem < ActiveRecord::Base
   end
 
   def update_task!(index, checked)
-    if self.target && (text = target.description)
+    if self.target && (text = (target.try(:body) || target.try(:description)))
       i = 0
       new_text = text.gsub(/^(\s*)- \[(x| )\](.*)$/) do |match|
         replacement = if i == index
@@ -100,7 +100,11 @@ class NewsFeedItem < ActiveRecord::Base
         replacement
       end
 
-      target.update!(description: new_text)
+      if target.respond_to?(:description)
+        target.update!(description: new_text)
+      else
+        target.update!(body: new_text)
+      end
     end
   end
 

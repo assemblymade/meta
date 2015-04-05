@@ -1,5 +1,7 @@
-const TaskListActions = require('../actions/task_list_actions')
 const DiscussionStore = require('../stores/discussion_store')
+const ProductStore = require('../stores/product_store')
+const TaskListActions = require('../actions/task_list_actions')
+const UserStore = require('../stores/user_store')
 
 module.exports = React.createClass({
   displayName: 'TaskListItem',
@@ -7,7 +9,7 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       checked: this.props.checked,
-      canUpdate: DiscussionStore.canUpdate()
+      canUpdate: this._canUpdate()
     }
   },
 
@@ -44,9 +46,13 @@ module.exports = React.createClass({
     })
   },
 
+  _canUpdate() {
+    return ProductStore.isCoreTeam(UserStore.getUser()) || DiscussionStore.canUpdate()
+  },
+
   _onChange() {
     this.setState({
-      canUpdate: DiscussionStore.canUpdate()
+      canUpdate: this._canUpdate()
     })
   }
 })
