@@ -80,7 +80,7 @@ const ProductTrust = React.createClass({
       action = <a href="/guides/domains#domains">Learn more</a>
     }
     return <Report label="Intellectual property" status={status}>
-      <p>For the community to share intellectual property, all code should be commited with an AGPL license. This prevents any one person from laying claim to the organization's intellectual property.</p>
+      <p>For the community to share intellectual property, all code should be open and commited with an AGPL license. This prevents any one person from laying claim to the organization's intellectual property.</p>
       {action}
     </Report>
   },
