@@ -74,7 +74,7 @@ class TransactionLogEntry < ActiveRecord::Base
   end
 
   def self.product_partners(product_id)
-    User.select('users.id, sum(cents) as balance').
+    User.select('users.*, sum(cents) as balance').
          where(tle: {product_id: product_id}).
          joins('inner join transaction_log_entries tle on tle.wallet_id = users.id').
          group('users.id').

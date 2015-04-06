@@ -1,26 +1,12 @@
-<h4>Hot Bounties</h4>
+<% title "Hot Bounties" %>
 
-<table>
-<% @bounties.each do |b| %>
-  <tr>
-    <td class="py3">
-      <a href=<%= WipSerializer.new(b).full_url %> >
-        <%= b.title %>
-      </a>
-    </td>
-    <td>
-      <%= b.description %>
-    </td>
-    <td>
-      <%= b.user.username %>
-      <%= b.user.hearts_received %>
-    </td>
-    <td>
-      <%= b.created_at %>
-    </td>
-  </tr>
+<% activate_nav! :discover %>
+
+<%= render 'shared/navbar' %>
+
+<%= react_component 'HotBounties', bounties: @bounties  %>
 
 
-  </tr>
-<% end %>
-</table>
+
+
+<%= render 'shared/footer' %>
