@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401205759) do
+ActiveRecord::Schema.define(version: 20150403193900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,7 +97,11 @@ ActiveRecord::Schema.define(version: 20150401205759) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "transaction_hash"
+    t.uuid     "guest_id"
+    t.text     "token"
   end
+
+  add_index "awards", ["token"], name: "index_awards_on_token", unique: true, using: :btree
 
   create_table "bounty_postings", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "bounty_id",  null: false

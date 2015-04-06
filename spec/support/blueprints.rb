@@ -37,9 +37,9 @@ end
 
 Award.blueprint do
   awarder
+  cents { (rand * 5000).to_i }
   winner
-  event
-  wip
+  wip { Task.make! }
 end
 
 BountyPosting.blueprint do
@@ -57,6 +57,10 @@ Discussion.blueprint do
   product
   number      { (sn.to_i * 10) + 1 }
   title { "Title #{sn}"}
+end
+
+Guest.blueprint do
+  email { "henchman_#{sn}@undergroundlair.com" }
 end
 
 Heart.blueprint do

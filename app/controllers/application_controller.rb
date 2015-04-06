@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :strip_invite_token
   before_action :strip_promo_token
   before_action :initialize_feature_flags
+  before_action :store_pending_award
 
   after_action  :set_request_info!,   if: :signed_in?
   after_action  :claim_invite,        if: :signed_in?
@@ -75,6 +76,22 @@ class ApplicationController < ActionController::Base
         end
       end
       redirect_to(url_for(params.except(:i)))
+    end
+  end
+
+  def store_pending_award
+    if token = (params[:token] || cookies[:award])
+      if award = Award.find_by(token: token)
+        cookies.permanent[:award] = award.token
+        store_data(signup_form_store: {
+          pending_award: AwardSerializer.new(award)
+        })
+
+        if signed_in?
+          award.claim!(current_user)
+          cookies.delete(:award)
+        end
+      end
     end
   end
 
