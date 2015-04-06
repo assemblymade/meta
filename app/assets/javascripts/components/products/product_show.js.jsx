@@ -5,7 +5,6 @@ const Avatar = require('../ui/avatar.js.jsx');
 const BountyCard = require('../bounty_card.js.jsx');
 const Button = require('../ui/button.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
-const IntroductionForm = require('./introduction_form.js.jsx');
 const MetricsBadge = require('./metrics_badge.js.jsx');
 const page = require('page');
 const Partner = require('../partner.js.jsx');
@@ -292,21 +291,6 @@ let ProductShow = React.createClass({
         </div>
       );
     }
-  },
-
-  renderIntroductionForm() {
-    let product = this.state.product;
-    let user = UserStore.getUser();
-
-    if (user && !product.is_member) {
-      return (
-        <div className="mt2">
-          <IntroductionForm product={product} />
-        </div>
-      );
-    }
-
-    return this.renderProductLead();
   },
 
   renderMostActiveUsers() {

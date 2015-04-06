@@ -4,7 +4,6 @@ const Accordion = require('../ui/accordion.js.jsx');
 const BountyMarksStore = require('../../stores/bounty_marks_store');
 const Button = require('../ui/button.js.jsx');
 const Immutable = require('immutable');
-const IntroductionForm = require('./introduction_form.js.jsx');
 const NewsFeed = require('../news_feed/news_feed.js.jsx');
 const Label = require('../ui/label.js.jsx');
 const NewsFeedItemsStore = require('../../stores/news_feed_items_store');
@@ -103,10 +102,6 @@ const ProductActivity = React.createClass({
               </div>
 
               <div className="mb3">
-                {this.renderIntroductionForm()}
-              </div>
-
-              <div className="mb3">
                 {this.renderTypeFilters()}
               </div>
 
@@ -117,44 +112,6 @@ const ProductActivity = React.createClass({
           </div>
         </div>
       </div>
-    );
-  },
-
-  renderIntroductionForm() {
-    let product = this.state.product;
-    let user = UserStore.getUser();
-
-    if (user && !product.is_member) {
-      return (
-        <Tile>
-          <div className="px3 py2">
-            <IntroductionForm product={product} />
-          </div>
-        </Tile>
-      );
-    }
-
-    return (
-      <Tile>
-        <div className="p3">
-          <div className="block h5 mt0 mb1 bold">
-            Getting Started with Updates
-          </div>
-          <div className="h6 m0 gray-1">
-            Catch up on the latest {product.name} updates, milestones, and other announcements here.
-            <br/><br/>
-            Jump into chat and ping <a href={product.people_url}>@core</a> if you have any questions.
-          </div>
-
-          <div className="center mt2 border-top">
-            <div className="mt2">
-              <Button type="default" action={function() { window.open('chat', '_blank'); }}>
-                Jump into chat
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Tile>
     );
   },
 
