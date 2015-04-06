@@ -261,7 +261,7 @@ class Product < ActiveRecord::Base
   end
 
   def distinct_wallets_unqueued
-    self.partners.where(queue_id: nil)
+    TransactionLogEntry.product_partners_with_balances_unqueued(self.id)
   end
 
   def mark_all_transactions_as_queued

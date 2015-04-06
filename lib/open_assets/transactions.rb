@@ -161,7 +161,7 @@ module OpenAssets
     end
 
     def dollar_outflows_as_btc(date)
-      BtcPayment.payments_before_data(data).where('btc_change < 0').sum('btc_change*-1*btcusdprice_at_moment').to_f/10000000000
+      BtcPayment.payments_before_data(date).where('btc_change < 0').sum('btc_change*-1*btcusdprice_at_moment').to_f/10000000000
     end
 
     def dollar_outflows_as_btc_per_month(date)

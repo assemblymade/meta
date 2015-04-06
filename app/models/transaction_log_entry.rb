@@ -74,11 +74,23 @@ class TransactionLogEntry < ActiveRecord::Base
   end
 
   def self.product_partners(product_id)
-    User.select('users.*, sum(cents) as balance').
+    User.select('users.id, sum(cents) as balance').
          where(tle: {product_id: product_id}).
          joins('inner join transaction_log_entries tle on tle.wallet_id = users.id').
          group('users.id').
          having('sum(cents) > 0')
+  end
+
+  def self.product_partners_with_balances(product_id)
+    User.joins('inner join transaction_log_entries tle on tle.wallet_id = users.id').
+      where(tle: {product_id: product_id}).
+      group('users.id').sum(:cents)
+  end
+
+  def self.product_partners_with_balances_unqueued(product_id)
+    User.joins('inner join transaction_log_entries tle on tle.wallet_id = users.id').
+      where(tle: {product_id: product_id, queue_id: nil}).
+      group('users.id').sum(:cents)
   end
 
   def self.transfer!(product, from_id, to_id, cents, via, created_at=Time.now)

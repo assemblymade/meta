@@ -89,7 +89,7 @@ let IdeaStartConversation = React.createClass({
                 </div>
 
                 <div className="clearfix mb1">
-                  <h5 className="mt0 mb2">Shape the idea with help from the community. Start by asking a question to kick things off.</h5>
+                  <h4 className="center mt0 mb2">Kick off the discussion. <br /> What questions would you like answered about your idea?</h4>
                 </div>
 
                 <form>
@@ -98,16 +98,6 @@ let IdeaStartConversation = React.createClass({
                   </Drawer>
 
                   <div className="mb0">
-                    <div className="py2 h6 gray-2">
-                      <p>
-                        Here are some example questions you could ask the community:
-                      </p>
-                      <ol>
-                        <li>What's a good name for this?</li>
-                        <li>Does anyone know if there are competing products?</li>
-                        <li>What would you change about the idea?</li>
-                      </ol>
-                    </div>
                     <NewComment canContainWork={false}
                         dropzoneInnerText={false}
                         hideAvatar={true}
