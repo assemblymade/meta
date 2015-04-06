@@ -82,7 +82,8 @@ let ProductShow = React.createClass({
     let product = this.state.product;
     let slug = product.slug;
     let user = UserStore.getUser();
-    let perks = null
+    let perks = null,
+        trust = null
 
     if (UserStore.isStaff()) {
       perks = <div className="mb3">
@@ -115,6 +116,48 @@ let ProductShow = React.createClass({
       </div>
     }
 
+    if (product && _.some(_.values(product.trust))) {
+
+      const renderTrustCol = function(field, label) {
+        let icon = null
+        if(product.trust[field]) {
+          icon = <span className="green"><Icon icon="check-circle" fw={true} /></span>
+        } else {
+          icon = <span className="gray-5"><Icon icon="question-circle" fw={true} /></span>
+        }
+        return <div className="sm-col sm-col-6 lg-col-4 px2 mb2 clearfix">
+          <div className="left mr1">
+            {icon}
+          </div>
+          <div className="overflow-hidden">
+            {label}
+          </div>
+        </div>
+      }
+
+      trust = <div className="py3">
+                <div className="clearfix py2">
+                  <h6 className="left gray-2 caps mt0 mb0">
+                    Community Ownership
+                  </h6>
+                  <a className="right h6" href={`${product.url}/trust`}>
+                    View more
+                  </a>
+                </div>
+
+                <div className="clearfix mxn2">
+                  {renderTrustCol('domain', 'Community held domains')}
+                  {renderTrustCol('ip', 'Shared intellectual property')}
+                  {renderTrustCol('hosting', 'Community held hosting')}
+                  {renderTrustCol('data', 'Community held data')}
+                  {renderTrustCol('finances', 'Community held finances')}
+                  {renderTrustCol('ios', 'Community held iOS App account')}
+                  {renderTrustCol('android', 'Community held Android App account')}
+                </div>
+
+              </div>
+    }
+
 
 
     var team = List()
@@ -132,8 +175,6 @@ let ProductShow = React.createClass({
         <ProductHeader />
 
         <div className="container mt3">
-          {this.renderEditButton()}
-
           <div className="clearfix mxn3">
             <div className="sm-col sm-col-8 px3 mb2 sm-mb0">
               <Tile>
@@ -145,6 +186,8 @@ let ProductShow = React.createClass({
                     <Reveal>
                       <Markdown color="black" content={product.lead + "\n" + product.description_html} normalized={true} lead={true} ref="description" />
                     </Reveal>
+
+                    {this.renderEditButton()}
                   </div>
 
                   <div className="py3">
@@ -182,6 +225,9 @@ let ProductShow = React.createClass({
                       }).toJS()}
                     </div>
                   </div>
+
+                  {trust}
+
                 </div>
               </Tile>
             </div>

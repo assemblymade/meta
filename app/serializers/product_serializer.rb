@@ -10,6 +10,7 @@ class ProductSerializer < ApplicationSerializer
   attributes :can_update, :try_url, :wips_count, :partners_count, :lead
   attributes :top_marks, :homepage_url, :screenshots, :description, :description_html, :labels
   attributes :bounty_valuation_steps, :coins_minted, :profit_last_month, :state, :greenlit_at
+  attributes :trust
 
   has_many :most_active_contributors, serializer: UserSerializer
 
@@ -68,4 +69,12 @@ class ProductSerializer < ApplicationSerializer
     l.merge(object.marks.limit(4).map(&:name))
     l
   end
+
+  def trust
+    fields = [:domain, :ip, :hosting, :data, :finances, :ios, :android]
+    fields.each_with_object({}) do |field, obj|
+      obj[field] = object.send("trust_#{field}_at").present?
+    end
+  end
+
 end

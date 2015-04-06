@@ -213,6 +213,13 @@ let ProductsHandlers = {
     });
   },
 
+  showProductTrust(product) {
+    Dispatcher.dispatch({
+      type: ActionTypes.PRODUCT_RECEIVE,
+      product: product
+    });
+  },
+
   showProductPartners(data) {
 
     Dispatcher.dispatch({

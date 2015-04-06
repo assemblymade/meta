@@ -23,7 +23,8 @@ module ApplicationHelper
     post_show_route? ||
     product_activity_route? ||
     product_show_route? ||
-    product_partners_route?
+    product_partners_route? ||
+    product_trust_route?
   end
 
   def bounties_index_route?
@@ -68,6 +69,11 @@ module ApplicationHelper
   def product_show_route?
     controller_name == 'products' &&
       action_name == 'show'
+  end
+
+  def product_trust_route?
+    controller_name == 'products' &&
+      action_name == 'trust'
   end
 
   def idea_show_route?

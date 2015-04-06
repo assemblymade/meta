@@ -212,6 +212,14 @@ class ProductsController < ProductController
     end
   end
 
+  def trust
+    set_product
+    respond_to do |format|
+      format.html { render }
+      format.json { render json: @product }
+    end
+  end
+
   def flag
     return redirect_to(product_url(@product)) unless current_user && current_user.is_staff?
     if request.post?

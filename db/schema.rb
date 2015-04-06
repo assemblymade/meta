@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331194114) do
+ActiveRecord::Schema.define(version: 20150406160722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -743,6 +743,13 @@ ActiveRecord::Schema.define(version: 20150331194114) do
     t.text     "asmlytics_key"
     t.integer  "total_visitors",                                default: 0,    null: false
     t.text     "analytics_category"
+    t.datetime "trust_domain_at"
+    t.datetime "trust_ip_at"
+    t.datetime "trust_hosting_at"
+    t.datetime "trust_data_at"
+    t.datetime "trust_finances_at"
+    t.datetime "trust_ios_at"
+    t.datetime "trust_android_at"
   end
 
   add_index "products", ["asmlytics_key"], name: "index_products_on_asmlytics_key", unique: true, using: :btree

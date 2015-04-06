@@ -334,6 +334,8 @@ ASM::Application.routes.draw do
     get '/people' => 'products#people'
     get '/coin' => 'products#coin'
 
+    get '/trust' => 'products#trust'
+
     get 'log' => 'stakes#show'
     get 'search' => 'search#index'
     patch :launch
