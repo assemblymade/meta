@@ -245,6 +245,15 @@ class Task < Wip
     award
   end
 
+  def award_pending_with_reason(awarder, guest, reason)
+    awards.create!(
+      awarder: awarder,
+      guest: guest,
+      wip: self,
+      cents: self.earnable_coins_cache
+    )
+  end
+
   def work_submitted(submitter)
     review_me!(submitter) if can_review_me?
   end
