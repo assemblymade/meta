@@ -49,10 +49,10 @@ const HotBounties = React.createClass({
                   {d.created_at}
                 </td>
                 <td>
-                  <a href={users[e].url}>
-                    <AvatarWithUsername user={users[e]} />
+                  <a href={d.author.hearts_received}>
+                    <AvatarWithUsername user={d.author} />
                   </a><br/>
-                  {users[e].hearts_received}
+                  {d.author.hearts_received}
                 </td>
               </tr>
             )
