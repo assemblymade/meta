@@ -244,6 +244,14 @@ class User < ActiveRecord::Base
 
   end
 
+  def love_ratio
+    if self.hearts_received > 0
+      Heart.where(user: self).count.to_f / self.hearts_received
+    else
+      0
+    end
+  end
+
   def partnerships
     Product.
        joins(:transaction_log_entries).
