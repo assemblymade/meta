@@ -5,10 +5,11 @@ import Tile from '../ui/tile.js.jsx';
 import Icon from '../ui/icon.js.jsx';
 import ProductHeader from './product_header.js.jsx';
 import ProductStore from '../../stores/product_store';
+import UserStore from '../../stores/user_store';
 
 const Report = React.createClass({
   render() {
-    const {label, status, description} = this.props
+    const {label, status, children} = this.props
     let icon = null
 
     if (status) {
@@ -17,7 +18,7 @@ const Report = React.createClass({
       </span>
     } else {
       icon = <span className="gray-5">
-        <Icon icon="question-circle" fw={true} />
+        <Icon icon="times-circle" fw={true} />
       </span>
     }
 
@@ -27,7 +28,7 @@ const Report = React.createClass({
       </div>
       <div className="overflow-hidden">
         <h5 className="mt0 mb0">{label}</h5>
-        {description}
+        {children}
       </div>
     </div>
   }
@@ -48,10 +49,8 @@ const ProductTrust = React.createClass({
             {this.renderDomainReport(product)}
             {this.renderIpReport(product)}
             {this.renderHostingReport(product)}
-            {this.renderDataReport(product)}
             {this.renderFinancesReport(product)}
-            {this.renderIOSReport(product)}
-            {this.renderAndroidReport(product)}
+            {this.renderMobileReport(product)}
           </div>
         </Tile>
       </div>
@@ -60,67 +59,72 @@ const ProductTrust = React.createClass({
 
   renderDomainReport(product) {
     const status = product.trust.domain
-    let description = <div>
-        <p>No one partner can change or update the domain name. It's held by Assembly for the community to help ensure that your ownership continues to be valuable.</p>
-        <a href="/guides/domains#domains">Learn more</a>
-      </div>
-
-    return <Report label="Domain" status={product.trust.domain} description={description} />
+    let action = null
+    if (UserStore.isSignedIn() && !status && ProductStore.isCoreTeam(UserStore.getUser())) {
+      action = <Button action="mailto:assembly@helpful.io?subject=Domains">Buy or transfer an existing domain</Button>
+    } else {
+      action = <a href="/guides/domains#domains">Learn more</a>
+    }
+    return <Report label="Domains" status={product.trust.domain}>
+      <p>An organization's domain name is one of it's most important assets. If somebody runs away with a domain it could be catistrophic. Domains should be community owned so that no one partner can change or update the domain name.</p>
+      {action}
+    </Report>
   },
 
   renderIpReport(product) {
     const status = product.trust.ip
-    let description = <div>
-        <p>For the community to share intellectual property, all code should be commited with an AGPL license. This prevents any one person from laying claim to the organization's intellectual property.</p>
-        <a href="/guides/domains#domains">Learn more</a>
-      </div>
-
-    return <Report label="Intellectual property" status={status} description={description} />
+    let action = null
+    if (UserStore.isSignedIn() && !status && ProductStore.isCoreTeam(UserStore.getUser())) {
+      action = <Button action={`/${product.slug}/repositories`}>Setup repos</Button>
+    } else {
+      action = <a href="/guides/domains#domains">Learn more</a>
+    }
+    return <Report label="Intellectual property" status={status}>
+      <p>For the community to share intellectual property, all code should be commited with an AGPL license. This prevents any one person from laying claim to the organization's intellectual property.</p>
+      {action}
+    </Report>
   },
 
   renderHostingReport(product) {
-    const status = product.trust.ip
-    let description = <div>
-        <p>For hosting to be held for the community, Assembly can manage the hosting using Heroku. The core team can get access to their Heroku instance to manage their own app.</p>
-        <a href="/guides/domains#domains">Learn more</a>
-      </div>
-    return <Report label="Hosting" status={status} description={description} />
-  },
-
-  renderDataReport(product) {
-    const status = product.trust.data
-    let description = <div>
-        <p>Customer data (databases) should be held by the community so that no one person can either corrupt or exploit the data.</p>
-        <a href="/guides/domains#domains">Learn more</a>
-      </div>
-    return <Report label="Data" status={status} description={description} />
+    const status = product.trust.hosting
+    let action = null
+    if (UserStore.isSignedIn() && !status && ProductStore.isCoreTeam(UserStore.getUser())) {
+      action = <Button action="mailto:support@assembly.com?subject=Hosting">Setup hosting</Button>
+    } else {
+      action = <a href="/guides/domains#hosting">Learn more</a>
+    }
+    return <Report label="Hosting &amp; customer data" status={status}>
+      <p>For hosting to be held for the community, Assembly can manage the hosting using Heroku. The core team can get access to their Heroku instance to manage their own app.</p>
+      {action}
+    </Report>
   },
 
   renderFinancesReport(product) {
     const status = product.trust.financials
-    let description = <div>
-        <p>For organizations that pay royalties, accurately reporting and collecting revenue is important to establishing monetary value to ownership. Assembly can manage collect revenue on behalf of the community.</p>
-        <a href="/guides/accepting-payments">Learn more</a>
-      </div>
-    return <Report label="Finances" status={status} description={description} />
+    let action = null
+    if (UserStore.isSignedIn() && !status && ProductStore.isCoreTeam(UserStore.getUser())) {
+      action = <Button action="/guides/accepting-payments">Setup payments</Button>
+    } else {
+      action = <a href="/guides/accepting-payments">Learn more</a>
+    }
+    return <Report label="Finances" status={status}>
+      <p>For organizations that pay royalties, accurately reporting and collecting revenue is important to establishing monetary value to ownership. Assembly can manage collect revenue on behalf of the community.</p>
+      {action}
+    </Report>
   },
 
-  renderIOSReport(product) {
-    const status = product.trust.ios
-    let description = <div>
-        <p>For organizations with iOS apps, having community access to the iOS App Store account is important. Assembly can manage access to the iOS account so that no one person can pull an app from the store and so revenue is correctly reported.</p>
-        <a href="/guides/starting-ios">Learn more</a>
-      </div>
-    return <Report label="iOS app" status={status} description={description} />
-  },
-
-  renderAndroidReport(product) {
-    const status = product.trust.android
-    let description = <div>
-        <p>For organizations with Android apps, having community access to the Google Play Store account is important. Assembly can manage access to the Play Store account so that no one person can pull an app from the store and so revenue is correctly reported.</p>
-        <a href="/guides/starting-android">Learn more</a>
-      </div>
-    return <Report label="Android app" status={status} description={description} />
+  renderMobileReport(product) {
+    const status = product.trust.mobile
+    let action = null
+    if (UserStore.isSignedIn() && !status && ProductStore.isCoreTeam(UserStore.getUser())) {
+      action = <Button action="mailto:assembly@helpful.io?subject=Mobile">Submit app for iOS or Android stores</Button>
+    } else {
+      action = <a href="/guides/starting-ios">Learn more</a>
+    }
+    return <Report label="Mobile apps" status={status}>
+      <p>For organizations with iOS apps, having community access to the iOS App Store account is important. Assembly can manage access to the iOS account so that no one person can pull an app from the store and so revenue is correctly reported.</p>
+      {action}
+    </Report>
   },
 
 })

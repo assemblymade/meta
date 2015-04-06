@@ -123,7 +123,7 @@ let ProductShow = React.createClass({
         if(product.trust[field]) {
           icon = <span className="green"><Icon icon="check-circle" fw={true} /></span>
         } else {
-          icon = <span className="gray-5"><Icon icon="question-circle" fw={true} /></span>
+          icon = <span className="gray-5"><Icon icon="times-circle" fw={true} /></span>
         }
         return <div className="sm-col sm-col-6 lg-col-4 px2 mb2 clearfix">
           <div className="left mr1">
@@ -149,10 +149,8 @@ let ProductShow = React.createClass({
                   {renderTrustCol('domain', 'Community held domains')}
                   {renderTrustCol('ip', 'Shared intellectual property')}
                   {renderTrustCol('hosting', 'Community held hosting')}
-                  {renderTrustCol('data', 'Community held data')}
                   {renderTrustCol('finances', 'Community held finances')}
-                  {renderTrustCol('ios', 'Community held iOS App account')}
-                  {renderTrustCol('android', 'Community held Android App account')}
+                  {renderTrustCol('mobile', 'Community held mobile apps')}
                 </div>
 
               </div>

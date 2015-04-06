@@ -71,7 +71,7 @@ class ProductSerializer < ApplicationSerializer
   end
 
   def trust
-    fields = [:domain, :ip, :hosting, :data, :finances, :ios, :android]
+    fields = [:domain, :ip, :hosting, :finances, :mobile]
     fields.each_with_object({}) do |field, obj|
       obj[field] = object.send("trust_#{field}_at").present?
     end
