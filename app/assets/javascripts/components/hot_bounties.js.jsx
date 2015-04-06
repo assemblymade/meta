@@ -14,30 +14,45 @@ const Jumbotron = require('./ui/jumbotron.js.jsx')
 const HotBounties = React.createClass({
 
   propTypes: {
-    bounties: React.PropTypes.array.isRequired
+    bounties: React.PropTypes.array.isRequired,
+    users: React.PropTypes.array.isRequired
   },
 
   renderHeader: function() {
     return (
-      <Jumbotron>
-        <div className="container center white">
-            <h1 className="mt0 mb0">
-              The best product ideas &mdash; built by all of us.
-            </h1>
-        </div>
-      </Jumbotron>
+      <div>
+        <h3>
+          Top Bounties
+        </h3>
+      </div>
     )
   },
 
   renderBounties: function() {
+    var users = this.props.users;
+
     return (
       <div>
         <table>
-          {_.map(this.props.bounties, function(d) {
+          {_.map(this.props.bounties, function(d, e) {
             return (
               <tr>
                 <td>
-                  d.title
+                  <a href={d.url}>
+                    {d.title}
+                  </a>
+                </td>
+                <td>
+                  {d.description}
+                </td>
+                <td>
+                  {d.created_at}
+                </td>
+                <td>
+                  <a href={users[e].url}>
+                    <AvatarWithUsername user={users[e]} />
+                  </a><br/>
+                  {users[e].hearts_received}
                 </td>
               </tr>
             )
@@ -49,12 +64,15 @@ const HotBounties = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className="col-md-6 col-md-offset-3">
         {this.renderHeader()}
+        <Tile>
+          {this.renderBounties()}
+        </Tile>
       </div>
     )
 
   }
 });
 
-module.exports = HotBounties;
+module.exports = window.HotBounties = HotBounties;

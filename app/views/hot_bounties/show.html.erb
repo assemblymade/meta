@@ -4,7 +4,10 @@
 
 <%= render 'shared/navbar' %>
 
-<%= react_component 'HotBounties', bounties: @bounties  %>
+<%= react_component 'HotBounties', bounties:
+  ActiveModel::ArraySerializer.new(@bounties, each_serializer: WipSerializer),
+  users: ActiveModel::ArraySerializer.new(@bounties.map{|a| a.user}, each_serializer: UserSerializer )
+    %>
 
 
 
