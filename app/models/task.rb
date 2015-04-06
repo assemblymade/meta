@@ -235,7 +235,8 @@ class Task < Wip
     end
   end
 
-  def award(closer, winning_event, amount=self.value)
+  # TODO: Remove value method and use underlying column
+  def award(closer, winning_event, amount=self[:value])
     stop_work!(winning_event.user)
 
     minting = nil
@@ -248,7 +249,7 @@ class Task < Wip
           winner: winning_event.user,
           event: win,
           wip: self,
-          cents: self.earnable_coins_cache
+          cents: amount
         )
 
         minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, amount)
@@ -275,10 +276,10 @@ class Task < Wip
           winner: winner,
           event: win,
           wip: self,
-          cents: self.earnable_coins_cache
+          cents: self[:value]
         )
 
-        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, self.value)
+        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, self[:value])
 
         milestones.each(&:touch)
       end
@@ -338,7 +339,7 @@ class Task < Wip
   end
 
   def winners
-    awards.map(&:winner).uniq
+    awards.select(&:winner).map(&:winner).uniq
   end
 
   def open?

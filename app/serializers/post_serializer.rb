@@ -20,12 +20,12 @@ class PostSerializer < ApplicationSerializer
   end
 
   def markdown_body
-    product_markdown(object.product, object.body)
+    bounty_markdown(object.product, object.body)
   end
 
   def body
     md = object.body
-    html = product_markdown(object.product, md)
+    html = bounty_markdown(object.product, md)
     text = Nokogiri::HTML(html).text
     {
       md:   object.body,
@@ -57,6 +57,6 @@ class PostSerializer < ApplicationSerializer
   cached
 
   def cache_key
-    ['v2', object]
+    ['v3', object]
   end
 end

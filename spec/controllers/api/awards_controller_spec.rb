@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Api::AwardsController do
-  let!(:bounty) { Task.make! }
+  let!(:bounty) { Task.make!(value: 100) }
   let!(:product) { bounty.product }
   let!(:user) { bounty.user }
   let!(:winner) { User.make!(email: 'jimmy@assembly.com') }

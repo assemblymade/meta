@@ -121,9 +121,24 @@ class ProductsController < ProductController
 
   def coin
     find_product!
+    data = {}
+    data['asset_ids'] = [@product.coin_info.asset_address]
+    data['name_short'] = @product.name[0,5]
+    data['name'] = @product.name
+    data['contract_url'] = ProductSerializer.new(@product).full_url
+    data['issuer'] = "Assembly.com"
+    data['description'] = ""#@product.description
+    data['description_mime'] = "text/x-markdown; charset=UTF-8"
+    data['type'] = "Ownership"
+    data['divisibility'] = 1
+    data['link_to_website'] = true
+    data['icon_url'] = @product.full_logo_url
+    data['image_url'] = @product.full_logo_url
+    version = "1.0"
+
     if @product
       if @product.coin_info
-        render json: CoinInfoSerializer.new(@product.coin_info)
+        render json: data
       else
         render json: {}
       end

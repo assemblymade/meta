@@ -1,7 +1,7 @@
 class Interpreter
 
   def marks_in_text(text)
-    marks = Mark.all.pluck(:name)
+    marks = Mark.pluck(:name)
     text = text.downcase.gsub(/[^A-Za-z0-9\s]/i, '')
     words = text.split(' ')
     mark_words = words.select{|a| marks.include?(a)}

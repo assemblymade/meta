@@ -13,6 +13,7 @@ class GuidesGroup < StaticContentGroup
     ['transferring-android', 'Transferring an Android app'],
     ['starting-web', 'Starting a Web app'],
     ['transferring-web', 'Transferring a Web app'],
+    ['idea-submission-rules', 'Submission Rules for Ideas'],
   ]
 
   def self.all

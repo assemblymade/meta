@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Task do
   let(:worker) { User.make! }
-  let(:task) { Task.make! }
+  let(:task) { Task.make!(value: 100) }
   let(:product) { task.product }
   let(:core_member) { User.make! }
   let(:comment) { NewsFeedItemComment.make!(body: 'TROGDOR', user: worker) }
@@ -15,20 +15,6 @@ describe Task do
     it 'creates assign Activity' do
       expect { task.allocate!(worker) }.to change(Activity, :count).by(1)
     end
-  end
-
-  describe "#value" do
-
-    it "defaults to 0" do
-      expect(task.value).to eq(0)
-    end
-
-    it "increments with a single offer" do
-      TransactionLogEntry.minted!(nil, Time.now, product, core_member.id, 1)
-      Offer.create!(bounty: task, user: core_member, amount: 100, ip: '1.1.1.1')
-      expect(task.value).to eq(100)
-    end
-
   end
 
   describe "award" do
