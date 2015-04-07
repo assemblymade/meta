@@ -456,7 +456,7 @@ class Product < ActiveRecord::Base
 
   def assign_asset_address
     if self.coin_info
-      if self.coin_info.asset_address == "" || !self.coin_info.asset_address.present?
+      if self.coin_info.asset_address.length < 10 || !self.coin_info.asset_address.present?
         a = OpenAssets::Transactions.new.get_asset_address(self.wallet_public_address)
         self.coin_info.update!({asset_address: a['asset_address']})
       end
