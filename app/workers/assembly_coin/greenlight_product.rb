@@ -20,7 +20,7 @@ module AssemblyCoin
         if time_since_issued > MIN_TIME_BETWEEN_ISSUANCE
           Rails.logger.info "[coins] creating new coin for #{product.id}"
           AssemblyCoin::CreateCoin.new.perform(product_id, TOTAL_COINS_UPON_GREENLIGHT)
-          AssemblyCoin::TransactionsOnBlockchain.new.perform(product_id)
+          #AssemblyCoin::TransactionsOnBlockchain.new.perform(product_id)
         else
           Rails.logger.info "[coins] you are attempting to issue coins too soon after last attempt: #{time_since_issued}"
         end

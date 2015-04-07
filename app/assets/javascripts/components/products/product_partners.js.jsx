@@ -7,6 +7,7 @@ const Markdown = require('../markdown.js.jsx')
 import ProductHeader from '../products/product_header.js.jsx'
 import ProductStore from '../../stores/product_store'
 import PartnersStore from '../../stores/partners_store'
+import Button from '../ui/button.js.jsx';
 
 function _parseDate(date) {
   var parsedDate = new Date(date);
@@ -18,7 +19,8 @@ const ProductPartners = React.createClass({
 
   getInitialState() {
     return {
-      partners: PartnersStore.get(ProductStore.getId())
+      partners: PartnersStore.get(ProductStore.getId()),
+      coinprism_url: ProductStore.getCoinPrismUrl()
     }
   },
 
@@ -72,6 +74,7 @@ const ProductPartners = React.createClass({
         <div className="container mt3">
           <Tile>
           <div className="p4">
+
             <div className="table-responsive">
               <table className="table">
                 <thead>
@@ -79,6 +82,7 @@ const ProductPartners = React.createClass({
                     <th>Partner</th>
                     <th className="right-align">Coins</th>
                     <th className="right-align">Ownership</th>
+                  
                   </tr>
                 </thead>
                 <tbody>

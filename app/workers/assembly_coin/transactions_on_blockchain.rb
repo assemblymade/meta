@@ -7,7 +7,7 @@ module AssemblyCoin
       distinct_wallets = TransactionLogEntry.
         where(action: 'credit', product_id: product_id, queue_id: nil).
         select(:wallet_id).
-        distinct
+        distinct.to_a
 
       distinct_wallets.each do |dw|
         wallet_id = dw.wallet_id
