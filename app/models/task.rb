@@ -79,50 +79,6 @@ class Task < Wip
     true
   end
 
-  def value
-    Rails.cache.fetch([self, 'value']) do
-      offers = Offer.where(bounty: self)
-
-      # 1. reject invalid (old) offers
-
-      latest_offers = {}
-      offers.each do |offer|
-        last_offer = latest_offers[offer.user]
-        if last_offer.nil? || last_offer.created_at < offer.created_at
-          latest_offers[offer.user] = offer
-        end
-      end
-
-      offers = latest_offers.values
-
-      # 2. figure out people's current ownership
-
-      partners = offers.map {|o| Partner.new(o.product, o.user) }
-      ownership = partners.each_with_object({}) do |partner, o|
-        o[partner.wallet] = [0.0001, partner.ownership].max
-      end
-
-      # 3. figure out weighted average
-
-      return 0 if offers.empty?
-
-      sum = 0
-      weight_sum = 0
-
-      offers.each do |offer|
-        sum += offer.amount * ownership[offer.user]
-        weight_sum += ownership[offer.user]
-      end
-
-      if weight_sum > 0
-        (sum / weight_sum).round
-      else
-        0
-      end
-    end
-  end
-  alias_method :calculate_current_value, :value
-
   def on_open_entry(prev_state, event, *args)
     assign_lowest_priority
   end
@@ -351,7 +307,6 @@ class Task < Wip
 
   def contracts
     WipContracts.new(self)
-    # raise "#{WipContracts.new(self).inspect}"
   end
 
   def update_coins_cache!
