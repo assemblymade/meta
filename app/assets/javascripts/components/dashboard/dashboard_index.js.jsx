@@ -18,7 +18,6 @@ const UserStore = require('../../stores/user_store.js')
 const Spinner = require('../spinner.js.jsx')
 const SvgIcon = require('../ui/svg_icon.js.jsx')
 const Tile = require('../ui/tile.js.jsx')
-const Leaderboard = require('../leaderboard.js.jsx')
 
 let DashboardIndex = React.createClass({
   propTypes: {
@@ -443,7 +442,6 @@ let DashboardIndex = React.createClass({
             <div className="md-col md-col-right md-col-4 px2">
               {product}
               {bounties}
-              <Leaderboard />
             </div>
             <div className="md-col md-col-6 px2 mb4">
               <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>
