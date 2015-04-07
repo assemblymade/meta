@@ -8,7 +8,7 @@ class WipContracts
   end
 
   def total_cents
-    @total_cents ||= task.value
+    @total_cents ||= (task.value || 0)
   end
 
   def earnable_cents
