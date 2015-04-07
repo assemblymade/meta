@@ -10,7 +10,7 @@ module.exports = React.createClass({
     var actor = this.props.actor;
 
     return (
-      <NewsFeedItemEvent>
+      <NewsFeedItemEvent timestamp={this.props.timestamp}>
         Reopened by
 
         {' '}<a href={actor.url} className="_strong black">{actor.username}</a>

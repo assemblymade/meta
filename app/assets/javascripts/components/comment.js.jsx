@@ -149,12 +149,12 @@ module.exports = React.createClass({
     });
 
     return (
-      <div className="px4 visible-hover-wrapper">
+      <div className="ml4 visible-hover-wrapper">
         <div className="h6 mt0 mb1">
           <a className="bold black black-hover" href={author.url}>{author.username}</a>
           {' '}
-          <a href={this.props.url} className="gray-2 gray-2-hover visible-hover">
-            commented {moment(this.props.timestamp).fromNow()}
+          <a href={this.props.url} className="right gray-2 gray-2-hover visible-hover">
+            {moment(this.props.timestamp).fromNow()}
           </a>
         </div>
 

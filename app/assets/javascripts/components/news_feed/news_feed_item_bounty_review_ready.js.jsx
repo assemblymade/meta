@@ -15,7 +15,7 @@ const NewsFeedItemBountyReviewReady = React.createClass({
     const awardUrl = this.props.award_url
 
     return (
-      <NewsFeedItemEvent>
+      <NewsFeedItemEvent timestamp={this.props.timestamp}>
         <div className="mb1">
           <a className="bold black" href={actor.url}>
             {actor.username}

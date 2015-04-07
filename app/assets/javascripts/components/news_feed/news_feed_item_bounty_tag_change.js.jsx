@@ -17,7 +17,7 @@ var NewsFeedBountyItemTagChange = React.createClass({
     // timestamp down below the last comment
 
     return (
-      <NewsFeedItemEvent>
+      <NewsFeedItemEvent timestamp={this.props.timestamp}>
         <a href={actor.url}>
           <Avatar user={actor} /> {actor.username}
           {' '}<span style={{ fontWeight: 400 }}>changed the tags.</span>

@@ -11,6 +11,7 @@ var Icon = require('../ui/icon.js.jsx');
 var IdeaSharePanel = require('../ideas/idea_share_panel.js.jsx');
 var NewComment = require('./new_comment.js.jsx');
 var NewCommentActionCreators = require('../../actions/new_comment_action_creators');
+var NewsFeedItemEvent = require('./news_feed_item_event.js.jsx');
 var NewsFeedItemBountyClose = require('./news_feed_item_bounty_close.js.jsx');
 var NewsFeedItemBountyCommentReference = require('./news_feed_item_bounty_comment_reference.js.jsx');
 var NewsFeedItemBountyReopen = require('./news_feed_item_bounty_reopen.js.jsx');
@@ -416,7 +417,9 @@ function parseEvent(event, awardUrl, editUrl) {
     renderedEvent = null
     break;
   case 'Event::Win':
-    renderedEvent = <NewsFeedItemBountyWin {...event} />;
+    renderedEvent = <NewsFeedItemEvent timestamp={event.timestamp}>
+      <NewsFeedItemBountyWin {...event} />
+    </NewsFeedItemEvent>
     break;
   case 'news_feed_item_comment':
     renderedEvent = <Comment

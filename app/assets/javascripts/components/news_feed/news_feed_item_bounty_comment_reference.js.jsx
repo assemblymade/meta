@@ -19,11 +19,11 @@ module.exports = React.createClass({
     var targetUrl = target.target_url;
 
     return (
-      <NewsFeedItemEvent>
-        <a className="_strong black" href={actor.url}>{actor.username}</a>
+      <NewsFeedItemEvent timestamp={this.props.timestamp}>
+        <a className="bold black" href={actor.url}>{actor.username}</a>
         {' '} mentioned this in {' '}
         {targetType}{' '}
-        <a className="_strong black" href={targetUrl} title={targetTitle}>{targetTitle}</a>
+        <a className="bold black" href={targetUrl} title={targetTitle}>{targetTitle}</a>
       </NewsFeedItemEvent>
     );
   }

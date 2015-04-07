@@ -12,12 +12,12 @@ module.exports = React.createClass({
     var target = this.props.target;
 
     return (
-      <NewsFeedItemEvent>
+      <div>
         <a href={target.url} className="black bold">{target.username}</a>
         {' '} was awarded this by {' '}
 
         <a href={actor.url} className="black bold">{actor.username}</a>
-      </NewsFeedItemEvent>
+      </div>
     );
   }
 });
