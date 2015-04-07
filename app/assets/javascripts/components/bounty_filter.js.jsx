@@ -61,7 +61,7 @@ var BountyFilter = React.createClass({
 
   renderSortDropdown: function() {
     var sorts = [
-      { name: 'Priority',               value: 'priority' },
+      { name: 'Order',                  value: 'priority' },
       { name: 'Most valuable',          value: 'most_valuable' },
       { name: 'Least valuable',         value: 'least_valuable' },
       { name: 'Newest',                 value: 'newest' },
