@@ -1,7 +1,7 @@
 class MetricsController < ProductController
   respond_to :html, :json
 
-  before_action :authenticate_staff!, except: :snippet
+  before_action :authenticate_staff!, :except => [:snippet, :overview]
 
   def index
     find_product!
@@ -28,6 +28,10 @@ class MetricsController < ProductController
         render json: ProductSerializer.new(@product).as_json.merge(asmlytics_snippet: snippet)
       end
     end
+  end
+
+  def overview
+    render json: MetricsAggregator.assemble_overview_metrics
   end
 
   def weekly
