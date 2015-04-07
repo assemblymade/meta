@@ -51,7 +51,7 @@
     }
   };
 
-  LandlineMigration.prototype.handleFailure = function() {
+  LandlineMigration.prototype.handleFailure = function(response) {
     console.error(response.message);
   };
 
