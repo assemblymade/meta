@@ -21,7 +21,7 @@ class BountyShallowSerializer < ApplicationSerializer
   end
 
   def coins
-    object.earnable_coins_cache
+    object.value
   end
 
   def url
