@@ -33,23 +33,21 @@ module Api
       respond_with @workers
     end
 
-    def authorization
-      @product = if params[:product_id].uuid?
+    def get_product_from_params(params)
+      if params[:product_id].uuid?
         Product.find(params[:product_id])
       else
-        Product.find_by(slug: params[:product_id])
+        Product.find_by(slig: params[:product_id])
       end
+    end
 
+    def authorization
+      @product = get_product_from_params(params)
       respond_with authorized: @product.authentication_token == params[:token]
     end
 
     def core_team
-      @product = if params[:product_id].uuid?
-        Product.find(params[:product_id])
-      else
-        Product.find_by(slug: params[:product_id])
-      end
-      
+      @product = get_product_from_params(params)
       @user = User.find_by!(authentication_token: params[:token])
 
       respond_with authorized: @product.core_team.include?(@user)

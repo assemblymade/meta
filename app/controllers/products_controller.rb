@@ -122,7 +122,9 @@ class ProductsController < ProductController
   def coin
     find_product!
     data = {}
-    data['asset_ids'] = [@product.coin_info.asset_address]
+    if @product.coin_info
+      data['asset_ids'] = [@product.coin_info.asset_address]
+    end
     data['name_short'] = @product.name[0,5]
     data['name'] = @product.name
     data['contract_url'] = ProductSerializer.new(@product).full_url

@@ -175,8 +175,6 @@ module Karma
         end
         return work_message
       end
-
-
     end
 
     def wip_text(deed)

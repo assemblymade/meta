@@ -10,11 +10,11 @@ class ContractsController < ProductController
     @active_contracts = @product.active_contracts
     @closed_contracts = @product.expired_contracts
 
-    @activeTipContracts = @product.auto_tip_contracts.select{|a| a.active?}.map{|b| AutoTipContractSerializer.new(b)}
-    @closedTipContracts = @product.auto_tip_contracts.select{|a| !a.active?}.map{|b| AutoTipContractSerializer.new(b)}
+    @activeTipContracts = AutoTipContract.active_tip_contracts_on_product(@product)
+    @closedTipContracts = AutoTipContract.closed_tip_contracts_on_product(@product)
 
-    @activeVestings = @product.proposals.select(&:won?).map(&:vestings).flatten.select{|a| !a.expired?}.map{|b| VestingSerializer.new(b)}
-    @closedVestings = @product.proposals.select(&:won?).map(&:vestings).flatten.select(&:expired?).map{|b| VestingSerializer.new(b)}
+    @activeVestings = Vesting.active_vestings_on_product(product)
+    @closedVestings = Vesting.closed_vestings_on_product(product)
   end
 
   def create

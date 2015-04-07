@@ -40,5 +40,12 @@ class Vesting < ActiveRecord::Base
     self.expiration_date - Time.now < 0
   end
 
+  def self.active_vestings_on_product(product)
+    product.proposals.select(&:won?).map(&:vestings).flatten.select{|a| !a.expired?}.map{|b| VestingSerializer.new(b)}
+  end
+
+  def self.closed_vestings_on_product(product)
+    product.proposals.select(&:won?).map(&:vestings).flatten.select(&:expired?).map{|b| VestingSerializer.new(b)}
+  end
 
 end
