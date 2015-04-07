@@ -89,7 +89,7 @@ let IdeaStartConversation = React.createClass({
                 </div>
 
                 <div className="clearfix mb1">
-                  <h5 className="mt0 mb2">Shape the idea with help from the community. Start by asking a question to kick things off.</h5>
+                  <h5 className="mt0 mb0">Start a conversation with the community by asking a question</h5>
                 </div>
 
                 <form>
@@ -100,13 +100,11 @@ let IdeaStartConversation = React.createClass({
                   <div className="mb0">
                     <div className="py2 h6 gray-2">
                       <p>
-                        Here are some example questions you could ask the community:
+                        People are often most responsive to questions, so writing one (or more) engaging questions will help you attract individuals who are excited about the idea.
                       </p>
-                      <ol>
-                        <li>What's a good name for this?</li>
-                        <li>Does anyone know if there are competing products?</li>
-                        <li>What would you change about the idea?</li>
-                      </ol>
+                      <p>
+                        You could ask about potential names, competing products, or critical feedback. Make sure to include helpful details about the problem that your idea solves.
+                      </p>
                     </div>
                     <NewComment canContainWork={false}
                         dropzoneInnerText={false}
@@ -116,7 +114,6 @@ let IdeaStartConversation = React.createClass({
                         thread={item.id}
                         url={url}
                         user={UserStore.getUser()} />
-                    {this.renderQuestionWarning()}
                   </div>
 
                   <div className="clearfix">

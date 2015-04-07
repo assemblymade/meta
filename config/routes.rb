@@ -286,6 +286,7 @@ ASM::Application.routes.draw do
   get '/products/:product_id/tasks/:id', to: redirect(ProductRedirector.new(:task)), as: :full_product_task
 
   get '/activities/:id' => 'activity#show'
+  get '/hotbounties' => 'hot_bounties#show'
 
   get '/interests/:interest' => 'global_interests#toggle', as: :global_interests
   get '/hello/:id' => 'hellos#show', as: :hello_user

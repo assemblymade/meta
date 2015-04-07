@@ -196,10 +196,10 @@ class Tweeter
     proceed = false
 
     if news_feed_item.target_type == "Post"
-      the_data = construct_tweet_data_post
+      the_data = construct_tweet_data_post(news_feed_item)
       proceed=true
     elsif news_feed_item.target_type == "Idea"
-      the_data = construct_tweet_data_idea
+      the_data = construct_tweet_data_idea(news_feed_item)
       proceed=true
     end
 

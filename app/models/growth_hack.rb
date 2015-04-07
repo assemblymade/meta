@@ -4,10 +4,8 @@ class GrowthHack
     if ["Comment", "Post"].include?(activity.verb)
 
       staff_handles = ["pletcher",
-                        "vanstee",
                         "bshyong",
                         "mdeiters",
-                        "whale",
                         "awwstn",
                         "chrislloyd",
                         "barisser"]
@@ -18,13 +16,13 @@ class GrowthHack
       return unless target_entity.news_feed_item
 
       attributes = {
-        user_id: user.id, 
-        heartable_id: target_entity.news_feed_item.id, 
+        user_id: user.id,
+        heartable_id: target_entity.news_feed_item.id,
         heartable_type: "NewsFeedItem"
       }
 
       unless Heart.exists?(attributes)
-        Heart.delay_for(rand(5..10).minutes).create(attributes) 
+        Heart.delay_for(rand(5..10).minutes).create(attributes)
       end
     end
   end

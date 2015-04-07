@@ -53,7 +53,7 @@ class Mark < ActiveRecord::Base
   def correlated_marks
     markings = Marking.where(markable_type: "Mark").where(mark: self).order('weight desc').limit(10)
     valid_markings = markings.where.not(markable_id: nil)
-    vector = valid_markings.map{|a| [a.markable.id, a.weight.to_f / (m.markable.markings.count**0.3)+1]}
+    vector = valid_markings.map{|a| [a.markable.id, a.weight.to_f / (a.markable.markings.count**0.3)+1]}
     s = Math.sqrt(vector.sum{|a| a[1]**2})
     if s > 0
       vector.map{|a| [a[0], a[1]/s ]}.sort_by{|a| a[1]}.reverse

@@ -28,4 +28,12 @@ describe Idea do
     expect(idea.score).to eq(0)
   end
 
+  it 'get idea participants list' do
+    idea = Idea.create!(user: user, name: "idea name", body: "idea body")
+    idea.run_callbacks(:commit)
+    idea.reload
+    participants = idea.participants
+    expect(participants).to eq([user])
+  end
+
 end

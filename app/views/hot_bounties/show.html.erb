@@ -1,0 +1,13 @@
+<% title "Hot Bounties" %>
+
+<% activate_nav! :discover %>
+
+<%= render 'shared/navbar' %>
+
+<%= react_component 'HotBounties', bounties: ActiveModel::ArraySerializer.new(@bounties, each_serializer: WipHotSerializer)
+    %>
+
+
+
+
+<%= render 'shared/footer' %>
