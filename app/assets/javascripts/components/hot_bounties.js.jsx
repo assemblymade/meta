@@ -14,61 +14,62 @@ const Jumbotron = require('./ui/jumbotron.js.jsx')
 const HotBounties = React.createClass({
 
   propTypes: {
-    bounties: React.PropTypes.array.isRequired,
-    users: React.PropTypes.array.isRequired
+    bounties: React.PropTypes.array.isRequired
   },
 
   renderHeader: function() {
     return (
-      <div>
-        <h3>
+      <div className="mb2">
+        <h3 className="mb0">
           Top Bounties
         </h3>
+        <h5 className="gray-2 mt0">
+          Based on author's heart count and bounty freshness
+        </h5>
       </div>
     )
   },
 
   renderBounties: function() {
-    var users = this.props.users;
-
-    return (
-      <div>
-        <table>
-          {_.map(this.props.bounties, function(d, e) {
-            return (
-              <tr>
-                <td>
+    var bounties =  _.map(this.props.bounties, function(d, e) {
+      return (
+        <div className="mb1">
+          <Tile>
+            <div className="p2">
+              <div className="p2">
+                <p className="bold">
                   <a href={d.url}>
                     {d.title}
                   </a>
-                </td>
-                <td>
+                </p>
+                <p>
                   {d.description}
-                </td>
-                <td>
-                  {d.created_at}
-                </td>
-                <td>
-                  <a href={d.author.hearts_received}>
-                    <AvatarWithUsername user={d.author} />
-                  </a><br/>
-                  {d.author.hearts_received}
-                </td>
-              </tr>
-            )
-          })}
-        </table>
-      </div>
+                </p>
+              </div>
+              <div className="py1 px2">
+                <a href={d.author.hearts_received}>
+                  <AvatarWithUsername user={d.author} />
+                </a>
+                <span className="ml1 gray-3 h6">
+                  <Icon icon="heart" /> {d.author.hearts_received}
+                </span>
+              </div>
+            </div>
+          </Tile>
+        </div>
+      )
+    })
+
+    return (
+      {bounties}
     )
   },
 
   render: function() {
     return (
-      <div className="col-md-6 col-md-offset-3">
+      <div className="col-md-8 col-md-offset-2 mb3">
         {this.renderHeader()}
-        <Tile>
-          {this.renderBounties()}
-        </Tile>
+        {this.renderBounties()}
       </div>
     )
 
