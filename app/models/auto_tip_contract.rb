@@ -27,6 +27,14 @@ class AutoTipContract < ActiveRecord::Base
     self.amount = (self.amount * 1000).floor / 1000.0
   end
 
+  def self.active_tip_contracts_on_product(product)
+    product.auto_tip_contracts.select{|a| a.active?}.map{|b| AutoTipContractSerializer.new(b)}
+  end
+
+  def self.closed_tip_contracts_on_product(product)
+    product.auto_tip_contracts.select{|a| !a.active?}.map{|b| AutoTipContractSerializer.new(b)}
+  end
+
   def one_contract_per_user
     if AutoTipContract.active_at(product, (created_at || Time.now)).where(user_id: user.id).exists?
       errors.add(:user, "existing contract in place for user")
