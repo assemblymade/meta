@@ -14,7 +14,7 @@ class CoinInfo < ActiveRecord::Base
     if self.asset_address.length > 10
       "https://www.coinprism.info/asset/#{self.asset_address}"
     else
-      "https://www.coinprism.info/address/#{self.wallet_public_address}"
+      "https://www.coinprism.info/address/#{self.product.wallet_public_address}"
     end
   end
 
