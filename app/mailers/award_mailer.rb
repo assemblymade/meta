@@ -14,6 +14,6 @@ class AwardMailer < BaseMailer
     @fun = "Let's get it started"
 
     mail   to: @guest.email,
-      subject: "You've been offered #{@award.cents} #{@product.name} coins"
+      subject: "You've received #{@award.cents} #{@product.name} coins"
   end
 end

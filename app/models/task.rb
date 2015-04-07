@@ -251,7 +251,9 @@ class Task < Wip
       guest: guest,
       wip: self,
       cents: self.earnable_coins_cache
-    )
+    ).tap do |award|
+      AwardMailer.delay(queue: 'mailer').pending_award(guest.id, award.id)
+    end
   end
 
   def work_submitted(submitter)

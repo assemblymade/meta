@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :strip_invite_token
   before_action :strip_promo_token
   before_action :initialize_feature_flags
-  before_action :store_pending_award
+  before_action :process_pending_award
 
   after_action  :set_request_info!,   if: :signed_in?
   after_action  :claim_invite,        if: :signed_in?
@@ -37,8 +37,21 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for_user
-    session[:previous_url] || dashboard_path
+    session[:previous_url] || dashboard_path(request.query_parameters)
   end
+
+  def after_sign_in_path_for(resource)
+    after_sign_in_path_for_user
+  end
+
+  def after_sign_up_path_for(resource)
+    after_sign_up_path_for_user
+  end
+
+  def after_sign_out_path_for(resource)
+    after_sign_out_path_for_user
+  end
+
 
   def initialize_feature_flags
     @feature_flags ||= {}
@@ -79,17 +92,18 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def store_pending_award
+  def process_pending_award
     if token = (params[:token] || cookies[:award])
       if award = Award.find_by(token: token)
-        cookies.permanent[:award] = award.token
-        store_data(signup_form_store: {
-          pending_award: AwardSerializer.new(award)
-        })
-
         if signed_in?
           award.claim!(current_user)
           cookies.delete(:award)
+          redirect_to product_task_award_path(award.wip.product, award.wip, award)
+        else
+          cookies.permanent[:award] = award.token
+          store_data(signup_form_store: {
+            pending_award: AwardSerializer.new(award)
+          })
         end
       end
     end
