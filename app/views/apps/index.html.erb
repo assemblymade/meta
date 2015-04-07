@@ -2,8 +2,8 @@
 <% activate_nav! :discover %>
 
 <%= render 'shared/navbar' %>
-
-<% showcase = @showcases.find {|s| s.slug == params[:showcase]} %>
+<!--
+<% showcase = @showcases.find {|s| s.slug == params[:showcase]} %> -->
 
 <%= react_component 'Apps',
       search: params[:search],
