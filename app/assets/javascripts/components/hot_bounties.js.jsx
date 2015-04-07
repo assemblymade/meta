@@ -47,7 +47,7 @@ const HotBounties = React.createClass({
                 </p>
               </div>
               <div className="py1 px2">
-                <a href={d.author.hearts_received}>
+                <a href={d.author.full_url}>
                   <AvatarWithUsername user={d.author} />
                 </a>
                 <span className="ml1 gray-3 h6">

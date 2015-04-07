@@ -3,7 +3,7 @@ class WipHotSerializer < WipSerializer
   include MarkdownHelper
   include TruncateHtmlHelper
 
-  attributes :description, :product
+  attributes :description, :app
 
   def description
     Search::Sanitizer.new.sanitize(
@@ -11,7 +11,7 @@ class WipHotSerializer < WipSerializer
     )
   end
 
-  def product
+  def app
     AppSerializer.new(object.product)
   end
 
