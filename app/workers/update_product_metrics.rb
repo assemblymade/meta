@@ -23,6 +23,16 @@ class UpdateProductMetrics
       )
     end
 
+    grouped_metrics('month') do |product, date, totals, v|
+      m = product.monthly_metrics.find_or_initialize_by(date: date)
+      m.update!(
+        uniques: v['uniques'].to_i,
+        visits: v['visits'].to_i,
+        registered_visits: v['registered_visits'].to_i,
+        total_accounts: totals['registered_users'].to_i
+      )
+    end
+
     grouped_total_visitors do |product, total|
       product.update!(total_visitors: total)
     end
