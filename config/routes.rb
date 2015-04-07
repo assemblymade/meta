@@ -188,6 +188,8 @@ ASM::Application.routes.draw do
   get '/help/:group', :to => 'questions#index', :as => :help
   get '/help' => redirect('/help/basics'), :as => :faq
 
+  get '/metrics' => 'metrics#overview'
+
   # Guides
   get '/guides/:group', :to => 'guides#index', :as => :guides
   get '/guides', :to => 'guides#index'

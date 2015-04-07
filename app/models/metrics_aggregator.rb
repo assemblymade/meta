@@ -85,4 +85,25 @@ class MetricsAggregator
         h
       end
   end
+
+  def self.current_user_count
+    User.where('last_request_at > ?', 15.minutes.ago).count
+  end
+
+  def self.love_throughput
+    Heart.where('created_at > ?', 1.days.ago).count
+  end
+
+  def self.products_since_week
+    Product.where('created_at > ?', 7.days.ago).select{|a| TransactionLogEntry.product_partners(a.id).to_a.count > 1}.count
+  end
+
+  def self.assemble_overview_metrics
+    metrics = {}
+    metrics['current_users'] = self.current_user_count
+    metrics['love_throughput'] = self.love_throughput
+    metrics['weekly_new_products_with_partners'] = products_since_week
+    metrics
+  end
+
 end

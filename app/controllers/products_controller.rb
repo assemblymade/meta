@@ -132,7 +132,7 @@ class ProductsController < ProductController
     data['description'] = ""#@product.description
     data['description_mime'] = "text/x-markdown; charset=UTF-8"
     data['type'] = "Ownership"
-    data['divisibility'] = 1
+    data['divisibility'] = 0
     data['link_to_website'] = true
     data['icon_url'] = @product.full_logo_url
     data['image_url'] = @product.full_logo_url
