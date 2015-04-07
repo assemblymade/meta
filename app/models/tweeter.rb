@@ -111,10 +111,10 @@ class Tweeter
 
   def tweet_hot_product(product_slug, growth)
     password = compute_password
+    product = Product.find_by(slug: product_slug)
     url = "https://asm-tweeter.herokuapp.com/product/hot/" + password
-    name = Product.find_by(slug: product_slug).name
     the_data = {
-      product_name: name,
+      product_name: product.name,
       users: product_participants(product),
       url: ProductSerializer.new(product).full_url,
       growth: growth
