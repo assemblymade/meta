@@ -2,6 +2,7 @@ require 'core_ext/time_ext'
 
 class PartnersController < ProductController
   before_action :find_product!
+  before_action :authenticate_user!
 
   # TODO: (whatupdave) use ProductOwnership
   def index
