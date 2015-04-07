@@ -185,27 +185,31 @@ class Idea < ActiveRecord::Base
     checklists
   end
 
+  def update_last_score_update(new_score)
+    self.update!({last_score_update: DateTime.now, score: new_score})
+  end
+
   def add_score
     lovescore = self.score
 
     news_feed_item.hearts.where('created_at > ?', last_score_update).each do |h|
-      time_since = h.created_at - EPOCH_START
-      multiplier = 2 ** (time_since.to_f / HEARTBURN.to_f)
-      lovescore = lovescore + multiplier
+      lovescore = lovescore + score_multiplier(h.created_at)
     end
 
-    update!({
-      last_score_update: DateTime.now,
-      score: lovescore
-    })
+    update_last_score_update(lovescore)
 
     if self.love == DEFAULT_TILTING_THRESHOLD
       send_tilt_email
     end
   end
 
+  def score_multiplier(date)
+    time_since = heart.created_at - EPOCH_START
+    love_change = 2 ** (time_since.to_f / HEARTBURN.to_f)
+  end
+
   def send_tilt_email
-    the_key = "tilt_notification_"+self.slug  + Time.now.strftime("%d%b%Y")
+    the_key = "tilt_notification_" + self.slug + Time.now.strftime("%d%b%Y")
     recipient_id = self.user.id
     EmailLog.send_once(recipient_id, the_key) do
       TiltMailer.delay(queue: 'mailer').create(recipient_id, self.id)
@@ -214,9 +218,7 @@ class Idea < ActiveRecord::Base
   end
 
   def decrement_score(heart)
-    time_since = heart.created_at - EPOCH_START
-    love_lost = 2 ** (time_since.to_f / HEARTBURN.to_f)
-    lovescore = self.score - love_lost
+    lovescore = self.score - score_multipler(heart.created_at)
     update!({last_score_update: DateTime.now,
       score: lovescore})
   end
@@ -306,14 +308,10 @@ class Idea < ActiveRecord::Base
   end
 
   def participants
-    p = [self.user]
-    self.news_feed_item.comments.each do |a|
-      p.append(a.user)
-    end
-    self.news_feed_item.hearts.each do |b|
-      p.append(b.user)
-    end
-    p.uniq
+    commenters = self.news_feed_item.comments.map{|a| a.user}
+    lovers = self.news_feed_item.hearts.map{|b| b.user}
+    creator = self.user
+    (commenters + lovers + creator).uniq
   end
 
 end
