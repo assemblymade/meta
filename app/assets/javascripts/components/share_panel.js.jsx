@@ -23,7 +23,7 @@ module.exports = React.createClass({
     FB.ui({
       method: 'share',
       display: 'popup',
-      href: this.props.url,
+      href: this.shortUrl(),
     }, function(response){});
   },
 
@@ -31,7 +31,7 @@ module.exports = React.createClass({
     e.preventDefault();
 
     window.open(
-      _googlePlusUrl(this.props.url),
+      _googlePlusUrl(this.shortUrl()),
       'googlepluswindow',
         'height=450, width=550, top=' +
         ($(window).height()/2 - 225) +

@@ -15,16 +15,23 @@
           <a class="black" href="<%= product_path @product %>"><%= @product.name %></a>
         </h2>
         <h4 class="m0 regular gray-2">
-          <span>Hosted, flexible chat for your product</span><span> </span>
+          <span><%= @product.pitch %></span><span> </span>
         </h4>
       </div>
 
       <div class="mt2">
-        <p>@chrislloyd has awarded you <span class="yellow">500</span> coins for completing the Bounty:
-           <b>#78 – Create a Helpful Account</b></p>
         <p>
-          <b>Congratulations!</b> Holding Helpful coins makes you a partner in the organization.
-          Partners have a voice in the future direction of the organization.
+          @<%= @award.awarder.username %> awarded
+          <%= @award.winner == current_user ? 'you' : "@#{@award.winner.username}" %>
+          <span class="yellow"><%= @award.coins %></span> coins for completing the Bounty:
+          <b>#<%= @bounty.number %> – <%= @bounty.title %></b>
+        </p>
+        <p>
+          <% if @award.winner == current_user %>
+            <b>Congratulations!</b> Holding <%= @product.name %> coins makes you a partner in the organization.
+            Partners have a voice in the future direction of the organization.
+          <% else %>
+          <% end %>
         </p>
       </div>
     </div>
@@ -33,9 +40,9 @@
       <div class="left">
         <span>Share this achievement</span>
         <%= react_component 'SharePanel',
-              shareText: 'I got this award',
+              message: "I'm a partner in #{@product.name}",
               title: 'Award!',
-              url: product_task_award_url(@product, @bounty, 1)
+              url: product_task_award_path(@product, @bounty, @award)
          %>
       </div>
 
