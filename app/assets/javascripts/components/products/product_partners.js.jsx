@@ -66,14 +66,6 @@ const ProductPartners = React.createClass({
           <td className="right-align">
             {formattedCoins}
           </td>
-
-          <td>
-            <a href={partner.coinprism_url}>
-              <div className="">
-                {partner.wallet_public_address}
-              </div>
-            </a>
-          </td>
         </tr>
       )
     })
@@ -82,7 +74,7 @@ const ProductPartners = React.createClass({
         <div className="container mt3">
           <Tile>
           <div className="p4">
-            <Button action={this.state.coinprism_url}>See it on the Blockchain</Button>
+
             <div className="table-responsive">
               <table className="table">
                 <thead>
@@ -90,7 +82,7 @@ const ProductPartners = React.createClass({
                     <th>Partner</th>
                     <th className="right-align">Coins</th>
                     <th className="right-align">Ownership</th>
-                    <th>Public Address</th>
+                  
                   </tr>
                 </thead>
                 <tbody>
