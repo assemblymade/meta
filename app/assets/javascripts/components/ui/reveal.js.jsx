@@ -1,24 +1,46 @@
 'use strict'
 
-import OverflowFade from './overflow_fade.js.jsx'
+import OverflowFade from './overflow_fade.js.jsx';
+
+const REM_BASE = 12
+
 
 const Reveal = React.createClass({
 
-  getInitialState() {
+  propTypes: {
+    maxHeight: React.PropTypes.number.isRequired
+  },
+
+  getDefaultProps() {
     return {
-      revealed: false
+      maxHeight: 20 * REM_BASE
     }
   },
 
-  render() {
-    const {children} = this.props
+  getInitialState() {
+    return {
+      revealed: false,
+      height: -1
+    }
+  },
 
-    if (this.state.revealed) {
+  componentDidMount() {
+    this.setState({
+      height: $(this.refs.children.getDOMNode()).outerHeight()
+    })
+  },
+
+  render() {
+    const {maxHeight} = this.props
+    const {height, revealed} = this.state
+    const children = <div ref="children">{this.props.children}</div>
+
+    if (height < maxHeight || revealed) {
       return children
     } else {
       return <div>
         <div className="mb2">
-          <OverflowFade height="20rem" dimension="vertical">
+          <OverflowFade height={maxHeight} dimension="vertical">
             {children}
           </OverflowFade>
         </div>
