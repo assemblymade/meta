@@ -42,7 +42,7 @@ module AssemblyCoin
       create_btc_payment_record(current_price, product, destination, amount)
     end
 
-    def create_btc_payment_record
+    def create_btc_payment_record(current_price, product, destination, amount)
       BtcPayment.create!({btcusdprice_at_moment: current_price,
         created_at: DateTime.now,
         action: "Maintained Balance for Product #{product.name}",
