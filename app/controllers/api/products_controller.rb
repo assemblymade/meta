@@ -37,7 +37,7 @@ module Api
       if params[:product_id].uuid?
         Product.find(params[:product_id])
       else
-        Product.find_by(slig: params[:product_id])
+        Product.find_by(slug: params[:product_id])
       end
     end
 

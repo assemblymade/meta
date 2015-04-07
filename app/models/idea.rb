@@ -193,7 +193,7 @@ class Idea < ActiveRecord::Base
     lovescore = self.score
 
     news_feed_item.hearts.where('created_at > ?', last_score_update).each do |h|
-      lovescore = lovescore + score_multiplier(h.created_at)
+      lovescore = lovescore + score_multiplier_heart(h)
     end
 
     update_last_score_update(lovescore)
@@ -203,7 +203,7 @@ class Idea < ActiveRecord::Base
     end
   end
 
-  def score_multiplier(date)
+  def score_multiplier_heart(heart)
     time_since = heart.created_at - EPOCH_START
     love_change = 2 ** (time_since.to_f / HEARTBURN.to_f)
   end
@@ -218,7 +218,7 @@ class Idea < ActiveRecord::Base
   end
 
   def decrement_score(heart)
-    lovescore = self.score - score_multipler(heart.created_at)
+    lovescore = self.score - score_multiplier_heart(heart)
     update!({last_score_update: DateTime.now,
       score: lovescore})
   end

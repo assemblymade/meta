@@ -2,7 +2,7 @@ class AdjustMarkings
   include Sidekiq::Worker
   def perform(markable_id, markable_type, marked_object_id, marked_object_type, scalar)
 
-    markable = deterimine_markable(markable_type, markable_id)
+    markable = determine_markable(markable_type, markable_id)
 
     if marked_object_type == "Product"
       marked_object = Product.where(id: marked_object_id)
