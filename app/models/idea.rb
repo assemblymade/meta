@@ -44,7 +44,7 @@ class Idea < ActiveRecord::Base
   HEARTBURN = 30.days  # period for 100% inflation, equivalent to half-life
   EPOCH_START = Time.new(2013, 6, 6)
 
-  DEFAULT_TILTING_THRESHOLD = 15
+  DEFAULT_TILTING_THRESHOLD = 0
   COMMENT_MINIMUM = 5
 
   CATEGORY_NAMES = [
@@ -310,7 +310,7 @@ class Idea < ActiveRecord::Base
   def participants
     commenters = self.news_feed_item.comments.map{|a| a.user}
     lovers = self.news_feed_item.hearts.map{|b| b.user}
-    creator = self.user
+    creator = [self.user]
     (commenters + lovers + creator).uniq
   end
 
