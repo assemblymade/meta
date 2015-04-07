@@ -6,9 +6,11 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="_pos-relative _h6 _clearfix" id={this.props.id}>
-        <div className="_pos-absolute _pos-ln3 _ht1_5 _ml3_5 _img-circle bg-white _border0_25 border-gray-6" style={{width: '1.5rem'}} />
-        <div className="gray-1 _ml3_5">
+      <div className="clearfix" id={this.props.id}>
+        <div className="left relative px1">
+          <div className="block circle bg-white border absolute" style={{width: '1.5rem', height: '1.5rem', borderWidth: 3}}>&nbsp;</div>
+        </div>
+        <div className="overflow-hidden ml4 h6 gray-2">
           {this.props.children}
         </div>
       </div>

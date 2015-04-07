@@ -15,8 +15,8 @@ var NewsFeedItemBountyTitleChange = React.createClass({
 
     return (
       <NewsFeedItemEvent>
-        <a href={actor.url}>{actor.username}</a>
-        {' '} renamed this from <strong>{this.props.body}</strong>
+        <a className="bold black" href={actor.url}>{actor.username}</a>
+        {' '} renamed this from <span className="black">&ldquo;{this.props.body}&rdquo;</span>
       </NewsFeedItemEvent>
     );
   }

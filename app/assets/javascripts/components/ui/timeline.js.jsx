@@ -1,6 +1,6 @@
 const TimelineItem = React.createClass({
   render() {
-    return <div className="_py1_25">
+    return <div className="py2">
       {this.props.children}
     </div>
   }
