@@ -1,7 +1,7 @@
 class MetricsController < ProductController
   respond_to :html, :json
 
-  before_action :authenticate_staff!, :except => [:snippet, :overview]
+  before_action :authenticate_staff!, except: :snippet
 
   def index
     find_product!
