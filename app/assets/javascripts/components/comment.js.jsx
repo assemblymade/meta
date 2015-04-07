@@ -91,7 +91,7 @@ module.exports = React.createClass({
   },
 
   renderAwardOption: function() {
-    if (this.currentUserIsCore() && this.props.awardUrl) {
+    if (this.currentUserIsCore()) {
       var id = this.props.id;
       var username = this.props.author.username;
       var awardUrl = this.props.awardUrl;
@@ -111,7 +111,7 @@ module.exports = React.createClass({
 
   renderAwardAndCloseOption: function() {
     var bounty = this.props.bounty
-    if (this.currentUserIsCore() && this.props.awardUrl) {
+    if (this.currentUserIsCore()) {
       var id = this.props.id;
       var username = this.props.author.username;
       var awardUrl = this.props.awardUrl;

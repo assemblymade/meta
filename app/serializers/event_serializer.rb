@@ -15,28 +15,32 @@ class EventSerializer < ActiveModel::Serializer
 
   attributes :id #, :url
   attributes :anchor
-  attributes :body, :body_html, :body_sanitized, :number, :timestamp, :type, :created_at, :target
-  attributes :edit_url
-  attributes :award_url, :can_award
+  attributes :body, :body_html, :body_sanitized, :number, :timestamp, :type, :created_at
+
+  # FIXME (@chrislloyd) This is dog slow. For every win-event it does a
+  #                     separate lookup for the award. Should probably
+  #                     be cached.
+  attributes :target
+
   attributes :product_id
   attributes :story_id
 
-  has_one :user, key: :actor, serializer: UserSerializer
+  # FIXME (@chrislloyd) Move clientside
+  attributes :edit_url
+  attributes :award_url
+
+  has_one :user, key: :actor, serializer: AvatarSerializer
 
   def anchor
     "comment-#{object.number}"
   end
 
   def product_id
-    object.product.id
+    object.wip.product_id
   end
 
   def award_url
-    award_product_wip_url(product, wip) if wip.open? && can_award
-  end
-
-  def can_award
-    Ability.new(scope).can?(:award, object) && object.awardable?
+    award_product_wip_url(product, wip) if wip.open?
   end
 
   def body_html
@@ -68,11 +72,13 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def target
-    if object.class == Event::Win
-      object.winner
-    # FIXME (pletcher): This isn't terrible -- it just adds in a couple of fields --
-    # but there must be a better way to do it
-    elsif object.class == Event::CommentReference
+    case object
+    when Event::Win
+      AvatarSerializer.new(object.winner)
+    when Event::CommentReference
+      # FIXME (@pletcher) This isn't terrible -- it just adds in a
+      #                   couple of fields -- but there must be a better
+      #                   way to do it
       Event::CommentReferenceSerializer.new(object)
     else
       object.try(:target)
