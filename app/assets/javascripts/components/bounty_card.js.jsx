@@ -1,8 +1,8 @@
 'use strict'
 
-import Icon from './ui/icon.js.jsx'
-import Avatar from './ui/avatar.js.jsx'
-import AppCoins from './app_coins.js.jsx'
+import Icon from './ui/icon.js.jsx';
+import Avatar from './ui/avatar.js.jsx';
+import AppCoins from './app_coins.js.jsx';
 
 const BountyCard = React.createClass({
 
@@ -19,7 +19,7 @@ const BountyCard = React.createClass({
         hearts = null
 
     if (bounty.locker) {
-      locker = <div className="right ml3 py2">
+      locker = <div className="right ml3">
         <Avatar user={bounty.locker} />
       </div>
     }
