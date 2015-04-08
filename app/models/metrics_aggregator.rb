@@ -87,7 +87,7 @@ class MetricsAggregator
   end
 
   def self.current_user_count
-    User.where('last_request_at > ?', 15.minutes.ago).count
+    User.where(is_staff: true).where('last_request_at > ?', 15.minutes.ago).count
   end
 
   def self.love_throughput
