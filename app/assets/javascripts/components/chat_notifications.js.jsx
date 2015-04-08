@@ -272,4 +272,4 @@ var ChatNotifications = React.createClass({
   }
 });
 
-module.exports = window.ChatNotifications = ChatNotifications;
+module.exports = ChatNotifications;

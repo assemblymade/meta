@@ -1,16 +1,66 @@
-var ActionTypes = require('../constants').ActionTypes
-var Dispatcher = require('../dispatcher');
-var moment = require('moment');
-var ReadTimesMixin = require('../mixins/read_times');
-var Store = require('./store');
-var UserStore = require('./user_store');
-var xhr = require('../xhr');
+'use strict';
 
-var _chatRooms = {};
-var _sortKeys = [];
-var _optimisticChatRooms = {};
-var _store = Object.create(Store);
-var noop = function() {};
+const ActionTypes = require('../constants').ActionTypes
+const Dispatcher = require('../dispatcher');
+const { List, Map } = require('immutable');
+const moment = require('moment');
+const Store = require('./es6_store');
+
+let chatRooms = List();
+let unreadRooms = List();
+
+let matchId = (roomId) => {
+  return (id) => {
+    return id === roomId;
+  };
+};
+
+class ChatNotificationsStore extends Store {
+  constructor() {
+    super();
+
+    this.dispatchToken = Dispatcher.register((action) => {
+      switch (action.type) {
+        case ActionTypes.CHAT_ROOM_MARKED_AS_READ:
+          unreadRooms = unreadRooms.filterNot(matchId(action.id));
+          break;
+        case ActionTypes.CHAT_ROOMS_RECEIVE:
+          chatRooms = List(action.chatRooms);
+          unreadRooms = List(action.unreadRooms);
+          break;
+        default:
+          return;
+      }
+
+      this.emitChange();
+    });
+  }
+
+  getChatRooms() {
+    return chatRooms;
+  }
+
+  getChatRoomsWithUnreadMarked() {
+    return chatRooms.map((room) => {
+      let r = Map(room);
+      if (unreadRooms.map(func.dot('key')).contains(room.id)) {
+        return r.set('unread', true);
+      }
+
+      return r.set('unread', false);
+    });
+  }
+
+  getUnreadCount(ack) {
+    return unreadRooms.count((room) => {
+      return moment(room.updated).unix() > ack;
+    });
+  }
+};
+
+module.exports = new ChatNotificationsStore();
+
+/*
 
 var ChatNotificationsStore = _.extend(_store, ReadTimesMixin, {
   'chat:acknowledge': noop,
@@ -162,3 +212,4 @@ ChatNotificationsStore.dispatchToken = Dispatcher.register(function(payload) {
 });
 
 module.exports = ChatNotificationsStore;
+*/
