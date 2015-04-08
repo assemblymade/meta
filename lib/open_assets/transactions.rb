@@ -144,20 +144,21 @@ module OpenAssets
 
       if receiver_address
         body = construct_transfer_post_body_to_user(product, user, coins, asset_address)
-
-        remote = OpenAssets::Remote.new("http://coins.assembly.com")
-        end_url="v2/colors/transfer"
-        remote.post end_url, body.to_json
+        send_post_to_transfer_route(body)
       end
+    end
+
+    def send_post_to_transfer_route(body)
+      remote = OpenAssets::Remote.new("http://coins.assembly.com")
+      end_url="v2/colors/transfer"
+      remote.post end_url, body.to_json
     end
 
     def return_coins_to_product_address(user, product, coins)
       if product.coin_info
         if asset_address = product.coin_info.asset_address
           body = construct_transfer_post_user_to_product(user, product, coins, asset_address)
-          remote = OpenAssets::Remote.new("http://coins.assembly.com")
-          end_url="v2/colors/transfer"
-          remote.post end_url, body.to_json
+          send_post_to_transfer_route(body)
         end
       end
     end
@@ -233,7 +234,7 @@ module OpenAssets
     def average_bought_price_as_of_date(date)
       sum = 0
       btcsum = 0
-      buy_payments_before_date = BtcPayment.where('created_at < ?', date).select("action="Bought BTC")
+      buy_payments_before_date = BtcPayment.where('created_at < ?', date).select{|a| a.action == "Bought BTC"}
       sum_usd_value_change = buy_payments_before_date.sum("btc_change * btc_usdprice_at_moment / 100.0")
       sum_btc_value_change = buy_payments_before_date.sum("btc_change")
 

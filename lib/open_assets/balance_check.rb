@@ -68,9 +68,11 @@ module OpenAssets
       diff = check_users_balances_on_product(product)
       diff.each do |d|
         coindiff = d[4]
+        user = User.find_by(username: d[0])
         if coindiff < 0
           coins = -1 * coindiff
           puts "SENDING #{coins} back to #{product.name} from #{user.username}"
+          OpenAssets::Transactions.new.send_btc(user.wallet_public_address, 0.00001)
           OpenAssets::Transactions.new.return_coins_to_product_address(user, product, coins)
         elsif coindiff > 0
           coins = coindiff
