@@ -13,12 +13,12 @@ const StoryTimeline = React.createClass({
   renderStories: function() {
 
     return (
-      _.map(this.state.stories, function(story) {
+      _.map(this.state.stories, function(story, i) {
 
         var actors = _.map(story.actors, func.dot('username')).join(', @')
 
         return (
-          <div className="clearfix p1">
+          <div className="clearfix p1" key={i}>
             <a href={story.url}>
               <div className="left mr2 mt1">
                 <Avatar user={story.actors[0]} size={18} />
