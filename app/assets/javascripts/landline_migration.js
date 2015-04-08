@@ -1,9 +1,10 @@
 ;(function() {
-  var LandlineMigration = function(url, team, uid) {
+  var LandlineMigration = function(url, team, uid, unreadHandler) {
     this.url = url;
     this.team = team;
     this.uid = uid;
     this.socket = io(this.url);
+    this.unreadHandler = unreadHandler;
 
     var token = retrieveToken();
 
@@ -20,7 +21,7 @@
 
   LandlineMigration.prototype.handleAuthorizationResponse = function(response) {
     if (response.success) {
-      this.socket.on('room.unread', this.handleUnread.bind(this));
+      this.socket.on('message', (this.unreadHandler || this.handleUnread).bind(this));
       $.ajax({
         url: this.url + '/rooms',
         method: 'GET',
@@ -55,8 +56,8 @@
     console.error(response.message);
   };
 
-  LandlineMigration.prototype.handleUnread = function(room) {
-    console.log(room);
+  LandlineMigration.prototype.handleUnread = function(_message, room) {
+    console.log(_message, room);
   };
 
   LandlineMigration.prototype.initializeSocket = function() {
