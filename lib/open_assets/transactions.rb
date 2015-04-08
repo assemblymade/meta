@@ -68,6 +68,37 @@ module OpenAssets
       remote.post end_url, body.to_json
     end
 
+    def award_by_creating_coins(product_id, user_id, coins)
+      product = Product.find(product_id)
+      user = User.find(user_id)
+      receiver_address = user.wallet_public_address
+
+      if receiver_address.nil?
+        AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform(
+          user.to_global_id,
+          :assign_key_pair
+        )
+        Rails.logger.info "ADDED KEYPAIR TO #{user.username}"
+        receiver_address = user.wallet_public_address
+      end
+
+      if receiver_address
+        body = {
+          public_address: product.wallet_public_address,
+          private_key: product.wallet_private_key,
+          name: product.name,
+          metadata: "u=https://assembly.com/#{product.slug}/coin",
+          coins: coins,
+          identifier: product_id.to_s+":"+user_id.to_s+":"+DateTime.now.to_s
+        }
+
+        puts "Forging #{total_coins}  #{product.name} Coins for User #{user.username} at #{user.wallet_public_address}"
+
+        remote = OpenAssets::Remote.new("http://coins.assembly.com")
+        end_url="v2/colors/issue"
+        remote.post end_url, body.to_json
+      end
+    end
 
     def award_coins(product_id, user_id, coins)
       product = Product.find(product_id)
