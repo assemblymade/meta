@@ -4,10 +4,12 @@ const AppCoins = require('../app_coins.js.jsx')
 const Tile = require('../ui/tile.js.jsx')
 const ProgressBar = require('../ui/progress_bar.js.jsx')
 const Markdown = require('../markdown.js.jsx')
+const UserStore = require('../../stores/user_store.js')
 import ProductHeader from '../products/product_header.js.jsx'
 import ProductStore from '../../stores/product_store'
 import PartnersStore from '../../stores/partners_store'
 import Button from '../ui/button.js.jsx';
+
 
 function _parseDate(date) {
   var parsedDate = new Date(date);
@@ -20,8 +22,21 @@ const ProductPartners = React.createClass({
   getInitialState() {
     return {
       partners: PartnersStore.get(ProductStore.getId()),
-      coinprism_url: ProductStore.getCoinPrismUrl()
+      coinprism_url: ProductStore.getCoinPrismUrl(),
+      isStaff: UserStore.isStaff()
     }
+  },
+
+  renderWalletAddress(partner) {
+    return (
+      <td>
+        <a href={partner.coinprism_url}>
+          <div className="">
+            {partner.wallet_public_address}
+          </div>
+        </a>
+      </td>
+    )
   },
 
   render() {
@@ -66,14 +81,16 @@ const ProductPartners = React.createClass({
           <td className="right-align">
             {formattedCoins}
           </td>
+          { this.state.isStaff ? this.renderWalletAddress(partner) : ""}
         </tr>
       )
-    })
+    }.bind(this))
     return <div>
         <ProductHeader />
         <div className="container mt3">
           <Tile>
           <div className="p4">
+            { this.state.isStaff ? <Button action = {this.state.coinprism_url} >See it on the Blockchain</Button> : <div></div>}
 
             <div className="table-responsive">
               <table className="table">
@@ -82,7 +99,7 @@ const ProductPartners = React.createClass({
                     <th>Partner</th>
                     <th className="right-align">Coins</th>
                     <th className="right-align">Ownership</th>
-                  
+                    { this.state.isStaff ? <th>Public Address</th> : ""}
                   </tr>
                 </thead>
                 <tbody>
