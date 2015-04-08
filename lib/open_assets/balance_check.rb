@@ -3,8 +3,15 @@ module OpenAssets
 
     def coins_issued_on_product(product)
       expected = expected_coins_on_product(product)
-      existing = sum_coins_with_holders(coinholder_data)
-      existing >= expected
+      coinholder_data = coinholders_on_asset_address(product)
+      if !coinholder_data['coinholders']
+        puts "cannot get data"
+        false
+      else
+        puts coinholder_data
+        existing = sum_coins_with_holders(coinholder_data)
+        existing >= expected
+      end
     end
 
     def coinholders_on_asset_address(product)
