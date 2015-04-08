@@ -54,6 +54,17 @@
       </a>
     <% end %>
 
+    <% if current_user.is_staff? %>
+      <div class="block border-top gray-2 py2" style="font-size: 80%">
+        Bitcoin Assets Address
+        <br>
+        <a href=<%= user.coinprism_url %>>
+          <%= user.wallet_public_address %>
+        </a>
+      </div>
+
+    <% end %>
+
   </div>
 </div>
 
