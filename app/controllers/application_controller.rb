@@ -127,7 +127,7 @@ class ApplicationController < ActionController::Base
     product_wip_url(product, wip, options)
   end
 
-  around_filter :profile if Rails.env == 'development'
+  # around_filter :profile if Rails.env == 'development'
 
   def profile
     if params[:profile] && result = RubyProf.profile { yield }

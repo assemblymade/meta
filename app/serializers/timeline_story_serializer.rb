@@ -12,4 +12,8 @@ class TimelineStorySerializer < StorySerializer
   def story
     StorySentences.new(object)
   end
+
+  def cache_key
+    ['timeline story', object.id, 'timeline']
+  end
 end

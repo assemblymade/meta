@@ -15,6 +15,8 @@ const Routes = require('../../routes');
 const Tile = require('../ui/tile.js.jsx');
 const TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
 const UserStore = require('../../stores/user_store');
+const StoryTimelineFeed = require('../story_timeline_feed.js.jsx')
+
 
 const BOUNTY_TARGET_TYPE = 'wip';
 const INTRODUCTION_TARGET_TYPE = 'team_membership';
@@ -93,21 +95,10 @@ const ProductActivity = React.createClass({
         <div className="container mt3">
           <div className="clearfix mxn3">
             <div className="sm-col sm-col-8 px3 mb2 sm-mb0">
-              {this.renderNewsFeed()}
+              {this.renderStoryFeed()}
             </div>
 
             <div className="md-col md-col-4 px3">
-              <div className="mb3">
-                <Button action={window.showCreatePost} block={true}>Write a new post</Button>
-              </div>
-
-              <div className="mb3">
-                {this.renderTypeFilters()}
-              </div>
-
-              <div className="mb3">
-                {this.renderTagFilters()}
-              </div>
             </div>
           </div>
         </div>
@@ -138,6 +129,14 @@ const ProductActivity = React.createClass({
         );
       }).toJS();
     }
+  },
+
+  renderStoryFeed() {
+    let product = this.state.product;
+
+    return (
+      <StoryTimelineFeed product={product} />
+    )
   },
 
   renderNewsFeed() {

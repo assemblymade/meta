@@ -166,8 +166,11 @@ class ProductsController < ProductController
 
   def stories
     find_product!
-    @stories = Story.joins(:activities).where('activities.product_id' => @product).order(created_at: :desc).limit(5)
-    render json: @stories, each_serializer: TimelineStorySerializer
+    stories = Story.joins(:activities).where('activities.product_id' => @product).order(created_at: :desc).page(params[:page]).per(20)
+    render json: stories,
+      serializer: PaginationSerializer,
+      each_serializer: TimelineStorySerializer,
+      root: :stories
   end
 
   def activity

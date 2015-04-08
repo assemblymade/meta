@@ -13,7 +13,7 @@ const StoryTimeline = React.createClass({
   renderStories: function() {
 
     return (
-      _.map(this.state.stories, function(story, i) {
+      _.map(_.first(this.state.stories, 5), function(story, i) {
 
         var actors = _.map(story.actors, func.dot('username')).join(', @')
 
@@ -82,7 +82,7 @@ const StoryTimeline = React.createClass({
 
   getStateFromStore: function() {
     return {
-      stories: _(StoryTimelineStore.fetchStories()).sortBy((s) => -moment(s.created_at).unix()),
+      stories: _(StoryTimelineStore.getStories()).sortBy((s) => -moment(s.created_at).unix()),
     }
   }
 

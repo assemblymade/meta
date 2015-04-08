@@ -4,7 +4,10 @@ const ActionTypes = require('../constants').ActionTypes;
 const Dispatcher = require('../dispatcher');
 const Store = require('./es6_store')
 
-let _stories;
+let _stories = []
+let _loading = false
+let _page = 1
+let _pages = 1
 
 class StoryTimelineStore extends Store {
   constructor() {
@@ -14,15 +17,36 @@ class StoryTimelineStore extends Store {
       switch(action.type) {
         case ActionTypes.PRODUCT_STORIES_RECEIVE:
           _stories = action.stories
+          _loading = false
+          _page = action.page
+          _pages = action.pages
+          this.emitChange()
+          break
+
+        case ActionTypes.PRODUCT_STORIES_REQUEST:
+          _loading = true
           this.emitChange()
           break
       }
     })
   }
 
-  fetchStories(){
+  getStories(){
     return _stories
   }
+
+  getPage(){
+    return _page
+  }
+
+  getPages(){
+    return _pages
+  }
+
+  getLoading() {
+    return _loading
+  }
+
 
 }
 

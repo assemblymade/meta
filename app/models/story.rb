@@ -4,6 +4,8 @@
 # Chuck and 3 others like your comment
 
 class Story < ActiveRecord::Base
+  include Kaminari::ActiveRecordModelExtension
+
   has_many :actors, through: :activities, source: :actor, source_type: 'User'
   has_many :activities
 
