@@ -233,7 +233,7 @@ module OpenAssets
     def average_bought_price_as_of_date(date)
       sum = 0
       btcsum = 0
-      buy_payments_before_date = BtcPayment.where('created_at < ?', date).select("action=Bought BTC")
+      buy_payments_before_date = BtcPayment.where('created_at < ?', date).select{|a| a.action == "Bought BTC"}
       sum_usd_value_change = buy_payments_before_date.sum("btc_change * btc_usdprice_at_moment / 100.0")
       sum_btc_value_change = buy_payments_before_date.sum("btc_change")
 
