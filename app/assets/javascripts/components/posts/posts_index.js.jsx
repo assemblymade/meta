@@ -5,6 +5,8 @@ var PostList = require('./post_list.js.jsx');
 var PostsStore = require('../../stores/posts_store');
 var ProductStore = require('../../stores/product_store');
 var Spinner = require('../spinner.js.jsx');
+var StoryTimeline = require('../story_timeline.js.jsx');
+const Tile = require('../ui/tile.js.jsx')
 
 var PostsIndex = React.createClass({
   propTypes: {
@@ -59,35 +61,30 @@ var PostsIndex = React.createClass({
   },
 
   render: function() {
-    return (
-      <div>
-        {this.renderPosts()}
-      </div>
-    );
-  },
-
-  renderPosts: function() {
     var posts = this.state.posts;
     var product = this.props.product;
-
     return (
-      <div className="row">
-        <div className="col-xs-12 col-sm-4 r768_float-right">
-          <div className="col-sm-11 col-sm-push-1 p0">
-            <div className="col-xs-6 col-sm-12">
-              <div className="pb1"> {/*Filters*/}
-                <Accordion title="Filters">
-                  <ul className="list-reset mxn2">
-                    {this.renderFilters()}
-                  </ul>
-                </Accordion>
-              </div>
+      <div>
+        <div className="clearfix mxn3">
+          <div className="sm-col-right sm-col-4 px3">
+            <div className="pb1"> {/*Filters*/}
+              <Accordion title="Filters">
+                <ul className="list-reset mxn2">
+                  {this.renderFilters()}
+                </ul>
+              </Accordion>
+            </div>
+
+            <div className="mb3 md-show">
+              <Tile>
+                <StoryTimeline product={product} />
+              </Tile>
             </div>
           </div>
-        </div>
 
-        <div className="col-xs-12 col-sm-8 r768_pr0">
-          {this.state.loading ? <Spinner /> : <PostList posts={posts} />}
+          <div className="sm-col sm-col-8 px3">
+            {this.state.loading ? <Spinner /> : <PostList posts={posts} />}
+          </div>
         </div>
       </div>
     );
