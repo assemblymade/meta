@@ -106,6 +106,18 @@ module OpenAssets
       body
     end
 
+    def construct_transfer_post_user_to_product(user, product, coins, asset_address)
+      body = {
+        public_address: user.wallet_public_address,
+        recipient_address: product.wallet_public_address,
+        private_key: user.wallet_private_key,
+        amount: coins.to_s,
+        asset_address: asset_address,
+        identifier: user.id.to_s+":"+product.id.to_s+":"+DateTime.now.to_s
+      }
+      body
+    end
+
     def award_by_creating_coins(product_id, user_id, coins)
       product = Product.find(product_id)
       user = User.find(user_id)
@@ -136,6 +148,17 @@ module OpenAssets
         remote = OpenAssets::Remote.new("http://coins.assembly.com")
         end_url="v2/colors/transfer"
         remote.post end_url, body.to_json
+      end
+    end
+
+    def return_coins_to_product_address(user, product, coins)
+      if product.coin_info
+        if asset_address = product.coin_info.asset_address
+          body = construct_transfer_post_user_to_product(user, product, coins, asset_address)
+          remote = OpenAssets::Remote.new("http://coins.assembly.com")
+          end_url="v2/colors/transfer"
+          remote.post end_url, body.to_json
+        end
       end
     end
 
