@@ -78,18 +78,31 @@ module OpenAssets
         asset_address = ""
       end
 
-      body = {
-        public_address: product.wallet_public_address,
-        recipient_address: user.wallet_public_address,
-        private_key: product.wallet_private_key,
-        amount: coins.to_s,
-        asset_address: asset_address,
-        identifier: product_id+":"+user_id+":"+DateTime.now.to_s
-      }
+      receiver_address = user.wallet_public_address
 
-      remote = OpenAssets::Remote.new("http://coins.assembly.com")
-      end_url="v2/colors/transfer"
-      remote.post end_url, body.to_json
+      if receiver_address.nil?
+        AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform(
+          user.to_global_id,
+          :assign_key_pair
+        )
+        Rails.logger.info "ADDED KEYPAIR TO #{user.username}"
+        receiver_address = user.wallet_public_address
+      end
+
+      if receiver_address
+        body = {
+          public_address: product.wallet_public_address,
+          recipient_address: user.wallet_public_address,
+          private_key: product.wallet_private_key,
+          amount: coins.to_s,
+          asset_address: asset_address,
+          identifier: product_id+":"+user_id+":"+DateTime.now.to_s
+        }
+
+        remote = OpenAssets::Remote.new("http://coins.assembly.com")
+        end_url="v2/colors/transfer"
+        remote.post end_url, body.to_json
+      end
     end
 
     def get_asset_address(btc_address)
