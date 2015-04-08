@@ -336,6 +336,7 @@ ASM::Application.routes.draw do
     get '/ownership' => 'products#ownership'
     get '/people' => 'products#people'
     get '/coin' => 'products#coin'
+    get '/stories' => 'products#stories'
 
     get '/trust' => 'products#trust'
 

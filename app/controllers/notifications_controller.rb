@@ -6,4 +6,6 @@ class NotificationsController < ApplicationController
 
     render json: @stories
   end
+
+
 end

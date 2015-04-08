@@ -164,6 +164,12 @@ class ProductsController < ProductController
     find_product!
   end
 
+  def stories
+    find_product!
+    @stories = Story.joins(:activities).where('activities.product_id' => @product).order(created_at: :desc).limit(5)
+    render json: @stories, each_serializer: TimelineStorySerializer
+  end
+
   def activity
     respond_to do |format|
       format.html { render 'show' }

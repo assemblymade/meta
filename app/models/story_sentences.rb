@@ -21,13 +21,21 @@ class StorySentences
     subject.class.name.underscore.downcase
   end
 
+  def display_verb
+    t("verbs.#{verb}.singular")
+  end
+
+  def display_subject
+    t("subjects.long.#{target_type}.other", subject.attributes.symbolize_keys)
+  end
+
   def as_json
     owner = [
-      t("verbs.#{verb}.singular"),
+      display_verb,
       '<b>' + t("subjects.short.#{target_type}.owner", subject.attributes.symbolize_keys) + '</b>'
     ]
     other = [
-      t("verbs.#{verb}.singular"),
+      display_verb,
       '<b>' + t("subjects.short.#{target_type}.other", subject.attributes.symbolize_keys) + '</b>'
     ]
 

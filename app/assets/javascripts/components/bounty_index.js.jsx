@@ -13,6 +13,7 @@ const PaginationLinks = require('./pagination_links.js.jsx')
 const Spinner = require('./spinner.js.jsx')
 const Tile = require('./ui/tile.js.jsx')
 const UserStore = require('../stores/user_store.js')
+const StoryTimeline = require('./story_timeline.js.jsx');
 
 const BountyIndex = React.createClass({
   propTypes: {
@@ -184,25 +185,7 @@ const BountyIndex = React.createClass({
 
             <div className="mb3">
               <Tile>
-                <div className="p3">
-                  <div className="block h5 mt0 mb1 bold">
-                    Getting Started with Bounties
-                  </div>
-                  <div className="h6 m0 gray-1">
-                    A bounty is the community asking for help on {product.name}.
-                    Find one that you would like to do and jump right in.
-                    <br/><br/>
-                    Ping <a href={product.people_url}>@core</a> in our chat room if you have any questions.
-                  </div>
-
-                  <div className="center mt2 border-top">
-                    <div className="mt2">
-                      <Button type="default" action={function() { window.open('chat', '_blank'); }}>
-                        Jump into chat
-                      </Button>
-                    </div>
-                  </div>
-                </div>
+                <StoryTimeline product={product} />
               </Tile>
             </div>
 
