@@ -87,11 +87,11 @@ class MetricsAggregator
   end
 
   def self.current_user_count
-    User.where('last_request_at > ?', 15.minutes.ago).count
+    User.where(is_staff: true).where('last_request_at > ?', 15.minutes.ago).count
   end
 
   def self.love_throughput
-    Heart.where('created_at > ?', 1.days.ago).count
+    Heart.joins(:user).where("users.is_staff=false").where('hearts.created_at > ?', 1.days.ago).count
   end
 
   def self.products_since_week
