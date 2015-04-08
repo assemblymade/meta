@@ -68,6 +68,7 @@ module OpenAssets
       diff = check_users_balances_on_product(product)
       diff.each do |d|
         coindiff = d[4]
+        user = User.find_by(username: d[0])
         if coindiff < 0
           coins = -1 * coindiff
           puts "SENDING #{coins} back to #{product.name} from #{user.username}"
