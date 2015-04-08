@@ -270,6 +270,12 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def reset_all_transactions_as_unqueued  #dont run this command without consulting a lvl 5 wizard or above
+    TransactionLogEntry.where(product_id: self.id).where.not(queue_id: nil).all.each do |a|
+      a.update!({queue_id: nil})
+    end
+  end
+
   def launched?
     current_state >= :team_building
   end

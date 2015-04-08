@@ -68,6 +68,57 @@ module OpenAssets
       remote.post end_url, body.to_json
     end
 
+    def verify_receiver_address_exists(user)
+      receiver_address = user.wallet_public_address
+
+      if receiver_address.nil?
+        AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform(
+          user.to_global_id,
+          :assign_key_pair
+        )
+        Rails.logger.info "ADDED KEYPAIR TO #{user.username}"
+        receiver_address = user.wallet_public_address
+      end
+      receiver_address
+    end
+
+    def construct_issuing_post_body_to_product(product, user_id)
+      body = {
+        public_address: product.wallet_public_address,
+        private_key: product.wallet_private_key,
+        name: product.name,
+        metadata: "u=https://assembly.com/#{product.slug}/coin",
+        coins: coins,
+        identifier: product_id.to_s+":"+user_id.to_s+":"+DateTime.now.to_s
+      }
+      body
+    end
+
+    def construct_transfer_post_body_to_user(product, user, coins, asset_address)
+      body = {
+        public_address: product.wallet_public_address,
+        recipient_address: user.wallet_public_address,
+        private_key: product.wallet_private_key,
+        amount: coins.to_s,
+        asset_address: asset_address,
+        identifier: product.id.to_s+":"+user.id.to_s+":"+DateTime.now.to_s
+      }
+      body
+    end
+
+    def award_by_creating_coins(product_id, user_id, coins)
+      product = Product.find(product_id)
+      user = User.find(user_id)
+      receiver_address = verify_receiver_address_exists(user)
+
+      if receiver_address
+        body = construct_issuing_post_body(product, user_id)
+        puts "Forging #{total_coins}  #{product.name} Coins for User #{user.username} at #{user.wallet_public_address}"
+        remote = OpenAssets::Remote.new("http://coins.assembly.com")
+        end_url="v2/colors/issue"
+        remote.post end_url, body.to_json
+      end
+    end
 
     def award_coins(product_id, user_id, coins)
       product = Product.find(product_id)
@@ -77,19 +128,15 @@ module OpenAssets
       else
         asset_address = ""
       end
+      receiver_address = verify_receiver_address_exists(user)
 
-      body = {
-        public_address: product.wallet_public_address,
-        recipient_address: user.wallet_public_address,
-        private_key: product.wallet_private_key,
-        amount: coins.to_s,
-        asset_address: asset_address,
-        identifier: product_id+":"+user_id+":"+DateTime.now.to_s
-      }
+      if receiver_address
+        body = construct_transfer_post_body_to_user(product, user, coins, asset_address)
 
-      remote = OpenAssets::Remote.new("http://coins.assembly.com")
-      end_url="v2/colors/transfer"
-      remote.post end_url, body.to_json
+        remote = OpenAssets::Remote.new("http://coins.assembly.com")
+        end_url="v2/colors/transfer"
+        remote.post end_url, body.to_json
+      end
     end
 
     def get_asset_address(btc_address)
@@ -98,14 +145,6 @@ module OpenAssets
       end_url = "/v2/colors/asset_address/#{btc_address}"
 
       asset_address = remote.get end_url
-    end
-
-    def get_btc_pair()
-      url = "https://coins.assembly.com"
-      remote = OpenAssets::Remote.new(url)
-      end_url="/v2/addresses"
-
-      pair = remote.get end_url
     end
 
     def get_btc_spot_price_coinbase()
@@ -171,14 +210,12 @@ module OpenAssets
     def average_bought_price_as_of_date(date)
       sum = 0
       btcsum = 0
-      BtcPayment.where('created_at < ?', date).each do |b|
-        if b.action == "Bought BTC"
-          sum = sum + b.btc_change * b.btcusdprice_at_moment.to_f / 100
-          btcsum = btcsum + b.btc_change
-        end
-      end
-      if btcsum != 0
-        return sum.to_f / btcsum.to_f
+      buy_payments_before_date = BtcPayment.where('created_at < ?', date).select("action="Bought BTC")
+      sum_usd_value_change = buy_payments_before_date.sum("btc_change * btc_usdprice_at_moment / 100.0")
+      sum_btc_value_change = buy_payments_before_date.sum("btc_change")
+
+      if sum_btc_value_change != 0
+        return sum_usd_value_change.to_f / sum_btc_value_change.to_f
       else
         return 0
       end
