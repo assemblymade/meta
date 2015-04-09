@@ -82,7 +82,8 @@ let ProductShow = React.createClass({
     let slug = product.slug;
     let user = UserStore.getUser();
     let perks = null,
-        trust = null
+        trust = null,
+        metrics = null
 
     if (UserStore.isStaff()) {
       perks = <div className="mb3">
@@ -112,6 +113,10 @@ let ProductShow = React.createClass({
             </Tile>
           </div>
         </Accordion>
+      </div>
+
+      metrics = <div className="mb3">
+        <MetricsBadge product={product} />
       </div>
     }
 
@@ -251,10 +256,7 @@ let ProductShow = React.createClass({
               </div>
 
               {perks}
-
-              <div className="mb3">
-                <MetricsBadge product={product} />
-              </div>
+              {metrics}
 
             </div>
           </div>

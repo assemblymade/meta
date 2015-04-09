@@ -43,7 +43,7 @@ let ProductImportantLinks = React.createClass({
 
         {this.renderLink('photo', 'Assets', Routes.product_assets_path({ product_id: slug }))}
 
-        {this.renderLink('bar-chart', 'Financials', Routes.product_financials_path({product_id: slug }))}
+        {this.renderFinancials()}
       </div>
     );
   },
@@ -70,7 +70,15 @@ let ProductImportantLinks = React.createClass({
 
       return this.renderLink('home', host, homepageUrl);
     }
+  },
+
+  renderFinancials() {
+    if (this.props.product.slug !== 'meta') {
+      return this.renderLink(
+        'bar-chart', 'Financials', Routes.product_financials_path({product_id: slug })
+      )
+    }
   }
-});
+})
 
 module.exports = ProductImportantLinks;
