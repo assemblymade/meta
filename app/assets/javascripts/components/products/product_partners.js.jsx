@@ -29,13 +29,13 @@ const ProductPartners = React.createClass({
 
   renderWalletAddress(partner) {
     return (
-      <td>
-        <a href={partner.coinprism_url} className="gray-2 h6">
-          <div className="">
-            {partner.wallet_public_address}
-          </div>
-        </a>
-      </td>
+
+      <a href={partner.coinprism_url} className="gray-3 gray-2-hover h6">
+        <div>
+          {partner.wallet_public_address}
+        </div>
+      </a>
+
     )
   },
 
@@ -66,12 +66,19 @@ const ProductPartners = React.createClass({
       return (
         <tr key={`partner-${partner.id}`}>
           <td>
-            <a href={partner.url} title={'@' + partner.username}>
+            <div className="clearfix">
               <div className="left mr2">
-                <Partner user={partner} size={24} />
+                <a className="h4 mb1 block" href={partner.url} title={'@' + partner.username}>
+                  <Partner user={partner} size={48} />
+                </a>
               </div>
-              {partner.username}
-            </a>
+              <div className="overflow-hidden">
+                <a className="h4 mb1 block" href={partner.url} title={'@' + partner.username}>
+                  {partner.username}
+                </a>
+                { this.state.isStaff ? this.renderWalletAddress(partner) : ""}
+              </div>
+            </div>
           </td>
 
           <td className="right-align">
@@ -81,7 +88,6 @@ const ProductPartners = React.createClass({
           <td className="right-align">
             {formattedCoins}
           </td>
-          { this.state.isStaff ? this.renderWalletAddress(partner) : ""}
         </tr>
       )
     }.bind(this))
@@ -90,8 +96,6 @@ const ProductPartners = React.createClass({
         <div className="container mt3">
           <Tile>
           <div className="p4">
-            { this.state.isStaff ? <Button action = {this.state.coinprism_url} >See it on the Blockchain</Button> : <div></div>}
-
             <div className="table-responsive">
               <table className="table">
                 <thead>
@@ -99,7 +103,6 @@ const ProductPartners = React.createClass({
                     <th>Partner</th>
                     <th className="right-align">Coins</th>
                     <th className="right-align">Ownership</th>
-                    { this.state.isStaff ? <th>Public Address</th> : ""}
                   </tr>
                 </thead>
                 <tbody>
