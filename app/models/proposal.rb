@@ -143,4 +143,9 @@ class Proposal < ActiveRecord::Base
     [self.product, self]
   end
 
+  def self.proposals_on_product(product)
+    prod_proposals = Proposal.where(product: product).where.not(state: "hidden")
+    prod_proposals.order('state desc, expiration desc').to_a
+  end
+
 end

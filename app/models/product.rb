@@ -764,18 +764,6 @@ class Product < ActiveRecord::Base
     prod_proposals.order('state desc, expiration desc').to_a
   end
 
-  def active_contracts
-    Vesting.active.
-      joins(:proposals).
-      where(proposals: {state: ["passed", "expired"], contract_type: 'vesting', product_id: self.id})
-  end
-
-  def expired_contracts
-    Vesting.expired.
-      joins(:proposals).
-      where(proposals: {state: ["passed", "expired"], contract_type: 'vesting', product_id: self.id})
-  end
-
   def try_url=(new_try_url)
     super(new_try_url.presence)
   end
