@@ -68,7 +68,9 @@ const ProductPartners = React.createClass({
           <td>
             <div className="clearfix">
               <div className="left mr2">
-                <Partner user={partner} size={48} />
+                <a className="h4 mb1 block" href={partner.url} title={'@' + partner.username}>
+                  <Partner user={partner} size={48} />
+                </a>
               </div>
               <div className="overflow-hidden">
                 <a className="h4 mb1 block" href={partner.url} title={'@' + partner.username}>
