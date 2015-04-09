@@ -16,8 +16,6 @@ window.app = new Application()
 $(document).ready ->
   app.trigger('init')
 
-  $('form[data-redirect]').each -> new AjaxFormView(el: @)
-
   $('a[data-authenticate]').click (e)->
     if app.isSignedIn()
       true

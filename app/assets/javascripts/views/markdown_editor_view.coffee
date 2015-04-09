@@ -56,4 +56,3 @@ $(document).ready ->
   $('.js-markdown-editor').each ->
     view = new MarkdownEditorView(el: @)
     $(@).data('view', view)
-

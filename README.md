@@ -34,10 +34,9 @@
     $ npm install
     $ npm run watch
 
-Alternatively, add the following line to your Procfile.dev:
+Alternatively, add the following line to a Procfile.dev file:
 
     node: npm install && npm run watch
-
 
 
 ### Elasticsearch
