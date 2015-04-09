@@ -162,16 +162,6 @@ itself would be meaningless; the ownership it represents is what matters.  In
 the case of Colored Coins, the entire process of labelling bitcoins is
 ineffaceable; what has been written cannot be unwritten.  
 
-It is possible to transfer these tokens as well as issue new ones.  Anyone may
-do so with the API server Assembly has built, called AssemblyCoins.  Tokens can
-be created to represent anything one wishes; the original issuer alone controls
-the total supply.  
+It is possible to issue new ones.  Anyone may do so with the [API server](http://coins.assembly.com) Assembly has built.  Tokens can be created to represent anything one wishes; the original issuer alone controls the total supply.
 
-However the colored coins created to represent Assembly App Coins are subject
-to certain restrictions, outside of the underlying protocol.  Because App Coins
-confer ownership rights on real world property and revenue streams, they are
-subject to certain legal restrictions.  In order to comply with SEC
-regulations, among others, we currently do not allow users to transfer or sell
-their app coins.  Hopefully, if the laws change, this will become possible.  We
-would like nothing more than for an open market to exist for Assembly App
-Coins.  However the law must catch up first.
+However the colored coins created to represent Assembly App Coins are subject to certain restrictions, outside of the underlying protocol.  Because App Coins confer ownership rights on real world property and revenue streams, they are subject to certain restrictions.  In order to comply with regulations, among others, we currently do not allow users to transfer or sell their app coins.
