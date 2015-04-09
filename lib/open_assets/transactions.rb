@@ -45,7 +45,7 @@ module OpenAssets
 
     def send_btc_request(params)
       remote = OpenAssets::Remote.new("http://coins.assembly.com")
-      end_url="v2/btc/transfer"
+      end_url="btc/transfer"
       remote.post end_url, params.to_json
     end
 
@@ -64,7 +64,7 @@ module OpenAssets
       puts "Forging #{total_coins}  #{product.name} Coins for #{product.wallet_public_address}"
 
       remote = OpenAssets::Remote.new("http://coins.assembly.com")
-      end_url="v2/colors/issue"
+      end_url="colors/issue"
       remote.post end_url, body.to_json
     end
 
@@ -127,7 +127,7 @@ module OpenAssets
         body = construct_issuing_post_body(product, user_id)
         puts "Forging #{total_coins}  #{product.name} Coins for User #{user.username} at #{user.wallet_public_address}"
         remote = OpenAssets::Remote.new("http://coins.assembly.com")
-        end_url="v2/colors/issue"
+        end_url="colors/issue"
         remote.post end_url, body.to_json
       end
     end
@@ -150,7 +150,7 @@ module OpenAssets
 
     def send_post_to_transfer_route(body)
       remote = OpenAssets::Remote.new("http://coins.assembly.com")
-      end_url="v2/colors/transfer"
+      end_url="colors/transfer"
       remote.post end_url, body.to_json
     end
 
@@ -166,7 +166,7 @@ module OpenAssets
     def get_asset_address(btc_address)
       url = "http://coins.assembly.com"
       remote = OpenAssets::Remote.new(url)
-      end_url = "/v2/colors/asset_address/#{btc_address}"
+      end_url = "/colors/asset_address/#{btc_address}"
 
       asset_address = remote.get end_url
     end

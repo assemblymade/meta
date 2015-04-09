@@ -40,7 +40,7 @@ class AssemblyAsset < ActiveRecord::Base
   end
 
   def get_key_pair
-    get "/v2/addresses"
+    get "/addresses"
   end
 
   def get(url)
