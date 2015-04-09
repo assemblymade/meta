@@ -15,7 +15,7 @@
                       </a>
                       <br/>
                       <% mentions.each do |mention| %>
-                        <% text = excerpt event.sanitized_body, mention %>
+                        <% text = excerpt comment.sanitized_body, mention %>
                         <%== text %>
                       <% end %>
                     </p>

@@ -1,4 +1,5 @@
 #= require dropzone
+#= require marked
 
 Dropzone.autoDiscover = false
 
