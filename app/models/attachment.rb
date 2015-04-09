@@ -35,7 +35,7 @@ class Attachment < ActiveRecord::Base
   # private
 
   def set_asset_path
-    self.asset_path = File.join("attachments", SecureRandom.uuid, name)
+    self.asset_path ||= File.join("attachments", SecureRandom.uuid, name)
   end
 
   def attachment_host

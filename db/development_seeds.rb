@@ -1,5 +1,3 @@
-puts "WARNING: Loading additional test data from db/development_seeds.rb"
-
 FAKE_IP = '1.0.0.0'
 
 def seed_idea_description(filename)
