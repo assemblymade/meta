@@ -127,10 +127,12 @@ class QueryMarks
 
   #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
 
-  #def wips_from_greenlit_pr
+  def wips_on_active_products
+    Wip.joins(:product).where(products: {state: ['profitable','greenlit']}).where(closed_at: nil).where(type: "Task").where('wips.created_at > ?', 90.days.ago)
+  end
 
   def get_all_wip_vectors
-    wips = Wip.joins(:product).where(products: {state: ['profitable','greenlit']}).where(closed_at: nil).where(type: "Task").where('wips.created_at > ?', 90.days.ago).where.not(product_id: "846ea827-f1d1-48f4-9409-ebae81f868a0")
+    wips = wips_on_active_products.where.not(product_id: "846ea827-f1d1-48f4-9409-ebae81f868a0")
     data = wips.joins(:marks).group('wips.id').group('marks.id').pluck("wips.id, marks.id, SUM(markings.weight)")
     data = data.map{|x,y,z| [x, [y,z]]}
     data = data.group_by(&:first)
@@ -165,19 +167,44 @@ class QueryMarks
     }
   end
 
-  def get_all_product_vectors
-    products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
+  def active_products_not_meta
+    Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
+  end
+
+  def construct_product_vector(products)
     product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{ |product, mark, weight| product }
     product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w] }  ]}
+  end
 
+  def construct_task_vector(products)
     task_vector = products.joins(tasks: :marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)*0.2").group_by{|product, mark, weight| product}
     task_vector = task_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w]}]   }
+  end
 
+  def merge_product_task_vectors(task_vector, product_vector)
     merged_vector = Hash[product_vector].merge(Hash[task_vector])
     merged_vector.map{ |k, v|
       magnitude = Math.sqrt(v.sum{ |m, w| w**2})
       [Product.find(k), v.map{|m, w| [m, w/magnitude]}.sort_by { |e| e[1] }.reverse  ]
     }
+  end
+
+  def get_all_product_vectors
+    products = active_products_not_meta
+    product_vector = construct_product_vector(products)
+
+    task_vector = construct_task_vector(products)
+    merge_product_task_vectors(task_vector, product_vector)
+  end
+
+  def refresh_top_bounties(user, result, limit)
+    TopBounty.where(user_id: user.id).delete_all
+    n=0
+    result.sort_by{|a, b| a}.reverse.take(limit).each do |w|
+      n=n+1
+      TopBounty.create!({user_id: user.id, score: w[0], rank: n, wip_id: w[1].id})
+    end
+    result.sort_by{|a,b| a}.reverse
   end
 
   def assign_top_bounties_for_user(limit, user, wip_vectors)
@@ -196,18 +223,10 @@ class QueryMarks
           end
         end
       end
-
-      TopBounty.where(user_id: user.id).delete_all
-      n=0
-      result.sort_by{|a, b| a}.reverse.take(limit).each do |w|
-        n=n+1
-        TopBounty.create!({user_id: user.id, score: w[0], rank: n, wip_id: w[1].id})
-      end
-      result.sort_by{|a,b| a}.reverse
+      refresh_top_bounties(user, result, limit)
     end
     result.sort_by{|a, b| a}.reverse
   end
-
 
   def assign_top_products_for_user(limit, user, product_vectors, user_vector = nil)
     user_vector ||= normalize_mark_vector(user.user_identity.get_mark_vector)

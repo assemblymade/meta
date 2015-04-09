@@ -755,10 +755,6 @@ class Product < ActiveRecord::Base
     majority_owner[1].to_f / total_coins.to_f >= 0.5
   end
 
-  def proposals_sorted
-
-  end
-
   def try_url=(new_try_url)
     super(new_try_url.presence)
   end
