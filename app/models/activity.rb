@@ -37,7 +37,11 @@ class Activity < ActiveRecord::Base
 
         if room
           a.publish_to_chat(room.id)
-
+          LandlineBridgeWorker.perform_async(
+            room.slug,
+            a.subject.body,
+            a.actor.id
+          )
           # only touch updated_at for chat messages.
           # We don't want the room to be marked as unread for events
           # other than people chatting
