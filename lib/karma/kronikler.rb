@@ -15,29 +15,6 @@ module Karma
       deed_dates.sort{|a,b| a[1] <=> b[1]}
     end
 
-    def karma_history_by_user(user_id)
-      deeds = deeds_by_user(user_id)
-      #wips, tips, invites, products
-      sums = [[DateTime.now.to_s,0,0,0,0]]
-      deeds.each do |d|
-        temp = sums.last.dup
-        temp[0] = (deed_date(d[0]) - Date.new(1970,1,1)).to_i
-        #temp[0] = deed_date(d[0])
-        if d[0].karma_event_type=="Wip"
-          temp[1]=temp[1]+d[0].karma_value
-        elsif d[0].karma_event_type=="Tip"
-          temp[2]=temp[2]+d[0].karma_value
-        elsif d[0].karma_event_type=="Invite"
-          temp[3] = temp[3]+d[0].karma_value
-        elsif d[0].karma_event_type == "Product"
-          temp[4]=temp[4]+d[0].karma_value
-        end
-        sums.append(temp)
-      end
-      sums = sums[1, sums.count]
-      return sums
-    end
-
     def product_of_deed(deed)
       if deed.karma_event_type == "Product"
         deed.karma_event.name
@@ -49,26 +26,8 @@ module Karma
     def karma_product_associations_by_user(user_id)
       deeds = deeds_by_user(user_id)
       history = []
-
       deeds.map{|row| row[0]}.each do |d|
-        tempentry= []
-        if d.karma_event_type == "Product"
-          tempentry.append(Product.find(d.karma_event_id).name)
-        elsif d.karma_event_type == "Wip"
-          tempentry.append(Product.find(Wip.find(d.karma_event_id).product_id).name)
-        elsif d.karma_event_type == "Tip"
-          tempentry.append(Product.find(Tip.find(d.karma_event_id).product_id).name)
-        elsif d.karma_event_type =="Invite"
-          invite = Invite.find(d.karma_event_id)
-          if invite.via_type == "Product"
-            tempentry.append(Product.find(invite.via_id).name)
-          elsif invite.via_type == "Wip"
-            tempentry.append(Product.find(Wip.find(invite.via_id).product_id).name)
-          end
-        end
-        tempentry.append(d.karma_value)
-        #tempentry.append( (deed_date(d)-Date.new(1970,1,1)).to_i )
-        tempentry.append(deed_date(d))
+        tempentry= [d.parent_product, d.karma_value, deed_date(d)]
         history.append(tempentry)
       end
       return history

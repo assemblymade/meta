@@ -4,12 +4,11 @@ class ProductGovernanceSerializer < ApplicationSerializer
   attributes :slug, :name, :url
 
   def proposals
-    object.proposals_sorted
+    Proposal.proposals_on_product(object)
   end
 
   def url
     product_governance_index_url(object.product)
   end
-
 
 end
