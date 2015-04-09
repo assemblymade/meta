@@ -1,6 +1,8 @@
 require 'timed_set'
 require 'csv'
 
+OPEN_ASSETS_NAME_SHORT_CHAR_LIMIT = 10
+
 class ProductsController < ProductController
   respond_to :html, :json
 
@@ -121,30 +123,26 @@ class ProductsController < ProductController
 
   def coin
     find_product!
-    data = {}
-    if @product.coin_info
-      data['asset_ids'] = [@product.coin_info.asset_address]
-    end
-    data['name_short'] = @product.name[0,5]
-    data['name'] = @product.name
-    data['contract_url'] = ProductSerializer.new(@product).full_url
-    data['issuer'] = "Assembly.com"
-    data['description'] = ""#@product.description
-    data['description_mime'] = "text/x-markdown; charset=UTF-8"
-    data['type'] = "Ownership"
-    data['divisibility'] = 0
-    data['link_to_website'] = true
-    data['icon_url'] = @product.full_logo_url
-    data['image_url'] = @product.full_logo_url
-    version = "1.0"
 
-    if @product
-      if @product.coin_info
-        render json: data
-      else
-        render json: {}
-      end
+    if @product.coin_info.nil?
+      render json: {}
+      return
     end
+
+    render json: {
+      asset_ids: [@product.coin_info.asset_address],
+      name_short: @product.name[0, OPEN_ASSETS_NAME_SHORT_CHAR_LIMIT],
+      name: @product.name,
+      contract_url: ProductSerializer.new(@product).full_url,
+      issuer: 'Assembly.com',
+      description: @product.pitch,
+      description_mime: "text/x-markdown; charset=UTF-8",
+      type: "Ownership",
+      divisibility: 0,
+      link_to_website: true,
+      icon_url: @product.full_logo_url,
+      image_url: @product.full_logo_url
+    }
   end
 
   def set_up_chat
@@ -240,7 +238,9 @@ class ProductsController < ProductController
   end
 
   def show
-    return redirect_to(about_url) if @product.meta?
+    if @product.meta? && !(signed_in? && current_user.staff?)
+      return redirect_to(about_url)
+    end
 
     show_product
   end
