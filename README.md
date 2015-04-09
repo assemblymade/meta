@@ -12,6 +12,8 @@
 * [PostgreSQL](http://www.postgresql.org)
 * [Redis](http://redis.io/)
 * [Elasticsearch](http://www.elasticsearch.org/)
+* [ReadRaptor](https://github.com/asm-products/readraptor)
+* [Firesize](https://github.com/asm-products/firesize)
 
 ## Setup
 

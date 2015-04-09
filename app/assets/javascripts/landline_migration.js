@@ -33,35 +33,6 @@
     });
   };
 
-  LandlineMigration.prototype.pushComment = function(comment) {
-    var room = comment.target.label || 'general';
-    var message = {
-      body: comment.body
-    };
-    var token = retrieveToken();
-    var url = this.url;
-    var postMessage = function() {
-      $.ajax({
-        url: url + '/rooms/' + room + '/messages?bridge=true',
-        method: 'POST',
-        headers: {
-          Authorization: 'Bearer ' + token,
-          'Content-Type': 'application/json',
-        },
-        dataType: 'json',
-        data: JSON.stringify(message),
-        success: function(result) {},
-        error: function(err) {}
-      });
-    };
-
-    if (token) {
-      postMessage();
-    } else {
-      this.logIn(postMessage);
-    }
-  };
-
   window.LandlineMigration = LandlineMigration;
 
   function retrieveToken() {

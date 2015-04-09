@@ -37,7 +37,9 @@ class Activity < ActiveRecord::Base
 
         if room
           a.publish_to_chat(room.id)
-
+          if body = a.subject.try(:body)
+            a.push_to_landline(room, body, a.actor)
+          end
           # only touch updated_at for chat messages.
           # We don't want the room to be marked as unread for events
           # other than people chatting
@@ -106,6 +108,14 @@ class Activity < ActiveRecord::Base
 
   def publish_to_chat(room_id)
     ActivityStream.new(room_id).push(self)
+  end
+
+  def push_to_landline(room, body, actor)
+    LandlineBridgeWorker.perform_async(
+      room.slug,
+      body,
+      actor.id
+    )
   end
 
   def publishable

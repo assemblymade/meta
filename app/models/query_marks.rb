@@ -284,11 +284,7 @@ class QueryMarks
 
   #RUN ONCE
   def retroactively_generate_all_user_markings
-    total = User.count
-    n=1
     User.all.each do |a|
-      puts "#{n.to_s} / #{total.to_s} generating user markings -- #{(100*n.to_f/total.to_f).round(2)}%  -- #{a.username}"
-      n = n + 1
       a.user_identity.markings.delete_all
       a.user_identity.assign_markings_from_scratch
     end
