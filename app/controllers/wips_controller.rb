@@ -92,7 +92,7 @@ class WipsController < ProductController
       end
 
       if @product.tasks.won_by(@event.user).count == 1
-        BadgeMailer.delay(queue: 'mailer').first_win(@event.id)
+        BadgeMailer.delay(queue: 'mailer').first_win(@event.id) unless @product.meta?
       end
       TrackVested.perform_async(@event.user_id, @product.id, Time.now)
     end
