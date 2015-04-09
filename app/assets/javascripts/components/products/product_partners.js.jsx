@@ -30,7 +30,7 @@ const ProductPartners = React.createClass({
   renderWalletAddress(partner) {
     return (
       <td>
-        <a href={partner.coinprism_url}>
+        <a href={partner.coinprism_url} className="gray-2 h6">
           <div className="">
             {partner.wallet_public_address}
           </div>
