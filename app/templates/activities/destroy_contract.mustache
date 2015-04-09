@@ -1,0 +1,29 @@
+<div class="media">
+
+  <div class="pull-left">
+    <div class="marker marker-red">
+      <i class="icon-wallet"></i>
+    </div>
+  </div>
+
+  <div class="media-body">
+    <div class="media-heading omega">
+      <div class="activity-body">
+        <div class="activity-actions">
+          <ul class="list-inline omega">
+            <li class="gray-2">
+              A contract for
+              {{#actor}}
+                <a href="{{url}}">{{username}}</a>
+              {{/actor}}
+              was revoked on
+              {{#target}}
+                <a target="_blank" href="{{url}}">{{#target}}{{name}}{{/target}}</a>
+              {{/target}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

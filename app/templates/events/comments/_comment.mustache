@@ -1,0 +1,89 @@
+<div class="activity" id="{{anchor}}" data-readraptor-track="{{readraptor_track_id}}" data-event-id="{{id}}">
+  <div class="pull-left activity-avatar">
+    {{#actor}}
+      <a href="{{url}}" title="@{{username}}">
+        <img class="media-object img-circle" src="{{avatar_url}}" alt="@{{username}}" width="30" height="30">
+      </a>
+    {{/actor}}
+  </div>
+
+  <div class="activity-body">
+
+    <!-- ACTIONS -->
+    <div class="activity-actions">
+
+      <ul class="list-inline pull-right omega">
+        <li>
+          <div class="dropdown">
+            <a href="#" class="dropdown-toggle" id="dropdown-{{cid}}" data-toggle="dropdown">
+              <i class="icon icon-ellipsis" style="font-size: 18px;"></i>
+            </a>
+            <ul class="dropdown-menu pull-right text-small" role="menu" aria-labelledby="dropdown-{{cid}}">
+
+              {{#award_url}}
+                <li>
+                  <a class="event-award" href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
+                    <i class="glyphicon glyphicon-star-empty dropdown-glyph"></i>
+                    Award bounty to {{#actor}}@{{username}}{{/actor}} and keep it open
+                  </a>
+                </li>
+
+                <li>
+                  <a class="event-award" href="{{award_url}}?event_id={{id}}&close=true" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
+                    <i class="glyphicon glyphicon-star dropdown-glyph"></i>
+                    Award bounty to {{#actor}}@{{username}}{{/actor}} and close it
+                  </a>
+                </li>
+              {{/award_url}}
+
+              {{#edit_url}}
+                <li>
+                  <a href="{{edit_url}}" role="menuitem">
+                    <i class="icon icon-pencil dropdown-glyph"></i>
+                    Edit comment
+                  </a>
+                </li>
+              {{/edit_url}}
+
+              {{#anchor}}
+                <li>
+                  <a href="#{{anchor}}" role="menuitem">
+                    <i class="icon icon-link dropdown-glyph"></i>
+                    Permalink
+                  </a>
+                </li>
+              {{/anchor}}
+
+            </ul>
+
+          </div>
+        </li>
+      </ul>
+
+      <ul class="list-reset clearfix mb0">
+        <li class="left mr1">
+          {{#actor}}
+            <a href="{{url}}" title="@{{username}}" class="chat-actor">
+              {{username}}
+            </a>
+          {{/actor}}
+        </li>
+
+        <li class="left mr1 js-insert-tips">
+        </li>
+        <li class="left mr1 js-insert-love">
+        </li>
+      </ul>
+
+    </div>
+
+
+    <!-- CONTENT -->
+    <div class="activity-content markdown markdown-normalized shrink-images">
+      {{{body_html}}}
+    </div>
+
+  </div>
+</div>
+
+<img class="hidden" src="{{readraptor_tracking_url}}" width="0" height="0">

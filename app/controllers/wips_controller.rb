@@ -29,6 +29,17 @@ class WipsController < ProductController
     end
   end
 
+  def show
+    @watchers = @wip.followers.to_a
+
+    @events = Event.render_events(@wip.events.order(:number), current_user)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @wip, serializer: WipSerializer }
+    end
+  end
+
   def new
     @wip = wip_class.new(product: @product)
   end

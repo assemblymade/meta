@@ -1,0 +1,16 @@
+<%= render 'users/sessions/sign_up' %>
+<%= render 'users/sessions/sign_in' %>
+
+<% content_for :javascript do %>
+  <script>
+    window.signup = new SignUpView({
+      el: $('.sign-up'),
+      fbCallbackPath: '<%= user_omniauth_callback_path(:facebook) %>',
+      fbScope: '<%= facebook_scope %>'
+    });
+
+    new NewSessionView({
+      el: $(".sign-in")
+    });
+  </script>
+<% end %>

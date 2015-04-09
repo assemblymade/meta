@@ -1,0 +1,93 @@
+<div id="sign-up" class="modal modal-static sign-up-box">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1>Create an account</h1>
+        It takes less than a minute
+      </div>
+
+      <div class="modal-body body">
+        <div class="section">
+          <ul class="segmented-list">
+
+            <li class="segmented-list-item">
+              <div class="segmented-list-label">
+                Products
+              </div>
+              570
+            </li>
+
+            <li class="segmented-list-item">
+              <div class="segmented-list-label">
+                Contributors
+              </div>
+              1,186
+            </li>
+
+            <li class="segmented-list-item">
+              <div class="segmented-list-label">
+                Paid Out
+              </div>
+              $33,872
+            </li>
+
+          </ul>
+        </div>
+
+        <div class="section facebook">
+          <div class="facebook-signin-form">
+
+            <a class="btn btn-large btn-default btn-block btn-facebook facebook-signin">
+              <span>
+                Sign up with Facebook
+              </span>
+            </a>
+
+            <a class="btn btn-large btn-default btn-block btn-facebook facebook-busy" style="display: none">
+              <span>
+                Connecting...
+              </span>
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="signin-or">
+          <span>OR</span>
+        </div>
+
+
+        <%= render 'users/sessions/sign_up' %>
+        <%= render 'users/sessions/sign_in' %>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footnote">
+    <!--
+    <div class="pull-right">
+      <a href="#faq">What is Assembly?</a>
+    </div>
+    -->
+
+    Already an Assembly member?
+    <a href="<%= login_path %>">Log in</a>
+  </div>
+</div>
+
+<% content_for :javascript do %>
+  <script>
+    window.signup = new SignUpView({
+      el: $('.sign-up-box'),
+      fbCallbackPath: '<%= user_omniauth_callback_path(:facebook) %>',
+      fbScope: '<%= facebook_scope %>'
+    });
+
+    new NewSessionView({
+      el: $(".regular-sign-in")
+    });
+  </script>
+<% end %>

@@ -111,4 +111,28 @@ class Event < ActiveRecord::Base
   def self.slug
     name.demodulize.underscore.downcase
   end
+
+  def self.render_events(events, current_user)
+    # TODO (chrislloyd) This is a hack from the old Mustache days. It could be
+    #      really cleaned up.
+    events.map do |event|
+      event_data = EventSerializer.for(event, current_user).as_json
+
+      if current_user
+        tracker = ReadraptorTracker.new(ReadRaptorSerializer.serialize_entities(event).first, current_user.id)
+        event_data[:readraptor_tracking_url] = tracker.url
+        event_data[:tips] = event_data[:tips].to_json
+      end
+
+      event_name = event.class.slug
+
+      template_root = Rails.root.join('app', 'templates', 'events')
+      template_path = template_root.join(
+        event_name.pluralize,
+        "_#{event_name}.mustache"
+      )
+
+      [event, Mustache.render(File.read(template_path), event_data)]
+    end
+  end
 end
