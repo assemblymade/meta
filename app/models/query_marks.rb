@@ -131,33 +131,14 @@ class QueryMarks
     Wip.joins(:product).where(products: {state: ['profitable','greenlit']}).where(closed_at: nil).where(type: "Task").where('wips.created_at > ?', 90.days.ago)
   end
 
-  def get_all_wip_vectors
-    wips = wips_on_active_products.where.not(product_id: "846ea827-f1d1-48f4-9409-ebae81f868a0")
+  def compute_task_marks_vector(wips)
     data = wips.joins(:marks).group('wips.id').group('marks.id').pluck("wips.id, marks.id, SUM(markings.weight)")
     data = data.map{|x,y,z| [x, [y,z]]}
     data = data.group_by(&:first)
     task_vector = data.map{ |x, v| [x, v.map{|a,b| [b[0], b[1].to_f] } ] }
+  end
 
-    products = Product.where(state: ['greenlit', 'profitable', 'team_building']).where(flagged_at: nil).where.not(slug: 'meta')
-    product_vector = products.joins(:marks).group('products.id, marks.id').pluck("products.id, marks.id, SUM(markings.weight)").group_by{ |product, mark, weight| product }
-    product_vector = product_vector.map{ |p, v| [p, v.map{ |p, m, w| [m, w] }  ]}
-    product_vector = Hash[product_vector]
-
-    merged_vector = []
-    task_vector.each do |w, v|
-      r=[w]
-      product = Wip.find(w).product
-      product_id = product.id
-      puts product_id
-      if product_id && product_vector.keys.include?(product_id)
-        pv = Hash[product_vector[product_id]]
-        v = Hash[v].merge(pv)
-      end
-      r.append(v.to_a)
-
-      merged_vector.append(r)
-    end
-
+  def normalize_wip_vector(merged_vector)
     merged_vector.map{|w, v|
       mag=Math.sqrt(v.sum{|q| q[1]**2})
        [w, v.map{
@@ -165,6 +146,28 @@ class QueryMarks
           }
         ]
     }
+  end
+
+  def get_all_wip_vectors
+    wips = wips_on_active_products.where.not(product_id: "846ea827-f1d1-48f4-9409-ebae81f868a0")
+    task_vector = compute_task_marks_vector(wips)
+
+    products = active_products_not_meta
+    product_vector = Hash[construct_product_vector(products)]
+
+    merged_vector = []
+    task_vector.each do |w, v|
+      r=[w]
+      product = Wip.find(w).product
+      product_id = product.id
+      if product_id && product_vector.keys.include?(product_id)
+        pv = Hash[product_vector[product_id]]
+        v = Hash[v].merge(pv)
+      end
+      r.append(v.to_a)
+      merged_vector.append(r)
+    end
+    normalize_wip_vector(merged_vector)
   end
 
   def active_products_not_meta
