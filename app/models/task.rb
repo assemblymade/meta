@@ -22,6 +22,8 @@ class Task < Wip
 
   AUTHOR_TIP = 0
   IN_PROGRESS = 'allocated'
+  # trending
+  EPOCH = 1134028003 # first WIP
 
   workflow_column :state
   workflow do
@@ -302,11 +304,12 @@ class Task < Wip
     closed_at.nil?
   end
 
-  # trending
-  EPOCH = 1134028003 # first WIP
-
   def contracts
     WipContracts.new(self)
+  end
+
+  def earnable_cents
+    WipContracts.new(self).earnable_cents
   end
 
   def update_coins_cache!
