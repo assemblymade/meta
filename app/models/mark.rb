@@ -73,4 +73,8 @@ class Mark < ActiveRecord::Base
     self.update!(mark_cluster_id: mark_cluster.id)
   end
 
+  def self.news_feed_item_marks_on_target(mark_name, news_feed_item)
+    news_feed_item.target.marks.where(name: mark_name).count > 0
+  end
+
 end

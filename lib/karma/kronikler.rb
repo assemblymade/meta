@@ -114,7 +114,7 @@ module Karma
         date = Date.parse(deed_date(deed).to_s).strftime("%m-%d-%Y")
         invite_type = invite.via_type
 
-        if deed.karma_value <5 #was just a request
+        if deed.karma_value < 5 #was just a request
           work_message = "#{invitor} invited #{invitee} "
           if invite_type == "Product"
             product_name = Product.find_by(id: invite.via_id).name
@@ -123,7 +123,7 @@ module Karma
             bounty_title = Task.find_by(id: invite.via_id).title
             work_message =  work_message + "to work on #{bounty_title}."
           end
-        elsif deed.karma_value >=5 #the work was actually done
+        elsif deed.karma_value >= 5 #the work was actually done
           if invite_type == "Product"
             product_name = Product.find_by(id: invite.via_id).name
             work_message = "#{invitor} asked #{invitee} to join him on #{product_name}.  #{invitee} answered the call!"
@@ -185,7 +185,6 @@ module Karma
         end
       end
 
-
       history = history.sort.to_h
 
       #bin into smoother averages
@@ -202,9 +201,6 @@ module Karma
         n=n+1
       end
       smooth_history
-
     end
-
-
   end
 end

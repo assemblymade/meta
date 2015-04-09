@@ -199,10 +199,6 @@ class Product < ActiveRecord::Base
     joins(:activities).where('activities.created_at > ?', 30.days.ago).group('products.id').having('count(*) > 5').count.count
   end
 
-  def news_feed_items_with_mark(mark_name)
-    QueryMarks.new.news_feed_items_per_product_per_mark(self, mark_name)
-  end
-
   def sum_viewings
     Viewing.where(viewable: self).count
   end
@@ -760,8 +756,7 @@ class Product < ActiveRecord::Base
   end
 
   def proposals_sorted
-    prod_proposals = Proposal.where(product: self).where.not(state: "hidden")
-    prod_proposals.order('state desc, expiration desc').to_a
+
   end
 
   def try_url=(new_try_url)
