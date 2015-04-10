@@ -3,6 +3,7 @@ require './lib/poster_image'
 require 'elasticsearch/model'
 
 class Product < ActiveRecord::Base
+  include ActiveRecord::UUID
   include Kaminari::ActiveRecordModelExtension
   include Elasticsearch::Model
   include GlobalID::Identification
@@ -745,7 +746,7 @@ class Product < ActiveRecord::Base
   end
 
   def normalized_mark_vector()
-    QueryMarks.new.normalize_mark_vector(self.mark_vector())
+    QueryMarks.new.normalize_mark_vector(mark_vector)
   end
 
   def majority_owner
