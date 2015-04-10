@@ -81,42 +81,21 @@ let ProductShow = React.createClass({
     let product = this.state.product;
     let slug = product.slug;
     let user = UserStore.getUser();
-    let perks = null,
-        trust = null,
-        metrics = null
+    let trust = null,
+        metrics = null,
+        metaNotice = null
 
     if (UserStore.isStaff()) {
-      perks = <div className="mb3">
-        <Accordion title="Partner perks">
-          <div className="mxn3">
-            <Tile>
-              <div className="p3 border-bottom">
-                <h5 className="mt0 mb0">Royalties</h5>
-                <div className="gray-2">
-                  On the 1st of every month partners are paid 10% of the previous month's accrued profit. The profit is split depending on the partner's current ownership.
-                </div>
-              </div>
-
-              <div className="p3 border-bottom">
-                <h5 className="mt0 mb0">Voting</h5>
-                <div className="gray-2">
-                  Your partnership means you get one vote in any decisions that are put towards the partners.
-                </div>
-              </div>
-
-              <div className="p3">
-                <h5 className="mt0 mb0">Updates</h5>
-                <div className="gray-2">
-                  Get access to parter-only updates about the product. Financials etc.
-                </div>
-              </div>
-            </Tile>
-          </div>
-        </Accordion>
-      </div>
-
       metrics = <div className="mb3">
         <MetricsBadge product={product} />
+      </div>
+    }
+
+    if (product && product.slug == 'meta') {
+      metaNotice = <div className="py3">
+        <div className="p2 border rounded border-yellow shadow">
+          Hi! Assembly Meta is a special place for us to be transparent about how we're building the Assembly platform. Just a note, <span className="bold">this product will not pay out any royalties</span>. We <span className="italic">are</span> planning on doing some nice things for partners, however. &mdash; <span className="gray-2">The Assembly Team</span>
+        </div>
       </div>
     }
 
@@ -192,6 +171,8 @@ let ProductShow = React.createClass({
                     {this.renderEditButton()}
                   </div>
 
+                  {metaNotice}
+
                   <div className="py3">
                     <div className="clearfix py2">
                       <a href={`/${product.slug}/activity`} className="right h6">View all</a>
@@ -255,7 +236,6 @@ let ProductShow = React.createClass({
                 </Accordion>
               </div>
 
-              {perks}
               {metrics}
 
             </div>

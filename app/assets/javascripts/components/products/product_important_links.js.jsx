@@ -43,7 +43,7 @@ let ProductImportantLinks = React.createClass({
 
         {this.renderLink('photo', 'Assets', Routes.product_assets_path({ product_id: slug }))}
 
-        {this.renderFinancials()}
+        {this.renderFinancials(slug)}
       </div>
     );
   },
@@ -73,7 +73,8 @@ let ProductImportantLinks = React.createClass({
   },
 
   renderFinancials() {
-    if (this.props.product.slug !== 'meta') {
+    const {slug} = this.props.product
+    if (slug !== 'meta') {
       return this.renderLink(
         'bar-chart', 'Financials', Routes.product_financials_path({product_id: slug })
       )
