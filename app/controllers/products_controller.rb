@@ -238,10 +238,6 @@ class ProductsController < ProductController
   end
 
   def show
-    if @product.meta? && !(signed_in? && current_user.staff?)
-      return redirect_to(about_url)
-    end
-
     show_product
   end
 
