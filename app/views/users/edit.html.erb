@@ -15,6 +15,7 @@
           <li><a href="#notifications" data-toggle="tab">Notifications</a></li>
           <li><a href="#payments" data-toggle="tab">Payments</a></li>
           <li><a href="#api" data-toggle="tab">API Access</a></li>
+          <li><a href="#beta" data-toggle="tab">Beta Subscription</a></li>
         </ul>
       </div>
 
@@ -197,6 +198,21 @@
 
         <div role="tabpanel" class="tab-pane" id="api">
           <%= react_component 'ApiSettings', authentication_token: current_user.authentication_token %>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="beta">
+          <%= form_for @user, html: {class: 'form'} do |f| %>
+            <div class="form-group">
+              <%= f.label :beta_subscription do %>
+              <%= f.check_box :beta_subscription %>
+              Subscribe to Assembly beta features
+              <% end %>
+            </div>
+
+            <div class="right-align">
+              <%= f.submit 'Update beta subscription', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
         </div>
       </div>
 

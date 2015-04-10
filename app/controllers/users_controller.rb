@@ -165,6 +165,7 @@ protected
       :location,
       :bio,
       :mail_preference,
+      :beta_subscription,
       mark_names: []
     )
   end
