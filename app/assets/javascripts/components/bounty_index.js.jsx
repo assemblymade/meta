@@ -172,15 +172,22 @@ const BountyIndex = React.createClass({
       )
     }
 
+    let createBountyButton = <div className="mb3">
+      <Button action={Bounty.showCreateBounty.bind(null, product)} block={true}>Create a new bounty</Button>
+    </div>
+
+    if (product && product.slug === 'meta' && !UserStore.isStaff()) {
+      createBountyButton = null
+    }
+
     return (
       <div>
         {callout}
         <div className="clearfix mxn3">
 
           <div className="sm-col-right sm-col-4 px3">
-            <div className="mb3">
-              <Button action={Bounty.showCreateBounty.bind(null, product)} block={true}>Create a new bounty</Button>
-            </div>
+
+            {createBountyButton}
 
             <div className="mb3">
               <Tile>
