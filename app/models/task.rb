@@ -252,7 +252,8 @@ class Task < Wip
       awarder: awarder,
       guest: guest,
       wip: self,
-      cents: self.earnable_cents
+      cents: self.earnable_cents,
+      reason: reason
     ).tap do |award|
       AwardMailer.delay(queue: 'mailer').pending_award(guest.id, award.id)
     end

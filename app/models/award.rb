@@ -14,9 +14,7 @@ class Award < ActiveRecord::Base
     return if winner.present?
 
     update!(winner: user)
-    wip.mint_coins!(self).tap do |minting|
-      CoinsMinted.new.perform(minting.id)
-    end
+    wip.award_with_reason(awarder, user, reason)
   end
 
   def coins
