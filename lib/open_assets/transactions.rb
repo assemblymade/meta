@@ -185,7 +185,6 @@ module OpenAssets
       url = "https://api.coindesk.com"
       remote = OpenAssets::Remote.new(url)
       end_url = "/v1/bpi/historical/close.json?start=#{datestring}"
-      puts end_url
       price = remote.get end_url
       price = JSON.parse(price)['bpi'].first[1]
     end

@@ -6,7 +6,7 @@ describe ChecklistHandler do
 
   before do
     User.make!({username: "kernel"})
-    Idea.create!({product_id: product.id, user_id: User.find_by(username: "kernel").id, name: "social_media_for_social_media_founders" })
+    new_idea = Idea.create!({product_id: product.id, user_id: User.find_by(username: "kernel").id, name: "social_media_for_social_media_founders", tentative_name: "inkredible"})
   end
 
   it 'hearts checklist' do
@@ -29,5 +29,8 @@ describe ChecklistHandler do
     expect(ChecklistHandler.checklist_comments_idea(idea)).to eq(false)
   end
 
+  it 'checklist_name_idea' do
+    expect(ChecklistHandler.checklist_name_idea(idea)).to eq("Name it")
+  end
 
 end

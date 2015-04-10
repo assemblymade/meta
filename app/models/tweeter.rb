@@ -44,7 +44,7 @@ class Tweeter
 
   def worthy_bounties(n)
     bounty_suggestion_fraction = 0.5
-    sorted_top_bountys = TweetPrep.bounties_from_top_products.select{|a| a.earnable_coins_cache}.sort_by{|a| -a.earnable_coins_cache}
+    sorted_top_bountys = TweetPrep.bounties_from_top_products.select(&:earnable_coins_cache).sort_by{|a| -a.earnable_coins_cache}
     top_bountys = sorted_top_bountys.take(top_bountys.count * bounty_suggestion_fraction)
     top_bountys.sample(n).uniq
   end
