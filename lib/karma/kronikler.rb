@@ -93,38 +93,30 @@ module Karma
       text = "#{recipient} was tipped #{amount} #{product_name} coins on #{date} by #{giver}."
     end
 
+    def get_invitor(invite)
+      User.find_by(id: invite.invitor_id).username
+    end
+
+    def get_invitee(invite)
+      invitee = User.find_by(id: invite.invitee_id)
+      if invitee
+        invitee=invitee.username
+      else
+        invitee=invite.invitee_email
+      end
+      invitee
+    end
+
     def invite_text(deed)
       invite = Invite.find_by(id: deed.karma_event_id)
-      if not invite.nil?
-        invitor = User.find_by(id: invite.invitor_id).username
-        invitee = User.find_by(id: invite.invitee_id)
-        if not invitee.nil?
-          invitee=invitee.username
-        else
-          invitee=invite.invitee_email
-        end
+      if invite
+        invitor = get_invitor(invite)
+        invitee = get_invitee(invite)
         date = Date.parse(deed_date(deed).to_s).strftime("%m-%d-%Y")
         invite_type = invite.via_type
-
-        if deed.karma_value < 5 #was just a request
-          work_message = "#{invitor} invited #{invitee} "
-          if invite_type == "Product"
-            product_name = Product.find_by(id: invite.via_id).name
-            work_message = work_message + "to work on #{product_name}."
-          elsif invite_type == "Wip"
-            bounty_title = Task.find_by(id: invite.via_id).title
-            work_message =  work_message + "to work on #{bounty_title}."
-          end
-        elsif deed.karma_value >= 5 #the work was actually done
-          if invite_type == "Product"
-            product_name = Product.find_by(id: invite.via_id).name
-            work_message = "#{invitor} asked #{invitee} to join him on #{product_name}.  #{invitee} answered the call!"
-          elsif invite_type == "Wip"
-            bounty_title = Task.find_by(id: invite.via_id).title
-            work_message = "#{invitee} worked on #{bounty_title}, after the suggestion of #{invitor}."
-          end
-        end
-        return work_message
+        return "#{invitor} invited #{invitee} on #{date} for #{invite_type}"
+      else
+        ""
       end
     end
 
@@ -157,42 +149,6 @@ module Karma
         kronikle = kronikle + convert_deed_to_text(d[0])
       end
       return kronikle
-    end
-
-    def meta_karma_history(bin_average)
-      history = {}  # [[date1, newkarma1], [date2, newkarma2]]
-      Deed.all.each do |d|
-        date = deed_date(d)
-        if history.include?(date)
-          history[date] = history[date] + d.karma_value
-        else
-          history[date] = d.karma_value
-        end
-      end
-
-      range = (history.keys[0]..history.keys.last)
-      range.each do |r|
-        if not history.include?(r)
-          history[r] = 0
-        end
-      end
-
-      history = history.sort.to_h
-
-      #bin into smoother averages
-      n=0
-      temp = 0
-      smooth_history = []
-      history.each do |h|
-
-        temp =  temp + h[1]
-        if n%bin_average == 0
-          smooth_history.append([ h[0], temp.to_f / bin_average.to_f])
-          temp = 0
-        end
-        n=n+1
-      end
-      smooth_history
     end
   end
 end

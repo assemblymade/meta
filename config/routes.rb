@@ -210,7 +210,6 @@ ASM::Application.routes.draw do
       get :graph_data
     end
     resources :karma, only: [:index]
-    resources :karmahistory, only: [:index]
     resources :leaderboard, only: [:index]
     resources :ownership, only: [:index, :update]
     resources :tags, only: [:index]
