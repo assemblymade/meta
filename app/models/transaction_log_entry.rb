@@ -28,7 +28,7 @@ class TransactionLogEntry < ActiveRecord::Base
   end
 
   def self.bounty_values_on_product(product)
-    bounties = TransactionLogEntry.minted.
+    TransactionLogEntry.minted.
       where(product_id: product.id).
       where.not(work_id: product.id).
       group(:work_id).

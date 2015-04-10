@@ -68,5 +68,4 @@ class ChatRoom < ActiveRecord::Base
     product.update(main_thread: main_thread)
     product.chat_rooms.create!(wip: main_thread, slug: product.slug)
   end
-
 end

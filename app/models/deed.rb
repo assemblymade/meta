@@ -20,6 +20,6 @@ class Deed < ActiveRecord::Base
   end
 
   def self.deeds_of_user(user)
+    Deed.where(user_id: user.id)
   end
-
 end

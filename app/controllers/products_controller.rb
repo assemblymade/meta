@@ -288,8 +288,8 @@ class ProductsController < ProductController
   end
 
   def find_the_chosen
-    chosen_ids = params[:product][:partner_ids] || ''
-    chosen_ids = chosen_ids.split(',').flatten
+    chosen_ids = params[:product][:partner_ids] || ""
+    chosen_ids.split(",").flatten
   end
 
   def disperse_coins(product, chosen_ids)
