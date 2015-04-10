@@ -28,7 +28,7 @@
         callback();
       },
       error: function(err) {
-        console.log(arguments);
+        Bugsnag.notify('landline.session-initialization-error', err.message);
       }
     });
   };

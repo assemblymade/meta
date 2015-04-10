@@ -382,7 +382,9 @@ ASM::Application.routes.draw do
 
     resources :repositories, only: [:index, :create, :destroy], as: :repos
     resources :team_memberships, path: 'memberships', only: [:show]
-    resources :tasks, only: [:show, :new], path: 'bounties'
+    resources :tasks, only: [:show, :new], path: 'bounties' do
+      resources :awards, only: [:show]
+    end
     resources :wips, only: [:index, :show, :new, :edit, :create, :update], controller: 'tasks', path: 'bounties' do
       get 'search', :on => :collection
 

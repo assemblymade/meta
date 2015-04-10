@@ -1,164 +1,97 @@
+'use strict';
+
 var ActionTypes = require('../constants').ActionTypes
 var Dispatcher = require('../dispatcher');
 var moment = require('moment');
-var ReadTimesMixin = require('../mixins/read_times');
-var Store = require('./store');
+var Store = require('./es6_store');
 var UserStore = require('./user_store');
-var xhr = require('../xhr');
 
-var _chatRooms = {};
-var _sortKeys = [];
-var _optimisticChatRooms = {};
-var _store = Object.create(Store);
+var chatRooms = {};
+var optimisticChatRooms = {};
 var noop = function() {};
 
-var ChatNotificationsStore = _.extend(_store, ReadTimesMixin, {
-  'chat:acknowledge': noop,
+let sortKeys = [];
 
-  'chat:markRoomAsRead': function(payload) {
-    xhr.noCsrfGet(payload.readraptor_url);
+class ChatNotificationsStore extends Store {
+  constructor() {
+    super();
 
-    _optimisticChatRooms[payload.id] = {
-      last_read_at: moment().unix()
-    };
-  },
-
-  'chat:fetchChatRooms': function(url) {
-    xhr.get(url, this.handleFetchedChatRooms.bind(this));
-  },
-
-  getUnreadCount: function(acknowledgedAt) {
-    var count = _.countBy(
-      _chatRooms,
-      function(entry) {
-        var updated = entry.updated > entry.last_read_at;
-
-        if (acknowledgedAt) {
-          return updated && entry.updated > acknowledgedAt;
-        }
-
-        return updated;
+    this.dispatchToken = Dispatcher.register((action) => {
+      switch (action.type) {
+        case ActionTypes.CHAT_NOTIFICATIONS_CHAT_ROOM_MARKED_AS_READ:
+          optimisticChatRooms[action.id] = {
+            last_read_at: moment().unix()
+          };
+          break;
+        case ActionTypes.CHAT_NOTIFICATIONS_CHAT_ROOMS_RECEIVE:
+          chatRooms = action.chatRooms;
+          optimisticChatRooms = {};
+          break;
+        case ActionTypes.CHAT_NOTIFICATIONS_SORT_KEYS_RECEIVE:
+          sortKeys = action.sortKeys;
+          // no need to emit a change event just for sortKeys
+          return;
+        default:
+          return;
       }
-    );
 
-    return count.true || 0;
-  },
+      this.emitChange();
+    });
+  }
 
-  handleFetchedChatRooms: function(err, data) {
-    if (err) {
-      return console.error(err);
+  getChatRoom(id) {
+    if (optimisticChatRooms[id]) {
+      chatRooms[id].last_read_at = optimisticChatRooms[id].last_read_at;
     }
 
-    try {
-      data = JSON.parse(data);
-    } catch (e) {
-      return console.error(e);
-    }
+    return chatRooms[id];
+  }
 
-    if (window.app.chatRoom) {
-      if (!_.find(data.chat_rooms, function(room){ return room.id == window.app.chatRoom.id })) {
-        data.chat_rooms.push(window.app.chatRoom)
+  getChatRooms() {
+    let bareRooms = _.values(chatRooms);
+
+    bareRooms.forEach((room) => {
+      if (optimisticChatRooms[room.id]) {
+        room.last_read_at = optimisticChatRooms[room.id].last_read_at;
       }
-    }
 
-    var chatRooms = data.chat_rooms;
-    _sortKeys = data.sort_keys;
+      chatRooms[room.id] = room;
+    });
 
-    var url = this.rrUrl() +
-      '/readers/' +
-      UserStore.getId() +
-      '/articles?' +
-      _.map(
-        chatRooms,
-        function(r) {
-          return 'key=' + r.id
-        }
-      ).join('&');
+    return chatRooms;
+  }
 
-    xhr.noCsrfGet(url, this.handleReadRaptor(chatRooms, 'id'));
-  },
+  getSortKeys() {
+    return sortKeys;
+  }
 
-  getChatRoom: function(id) {
-    if (_optimisticChatRooms[id]) {
-      _chatRooms[id].last_read_at = _optimisticChatRooms[id].last_read_at;
-    }
+  getUnreadCount(acknowledgedAt) {
+    return _.countBy(chatRooms, (room) => {
+      let updated = room.updated > room.last_read_at;
 
-    return _chatRooms[id];
-  },
-
-  getChatRooms: function() {
-    for (var id in _optimisticChatRooms) {
-      if (_chatRooms[id]) {
-        _chatRooms[id].last_read_at = _optimisticChatRooms[id].last_read_at;
+      if (acknowledgedAt) {
+        return updated && room.updated > acknowledgedAt;
       }
-    }
 
-    return _chatRooms;
-  },
+      return updated;
+    }).true || 0;
+  }
 
-  getSortKeys: function() {
-    return _sortKeys;
-  },
-
-  setStories: function(chatRooms) {
-    _chatRooms = chatRooms;
-
-    var keys = _.keys(_optimisticChatRooms)
-    for (var i = 0; i < keys.length; i++) {
-      if (_chatRooms[keys[i]]) {
-        _chatRooms[keys[i]].last_read_at = _optimisticChatRooms[keys[i]].last_read_at;
-      }
-    }
-
-    _optimisticChatRooms = {}
-  },
-
-  removeChatRoom: function(id) {
-    delete _chatRooms[id]
-  },
-
-  removeAllChatRooms: function() {
-    _chatRooms = {};
-  },
-
-  mostRecentlyUpdatedChatRoom: function() {
-    if (_.keys(_chatRooms).length === 0) {
+  mostRecentlyUpdatedChatRoom() {
+    if (_.keys(chatRooms).length === 0) {
       return null;
     }
 
     return _.max(
       _.filter(
-        _.values(_chatRooms),
-        function filterRooms(room) {
-          return room.id !== (app.chatRoom || {}).id;
+        _.values(chatRooms),
+        (room) => {
+          return room.id !== (window.app.chatRoom || {}).id;
         }
       ),
       func.dot('updated')
     );
   }
-});
+};
 
-ChatNotificationsStore.dispatchToken = Dispatcher.register(function(payload) {
-  var action = payload.action;
-  var data = payload.data;
-  var sync = payload.sync;
-
-  switch(payload.type) {
-    case ActionTypes.CHAT_ADDED:
-      _chatRooms['chat_' + data.chat_room].updated_at = data.updated
-      ChatNotificationsStore.emitChange()
-      break;
-  }
-
-  if (!ChatNotificationsStore[action]) {
-    return;
-  }
-
-  ChatNotificationsStore[action](data);
-
-  if (sync) {
-    return _store.emitChange();
-  }
-});
-
-module.exports = ChatNotificationsStore;
+module.exports = new ChatNotificationsStore();

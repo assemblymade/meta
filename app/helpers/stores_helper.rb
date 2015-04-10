@@ -12,6 +12,7 @@ module StoresHelper
     product: ['products/product_followers_store', 'products/product_store'],
     product_assets: 'bounties/comment_attachment_store',
     products: 'products/products_store',
+    signup_form_store: 'users/signup_form_store',
     user_subscriptions: 'users/user_subscriptions',
     wip: 'wips/people_store',
   }

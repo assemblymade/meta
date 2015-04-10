@@ -11,11 +11,11 @@ class Api::AwardsController < Api::ApiController
     if winner = User.find_by(email: params[:email])
       award = bounty.award_with_reason(current_user, winner, params[:reason])
     else
-      # TODO: Send award email
+      guest = Guest.find_or_create_by!(email: params[:email])
+      award = bounty.award_pending_with_reason(current_user, guest, params[:reason])
     end
 
-    respond_with award,
-      location: api_product_bounty_award_path(product, bounty, award)
+    respond_with(product, bounty, award, serializer: AwardSerializer)
   end
 
   def show

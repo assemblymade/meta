@@ -5,6 +5,6 @@ class CreateChatMessage < ApiWorker
     @user = User.find(user_id)
     @room = ChatRoom.find(room_id)
 
-    post api_chat_room_comments_url(@room.slug), body: body
+    post api_chat_room_comments_url(@room.slug, bridge: true), body: body
   end
 end

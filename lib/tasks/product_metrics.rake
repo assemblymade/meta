@@ -19,7 +19,7 @@ namespace :product_metrics do
     require 'csv'
     csv = CSV.generate do |csv|
       csv << (["Product", "Total Accounts", "Uniques", "Previous"])
-      numbers.sort_by{|_, t| -(t || 0) }.each do |row|
+      numbers.sort_by{|cols| -(cols[1..-1].compact.max) }.each do |row|
         csv << row
       end
     end

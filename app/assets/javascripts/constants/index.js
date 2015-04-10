@@ -35,6 +35,9 @@ var CONSTANTS = {
 
     CHAT_ADDED: null,
     CHAT_MESSAGE_RECEIVE_ACTIVITIES: null,
+    CHAT_NOTIFICATIONS_CHAT_ROOM_MARKED_AS_READ: null,
+    CHAT_NOTIFICATIONS_CHAT_ROOMS_RECEIVE: null,
+    CHAT_NOTIFICATIONS_SORT_KEYS_RECEIVE: null,
     CHAT_USER_ONLINE: null,
 
     CHECKLIST_ITEMS_RECEIVE: null,
@@ -99,6 +102,7 @@ var CONSTANTS = {
     PAGINATION_PAGE_CHANGED: null,
     PAGINATION_TOTAL_PAGES_RECEIVE: null,
 
+    PENDING_AWARD_RECEIVE: null,
     PEOPLE_RECEIVE: null,
 
     POST_RECEIVE: null,
@@ -170,13 +174,6 @@ var CONSTANTS = {
   }),
 
   // TODO (whatupdave) remove old constants
-  CHAT_NOTIFICATIONS: {
-    ACTIONS: {
-      ACKNOWLEDGE: 'chat:acknowledge',
-      FETCH_CHAT_ROOMS: 'chat:fetchChatRooms',
-      MARK_ROOM_AS_READ: 'chat:markRoomAsRead'
-    }
-  },
 
   CONTRACT: {
     ACTIONS: {

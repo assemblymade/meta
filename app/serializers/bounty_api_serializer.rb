@@ -14,7 +14,7 @@ class BountyApiSerializer < ApplicationSerializer
   end
 
   def coins
-    object[:value] || 0
+    object.value || 0
   end
 
   # private

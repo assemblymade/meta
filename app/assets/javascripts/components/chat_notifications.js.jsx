@@ -1,17 +1,17 @@
-var ActionTypes = require('../constants').ActionTypes;
-var ChatNotificationsStore = require('../stores/chat_notifications_store');
-var CONSTANTS = require('../constants');
-var DesktopNotifications = require('./desktop_notifications.js.jsx');
-var Dispatcher = require('../dispatcher');
-var LocalStorageMixin = require('../mixins/local_storage.js');
-var Spinner = require('./spinner.js.jsx');
-var UserStore = require('../stores/user_store.js');
+'use strict';
 
-var N = CONSTANTS.CHAT_NOTIFICATIONS;
+const ActionTypes = require('../constants').ActionTypes;
+const ChatNotificationsActions = require('../actions/chat_notifications_actions');
+const ChatNotificationsStore = require('../stores/chat_notifications_store');
+const DesktopNotifications = require('./desktop_notifications.js.jsx');
+const Dispatcher = require('../dispatcher');
+const LocalStorageMixin = require('../mixins/local_storage.js');
+const Spinner = require('./spinner.js.jsx');
+const UserStore = require('../stores/user_store.js');
 
-var NotificationsList = React.createClass({
+const NotificationsList = React.createClass({
   render: function() {
-    var productNodes = this.props.data.map(function(entry){
+    var productNodes = this.props.chatRooms.map(function(entry){
       var label = entry.product_name ? entry.product_name : `#${entry.label}`;
       var badge = null;
 
@@ -73,30 +73,32 @@ function dynamicSortMultiple() {
   }
 }
 
-var ChatNotifications = React.createClass({
+const ChatNotifications = React.createClass({
   mixins: [LocalStorageMixin],
 
   articles: function() {
-    return _.flatten(_.map(this.state.data, function(a){
+    return _.flatten(_.map(this.state.chatRooms, function(a){
       return a.entities;
     }));
   },
 
   componentDidMount: function() {
-    this.onPush(function(event, msg) {
-      if (event == ActionTypes.USER_MENTIONED) {
+    this.onPush((event, msg) => {
+      if (event === ActionTypes.USER_MENTIONED) {
         this.desktopNotify(msg);
       }
 
-      this.fetchNotifications();
-    }.bind(this));
+      this.fetchChatRooms(this.props.url);
+    });
 
-    window.visibility(function(visible) {
-      if (visible) { this.fetchNotifications(); }
-    }.bind(this));
+    window.visibility((visible) => {
+      if (visible) {
+        this.fetchChatRooms(this.props.url);
+      }
+    });
 
     ChatNotificationsStore.addChangeListener(this.handleChatRoomsChanged);
-    this.fetchNotifications();
+    this.fetchChatRooms(this.props.url);
   },
 
   componentWillUnmount: function() {
@@ -124,12 +126,7 @@ var ChatNotifications = React.createClass({
     return n.show();
   },
 
-  fetchNotifications: _.debounce(function() {
-    Dispatcher.dispatch({
-      action: N.ACTIONS.FETCH_CHAT_ROOMS,
-      data: this.props.url
-    });
-  }, 1000),
+  fetchChatRooms: _.debounce(ChatNotificationsActions.fetchChatRooms, 1000),
 
   getDefaultProps: function() {
     return {
@@ -139,7 +136,7 @@ var ChatNotifications = React.createClass({
 
   getInitialState: function() {
     return {
-      data: ChatNotificationsStore.getChatRooms(),
+      chatRooms: ChatNotificationsStore.getChatRooms(),
       sortKeys: [],
       acknowledgedAt: this.storedAck('chatAck'),
       desktopNotificationsEnabled: false
@@ -147,12 +144,12 @@ var ChatNotifications = React.createClass({
   },
 
   handleChatRoomsChanged: function() {
-    var data = ChatNotificationsStore.getChatRooms();
+    var chatRooms = ChatNotificationsStore.getChatRooms();
 
     this.setState({
-      data: data,
+      chatRooms: chatRooms,
       sortKeys: ChatNotificationsStore.getSortKeys(),
-      spin: _.isEmpty(data)
+      spin: _.isEmpty(chatRooms)
     });
   },
 
@@ -170,15 +167,9 @@ var ChatNotifications = React.createClass({
   },
 
   markAllAsRead: function() {
-    _.each(_.values(this.state.data), function(entry) {
-      Dispatcher.dispatch({
-        action: N.ACTIONS.MARK_ROOM_AS_READ,
-        data: entry,
-        sync: true
-      });
+    _.each(_.values(this.state.chatRooms), function(chatRoom) {
+      ChatNotificationsActions.markRoomAsRead(chatRoom.id, chatRoom.readraptor_url);
     });
-
-    this.handleChatRoomsChanged();
   },
 
   latestArticle: function() {
@@ -231,7 +222,7 @@ var ChatNotifications = React.createClass({
       return <Spinner />;
     }
 
-    if (_.isEmpty(this.state.data)) {
+    if (_.isEmpty(this.state.chatRooms)) {
       return (
         <a href="/chat/general" className="list-group-item" style={{ border: 'none' }}>
           Community chat
@@ -239,7 +230,7 @@ var ChatNotifications = React.createClass({
       );
     }
 
-    return <NotificationsList data={this.sortByLastReadAt(this.state.data)} />;
+    return <NotificationsList chatRooms={this.sortByLastReadAt(this.state.chatRooms)} />;
   },
 
   storedAckChanged: function() {
@@ -248,12 +239,12 @@ var ChatNotifications = React.createClass({
     });
   },
 
-  sortByLastReadAt: function(data) {
-    if (data === null) {
+  sortByLastReadAt: function(chatRooms) {
+    if (chatRooms === null) {
       return [];
     }
 
-    var values = _.values(data);
+    var values = _.values(chatRooms);
     for (var i = 0; i < values.length; i++) {
       var entry = values[i];
 
