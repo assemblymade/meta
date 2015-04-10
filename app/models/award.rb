@@ -11,10 +11,10 @@ class Award < ActiveRecord::Base
   before_validation :set_token, on: :create
 
   def claim!(user)
-    return if !winner.nil?
+    return if winner.present?
 
     update!(winner: user)
-    TransactionLogEntry.minted!(nil, Time.current, wip.product, self.id, cents).tap do |minting|
+    wip.mint_coins!(self).tap do |minting|
       CoinsMinted.new.perform(minting.id)
     end
   end

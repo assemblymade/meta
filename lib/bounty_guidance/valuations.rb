@@ -141,7 +141,6 @@ module BountyGuidance
       results = []
       (1..n_medians).step(1) do |n|
         position = ((n.to_f)/(n_medians.to_f+1.0)*list_length).to_i
-        puts position
         results.append(list[position])
       end
       results

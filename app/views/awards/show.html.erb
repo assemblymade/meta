@@ -24,7 +24,9 @@
           @<%= @award.awarder.username %> awarded
           <%= @award.winner == current_user ? 'you' : "@#{@award.winner.username}" %>
           <span class="yellow"><%= @award.coins %></span> coins for completing the Bounty:
-          <b>#<%= @bounty.number %> – <%= @bounty.title %></b>
+          <a href="<%= product_task_path(@product, @bounty) %>">
+            <b>#<%= @bounty.number %> – <%= @bounty.title %></b>
+          </a>
         </p>
         <p>
           <% if @award.winner == current_user %>

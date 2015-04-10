@@ -194,7 +194,7 @@ class Task < Wip
   end
 
   # TODO: Remove value method and use underlying column
-  def award(closer, winning_event, amount=self[:value])
+  def award(closer, winning_event, amount=nil)
     stop_work!(winning_event.user)
 
     minting = nil
@@ -207,10 +207,10 @@ class Task < Wip
           winner: winning_event.user,
           event: win,
           wip: self,
-          cents: amount
+          cents: value
         )
 
-        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, amount)
+        minting = mint_coins!(award, amount)
 
         milestones.each(&:touch)
       end
@@ -237,7 +237,7 @@ class Task < Wip
           cents: earnable_cents
         )
 
-        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, self[:value])
+        minting = mint_coins!(award)
 
         milestones.each(&:touch)
       end
@@ -252,10 +252,16 @@ class Task < Wip
       awarder: awarder,
       guest: guest,
       wip: self,
-      cents: self.earnable_coins_cache
+      cents: self.earnable_cents
     ).tap do |award|
       AwardMailer.delay(queue: 'mailer').pending_award(guest.id, award.id)
     end
+  end
+
+  def mint_coins!(award, amount=nil)
+    amount ||= contracts.total_cents
+
+    TransactionLogEntry.minted!(nil, Time.current, product, award.id, amount)
   end
 
   def work_submitted(submitter)

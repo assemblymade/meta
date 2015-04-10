@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Award do
   context 'pending' do
-    let!(:award) { Award.make!(guest: guest) }
+    let!(:award) { Award.make!(guest: guest, winner: nil) }
     let!(:guest) { Guest.make! }
     let!(:winner) { User.make! }
 

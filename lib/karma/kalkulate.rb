@@ -149,7 +149,6 @@ module Karma
       Task.all.each do |w|
         w.winners.each do |t|
           n=n+1
-          puts n
           karma_from_bounty_completion(w, t)
           karma_from_bounty_creation_after_completion(w)
         end
