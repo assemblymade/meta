@@ -39,8 +39,8 @@ class Activity < ActiveRecord::Base
         if room
           a.publish_to_chat(room.id)
 
-          if body = a.subject.try(:body) && !bridge
-            a.push_to_landline(room, body, a.actor)
+          if a.subject.try(:body) && !bridge
+            a.push_to_landline(room, a.subject.body, a.actor)
           end
           # only touch updated_at for chat messages.
           # We don't want the room to be marked as unread for events
@@ -113,6 +113,7 @@ class Activity < ActiveRecord::Base
   end
 
   def push_to_landline(room, body, actor)
+    puts "body: #{body}"
     LandlineBridgeWorker.perform_async(
       room.slug,
       body,

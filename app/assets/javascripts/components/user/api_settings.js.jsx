@@ -1,3 +1,5 @@
+'use strict';
+
 const UserStore = require('../../stores/user_store')
 
 module.exports = React.createClass({
