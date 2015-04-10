@@ -234,7 +234,7 @@ class Task < Wip
           winner: winner,
           event: win,
           wip: self,
-          cents: self[:value]
+          cents: earnable_cents
         )
 
         minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, self[:value])
