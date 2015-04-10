@@ -93,6 +93,9 @@ const IdeaProgressWidget = React.createClass({
         <div className="py2">
           <ProgressBar progress={progress} type="success" />
         </div>
+        <div className="gray-2 h6 center">
+          Complete these steps first
+        </div>
       </div>
     )
   },
@@ -110,7 +113,7 @@ const IdeaProgressWidget = React.createClass({
             entity_type={"Idea"}
             entity={this.props.entity}
             checklistItems={activeChecklist.items}
-            locked={this.state.activeStage > this.state.currentStage} 
+            locked={this.state.activeStage > this.state.currentStage}
             complete={complete}
             buttonText={b} />
         </div>
