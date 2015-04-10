@@ -2,7 +2,9 @@ module Karma
   class Kronikler
 
     def deed_date(deed)
-      deed.karma_event.created_at
+      if deed.karma_event
+        deed.karma_event.created_at
+      end
     end
 
     def deeds_by_user(user_id)
