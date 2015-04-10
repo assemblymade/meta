@@ -28,17 +28,16 @@ deploy:
   app:
     secure: gv+O69pvNInWcQUSRwjPS2Fu+5gKwSTkiEzQ8KkOMygBTa1btS8DWpvQUtkxtEyXDwTz7P5UNYNNsRcL1/UCB6Xl3UknnTK825yTMfX3UDKAhNQ0+Zw0GtqXx9xXnfPthhBYGK7g2aKhoou4eJwkDIBVytmMsTxFj+fwnTSRnRo=
   run:
-    - rake db:migrate
-    - restart
-    - rake cleanup
+  - rake db:migrate
+  - restart
+  - rake cleanup
   api_key:
-    secure: V8u9b4ILMBW4EMofqRlm3XBgQIBM0P5Ewa4ETeKiESb0PwkGVw7KXIWW571pzXpw0+Z7aDNQlmAbF4OQljXasg4B+V0h69AvoEaXfOVhZPbdLn//zXdcbh71vV3bIhyOhXrWzbrhsVLuEgc5w1Wgq5bx4um5DVkPrIid0m0nyRk=
+    secure: LHxvRYHVgDWwJwkr+48HNmcXkFgx/ZzW6hderdDaDyUGMpq0T4GdzsOh8XpsqclXLH/fw3BpXqACpQvm3489sXOUwHhO723kt1bVgvIs3NtDjiPQ3pTwmcdh0QJckxlG8+Z0E6Ikxw1DdoZfnPen2QQ/NT0L2IZCyM4tZN5ULiY=
 notifications:
   slack:
     secure: LwA/h6BTdQToj8xjvcdEXMHgM9XYOFhFsXkHCOfvsmowV0NNSAKK+CumSnmcnOlAP7E42MEd6aMEi3Rf+xHuYv6IbnFzUwiyh8856jtMUoWPeH2C8Aiin9/7Oe2JFHYWS0DNq2Pe4f/9Xri0luJWnCZsBZburRAbLDCM4mSc3vc=
     on_success: never
     on_failure: always
-
 env:
   global:
     secure: e5U3AYlkOhCiDJxHnR+tAkARa+EL3mcKYQujnerIkXxcCHz2D2cRgYutGYb6sfZxZaspZsk62EyxGTeEcCJP5D5ANaOkpQ4qdSjznHRJdjiEcM2+XBUsRXgTQeeXbtpG5uW+gX9DlFf0e1149RHXErdR0WiUdrHpRKnAU8LOV48=
