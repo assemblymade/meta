@@ -27,6 +27,14 @@ class TransactionLogEntry < ActiveRecord::Base
     with_cents.group(:product_id).sum(:cents)
   end
 
+  def self.bounty_values_on_product(product)
+    bounties = TransactionLogEntry.minted.
+      where(product_id: product.id).
+      where.not(work_id: product.id).
+      group(:work_id).
+      sum(:cents).values.reject(&:zero?)
+  end
+
   def self.products_with_balance(wallet_id, launched_only=false)
     query = Product.select('products.id, sum(cents) as balance').
        joins('inner join transaction_log_entries tle on tle.product_id = products.id').

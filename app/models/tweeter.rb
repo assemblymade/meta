@@ -9,7 +9,9 @@ class Tweeter
   end
 
   def self.tweet_new_product(idea, product)
-    mention = product.user.twitter_nickname
+    if product.user
+      mention = product.user.twitter_nickname
+    end
     if !mention
       mention = " "
     else

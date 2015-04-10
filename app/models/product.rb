@@ -1,10 +1,8 @@
-require 'activerecord/uuid'
 require 'money'
 require './lib/poster_image'
 require 'elasticsearch/model'
 
 class Product < ActiveRecord::Base
-  include ActiveRecord::UUID
   include Kaminari::ActiveRecordModelExtension
   include Elasticsearch::Model
   include GlobalID::Identification
@@ -568,14 +566,8 @@ class Product < ActiveRecord::Base
   end
 
   def average_bounty
-    bounties = TransactionLogEntry.minted.
-      where(product_id: product.id).
-      where.not(work_id: product.id).
-      group(:work_id).
-      sum(:cents).values.reject(&:zero?)
-
+    bounties = TransactionLogEntry.bounty_values_on_product(product)
     return DEFAULT_BOUNTY_SIZE if bounties.none?
-
     bounties.inject(0, &:+) / bounties.size
   end
 

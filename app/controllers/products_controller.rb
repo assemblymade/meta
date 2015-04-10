@@ -79,42 +79,16 @@ class ProductsController < ProductController
   def create
     if idea_id = params[:product].delete(:idea_id)
       @idea = Idea.find(idea_id)
-
       return redirect_to action: :new, layout: 'application' unless @idea.user == current_user
     end
 
-    @product = create_product_with_params
+    if @idea
+      @product = create_product_with_params(@idea)
+    else
+      @product = create_product_with_params
+    end
+
     if @product.valid?
-
-      Karma::Kalkulate.new.award_for_product_to_stealth(@product)
-      @product.retrieve_key_pair
-
-      if @idea
-        @idea.update(product_id: @product.id)
-      end
-
-      chosen_ids = params[:product][:partner_ids] || ''
-      chosen_ids = chosen_ids.split(',').flatten
-      GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)   #TO DO  --> Make this asynchronous.  Currently will cause tests to fail if asynchronous.
-
-      if @idea
-        the_key = @idea.slug.to_sym
-        chosen_ids.each do |chosen_id|
-          EmailLog.send_once(chosen_id, the_key) do
-            PartnershipMailer.delay(queue: 'mailer').create(chosen_id, @product.id, @idea.id)
-          end
-        end
-
-        Tweeter.tweet_new_product(@idea, @product)
-      end
-
-      AutoBounty.new.product_initial_bounties(@product)
-      current_user.touch
-      @product.reload
-
-      # Set up a room on Landline
-      set_up_chat
-
       respond_with(@product, location: product_path(@product))
     else
       render action: :new, layout: 'application'
@@ -305,35 +279,68 @@ class ProductsController < ProductController
 
   # private
 
-  def create_product_chat(product)
-    main_thread = product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
-    product.update(main_thread: main_thread)
-    product.chat_rooms.create!(wip: main_thread, slug: product.slug)
+  def setup_core_team(product)
+    core_team_ids = Array(params[:core_team])
+    core_team_members = User.where(id: core_team_ids.select(&:uuid?))
+    core_team_members.each do |user|
+      product.core_team_memberships.create(user: user)
+    end
   end
 
-  def create_product_with_params
+  def find_the_chosen
+    chosen_ids = params[:product][:partner_ids] || ''
+    chosen_ids = chosen_ids.split(',').flatten
+  end
+
+  def disperse_coins(product, chosen_ids)
+    GiveCoinsToParticipants.new.perform(chosen_ids, product.id)
+  end
+
+  def spread_the_word(idea, product, chosen_ids)
+    if idea
+      the_key = idea.slug.to_sym
+      chosen_ids.each do |chosen_id|
+        EmailLog.send_once(chosen_id, the_key) do
+          PartnershipMailer.delay(queue: 'mailer').create(chosen_id, product.id, idea.id)
+        end
+      end
+      Tweeter.tweet_new_product(idea, product)
+    end
+  end
+
+  def create_product_with_params(idea=nil)
     product = current_user.products.create(product_params)
     if product.valid?
       product.team_memberships.create!(user: current_user, is_core: true)
 
       product.watch!(current_user)
-
-      create_product_chat(product)
+      ChatRoom.create_for_product(product, current_user)
 
       ownership = params[:ownership] || {}
-      core_team_ids = Array(params[:core_team])
 
-      core_team_members = User.where(id: core_team_ids.select(&:uuid?))
-
-      core_team_members.each do |user|
-        product.core_team_memberships.create(user: user)
-      end
+      setup_core_team(product)
 
       product.update_partners_count_cache
-
       product.save!
 
       flash[:new_product_callout] = true
+
+      Karma::Kalkulate.new.award_for_product_to_stealth(product)
+      product.retrieve_key_pair
+      if idea
+        idea.update(product_id: product.id)
+      end
+
+      the_elect = find_the_chosen
+      disperse_coins(product, the_elect)
+      product.reload
+      spread_the_word(idea, product, the_elect)
+
+      AutoBounty.new.product_initial_bounties(product)
+      current_user.touch
+      product.reload
+      # Set up a room on Landline
+      set_up_chat
     end
     product
   end
