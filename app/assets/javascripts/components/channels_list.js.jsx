@@ -60,7 +60,7 @@ var ChannelsList = React.createClass({
   shortList: function(count) {
     var rooms = this.state.rooms
     if (rooms && _.keys(rooms).length > 0) {
-      var unreadRecentRoomIds = _.sortBy(_.keys(rooms), function(roomId){
+      var unreadRecentRoomIds = _.sortBy(_.keys(rooms), function(roomId) {
         var unread = rooms[roomId].updated_at > rooms[roomId].last_read_at
         return -rooms[roomId].last_read_at * (unread ? 2 : 1)
       })
@@ -68,8 +68,10 @@ var ChannelsList = React.createClass({
       unreadRecentRoomIds = [this.props.currentRoom].concat(_.without(unreadRecentRoomIds, this.props.currentRoom))
       unreadRecentRoomIds = _.first(unreadRecentRoomIds, count)
 
-      return _.sortBy(unreadRecentRoomIds, function(roomId){
-        return rooms[roomId].label == 'general' ? '_______' : rooms[roomId].label
+      return _.sortBy(unreadRecentRoomIds, function(roomId) {
+        if (!rooms[roomId]) return '_______';
+
+        return rooms[roomId].label === 'general' ? '_______' : rooms[roomId].label
       })
     }
     return []

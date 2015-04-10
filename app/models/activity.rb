@@ -38,7 +38,7 @@ class Activity < ActiveRecord::Base
 
         if room
           a.publish_to_chat(room.id)
-          puts a.inspect
+
           if body = a.subject.try(:body) && !bridge
             a.push_to_landline(room, body, a.actor)
           end

@@ -49,11 +49,7 @@ class window.ChatView extends Backbone.View
     )
 
   updateReadAt: _.debounce(=>
-    Dispatcher.dispatch({
-      action: CONSTANTS.CHAT_NOTIFICATIONS.ACTIONS.MARK_ROOM_AS_READ,
-      data: {id: app.chatRoom.id, readraptor_url: app.chatRoom.readRaptorChatPath},
-      sync: true
-    });
+    window.ChatNotificationsActions.markRoomAsRead(window.app.chatRoom.id, window.app.chatRoom.readRaptorChatPath)
   , 200)
 
   buildSubviewForModel: (model, index) ->
