@@ -49,12 +49,17 @@ class QueryMarks
     end
   end
 
-  def add_mark_vectors(vector1, vector2)
-    #add vectors and save markings accordingly
+  def decompose_mark_vectors(vector1, vector2)
     mark_types1 = vector1.map{ |a| a[0] }
     mark_values1 = vector1.map{|a| a[1]}
     mark_values2 = vector2.map{|a| a[1]}
     mark_types2 = vector2.map{|a| a[0] }
+    mark_types1, mark_values1, mark_values2, mark_types2
+  end
+
+  def add_mark_vectors(vector1, vector2)
+    #add vectors and save markings accordingly
+    mark_types1, mark_values1, mark_values2, mark_types2 = decompose_mark_vectors(vector1, vector2)
     overlapped_types = mark_types1 & mark_types2
     nonoverlapped_types1 = (mark_types1 - mark_types2)
     nonoverlapped_types2 = (mark_types2 - mark_types1)
