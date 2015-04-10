@@ -191,10 +191,10 @@ class User < ActiveRecord::Base
   end
 
   def beta_subscription=(subscribed)
-    self.beta_subscriber_at = subscribed == 1 ? Time.now : nil
+    self.beta_subscriber_at = subscribed.to_i == 1 ? Time.now : nil
   end
 
-  def beta_subscriber?
+  def is_beta_subscriber?
     beta_subscription
   end
 
