@@ -23,6 +23,7 @@ class Activity < ActiveRecord::Base
   delegate :url_params, to: :target_entity
 
   def self.publish!(opts)
+    bridge = opts.delete(:bridge)
     create!(opts).tap do |a|
       if a.publishable
         if Story.should_publish?(a)
@@ -37,7 +38,8 @@ class Activity < ActiveRecord::Base
 
         if room
           a.publish_to_chat(room.id)
-          if body = a.subject.try(:body)
+          puts a.inspect
+          if body = a.subject.try(:body) && !bridge
             a.push_to_landline(room, body, a.actor)
           end
           # only touch updated_at for chat messages.

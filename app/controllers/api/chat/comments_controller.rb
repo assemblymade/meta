@@ -22,7 +22,8 @@ module Api
             actor: current_user,
             subject: @event,
             target: @chat_room,
-            socket_id: params[:socket_id]
+            socket_id: params[:socket_id],
+            bridge: params[:bridge] || false
           )
 
           # push @mentions to mentionee

@@ -52,6 +52,12 @@ ChatRoom.blueprint do
   slug { "room_#{sn}" }
 end
 
+Event::Comment.blueprint do
+  user
+  body
+  wip { Wip.make! }
+end
+
 Discussion.blueprint do
   user
   product
