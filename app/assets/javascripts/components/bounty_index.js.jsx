@@ -173,7 +173,7 @@ const BountyIndex = React.createClass({
     }
 
     let createBountyButton = <div className="mb3">
-      <Button action={Bounty.showCreateBounty.bind(null, product)} block={true}>Create a new bounty</Button>
+      <Button action={Bounty.showCreateBounty.bind(null, product)} block={true} type="primary">Create a new bounty</Button>
     </div>
 
     if (product && product.slug === 'meta' && !UserStore.isStaff()) {
@@ -192,22 +192,18 @@ const BountyIndex = React.createClass({
             <div className="mb3">
               <Tile>
                 <div className="p3">
-                  <div className="block h5 mt0 mb1 bold">
-                    Getting Started with Bounties
-                  </div>
-                  <div className="h6 m0 gray-1">
+                  <h5 className="mt0 mb1">Getting Started with Bounties</h5>
+                  <p className="h6 mb2 gray-1">
                     A bounty is the community asking for help on {product.name}.
                     Find one that you would like to do and jump right in.
                     <br/><br/>
                     Ping <a href={product.people_url}>@core</a> in our chat room if you have any questions.
-                  </div>
+                  </p>
 
-                  <div className="center mt2 border-top">
-                    <div className="mt2">
-                      <Button type="default" action={function() { window.open('chat', '_blank'); }}>
-                        Jump into chat
-                      </Button>
-                    </div>
+                  <div className="center">
+                    <Button type="default" action={function() { window.open('chat', '_blank'); }}>
+                      Jump into chat
+                    </Button>
                   </div>
                 </div>
               </Tile>
