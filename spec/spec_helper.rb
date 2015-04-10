@@ -1,9 +1,10 @@
 ENV['RAILS_ENV'] ||= 'test'
 ENV['READRAPTOR_URL'] ||= 'https://readraptor.com'
 
-require File.expand_path("../../config/environment", __FILE__)
-
 require 'simplecov'
+SimpleCov.start 'rails'
+
+require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/collection_matchers'
 require 'capybara/rspec'
@@ -42,8 +43,6 @@ CodeClimate::TestReporter.configure do |config|
 end
 
 CodeClimate::TestReporter.start
-
-SimpleCov.start
 
 WebMock.disable_net_connect!(allow_localhost: true)
 

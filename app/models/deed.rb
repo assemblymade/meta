@@ -19,4 +19,7 @@ class Deed < ActiveRecord::Base
     end
   end
 
+  def self.deeds_of_user(user)
+  end
+
 end

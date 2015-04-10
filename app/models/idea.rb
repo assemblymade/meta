@@ -101,7 +101,11 @@ class Idea < ActiveRecord::Base
   end
 
   def comments
-    news_feed_item.comments
+    if news_feed_item
+      news_feed_item.comments
+    else
+      []
+    end
   end
 
   def creator_username
