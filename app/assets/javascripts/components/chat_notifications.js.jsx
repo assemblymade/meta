@@ -168,7 +168,7 @@ const ChatNotifications = React.createClass({
 
   markAllAsRead: function() {
     _.each(_.values(this.state.chatRooms), function(chatRoom) {
-      ChatNotificationsActions.markRoomAsRead(chatRoom.id, chatRoom.url);
+      ChatNotificationsActions.markRoomAsRead(chatRoom.id, chatRoom.readraptor_url);
     });
   },
 

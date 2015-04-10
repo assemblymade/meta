@@ -67,10 +67,10 @@ class ChatNotificationsStore extends Store {
 
   getUnreadCount(acknowledgedAt) {
     return _.countBy(chatRooms, (room) => {
-      let updated = entry.updated > entry.last_read_at;
+      let updated = room.updated > room.last_read_at;
 
       if (acknowledgedAt) {
-        return updated && entry.updated > acknowledgedAt;
+        return updated && room.updated > acknowledgedAt;
       }
 
       return updated;
