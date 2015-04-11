@@ -52,7 +52,7 @@ describe Wip::Worker do
       Wip::Worker.mia.should be_empty
       task = Task.make!
       task.start_work!(user)
-      task.submit_design!(work = Attachment.make!, work.user)
+      task.review_me!(user)
     end
 
     Wip::Worker.mia.should be_empty

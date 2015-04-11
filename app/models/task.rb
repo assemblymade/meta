@@ -66,14 +66,12 @@ class Task < Wip
     after_transition { notify_state_changed }
   end
 
-  class << self
-    def states
-      workflow_spec.states.keys
-    end
+  def self.states
+    workflow_spec.states.keys
+  end
 
-    def deliverable_types
-      %w(design code copy other)
-    end
+  def self.deliverable_types
+    %w(design code copy other)
   end
 
   def awardable?

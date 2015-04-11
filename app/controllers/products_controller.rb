@@ -287,25 +287,13 @@ class ProductsController < ProductController
     end
   end
 
-  def find_the_chosen
-    chosen_ids = params[:product][:partner_ids] || ""
-    chosen_ids.split(",").flatten
-  end
-
-  def disperse_coins(product, chosen_ids)
-    GiveCoinsToParticipants.new.perform(chosen_ids, product.id)
-  end
-
   def spread_the_word(idea, product, chosen_ids)
-    if idea
-      the_key = idea.slug.to_sym
-      chosen_ids.each do |chosen_id|
-        EmailLog.send_once(chosen_id, the_key) do
-          PartnershipMailer.delay(queue: 'mailer').create(chosen_id, product.id, idea.id)
-        end
+    chosen_ids.each do |chosen_id|
+      EmailLog.send_once(chosen_id, idea.slug) do
+        PartnershipMailer.delay(queue: 'mailer').create(chosen_id, product.id, idea.id)
       end
-      Tweeter.tweet_new_product(idea, product)
     end
+    Tweeter.tweet_new_product(idea, product)
   end
 
   def create_product_with_params(idea=nil)
@@ -329,12 +317,12 @@ class ProductsController < ProductController
       product.retrieve_key_pair
       if idea
         idea.update(product_id: product.id)
-      end
+        the_elect = (params[:product][:partner_ids] || "").split(",").flatten
+        GiveCoinsToParticipants.new.perform(the_elect, product.id)
 
-      the_elect = find_the_chosen
-      disperse_coins(product, the_elect)
-      product.reload
-      spread_the_word(idea, product, the_elect)
+        product.reload
+        spread_the_word(idea, product, the_elect)
+      end
 
       AutoBounty.new.product_initial_bounties(product)
       current_user.touch
