@@ -46,111 +46,6 @@
     font-weight: 500;
     margin-bottom: 1rem;
   }
-  .corner {
-    position: absolute;
-    top:0;
-    right:0;
-    width: 5rem;
-    height: 5rem;
-    border-top-right-radius: 0.5rem;
-    background: -moz-linear-gradient(45deg, rgba(200,0,0,0) 0%, rgba(200,0,0,0) 50%, rgba(200,0,0,1) 51%, rgba(200,0,0,1) 100%);
-    background: -webkit-linear-gradient(45deg, rgba(200,0,0,0) 0%,rgba(200,0,0,0) 50%,rgba(200,0,0,1) 51%,rgba(200,0,0,1) 100%);
-    background: linear-gradient(45deg, rgba(200,0,0,0) 0%,rgba(200,0,0,0) 50%,rgba(200,0,0,1) 51%,rgba(200,0,0,1) 100%);
-    -webkit-transform:rotate(360deg);
-
-    // below should be optimized into a mixin later
-    &.accent-brown {
-      background: -moz-linear-gradient(45deg, rgba(127,112,77,0) 0%, rgba(127,112,77,0) 50%, rgba(127,112,77,1) 51%, rgba(127,112,77,1) 100%);
-      background: -webkit-linear-gradient(45deg, rgba(127,112,77,0) 0%,rgba(127,112,77,0) 50%,rgba(127,112,77,1) 51%,rgba(127,112,77,1) 100%);
-      background: linear-gradient(45deg, rgba(127,112,77,0) 0%,rgba(127,112,77,0) 50%,rgba(127,112,77,1) 51%,rgba(127,112,77,1) 100%);
-    }
-    &.accent-blue {
-      background: -moz-linear-gradient(45deg, rgba(38,92,101,0) 0%, rgba(38,92,101,0) 50%, rgba(38,92,101,1) 51%, rgba(38,92,101,1) 100%);
-      background: -webkit-linear-gradient(45deg, rgba(38,92,101,0) 0%,rgba(38,92,101,0) 50%,rgba(38,92,101,1) 51%,rgba(38,92,101,1) 100%);
-      background: linear-gradient(45deg, rgba(38,92,101,0) 0%,rgba(38,92,101,0) 50%,rgba(38,92,101,1) 51%,rgba(38,92,101,1) 100%);
-    }
-    &.accent-red {
-      background: -moz-linear-gradient(45deg, rgba(240,85,72,0) 0%, rgba(240,85,72,0) 50%, rgba(240,85,72,1) 51%, rgba(240,85,72,1) 100%);
-      background: -webkit-linear-gradient(45deg, rgba(240,85,72,0) 0%,rgba(240,85,72,0) 50%,rgba(240,85,72,1) 51%,rgba(240,85,72,1) 100%);
-      background: linear-gradient(45deg, rgba(240,85,72,0) 0%,rgba(240,85,72,0) 50%,rgba(240,85,72,1) 51%,rgba(240,85,72,1) 100%);
-    }
-    &.accent-green {
-      background: -moz-linear-gradient(45deg, rgba(146,185,71,0) 0%, rgba(146,185,71,0) 50%, rgba(146,185,71,1) 51%, rgba(146,185,71,1) 100%);
-      background: -webkit-linear-gradient(45deg, rgba(146,185,71,0) 0%,rgba(146,185,71,0) 50%,rgba(146,185,71,1) 51%,rgba(146,185,71,1) 100%);
-      background: linear-gradient(45deg, rgba(146,185,71,0) 0%,rgba(146,185,71,0) 50%,rgba(146,185,71,1) 51%,rgba(146,185,71,1) 100%);
-    }
-  }
-}
-
-.action-bar {
-  //
-  > .item {
-    width: 120%;
-    margin: 0 -10%;
-    display:inline-block;
-    vertical-align: middle;
-    border-bottom: 1px solid $gray-5;
-    //
-    &:last-child{
-      margin-right: -5px;
-      border:none;
-    }
-  }
-}
-
-a.comment-count {
-  display: inline-block;
-  vertical-align: middle;
-  color:$gray-2;
-  font-size: 1.1rem;
-  line-height: 1.7rem;
-  font-weight: bold;
-  //
-  &:hover, &:active {
-    //
-    .svg-icon-comment  {
-      fill:$gray-2;
-    }
-  }
-  .svg-icon-comment {
-    width: 1.3rem;
-    margin-right:0.5rem;
-    fill:$gray-3;
-  }
-}
-.action-group {
-  display:table;
-  table-layout: fixed;
-  width: 100%;
-  //
-  > .item {
-    display: table-cell;
-    width:5rem;
-    vertical-align: middle;
-    text-align: center;
-    border-right: 1px solid $gray-5;
-    //
-    &:first-child {
-      width:auto;
-      text-align: left;
-      padding-right: 2rem;
-      padding-left: 2rem;
-    }
-    &:last-child {
-      border-right:none;
-    }
-  }
-  .action-icon {
-    padding: 1rem 0;
-
-    //
-    &:hover, &:active {
-      //
-      .svg-icon-share {
-        fill:$gray-2;
-      }
-    }
-  }
 }
 
 .action-icon.red {
@@ -179,52 +74,6 @@ a.comment-count {
   fill:$gray-3;
 }
 
-.progress-group {
-  display:table;
-  table-layout:fixed;
-  width: 100%;
-  padding: 1.5rem 2rem 1.5rem 2rem;
-  //
-  > .item {
-    display:table-cell;
-    vertical-align: middle;
-    //
-    &:last-child{
-      width: 5rem;
-      text-align: center;
-    }
-  }
-  progress {
-    display:block;
-    width:100%;
-    height: 1rem;
-    border-radius: 1rem;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: none;
-    color: $green;
-  }
-  progress::-webkit-progress-bar {
-    background: $gray-5;
-    border-radius: 1rem;
-  }
-  progress::-webkit-progress-value {
-    border-radius: 1rem;
-    background: -webkit-linear-gradient(top, $green 1%,$green 100%);
-  }
-  progress::-moz-progress-bar {
-    border-radius: 1rem;
-    background: -moz-linear-gradient(top, $green 1%,$green 100%);
-  }
-}
-.progress-count {
-  color:$black;
-  font-size: 1.1rem;
-  line-height: 1.7rem;
-  font-weight: bold;
-}
-
 // -- Size Variations ------------
 
 .tile-small {
@@ -242,10 +91,3 @@ a.comment-count {
     margin-top: -1rem;
   }
 }
-
-// -- Delta's ------------
-//
-// http://assembly.com/ideas
-// .tile-ideas {
-//   margin-bottom: 0;
-// }
