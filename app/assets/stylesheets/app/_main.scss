@@ -23,45 +23,9 @@ a:focus {
   border-radius: $border-radius-base;
 }
 
-// -- headers -------------------
-h1, h2, h3, h4, h5, h6 {
-  font-family: $font-family-sans-serif;
-  font-weight: bold;
-  line-height: $headings-line-height;
-}
-h1, .h1 {
-  font-size: $font-size-h1; // 30px/48px
-  line-height: 4rem;
-}
-h2, .h2 {
-  font-size: $font-size-h2; // 30px/36px
-  line-height: 3rem;
-}
-h3, .h3 {
-  font-size: $font-size-h3; // 24px/30px
-  line-height: 2.5rem;
-}
-h4, .h4 {
-  font-size: $font-size-h4; // 18px/24px
-  line-height: 2rem;
-}
-h5, .h5 {
-  font-size: $font-size-h5; // 16px/24px
-  line-height: 2rem;
-}
-h6, .h6 {
-  font-size: $font-size-h6; // 14px/18px
-  line-height: 1.5rem;
-}
-
 // -- code ----------------------
-pre, code, samp {
-  font-family: $font-family-monospace;
-  font-size: inherit;
-}
 code {
   color: $red;
-  background-color: $gray-6;
 }
 
 mark, .mark {
