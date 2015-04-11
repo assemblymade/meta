@@ -175,22 +175,6 @@ class TasksController < WipsController
     end
   end
 
-  def deliverables
-    @attachment = Attachment.find(params[:attachment_id])
-    @wip.submit_design! @attachment, current_user
-    respond_with @wip, location: product_wip_path(@product, @wip)
-  end
-
-  def copy_deliverables
-    @wip.submit_copy! copy_params, current_user
-    respond_with @wip, location: product_wip_path(@product, @wip)
-  end
-
-  def code_deliverables
-    deliverable = @wip.submit_code! code_params, current_user
-    respond_with deliverable, location: product_wip_path(@wip.product, @wip)
-  end
-
   def destroy
     # This removes a task from a milestone. Doesn't delete the actual Task
     @milestone = @product.milestones.find_by!(number: params[:project_id])

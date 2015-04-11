@@ -2,6 +2,7 @@ class GiveCoinsToParticipants
   include Sidekiq::Worker
   sidekiq_options queue: 'critical'
 
+  # TODO (whatupdave): Use the Bounty Factory
   def perform(chosen_participant_ids, product_id, coins_each=10)
     product = Product.find(product_id)
     author = product.user
