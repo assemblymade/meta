@@ -26,20 +26,20 @@
     </div>
   </div>
 <% else %>
-  <div class="stat-group">
-    <div class="stat">
-      <div class="stat-title">Total Revenue</div>
-      <div class="stat-value"><%= short_currency @product.profit_reports.map(&:revenue).reduce(:+) %></div>
+  <div class="full-width mb2 center flex flex-around">
+    <div class="inline-block">
+      <span class="gray-2 block">Total Revenue</span>
+      <span class="h2 bold block"><%= short_currency @product.profit_reports.map(&:revenue).reduce(:+) %></span>
     </div>
 
-    <div class="stat">
-      <div class="stat-title">Total Expenses</div>
-      <div class="stat-value"><%= short_currency @product.profit_reports.map(&:expenses).reduce(:+) %></div>
+    <div class="inline-block">
+      <span class="gray-2 block">Total Expenses</span>
+      <span class="h2 bold block"><%= short_currency @product.profit_reports.map(&:expenses).reduce(:+) %></span>
     </div>
 
-    <div class="stat">
-      <div class="stat-title">Total Royalties</div>
-      <div class="stat-value"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></div>
+    <div class="inline-block">
+      <span class="gray-2 block">Total Royalties</span>
+      <span class="h2 bold block"><%= short_currency @product.profit_reports.map(&:profit).reduce(:+) %></span>
     </div>
 
   </div>

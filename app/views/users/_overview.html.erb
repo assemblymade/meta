@@ -1,6 +1,6 @@
-<div class="stat-group" style="margin-bottom: 36px;">
-  <div class="stat">
-    <div class="stat-value">
+<div class="full-width mb2 center flex flex-around">
+  <div class="inline-block">
+    <div class="h2 bold">
       <% if @show_karma %>
       <%= "<a href=".html_safe %>
       "<%= user_karma_path(@user)%>"
@@ -11,22 +11,22 @@
       <%= number_with_delimiter(@user.count_contributions) %>
       <% end %>
     </div>
-    <div class="stat-title">
+    <span class="gray-2 block">
       <% if @show_karma %>
       <%= "Karma" %>
       <% else %>
       <%= "Contributions" %>
       <% end %>
-    </div>
+    </span>
   </div>
 
-  <div class="stat">
-    <div class="stat-value">
+  <div class="inline-block">
+    <div class="h2 bold">
       <%= number_with_delimiter @user.sum_app_cents %>
     </div>
-    <div class="stat-title">
+    <span class="gray-2 block">
       App Coins
-    </div>
+    </span>
   </div>
 
 </div>
