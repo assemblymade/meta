@@ -2,18 +2,3 @@
   @include clearfix;
   border: 1px solid $gray-5;
 }
-
-.counter-btn {
-  float: left;
-  border: none;
-
-  &.active {
-    cursor: default;
-  }
-}
-
-.counter-badge {
-  float: right;
-  color: $gray-2;
-  background-color: transparent;
-}

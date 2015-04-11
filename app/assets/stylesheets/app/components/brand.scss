@@ -1,19 +1,6 @@
-// Catchall baseclass
-
-.navbar-brand {
-  font-size: 18px;
-}
-
 .brand {
   font-weight: 800;
   letter-spacing: 1.5pt;
   text-transform: uppercase;
   line-height: inherit;
-
-  > .icon {
-    font-size: 32px;
-    vertical-align: middle;
-    position: relative;
-    top: -1px;
-  }
 }
