@@ -211,7 +211,7 @@ class Task < Wip
           cents: (amount || earnable_cents)
         )
 
-        minting = mint_coins!(award)
+        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, amount || contracts.total_cents)
 
         milestones.each(&:touch)
       end
@@ -231,12 +231,6 @@ class Task < Wip
     ).tap do |award|
       AwardMailer.delay(queue: 'mailer').pending_award(guest.id, award.id)
     end
-  end
-
-  def mint_coins!(award, amount=nil)
-    amount ||= contracts.total_cents
-
-    TransactionLogEntry.minted!(nil, Time.current, product, award.id, amount)
   end
 
   def work_submitted(submitter)
