@@ -56,15 +56,6 @@
   }
 }
 
-// (@chrislloyd) Custom offset for comments in a timeline. It would be nice if
-// this was a consistant style
-.markdown-wide-quotes {
-  blockquote {
-    margin-left:  calc(-2rem - 4px - 6px);
-    padding-left: calc(2rem + 6px);
-  }
-}
-
 // hack to shrink images in bounties but not the lightbox
 .shrink-images {
   img { max-width: 50%;}

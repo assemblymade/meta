@@ -1,25 +1,25 @@
 <%= stylesheet_link_tag 'admin' %>
 
 <div class="row">
-  <div id="legend"></div>
+  <div class="inline-block relative right"></div>
   <h5>Avg bounty lifespan: <%= @avg_bounty_age['avg_life'] %></h5>
   <p><i>Append weeks=N param to get more history</i></p>
 </div>
 
-<div class="charts_container">
-  <div class="chart_container">
+<div class="mt1">
+  <div class="left relative m1">
     <h5>Bounties Created</h5>
-    <div class="chart" id="bounties-created"></div>
+    <div class="inline-block" id="bounties-created"></div>
     <div id="slider"></div>
   </div>
   <div class="chart_container">
     <h5>Award Ratio</h5>
-    <div class="chart" id="award-ratio"></div>
+    <div class="inline-block" id="award-ratio"></div>
     <div id="slider"></div>
   </div>
   <div class="chart_container">
     <h5>Close Ratio</h5>
-    <div class="chart" id="close-ratio"></div>
+    <div class="inline-block" id="close-ratio"></div>
     <div id="close-ratio-x"></div>
   </div>
 </div>
@@ -178,5 +178,3 @@
     ]
   });
 </script>
-
-

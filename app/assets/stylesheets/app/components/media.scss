@@ -8,31 +8,3 @@
     margin-left: $grid-gutter-width;
   }
 }
-
-// TODO: Line-height is fixed
-.media-heading {
-  @include clearfix;
-  padding-top: (22px - 20px) / 2;
-  padding-bottom: (22px - 20px) / 2;
-  margin-bottom: $padding-base-vertical;
-  color: $gray-2;
-  line-height: 22px;
-
-  a {
-    color: inherit;
-    font-weight: bold;
-  }
-
-  .event-award:hover {
-    color: $brand-success;
-  }
-}
-
-.media-footer {
-  margin-top: $padding-xl-vertical;
-  border-top: 1px solid $brand-divider;
-  padding-top: $padding-base-vertical;
-  padding-bottom: $padding-base-vertical;
-
-  color: $gray-2;
-}

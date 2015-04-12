@@ -21,10 +21,6 @@ $text-accent: #BC9454;
   margin-bottom: 0 !important;
 }
 
-.neuter-paragraphs > p:last-child {
-  @extend .omega;
-}
-
 .sub-thingy {
   margin-top: -24px;
   padding-top: 12px; padding-bottom: 12px; border-bottom: 1px solid $brand-divider;
@@ -36,45 +32,24 @@ $text-accent: #BC9454;
   margin-top: $line-height-computed * 2;
   margin-bottom: $line-height-computed * 2;
   padding: ($line-height-computed * 2) ($grid-gutter-width * 2);
-  outline: none;
-}
 
-.play-button:hover {
-  background-color: rgba(black, .2);
-}
+  &:hover {
+    background-color: rgba(black, 0.2);
+  }
 
-.play-button:focus {
-  outline: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 .masthead-gradient {
   @include gradient-vertical(rgb(34, 157, 171), rgb(16, 53, 97), 24%, 100%);
-
   position: absolute;
-
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-
   opacity: .7;
-}
-
-.feature {
-  padding-bottom: $padding-large-vertical;
-  position: relative;
-
-  > .glyphicon {
-    display: block;
-    font-size: $font-size-large;
-    margin-left: -36px;
-    position: absolute;
-  }
-
-  > .feature-title {
-    line-height: 1.1;
-    margin-top: 0;
-  }
 }
 
 // TODO This was @chrislloyd's hack. To be replaced when more time is spent on the welcome banner.

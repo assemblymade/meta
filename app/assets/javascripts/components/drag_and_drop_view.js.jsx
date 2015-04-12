@@ -16,7 +16,7 @@ var DragAndDrop = React.createClass({
         <img src={this.props.url}
             alt={this.props.alt}
             style={{opacity: this.state.opacity}}
-            className='img-rounded'
+            className='rounded'
             width='100%' />
 
         <span style={{
