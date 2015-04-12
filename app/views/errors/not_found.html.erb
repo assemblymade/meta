@@ -1,35 +1,24 @@
 <style>
-  html {
-  background: url(<%= image_path("404/#{@background}.jpg") %>) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  }
-  .navbar{
-    z-index:2000;
+  body {
+    background: url(<%= image_path("404/#{@background}.jpg") %>) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
 </style>
 
 <%= render 'shared/navbar' %>
 
-<div class="modal equator">
-  <div class="equator-container">
-    <div class="modal-dialog">
-      <div class="center">
-        <div class="modal-body">
-          <h3 <% if [3,5].include?(@background) %>style="color:#eee;"<% end %>>We still haven't found what you're looking for</h3>
-          <form action="<%= discover_path %>">
-            <div class="form-group has-feedback">
-              <div class="input-group-search">
-                <input type="search" name="search" value="<%= params[:search] %>" placeholder="Search" class="form-control" autocomplete="off">
-              </div>
-              <input type="hidden" name="type" value="">
-            </div>
-            <button type="submit" class="btn btn-default sr-only">Search</button>
-          </form>
-        </div>
+<article class="sm-col-11 md-col-6 mx-auto mt4 center">
+  <h3 class-"mt0" <% if [3,5].include?(@background) %>style="color:#eee;"<% end %>>We couldn't find that :(</h3>
+  <form action="<%= discover_path %>">
+    <div class="form-group has-feedback">
+      <div class="input-group-search">
+        <input type="search" name="search" value="<%= params[:search] %>" placeholder="Search" class="form-control" autocomplete="off">
       </div>
+      <input type="hidden" name="type" value="">
     </div>
-  </div>
-</div>
+    <button type="submit" class="button button--default sr-only">Search</button>
+  </form>
+</article>
