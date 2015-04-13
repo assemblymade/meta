@@ -12,7 +12,7 @@ const BountyCard = React.createClass({
 
   render: function() {
     let bounty = this.props.bounty
-    let coins = bounty.coins || bounty.earnable_coins_cache
+    let coins = bounty.coins || bounty.earnable_coins
     let locker = null,
         meta = null,
         comments = null,

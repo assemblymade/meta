@@ -1,9 +1,5 @@
 class AwardSerializer < ApplicationSerializer
-  attributes :coins, :bounty
-
-  def coins
-    object.cents
-  end
+  attributes :bounty, :coins, :state
 
   def bounty
     {
@@ -13,5 +9,12 @@ class AwardSerializer < ApplicationSerializer
     }
   end
 
+  def coins
+    object.cents
+  end
+
+  def state
+    object.winner ? 'awarded' : 'pending'
+  end
 
 end

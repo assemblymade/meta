@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150407011939) do
+ActiveRecord::Schema.define(version: 20150410215557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,7 +97,12 @@ ActiveRecord::Schema.define(version: 20150407011939) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "transaction_hash"
+    t.uuid     "guest_id"
+    t.text     "token"
+    t.text     "reason"
   end
+
+  add_index "awards", ["token"], name: "index_awards_on_token", unique: true, using: :btree
 
   create_table "bounty_postings", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "bounty_id",  null: false
@@ -332,6 +337,14 @@ ActiveRecord::Schema.define(version: 20150407011939) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "guests", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "email",      null: false
+  end
+
+  add_index "guests", ["email"], name: "index_guests_on_email", unique: true, using: :btree
 
   create_table "hearts", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "user_id",                    null: false
@@ -1084,6 +1097,7 @@ ActiveRecord::Schema.define(version: 20150407011939) do
     t.datetime "coin_callout_viewed_at"
     t.integer  "hearts_received",                               default: 0,       null: false
     t.datetime "last_hearted_at"
+    t.datetime "beta_subscriber_at"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

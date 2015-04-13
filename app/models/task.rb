@@ -1,3 +1,4 @@
+# TODO: (whatupdave) rename to Bounty
 class Task < Wip
   belongs_to :locker, class_name: 'User', foreign_key: 'locked_by'
 
@@ -65,14 +66,12 @@ class Task < Wip
     after_transition { notify_state_changed }
   end
 
-  class << self
-    def states
-      workflow_spec.states.keys
-    end
+  def self.states
+    workflow_spec.states.keys
+  end
 
-    def deliverable_types
-      %w(design code copy other)
-    end
+  def self.deliverable_types
+    %w(design code copy other)
   end
 
   def awardable?
@@ -132,7 +131,6 @@ class Task < Wip
   end
 
   def assigned_to?(worker)
-    false if worker.nil?
     workers.include?(worker)
   end
 
@@ -145,7 +143,7 @@ class Task < Wip
   end
 
   def start_work!(worker)
-    self.workers << worker unless self.workers.include?(worker)
+    self.workers << worker unless assigned_to?(worker)
     Analytics.track(
       user_id: worker.id,
       event: 'product.wip.start_work',
@@ -191,35 +189,11 @@ class Task < Wip
     end
   end
 
-  # TODO: Remove value method and use underlying column
-  def award(closer, winning_event, amount=self[:value])
-    stop_work!(winning_event.user)
-
-    minting = nil
-    award = nil
-    add_activity(closer, Activities::Award) do
-      win = ::Event::Win.new(user: closer)
-      add_event(win) do
-        award = self.awards.create!(
-          awarder: closer,
-          winner: winning_event.user,
-          event: win,
-          wip: self,
-          cents: amount
-        )
-
-        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, amount)
-
-        milestones.each(&:touch)
-      end
-    end
-
-    CoinsMinted.new.perform(minting.id) if minting
-    award
+  def award(closer, winning_event, amount=nil, reason=nil)
+    award_with_reason(closer, winning_event.user, reason, amount)
   end
 
-  # TODO: fix API of above method and combine methods
-  def award_with_reason(closer, winner, reason)
+  def award_with_reason(closer, winner, reason, amount=nil)
     stop_work!(winner)
 
     minting = nil
@@ -232,10 +206,10 @@ class Task < Wip
           winner: winner,
           event: win,
           wip: self,
-          cents: self[:value]
+          cents: (amount || earnable_cents)
         )
 
-        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, self[:value])
+        minting = TransactionLogEntry.minted!(nil, Time.current, product, award.id, amount || contracts.total_cents)
 
         milestones.each(&:touch)
       end
@@ -245,49 +219,20 @@ class Task < Wip
     award
   end
 
+  def award_pending_with_reason(awarder, guest, reason)
+    awards.create!(
+      awarder: awarder,
+      guest: guest,
+      wip: self,
+      cents: self.earnable_cents,
+      reason: reason
+    ).tap do |award|
+      AwardMailer.delay(queue: 'mailer').pending_award(guest.id, award.id)
+    end
+  end
+
   def work_submitted(submitter)
     review_me!(submitter) if can_review_me?
-  end
-
-  def submit_design!(attachment, submitter)
-    add_activity submitter, Activities::Post do
-      add_event (event = ::Event::DesignDeliverable.new(user: submitter, attachment: attachment)) do
-        work_submitted(submitter)
-        self.deliverables.create! attachment: attachment
-      end
-    end
-  end
-
-  def submit_copy!(copy_attributes, submitter)
-    transaction do
-      work_submitted(submitter)
-      deliverable = self.copy_deliverables.create! copy_attributes.merge(user: submitter)
-
-      add_activity submitter, Activities::Post do
-        event = ::Event::CopyAdded.new(user: submitter, deliverable: deliverable)
-        self.events << event
-        event
-      end
-    end
-  end
-
-  def submit_code!(code_attributes, submitter)
-    work = nil
-    transaction do
-      work_submitted(submitter)
-      work = self.code_deliverables.build code_attributes.merge(user: submitter)
-      add_activity submitter, Activities::Post do
-        if work.save
-          event = ::Event::CodeAdded.new(user: submitter, deliverable: work)
-          self.events << event
-          StreamEvent.add_work_event!(actor: submitter, subject: event, target: self)
-          event
-        else
-          raise ActiveRecord::Rollback
-        end
-      end
-    end
-    work
   end
 
   def current_posting
@@ -302,11 +247,12 @@ class Task < Wip
     closed_at.nil?
   end
 
-  # trending
-  EPOCH = 1134028003 # first WIP
-
   def contracts
     WipContracts.new(self)
+  end
+
+  def earnable_cents
+    WipContracts.new(self).earnable_cents
   end
 
   def update_coins_cache!

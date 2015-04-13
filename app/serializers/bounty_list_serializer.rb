@@ -34,6 +34,6 @@ class BountyListSerializer < ApplicationSerializer
   end
 
   def value
-    object[:value]
+    object.value
   end
 end

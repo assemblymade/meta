@@ -186,6 +186,18 @@ class User < ActiveRecord::Base
     staff?
   end
 
+  def beta_subscription
+    !beta_subscriber_at.nil?
+  end
+
+  def beta_subscription=(subscribed)
+    self.beta_subscriber_at = subscribed.to_i == 1 ? Time.now : nil
+  end
+
+  def is_beta_subscriber?
+    beta_subscription
+  end
+
   def last_contribution
     events.order("created_at ASC").last
   end

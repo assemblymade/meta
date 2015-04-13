@@ -4,7 +4,8 @@ const ActionTypes = require('../constants').ActionTypes;
 const Dispatcher = require('../dispatcher');
 const Store = require('./es6_store');
 
-let errors = {};
+var errors = {}
+var pendingAward = null
 
 class SignupFormStore extends Store {
   constructor() {
@@ -13,8 +14,11 @@ class SignupFormStore extends Store {
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
         case ActionTypes.SIGNUP_ERRORS:
-          errors = action.errors;
+          errors = action.errors
           break;
+        case ActionTypes.PENDING_AWARD_RECEIVE:
+          pendingAward = action.award
+          break
         default:
           return;
       }
@@ -29,6 +33,21 @@ class SignupFormStore extends Store {
 
     return e;
   }
+
+  getPendingAward() {
+    return pendingAward
+  }
 };
 
-module.exports = new SignupFormStore();
+var store = new SignupFormStore()
+var dataTag = document.getElementById('SignupFormStore')
+if (dataTag) {
+  var data = JSON.parse(dataTag.innerHTML)
+
+  Dispatcher.dispatch({
+    type: ActionTypes.PENDING_AWARD_RECEIVE,
+    award: data.pending_award
+  });
+}
+
+module.exports = store

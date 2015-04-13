@@ -52,4 +52,16 @@ class Vesting < ActiveRecord::Base
     vestings_in_won_proposals(product).select(&:expired?).map{|b| VestingSerializer.new(b)}
   end
 
+  def self.active_contracts_on_product(product)
+    Vesting.active.
+      joins(:proposals).
+      where(proposals: {state: ["passed", "expired"], contract_type: 'vesting', product_id: product.id})
+  end
+
+  def self.expired_contracts_on_product(product)
+    Vesting.expired.
+      joins(:proposals).
+      where(proposals: {state: ["passed", "expired"], contract_type: 'vesting', product_id: product.id})
+  end
+
 end

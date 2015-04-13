@@ -7,14 +7,14 @@ class ContractsController < ProductController
   def index
     find_product!
 
-    @active_contracts = @product.active_contracts
-    @closed_contracts = @product.expired_contracts
+    @active_contracts = Vesting.active_contracts_on_product(@product)
+    @closed_contracts = Vesting.expired_contracts_on_product(@product)
 
     @activeTipContracts = AutoTipContract.active_tip_contracts_on_product(@product)
     @closedTipContracts = AutoTipContract.closed_tip_contracts_on_product(@product)
 
-    @activeVestings = Vesting.active_vestings_on_product(product)
-    @closedVestings = Vesting.closed_vestings_on_product(product)
+    @activeVestings = Vesting.active_vestings_on_product(@product)
+    @closedVestings = Vesting.closed_vestings_on_product(@product)
   end
 
   def create

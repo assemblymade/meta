@@ -2,40 +2,18 @@ module Karma
   class Kronikler
 
     def deed_date(deed)
-      deed.karma_event.created_at
+      if deed.karma_event
+        deed.karma_event.created_at
+      end
     end
 
     def deeds_by_user(user_id)
-      deeds = Deed.where(user_id: user_id)
       deed_dates = []
-      deeds.each do |d|
+      Deed.deeds_of_user(user).each do |d|
         deed_dates.append([d, deed_date(d)])
       end
       deed_dates
       deed_dates.sort{|a,b| a[1] <=> b[1]}
-    end
-
-    def karma_history_by_user(user_id)
-      deeds = deeds_by_user(user_id)
-      #wips, tips, invites, products
-      sums = [[DateTime.now.to_s,0,0,0,0]]
-      deeds.each do |d|
-        temp = sums.last.dup
-        temp[0] = (deed_date(d[0]) - Date.new(1970,1,1)).to_i
-        #temp[0] = deed_date(d[0])
-        if d[0].karma_event_type=="Wip"
-          temp[1]=temp[1]+d[0].karma_value
-        elsif d[0].karma_event_type=="Tip"
-          temp[2]=temp[2]+d[0].karma_value
-        elsif d[0].karma_event_type=="Invite"
-          temp[3] = temp[3]+d[0].karma_value
-        elsif d[0].karma_event_type == "Product"
-          temp[4]=temp[4]+d[0].karma_value
-        end
-        sums.append(temp)
-      end
-      sums = sums[1, sums.count]
-      return sums
     end
 
     def product_of_deed(deed)
@@ -49,35 +27,14 @@ module Karma
     def karma_product_associations_by_user(user_id)
       deeds = deeds_by_user(user_id)
       history = []
-
       deeds.map{|row| row[0]}.each do |d|
-        tempentry= []
-        if d.karma_event_type == "Product"
-          tempentry.append(Product.find(d.karma_event_id).name)
-        elsif d.karma_event_type == "Wip"
-          tempentry.append(Product.find(Wip.find(d.karma_event_id).product_id).name)
-        elsif d.karma_event_type == "Tip"
-          tempentry.append(Product.find(Tip.find(d.karma_event_id).product_id).name)
-        elsif d.karma_event_type =="Invite"
-          invite = Invite.find(d.karma_event_id)
-          if invite.via_type == "Product"
-            tempentry.append(Product.find(invite.via_id).name)
-          elsif invite.via_type == "Wip"
-            tempentry.append(Product.find(Wip.find(invite.via_id).product_id).name)
-          end
-        end
-        tempentry.append(d.karma_value)
-        #tempentry.append( (deed_date(d)-Date.new(1970,1,1)).to_i )
-        tempentry.append(deed_date(d))
+        tempentry= [d.parent_product, d.karma_value, deed_date(d)]
         history.append(tempentry)
       end
       return history
     end
 
-    def karma_product_history_by_user(user_id)
-      product_history = karma_product_associations_by_user(user_id)
-      product_names = product_history.map{|row| row[0]}.uniq
-
+    def fabricate_history(product_names, product_history)
       history = [[0]*(product_names.count+1)]
 
       product_history.each do |p|
@@ -88,20 +45,23 @@ module Karma
         tempentry[prod_position] = tempentry[prod_position] + p[1]
         history.append(tempentry)
       end
+      history
+    end
+
+    def karma_product_history_by_user(user_id)
+      product_history = karma_product_associations_by_user(user_id)
+      product_names = product_history.map{|row| row[0]}.uniq
+      history = fabricate_history(product_names, product_history)
       newhistory = []
-      #make into fractions
-      n=0
+
       history.each do |p|
         sum = p[1, p.count].sum
         if sum == 0
           sum=1
         end
-        r = []
-        n=n+1
-        r.append(p[0])
+        r = [p[0]]
         p[1, p.count].each do |a|
-          a = a.to_f / sum.to_f*100.0
-          r.append(a)
+          r.append(a.to_f / sum.to_f*100.0)
         end
         newhistory.append(r)
       end
@@ -110,20 +70,13 @@ module Karma
 
     def aggregate_karma_info_per_user(user_id)
       deeds = Deed.where(user_id: user_id)
-
       aggregate = {}
       aggregate['Bounties'] = deeds.where(karma_event_type: "Wip").sum(:karma_value)
       aggregate['Tips'] = deeds.where(karma_event_type: "Tip").sum(:karma_value)
       aggregate['Invites'] = deeds.where(karma_event_type: "Invite").sum(:karma_value)
       aggregate['Products'] = deeds.where(karma_event_type: "Product").sum(:karma_value)
-
       return aggregate
     end
-
-    def karma_rankings()
-
-    end
-
 
     def product_text(deed)
       username = User.find_by(id: deed.user_id).username
@@ -142,38 +95,30 @@ module Karma
       text = "#{recipient} was tipped #{amount} #{product_name} coins on #{date} by #{giver}."
     end
 
+    def get_invitor(invite)
+      User.find_by(id: invite.invitor_id).username
+    end
+
+    def get_invitee(invite)
+      invitee = User.find_by(id: invite.invitee_id)
+      if invitee
+        invitee=invitee.username
+      else
+        invitee=invite.invitee_email
+      end
+      invitee
+    end
+
     def invite_text(deed)
       invite = Invite.find_by(id: deed.karma_event_id)
-      if not invite.nil?
-        invitor = User.find_by(id: invite.invitor_id).username
-        invitee = User.find_by(id: invite.invitee_id)
-        if not invitee.nil?
-          invitee=invitee.username
-        else
-          invitee=invite.invitee_email
-        end
+      if invite
+        invitor = get_invitor(invite)
+        invitee = get_invitee(invite)
         date = Date.parse(deed_date(deed).to_s).strftime("%m-%d-%Y")
         invite_type = invite.via_type
-
-        if deed.karma_value <5 #was just a request
-          work_message = "#{invitor} invited #{invitee} "
-          if invite_type == "Product"
-            product_name = Product.find_by(id: invite.via_id).name
-            work_message = work_message + "to work on #{product_name}."
-          elsif invite_type == "Wip"
-            bounty_title = Task.find_by(id: invite.via_id).title
-            work_message =  work_message + "to work on #{bounty_title}."
-          end
-        elsif deed.karma_value >=5 #the work was actually done
-          if invite_type == "Product"
-            product_name = Product.find_by(id: invite.via_id).name
-            work_message = "#{invitor} asked #{invitee} to join him on #{product_name}.  #{invitee} answered the call!"
-          elsif invite_type == "Wip"
-            bounty_title = Task.find_by(id: invite.via_id).title
-            work_message = "#{invitee} worked on #{bounty_title}, after the suggestion of #{invitor}."
-          end
-        end
-        return work_message
+        return "#{invitor} invited #{invitee} on #{date} for #{invite_type}"
+      else
+        ""
       end
     end
 
@@ -207,45 +152,5 @@ module Karma
       end
       return kronikle
     end
-
-    def meta_karma_history(bin_average)
-      history = {}  # [[date1, newkarma1], [date2, newkarma2]]
-      Deed.all.each do |d|
-        date = deed_date(d)
-        if history.include?(date)
-          history[date] = history[date] + d.karma_value
-        else
-          history[date] = d.karma_value
-        end
-      end
-
-      range = (history.keys[0]..history.keys.last)
-      range.each do |r|
-        if not history.include?(r)
-          history[r] = 0
-        end
-      end
-
-
-      history = history.sort.to_h
-
-      #bin into smoother averages
-      n=0
-      temp = 0
-      smooth_history = []
-      history.each do |h|
-
-        temp =  temp + h[1]
-        if n%bin_average == 0
-          smooth_history.append([ h[0], temp.to_f / bin_average.to_f])
-          temp = 0
-        end
-        n=n+1
-      end
-      smooth_history
-
-    end
-
-
   end
 end

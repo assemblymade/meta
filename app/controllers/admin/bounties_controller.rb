@@ -53,7 +53,7 @@ class Admin::BountiesController < AdminController
     @created_c = created('core', @history)
     @created_s = created('staff', @history)
     @created_n = created('noncore', @history)
-    [date_helper(@history), 
+    [date_helper(@history),
       @created,
       @created_c,
       @created_n,
@@ -62,7 +62,7 @@ class Admin::BountiesController < AdminController
 
   def award_ratio
     bounties_created
-    [date_helper(@history), 
+    [date_helper(@history),
     awarded(nil, @history).zip(@created).map{|m| m.first / m.last},
     awarded('core', @history).zip(@created_c).map{|m| m.first / m.last},
     awarded('noncore', @history).zip(@created_n).map{|m| m.first / m.last},
@@ -71,7 +71,7 @@ class Admin::BountiesController < AdminController
 
   def close_ratio
     bounties_created
-    [date_helper(@history), 
+    [date_helper(@history),
     closed(nil, @history).zip(@created).map{|m| m.first / m.last},
     closed('core', @history).zip(@created_c).map{|m| m.first / m.last},
     closed('noncore', @history).zip(@created_n).map{|m| m.first / m.last},
@@ -80,7 +80,7 @@ class Admin::BountiesController < AdminController
 
   def set_params
     @user_type = params[:user_type]
-    @history = filtered_params(:weeks, 4)  
+    @history = filtered_params(:weeks, 4)
   end
 
   def filtered_params(key, default=nil)
@@ -89,4 +89,3 @@ class Admin::BountiesController < AdminController
   end
 
 end
-

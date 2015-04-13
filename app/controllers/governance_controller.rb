@@ -6,7 +6,7 @@ class GovernanceController < ProductController
 
   def index
     find_product!
-    @proposals = @product.proposals_sorted
+    @proposals = Proposal.proposals_on_product(@product)
     @heartables = Heart.store_data(@proposals.map(&:news_feed_item))
     store_data heartables: @heartables
 

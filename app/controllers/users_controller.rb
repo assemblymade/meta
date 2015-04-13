@@ -55,7 +55,6 @@ class UsersController < ApplicationController
     @show_karma = current_user && current_user.staff?
     @user = User.find_by(username: params[:id]).decorate
     @deeds = Karma::Kronikler.new.deeds_by_user(@user.id).reverse
-    @karma_history = Karma::Kronikler.new.karma_history_by_user(@user.id)
     @karma_product_history = Karma::Kronikler.new.karma_product_history_by_user(@user.id)
 
     @pi_chart_data = Karma::Kalkulate.assemble_karma_pie_chart(@karma_product_history)
@@ -166,6 +165,7 @@ protected
       :location,
       :bio,
       :mail_preference,
+      :beta_subscription,
       mark_names: []
     )
   end

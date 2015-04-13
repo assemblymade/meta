@@ -30,44 +30,99 @@ module OpenAssets
         identifier: destination+":"+amount.to_s+":"+DateTime.now.to_s
       }
 
-      BtcPayment.create!({
-        btcusdprice_at_moment: get_btc_spot_price_coinbase()*100,
-        created_at: DateTime.now,
-        action: "Sent BTC",
-        sender: "Assembly Central",
-        recipient: destination,
-        sender_address: public_address,
-        recipient_address: destination,
-        btc_change: amount*-100000000})
-
-        send_btc_request(params)
+      BtcPayment.create_entry(destination, public_address, float_amount)
+      send_btc_request(params)
     end
 
     def send_btc_request(params)
       remote = OpenAssets::Remote.new("http://coins.assembly.com")
-      end_url="v2/btc/transfer"
+      end_url="btc/transfer"
       remote.post end_url, params.to_json
     end
 
-    def forge_coins(product_id, total_coins)
-      product = Product.find(product_id)
-
-      body = {
+    def construct_forge_coins_body(product, total_coins)
+      {
         public_address: product.wallet_public_address,
         private_key: product.wallet_private_key,
         name: product.name,
         metadata: "u=https://assembly.com/#{product.slug}/coin",
         coins: total_coins,
         identifier: product_id.to_s+":"+DateTime.now.to_s
-      }
+      }.to_json
+    end
 
+    def forge_coins(product_id, total_coins)
+      product = Product.find(product_id)
       puts "Forging #{total_coins}  #{product.name} Coins for #{product.wallet_public_address}"
 
       remote = OpenAssets::Remote.new("http://coins.assembly.com")
-      end_url="v2/colors/issue"
-      remote.post end_url, body.to_json
+      end_url="colors/issue"
+      remote.post end_url, construct_forge_coins_body(product, total_coins)
     end
 
+    def verify_receiver_address_exists(user)
+      receiver_address = user.wallet_public_address
+
+      if receiver_address.nil?
+        AssemblyCoin::AssignBitcoinKeyPairWorker.new.perform(
+          user.to_global_id,
+          :assign_key_pair
+        )
+        Rails.logger.info "ADDED KEYPAIR TO #{user.username}"
+        receiver_address = user.wallet_public_address
+      end
+      receiver_address
+    end
+
+    def construct_issuing_post_body_to_product(product, user_id)
+      body = {
+        public_address: product.wallet_public_address,
+        private_key: product.wallet_private_key,
+        name: product.name,
+        metadata: "u=https://assembly.com/#{product.slug}/coin",
+        coins: coins,
+        identifier: product_id.to_s+":"+user_id.to_s+":"+DateTime.now.to_s
+      }
+      body
+    end
+
+    def construct_transfer_post_body_to_user(product, user, coins, asset_address)
+      body = {
+        public_address: product.wallet_public_address,
+        recipient_address: user.wallet_public_address,
+        private_key: product.wallet_private_key,
+        amount: coins.to_s,
+        asset_address: asset_address,
+        identifier: product.id.to_s+":"+user.id.to_s+":"+DateTime.now.to_s
+      }
+      body
+    end
+
+    def construct_transfer_post_user_to_product(user, product, coins, asset_address)
+      body = {
+        public_address: user.wallet_public_address,
+        recipient_address: product.wallet_public_address,
+        private_key: user.wallet_private_key,
+        amount: coins.to_s,
+        asset_address: asset_address,
+        identifier: user.id.to_s+":"+product.id.to_s+":"+DateTime.now.to_s
+      }
+      body
+    end
+
+    def award_by_creating_coins(product_id, user_id, coins)
+      product = Product.find(product_id)
+      user = User.find(user_id)
+      receiver_address = verify_receiver_address_exists(user)
+
+      if receiver_address
+        body = construct_issuing_post_body(product, user_id)
+        puts "Forging #{total_coins}  #{product.name} Coins for User #{user.username} at #{user.wallet_public_address}"
+        remote = OpenAssets::Remote.new("http://coins.assembly.com")
+        end_url="colors/issue"
+        remote.post end_url, body.to_json
+      end
+    end
 
     def award_coins(product_id, user_id, coins)
       product = Product.find(product_id)
@@ -77,35 +132,35 @@ module OpenAssets
       else
         asset_address = ""
       end
+      receiver_address = verify_receiver_address_exists(user)
 
-      body = {
-        public_address: product.wallet_public_address,
-        recipient_address: user.wallet_public_address,
-        private_key: product.wallet_private_key,
-        amount: coins.to_s,
-        asset_address: asset_address,
-        identifier: product_id+":"+user_id+":"+DateTime.now.to_s
-      }
+      if receiver_address
+        body = construct_transfer_post_body_to_user(product, user, coins, asset_address)
+        send_post_to_transfer_route(body)
+      end
+    end
 
+    def send_post_to_transfer_route(body)
       remote = OpenAssets::Remote.new("http://coins.assembly.com")
-      end_url="v2/colors/transfer"
+      end_url="colors/transfer"
       remote.post end_url, body.to_json
+    end
+
+    def return_coins_to_product_address(user, product, coins)
+      if product.coin_info
+        if asset_address = product.coin_info.asset_address
+          body = construct_transfer_post_user_to_product(user, product, coins, asset_address)
+          send_post_to_transfer_route(body)
+        end
+      end
     end
 
     def get_asset_address(btc_address)
       url = "http://coins.assembly.com"
       remote = OpenAssets::Remote.new(url)
-      end_url = "/v2/colors/asset_address/#{btc_address}"
+      end_url = "/colors/asset_address/#{btc_address}"
 
       asset_address = remote.get end_url
-    end
-
-    def get_btc_pair()
-      url = "https://coins.assembly.com"
-      remote = OpenAssets::Remote.new(url)
-      end_url="/v2/addresses"
-
-      pair = remote.get end_url
     end
 
     def get_btc_spot_price_coinbase()
@@ -122,7 +177,6 @@ module OpenAssets
       url = "https://api.coindesk.com"
       remote = OpenAssets::Remote.new(url)
       end_url = "/v1/bpi/historical/close.json?start=#{datestring}"
-      puts end_url
       price = remote.get end_url
       price = JSON.parse(price)['bpi'].first[1]
     end
@@ -171,14 +225,12 @@ module OpenAssets
     def average_bought_price_as_of_date(date)
       sum = 0
       btcsum = 0
-      BtcPayment.where('created_at < ?', date).each do |b|
-        if b.action == "Bought BTC"
-          sum = sum + b.btc_change * b.btcusdprice_at_moment.to_f / 100
-          btcsum = btcsum + b.btc_change
-        end
-      end
-      if btcsum != 0
-        return sum.to_f / btcsum.to_f
+      buy_payments_before_date = BtcPayment.where('created_at < ?', date).select{|a| a.action == "Bought BTC"}
+      sum_usd_value_change = buy_payments_before_date.sum("btc_change * btc_usdprice_at_moment / 100.0")
+      sum_btc_value_change = buy_payments_before_date.sum("btc_change")
+
+      if sum_btc_value_change != 0
+        return sum_usd_value_change.to_f / sum_btc_value_change.to_f
       else
         return 0
       end

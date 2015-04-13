@@ -4,9 +4,12 @@ const AppCoins = require('../app_coins.js.jsx')
 const Tile = require('../ui/tile.js.jsx')
 const ProgressBar = require('../ui/progress_bar.js.jsx')
 const Markdown = require('../markdown.js.jsx')
+const UserStore = require('../../stores/user_store.js')
 import ProductHeader from '../products/product_header.js.jsx'
 import ProductStore from '../../stores/product_store'
 import PartnersStore from '../../stores/partners_store'
+import Button from '../ui/button.js.jsx';
+
 
 function _parseDate(date) {
   var parsedDate = new Date(date);
@@ -18,8 +21,22 @@ const ProductPartners = React.createClass({
 
   getInitialState() {
     return {
-      partners: PartnersStore.get(ProductStore.getId())
+      partners: PartnersStore.get(ProductStore.getId()),
+      coinprism_url: ProductStore.getCoinPrismUrl(),
+      isStaff: UserStore.isStaff()
     }
+  },
+
+  renderWalletAddress(partner) {
+    return (
+
+      <a href={partner.coinprism_url} className="gray-3 gray-2-hover h6">
+        <div>
+          {partner.wallet_public_address}
+        </div>
+      </a>
+
+    )
   },
 
   render() {
@@ -49,12 +66,19 @@ const ProductPartners = React.createClass({
       return (
         <tr key={`partner-${partner.id}`}>
           <td>
-            <a href={partner.url} title={'@' + partner.username}>
+            <div className="clearfix">
               <div className="left mr2">
-                <Partner user={partner} size={24} />
+                <a className="h4 mb1 block" href={partner.url} title={'@' + partner.username}>
+                  <Partner user={partner} size={48} />
+                </a>
               </div>
-              {partner.username}
-            </a>
+              <div className="overflow-hidden">
+                <a className="h4 mb1 block" href={partner.url} title={'@' + partner.username}>
+                  {partner.username}
+                </a>
+                { this.state.isStaff ? this.renderWalletAddress(partner) : ""}
+              </div>
+            </div>
           </td>
 
           <td className="right-align">
@@ -66,7 +90,7 @@ const ProductPartners = React.createClass({
           </td>
         </tr>
       )
-    })
+    }.bind(this))
     return <div>
         <ProductHeader />
         <div className="container mt3">

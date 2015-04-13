@@ -49,11 +49,7 @@ class window.ChatView extends Backbone.View
     )
 
   updateReadAt: _.debounce(=>
-    Dispatcher.dispatch({
-      action: CONSTANTS.CHAT_NOTIFICATIONS.ACTIONS.MARK_ROOM_AS_READ,
-      data: {id: app.chatRoom.id, readraptor_url: app.chatRoom.readRaptorChatPath},
-      sync: true
-    });
+    window.ChatNotificationsActions.markRoomAsRead(window.app.chatRoom.id, window.app.chatRoom.readRaptorChatPath)
   , 200)
 
   buildSubviewForModel: (model, index) ->
@@ -99,7 +95,6 @@ class window.ChatView extends Backbone.View
           type: 'CHAT_MESSAGE_RECEIVE_ACTIVITIES'
           activities: [comment.attributes]
         )
-        @pushCommentToLandline(comment.attributes)
         activity.set(data)
     )
     activity
@@ -107,9 +102,6 @@ class window.ChatView extends Backbone.View
   onLoadMore: (e) =>
     e.preventDefault()
     this.loadMore(e)
-
-  pushCommentToLandline: (comment) ->
-    Landline.pushComment(comment)
 
   handleScroll: (e)=>
     @stuckToBottom = (@$el.height() - (e.currentTarget.scrollTop + @scrollContainer.height())) < BOTTOM_SCROLL_MARGIN

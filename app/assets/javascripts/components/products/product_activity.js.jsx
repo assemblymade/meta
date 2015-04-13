@@ -88,6 +88,14 @@ const ProductActivity = React.createClass({
     let product = this.state.product;
     let slug = product.slug;
 
+    let writePostButton = <div className="mb3">
+      <Button action={window.showCreatePost} block={true}>Write a new post</Button>
+    </div>
+
+    if (product && slug === 'meta' && !UserStore.isStaff()) {
+      writePostButton = null
+    }
+
     return (
       <div>
         <ProductHeader />

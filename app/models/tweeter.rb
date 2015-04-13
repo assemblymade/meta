@@ -1,15 +1,9 @@
 class Tweeter
 
-  def idea_participants(idea)
-    if idea.user.twitter_nickname
-      [idea.user.twitter_nickname, "asm"]
-    else
-      ["asm"]
-    end
-  end
-
   def self.tweet_new_product(idea, product)
-    mention = product.user.twitter_nickname
+    if product.user
+      mention = product.user.twitter_nickname
+    end
     if !mention
       mention = " "
     else
@@ -48,21 +42,9 @@ class Tweeter
     participants.uniq.take(3)
   end
 
-  def bounty_hashtags(bounty)
-    QueryMarks.new.legible_mark_vector(bounty.mark_vector).sort_by{|a, b| -b}.map{|a, b| a}.take(4)
-  end
-
-  def top_products_by_activity
-    ProductStats.top_products_by_activity(limit: 12).select{|a, b| a != "meta"}.map{|a, b| Product.find_by(slug: a)}
-  end
-
-  def bounties_from_top_products
-    top_products_by_activity.map{|a| a.tasks}.flatten.select{|a| a.state == "open"}
-  end
-
   def worthy_bounties(n)
     bounty_suggestion_fraction = 0.5
-    sorted_top_bountys = bounties_from_top_products.select{|a| a.earnable_coins_cache}.sort_by{|a| -a.earnable_coins_cache}
+    sorted_top_bountys = TweetPrep.bounties_from_top_products.select(&:earnable_coins_cache).sort_by{|a| -a.earnable_coins_cache}
     top_bountys = sorted_top_bountys.take(top_bountys.count * bounty_suggestion_fraction)
     top_bountys.sample(n).uniq
   end
@@ -74,7 +56,7 @@ class Tweeter
       bounty_name: bounty.title,
       authors: bounty_participants(bounty),
       url: WipSerializer.new(bounty).full_url,
-      hashtags: bounty_hashtags(bounty),
+      hashtags: TweetPrep.bounty_hashtags(bounty),
       product_name: bounty.product.name
     }
 
@@ -93,7 +75,7 @@ class Tweeter
     url = "https://asm-tweeter.herokuapp.com/idea/" + password
     the_data = {
       idea_name: idea.twitter_title,
-      users: idea_participants(idea),
+      users: TweetPrep.idea_participants(idea),
       url: IdeaSerializer.new(idea).url,
       hashtags: idea_marks(idea)
     }
@@ -111,10 +93,10 @@ class Tweeter
 
   def tweet_hot_product(product_slug, growth)
     password = compute_password
+    product = Product.find_by(slug: product_slug)
     url = "https://asm-tweeter.herokuapp.com/product/hot/" + password
-    name = Product.find_by(slug: product_slug).name
     the_data = {
-      product_name: name,
+      product_name: product.name,
       users: product_participants(product),
       url: ProductSerializer.new(product).full_url,
       growth: growth
@@ -147,7 +129,7 @@ class Tweeter
   def tweet_love_idea(idea)
     password = compute_password
     url = "https://asm-tweeter.herokuapp.com/love/" + password
-    participants = idea_participants(idea)
+    participants = TweetPrep.idea_participants(idea)
     the_data = {
       title: idea.name,
       authors: participants,
@@ -183,28 +165,19 @@ class Tweeter
   def construct_tweet_data_idea(news_feed_item)
     data = {
       title: news_feed_item.target.name,
-      authors: idea_participants(news_feed_item.target),
+      authors: TweetPrep.idea_participants(news_feed_item.target),
       url: IdeaSerializer.new(news_feed_item.target).url,
       hashtags: idea_marks(news_feed_item.target)
     }
   end
 
   def tweet_loved_news_feed_item(news_feed_item)
-    password = compute_password
-    url = "https://asm-tweeter.herokuapp.com/love/" + password
-    participants = []
-    proceed = false
-
-    if news_feed_item.target_type == "Post"
-      the_data = construct_tweet_data_post(news_feed_item)
-      proceed=true
-    elsif news_feed_item.target_type == "Idea"
-      the_data = construct_tweet_data_idea(news_feed_item)
-      proceed=true
-    end
-
-    if proceed
-      request :post, url, the_data
+    url = "https://asm-tweeter.herokuapp.com/love/" + compute_password
+    target_type = news_feed_item.target_type
+    if target_type == "Post"
+      request :post, url, construct_tweet_data_post(news_feed_item)
+    elsif target_type == "Idea"
+      request :post, url, construct_tweet_data_idea(news_feed_item)
     end
   end
 
@@ -229,5 +202,4 @@ class Tweeter
       faraday.adapter  :net_http
     end
   end
-
 end

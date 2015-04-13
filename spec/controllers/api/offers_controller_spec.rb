@@ -16,7 +16,7 @@ describe Api::OffersController do
       bounty.reload
 
       expect(response).to be_successful
-      expect(bounty[:value]).to eq(5000)
+      expect(bounty.value).to eq(5000)
     end
   end
 end

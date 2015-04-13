@@ -41,6 +41,10 @@ class ProductStore extends Store {
     return _product.get('slug');
   }
 
+  getCoinPrismUrl() {
+    return _product.get('coinprism_url')
+  }
+
   getCoreTeamIds() {
     return List(
         _product.get('core_team')

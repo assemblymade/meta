@@ -23,6 +23,7 @@ class Activity < ActiveRecord::Base
   delegate :url_params, to: :target_entity
 
   def self.publish!(opts)
+    bridge = opts.delete(:bridge)
     create!(opts).tap do |a|
       if a.publishable
         if Story.should_publish?(a)
@@ -38,6 +39,9 @@ class Activity < ActiveRecord::Base
         if room
           a.publish_to_chat(room.id)
 
+          if a.subject.try(:body) && !bridge
+            a.push_to_landline(room, a.subject.body, a.actor)
+          end
           # only touch updated_at for chat messages.
           # We don't want the room to be marked as unread for events
           # other than people chatting
@@ -106,6 +110,15 @@ class Activity < ActiveRecord::Base
 
   def publish_to_chat(room_id)
     ActivityStream.new(room_id).push(self)
+  end
+
+  def push_to_landline(room, body, actor)
+    puts "body: #{body}"
+    LandlineBridgeWorker.perform_async(
+      room.slug,
+      body,
+      actor.id
+    )
   end
 
   def publishable

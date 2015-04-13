@@ -1,0 +1,80 @@
+<center>
+  <!-- inner / gutter -->
+    <div class="width-toggle tile">
+     <!-- tile header -->
+       <table class="width-toggle" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+         <tbody class="width-toggle">
+            <tr class="width-toggle">
+              <td class="" style="padding-top:16px; padding-bottom:16px; padding-left:16px;">
+                <div style="display:inline-block; text-align:left;">
+                  <div class="h3 bold collapse" style="margin-bottom:4px">
+                    You've received <%= pluralize @award.cents, "#{@product.name} coin" %>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr class="width-toggle">
+              <td style="padding:16px;">
+                <%= image_tag 'emails/fireworks.png', width: 600-16-16, style: 'max-width:100%' %>
+              </td>
+            </tr>
+            <tr class="width-toggle">
+              <td class="" style="padding:16px;">
+                <p>
+                  <b>Congratulations!</b> Due to your recent efforts completing the bounty <b><%= @bounty.title %></b>
+                  on <%= @product.name %>, @<%= @award.awarder.username %> has awarded you <%= @award.coins %> coins.
+                </p>
+                <p>
+                  <%= @product.name %> is a community built product on Assembly. In case you're not sure, Assembly is
+                  a platform where people build products together and share in the ownership.
+                </p>
+                <p>
+                  You're just a few clicks away from claiming coins in <%= @product.name %>.
+                  Having coins makes you a partner in the organization.
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="width-toggle" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
+          <tbody class="width-toggle">
+          <tr class="width-toggle">
+            <td style="width:10%"></td>
+            <td align="center" style="font-size: 18px; font-weight:bold; line-height: 22px; padding:18px 82px; color:#ffffff; border-radius:50px; background-color: #33d6a6;">
+              <a href="<%= new_user_registration_url(token: @award.token) %>" style="display:block; text-align:center; color:#ffffff; text-decoration: none; cursor:pointer;">
+                Claim your coins
+              </a>
+            </td>
+            <td style="width:10%"></td>
+          </tr>
+          <tr class="width-toggle">
+            <td style="padding:16px;">
+            </td>
+          </tr>
+
+        </tbody>
+        </table>
+
+       <!-- tile main -->
+      <table class="width-toggle" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="max-width:600px; display:block;">
+        <tbody class="width-toggle" style="display:block;">
+          <tr class="width-toggle" style="display:block;">
+            <td class="width-toggle" style="display:block;">
+
+
+            </td>
+          </tr>
+        </tbody>
+       </table>
+    </div>
+</center>
+
+<!-- gap -->
+<!--[if mso]>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr><td class="office-gap-2">&nbsp;</td></tr>
+</table>
+<![endif]-->
+<div class="gap-2"></div>
+<!-- prefooter -->

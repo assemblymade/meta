@@ -15,8 +15,8 @@ var DropdownMenuItem = React.createClass({
     var icon = null
     if (this.props.icon) {
       icon = (
-        <div className="gray-3 center left mr1" style={{minWidth: '2rem'}}>
-          <Icon icon={this.props.icon} />
+        <div className="left gray-3 mr1">
+          <Icon icon={this.props.icon} fw={true} />
         </div>
       )
     }

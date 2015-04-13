@@ -1,6 +1,8 @@
 require 'timed_set'
 require 'csv'
 
+OPEN_ASSETS_NAME_SHORT_CHAR_LIMIT = 10
+
 class ProductsController < ProductController
   respond_to :html, :json
 
@@ -77,42 +79,16 @@ class ProductsController < ProductController
   def create
     if idea_id = params[:product].delete(:idea_id)
       @idea = Idea.find(idea_id)
-
       return redirect_to action: :new, layout: 'application' unless @idea.user == current_user
     end
 
-    @product = create_product_with_params
+    if @idea
+      @product = create_product_with_params(@idea)
+    else
+      @product = create_product_with_params
+    end
+
     if @product.valid?
-
-      Karma::Kalkulate.new.award_for_product_to_stealth(@product)
-      @product.retrieve_key_pair
-
-      if @idea
-        @idea.update(product_id: @product.id)
-      end
-
-      chosen_ids = params[:product][:partner_ids] || ''
-      chosen_ids = chosen_ids.split(',').flatten
-      GiveCoinsToParticipants.new.perform(chosen_ids, @product.id)   #TO DO  --> Make this asynchronous.  Currently will cause tests to fail if asynchronous.
-
-      if @idea
-        the_key = @idea.slug.to_sym
-        chosen_ids.each do |chosen_id|
-          EmailLog.send_once(chosen_id, the_key) do
-            PartnershipMailer.delay(queue: 'mailer').create(chosen_id, @product.id, @idea.id)
-          end
-        end
-
-        Tweeter.tweet_new_product(@idea, @product)
-      end
-
-      AutoBounty.new.product_initial_bounties(@product)
-      current_user.touch
-      @product.reload
-
-      # Set up a room on Landline
-      set_up_chat
-
       respond_with(@product, location: product_path(@product))
     else
       render action: :new, layout: 'application'
@@ -121,30 +97,26 @@ class ProductsController < ProductController
 
   def coin
     find_product!
-    data = {}
-    if @product.coin_info
-      data['asset_ids'] = [@product.coin_info.asset_address]
-    end
-    data['name_short'] = @product.name[0,5]
-    data['name'] = @product.name
-    data['contract_url'] = ProductSerializer.new(@product).full_url
-    data['issuer'] = "Assembly.com"
-    data['description'] = ""#@product.description
-    data['description_mime'] = "text/x-markdown; charset=UTF-8"
-    data['type'] = "Ownership"
-    data['divisibility'] = 0
-    data['link_to_website'] = true
-    data['icon_url'] = @product.full_logo_url
-    data['image_url'] = @product.full_logo_url
-    version = "1.0"
 
-    if @product
-      if @product.coin_info
-        render json: data
-      else
-        render json: {}
-      end
+    if @product.coin_info.nil?
+      render json: {}
+      return
     end
+
+    render json: {
+      asset_ids: [@product.coin_info.asset_address],
+      name_short: @product.name[0, OPEN_ASSETS_NAME_SHORT_CHAR_LIMIT],
+      name: @product.name,
+      contract_url: ProductSerializer.new(@product).full_url,
+      issuer: 'Assembly.com',
+      description: @product.pitch,
+      description_mime: "text/x-markdown; charset=UTF-8",
+      type: "Ownership",
+      divisibility: 0,
+      link_to_website: true,
+      icon_url: @product.full_logo_url,
+      image_url: @product.full_logo_url
+    }
   end
 
   def set_up_chat
@@ -249,8 +221,6 @@ class ProductsController < ProductController
   end
 
   def show
-    return redirect_to(about_url) if @product.meta?
-
     show_product
   end
 
@@ -314,35 +284,56 @@ class ProductsController < ProductController
 
   # private
 
-  def create_product_chat(product)
-    main_thread = product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
-    product.update(main_thread: main_thread)
-    product.chat_rooms.create!(wip: main_thread, slug: product.slug)
+  def setup_core_team(product)
+    core_team_ids = Array(params[:core_team])
+    core_team_members = User.where(id: core_team_ids.select(&:uuid?))
+    core_team_members.each do |user|
+      product.core_team_memberships.create(user: user)
+    end
   end
 
-  def create_product_with_params
+  def spread_the_word(idea, product, chosen_ids)
+    chosen_ids.each do |chosen_id|
+      EmailLog.send_once(chosen_id, idea.slug) do
+        PartnershipMailer.delay(queue: 'mailer').create(chosen_id, product.id, idea.id)
+      end
+    end
+    Tweeter.tweet_new_product(idea, product)
+  end
+
+  def create_product_with_params(idea=nil)
     product = current_user.products.create(product_params)
     if product.valid?
       product.team_memberships.create!(user: current_user, is_core: true)
 
       product.watch!(current_user)
-
-      create_product_chat(product)
+      ChatRoom.create_for_product(product, current_user)
 
       ownership = params[:ownership] || {}
-      core_team_ids = Array(params[:core_team])
 
-      core_team_members = User.where(id: core_team_ids.select(&:uuid?))
-
-      core_team_members.each do |user|
-        product.core_team_memberships.create(user: user)
-      end
+      setup_core_team(product)
 
       product.update_partners_count_cache
-
       product.save!
 
       flash[:new_product_callout] = true
+
+      Karma::Kalkulate.new.award_for_product_to_stealth(product)
+      product.retrieve_key_pair
+      if idea
+        idea.update(product_id: product.id)
+        the_elect = (params[:product][:partner_ids] || "").split(",").flatten
+        GiveCoinsToParticipants.new.perform(the_elect, product.id)
+
+        product.reload
+        spread_the_word(idea, product, the_elect)
+      end
+
+      AutoBounty.new.product_initial_bounties(product)
+      current_user.touch
+      product.reload
+      # Set up a room on Landline
+      set_up_chat
     end
     product
   end

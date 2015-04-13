@@ -1,4 +1,3 @@
-require 'activerecord/uuid'
 require 'money'
 require './lib/poster_image'
 require 'elasticsearch/model'
@@ -199,10 +198,6 @@ class Product < ActiveRecord::Base
     joins(:activities).where('activities.created_at > ?', 30.days.ago).group('products.id').having('count(*) > 5').count.count
   end
 
-  def news_feed_items_with_mark(mark_name)
-    QueryMarks.new.news_feed_items_per_product_per_mark(self, mark_name)
-  end
-
   def sum_viewings
     Viewing.where(viewable: self).count
   end
@@ -267,6 +262,12 @@ class Product < ActiveRecord::Base
   def mark_all_transactions_as_queued
     TransactionLogEntry.where(product_id: self.id).where(queue_id: nil).all.each do |a|
       a.update!({queue_id: Time.now.to_s})
+    end
+  end
+
+  def reset_all_transactions_as_unqueued  #dont run this command without consulting a lvl 5 wizard or above
+    TransactionLogEntry.where(product_id: self.id).where.not(queue_id: nil).all.each do |a|
+      a.update!({queue_id: nil})
     end
   end
 
@@ -454,11 +455,19 @@ class Product < ActiveRecord::Base
     self.coin_info.asset_address
   end
 
+  def set_asset_address
+    a = OpenAssets::Transactions.new.get_asset_address(self.wallet_public_address)
+    self.coin_info.update!({asset_address: a['asset_address']})
+  end
+
   def assign_asset_address
     if self.coin_info
-      if self.coin_info.asset_address == "" || !self.coin_info.asset_address.present?
-        a = OpenAssets::Transactions.new.get_asset_address(self.wallet_public_address)
-        self.coin_info.update!({asset_address: a['asset_address']})
+      if !self.coin_info.asset_address
+        set_asset_address
+      else
+        if self.coin_info.asset_address.length < 10
+          set_asset_address
+        end
       end
     end
   end
@@ -558,14 +567,8 @@ class Product < ActiveRecord::Base
   end
 
   def average_bounty
-    bounties = TransactionLogEntry.minted.
-      where(product_id: product.id).
-      where.not(work_id: product.id).
-      group(:work_id).
-      sum(:cents).values.reject(&:zero?)
-
+    bounties = TransactionLogEntry.bounty_values_on_product(product)
     return DEFAULT_BOUNTY_SIZE if bounties.none?
-
     bounties.inject(0, &:+) / bounties.size
   end
 
@@ -739,37 +742,14 @@ class Product < ActiveRecord::Base
   end
 
   def mark_vector
-    my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
+    QueryMarks.new.mark_vector_for_object(self)
   end
 
   def normalized_mark_vector()
-    QueryMarks.new.normalize_mark_vector(self.mark_vector())
+    QueryMarks.new.normalize_mark_vector(mark_vector)
   end
 
-  def majority_owner
-    total_coins = TransactionLogEntry.where(product: self).sum(:cents)
-    majority_owner = TransactionLogEntry.where(product: self).group('wallet_id').sum(:cents).sort_by{|k,v| -v}.first
-
-    majority_owner[1].to_f / total_coins.to_f >= 0.5
-  end
-
-  def proposals_sorted
-    prod_proposals = Proposal.where(product: self).where.not(state: "hidden")
-    prod_proposals.order('state desc, expiration desc').to_a
-  end
-
-  def active_contracts
-    Vesting.active.
-      joins(:proposals).
-      where(proposals: {state: ["passed", "expired"], contract_type: 'vesting', product_id: self.id})
-  end
-
-  def expired_contracts
-    Vesting.expired.
-      joins(:proposals).
-      where(proposals: {state: ["passed", "expired"], contract_type: 'vesting', product_id: self.id})
-  end
-
+  # this bears commenting. If new_try_url is blank, set this to nil
   def try_url=(new_try_url)
     super(new_try_url.presence)
   end

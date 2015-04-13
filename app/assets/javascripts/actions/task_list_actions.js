@@ -1,3 +1,5 @@
+'use strict';
+
 const NewsFeedItemStore = require('../stores/news_feed_item_store')
 const Routes = require('../routes')
 const WebUtil = require('../web_util')

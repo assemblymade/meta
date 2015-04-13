@@ -22,7 +22,8 @@ const SignupForm = React.createClass({
       errors: SignupFormStore.getErrors(),
       hasAccount: false,
       isSigningUp: false,
-      showSignupForm: false
+      showSignupForm: false,
+      pendingAward: SignupFormStore.getPendingAward()
     };
   },
 
@@ -60,14 +61,22 @@ const SignupForm = React.createClass({
   },
 
   render() {
+    let award = this.state.pendingAward
     return (
       <div className="row">
         <div className="col-sm-6 col-sm-offset-3">
           <div className="center">
             <img className="py4" src="/assets/logo.min.png" />
-            <p className="gray-2">
-              Sign in to Assembly or create an account below.
-            </p>
+            {award ?
+              <p>
+                Sign up and instantly receive {award.coins} coins for completing
+                <b> {award.bounty.title}</b> on <b> {award.bounty.product.name}</b>
+
+              </p> :
+              <p className="gray-2">
+                Sign in to Assembly or create an account below.
+              </p>
+            }
           </div>
 
           <div className="center py2">
@@ -97,7 +106,7 @@ const SignupForm = React.createClass({
 
           <p className="center small gray-2">
             <br />
-            By signing up, you agree to Assembly's <a href="/terms">Terms of Service</a>.
+            By signing up, you agree to Assembly&#39;s <a href="/terms">Terms of Service</a>.
           </p>
         </div>
       </div>
@@ -186,7 +195,8 @@ const SignupForm = React.createClass({
   updateFormState() {
     this.setState({
       errors: SignupFormStore.getErrors(),
-      isSigningUp: false
+      isSigningUp: false,
+      pendingAward: SignupFormStore.getPendingAward()
     });
   },
 

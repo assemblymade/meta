@@ -9,25 +9,26 @@ var qs = require('qs');
 var url = require('url');
 
 var BLACKLIST = [
-  '/home',
   '/about',
-  '/terms',
+  '/activity',
+  '/channel',
   '/core-team',
+  '/create',
+  '/discover',
+  '/getting-started',
+  '/help',
+  '/home',
+  '/login',
+  '/logout',
+  '/new',
   '/pitchweek',
   '/sabbaticals',
-  '/activity',
-  '/getting-started',
-  '/create',
+  '/settings',
+  '/signup',
   '/start',
   '/styleguide',
-  '/discover',
-  '/login',
+  '/terms',
   '/user',
-  '/logout',
-  '/signup',
-  '/settings',
-  '/channel',
-  '/help'
 ];
 
 class Router {

@@ -29,17 +29,6 @@ class WipsController < ProductController
     end
   end
 
-  def show
-    @watchers = @wip.followers.to_a
-
-    @events = Event.render_events(@wip.events.order(:number), current_user)
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @wip, serializer: WipSerializer }
-    end
-  end
-
   def new
     @wip = wip_class.new(product: @product)
   end
@@ -103,7 +92,7 @@ class WipsController < ProductController
       end
 
       if @product.tasks.won_by(@event.user).count == 1
-        BadgeMailer.delay(queue: 'mailer').first_win(@event.id)
+        BadgeMailer.delay(queue: 'mailer').first_win(@event.id) unless @product.meta?
       end
       TrackVested.perform_async(@event.user_id, @product.id, Time.now)
     end

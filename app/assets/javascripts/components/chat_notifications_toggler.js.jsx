@@ -1,11 +1,9 @@
-var CONSTANTS = require('../constants');
+var ActionTypes = require('../constants').ActionTypes;
 var ChatNotificationsStore = require('../stores/chat_notifications_store');
 var Dispatcher = require('../dispatcher');
 var DropdownTogglerMixin = require('../mixins/dropdown_toggler.js.jsx');
 var LocalStorageMixin = require('../mixins/local_storage');
 var moment = require('moment');
-
-var CN = CONSTANTS.CHAT_NOTIFICATIONS;
 
 var ChatNotificationsToggler = React.createClass({
   mixins: [DropdownTogglerMixin, LocalStorageMixin],
@@ -17,12 +15,6 @@ var ChatNotificationsToggler = React.createClass({
 
     this.setState({
       acknowledgedAt: timestamp
-    });
-
-    Dispatcher.dispatch({
-      action: CN.ACTIONS.ACKNOWLEDGE,
-      data: timestamp,
-      sync: true
     });
   },
 
