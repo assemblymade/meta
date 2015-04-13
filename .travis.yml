@@ -5,7 +5,7 @@ addons:
   postgresql: '9.3'
   code_climate:
     repo_token:
-      secure: PK/YJYSCEQ0/pRrFhruasAp91P/6MRPowVoC3fVU1fCa8CoZmck8YCbDIUkuCQhRFfbUb6ggg3yGmwSrX+WcKXwzEzvO88zUv1rb+wRey/hxzrH8f67e2d03eNDGhDSXDBxp16yTGzgGoOIkTofOS1PhwFF1FWIZ4azcxpaMMjM=
+      secure: BjbonvyKvacSXbRKWh1UdXDSS+n+yILx+tkQhpzeVxt3DPuRHxBFwVRJDZX8Kk1STANAd6wy9nrI22Hh+waciNglVryfRwHpP/+uzx2yZcjYkvQnlNn5mBXVa+/XVLlDSC4Wcd63q9aN9YD86fJ6HiX2qi0B2i0jNxjT0S2LBG8=
 install:
 - npm install
 - npm run bundle
