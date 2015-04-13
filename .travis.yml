@@ -25,8 +25,7 @@ sudo: false
 deploy:
   provider: heroku
   strategy: git
-  app:
-    secure: gv+O69pvNInWcQUSRwjPS2Fu+5gKwSTkiEzQ8KkOMygBTa1btS8DWpvQUtkxtEyXDwTz7P5UNYNNsRcL1/UCB6Xl3UknnTK825yTMfX3UDKAhNQ0+Zw0GtqXx9xXnfPthhBYGK7g2aKhoou4eJwkDIBVytmMsTxFj+fwnTSRnRo=
+  app: "asm-production"
   run:
   - rake db:migrate
   - restart
