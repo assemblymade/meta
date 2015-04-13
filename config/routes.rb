@@ -210,7 +210,6 @@ ASM::Application.routes.draw do
       get :graph_data
     end
     resources :karma, only: [:index]
-    resources :karmahistory, only: [:index]
     resources :leaderboard, only: [:index]
     resources :ownership, only: [:index, :update]
     resources :tags, only: [:index]
@@ -397,9 +396,6 @@ ASM::Application.routes.draw do
       patch 'award', :action => :award, :on => :member
       post 'promote'
       post 'demote'
-      post 'deliverables'
-      post 'copy_deliverables'
-      post 'code_deliverables'
       patch 'watch'
       patch 'mute'
       get 'mute'

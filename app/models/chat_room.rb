@@ -62,4 +62,10 @@ class ChatRoom < ActiveRecord::Base
   def url_params
     [self]
   end
+
+  def self.create_for_product(product, current_user)
+    main_thread = product.discussions.create!(title: Discussion::MAIN_TITLE, user: current_user, number: 0)
+    product.update(main_thread: main_thread)
+    product.chat_rooms.create!(wip: main_thread, slug: product.slug)
+  end
 end

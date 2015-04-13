@@ -30,17 +30,8 @@ module OpenAssets
         identifier: destination+":"+amount.to_s+":"+DateTime.now.to_s
       }
 
-      BtcPayment.create!({
-        btcusdprice_at_moment: get_btc_spot_price_coinbase()*100,
-        created_at: DateTime.now,
-        action: "Sent BTC",
-        sender: "Assembly Central",
-        recipient: destination,
-        sender_address: public_address,
-        recipient_address: destination,
-        btc_change: amount*-100000000})
-
-        send_btc_request(params)
+      BtcPayment.create_entry(destination, public_address, float_amount)
+      send_btc_request(params)
     end
 
     def send_btc_request(params)
@@ -49,23 +40,24 @@ module OpenAssets
       remote.post end_url, params.to_json
     end
 
-    def forge_coins(product_id, total_coins)
-      product = Product.find(product_id)
-
-      body = {
+    def construct_forge_coins_body(product, total_coins)
+      {
         public_address: product.wallet_public_address,
         private_key: product.wallet_private_key,
         name: product.name,
         metadata: "u=https://assembly.com/#{product.slug}/coin",
         coins: total_coins,
         identifier: product_id.to_s+":"+DateTime.now.to_s
-      }
+      }.to_json
+    end
 
+    def forge_coins(product_id, total_coins)
+      product = Product.find(product_id)
       puts "Forging #{total_coins}  #{product.name} Coins for #{product.wallet_public_address}"
 
       remote = OpenAssets::Remote.new("http://coins.assembly.com")
       end_url="colors/issue"
-      remote.post end_url, body.to_json
+      remote.post end_url, construct_forge_coins_body(product, total_coins)
     end
 
     def verify_receiver_address_exists(user)
@@ -185,7 +177,6 @@ module OpenAssets
       url = "https://api.coindesk.com"
       remote = OpenAssets::Remote.new(url)
       end_url = "/v1/bpi/historical/close.json?start=#{datestring}"
-      puts end_url
       price = remote.get end_url
       price = JSON.parse(price)['bpi'].first[1]
     end

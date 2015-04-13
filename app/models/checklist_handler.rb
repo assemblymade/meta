@@ -211,7 +211,7 @@ class ChecklistHandler
   def self.checklist_name_idea(idea)
     name = {}
     name['title'] = "Pick a name"
-    if self.tentative_name
+    if idea.tentative_name
       name['smalltext'] = idea.tentative_name
       name['state'] = true
     else

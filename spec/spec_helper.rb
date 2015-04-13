@@ -1,9 +1,12 @@
+require 'simplecov'
+SimpleCov.start 'rails'
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
+
 ENV['RAILS_ENV'] ||= 'test'
 ENV['READRAPTOR_URL'] ||= 'https://readraptor.com'
 
 require File.expand_path("../../config/environment", __FILE__)
-
-require 'simplecov'
 require 'rspec/rails'
 require 'rspec/collection_matchers'
 require 'capybara/rspec'
@@ -11,7 +14,6 @@ require 'capybara/poltergeist'
 require 'email_spec'
 require 'sidekiq/testing'
 require 'webmock/rspec'
-require 'codeclimate-test-reporter'
 require 'pry'
 
 Capybara.register_driver :poltergeist do |app|
@@ -42,8 +44,6 @@ CodeClimate::TestReporter.configure do |config|
 end
 
 CodeClimate::TestReporter.start
-
-SimpleCov.start
 
 WebMock.disable_net_connect!(allow_localhost: true)
 

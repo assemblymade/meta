@@ -21,5 +21,7 @@ class BountyFactory
     if assignee
       wip.start_work!(assignee)
     end
+
+    wip
   end
 end

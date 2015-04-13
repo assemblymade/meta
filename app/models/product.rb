@@ -1,4 +1,3 @@
-require 'activerecord/uuid'
 require 'money'
 require './lib/poster_image'
 require 'elasticsearch/model'
@@ -568,14 +567,8 @@ class Product < ActiveRecord::Base
   end
 
   def average_bounty
-    bounties = TransactionLogEntry.minted.
-      where(product_id: product.id).
-      where.not(work_id: product.id).
-      group(:work_id).
-      sum(:cents).values.reject(&:zero?)
-
+    bounties = TransactionLogEntry.bounty_values_on_product(product)
     return DEFAULT_BOUNTY_SIZE if bounties.none?
-
     bounties.inject(0, &:+) / bounties.size
   end
 
@@ -749,20 +742,14 @@ class Product < ActiveRecord::Base
   end
 
   def mark_vector
-    my_mark_vector = QueryMarks.new.mark_vector_for_object(self)
+    QueryMarks.new.mark_vector_for_object(self)
   end
 
   def normalized_mark_vector()
-    QueryMarks.new.normalize_mark_vector(self.mark_vector())
+    QueryMarks.new.normalize_mark_vector(mark_vector)
   end
 
-  def majority_owner
-    total_coins = TransactionLogEntry.where(product: self).sum(:cents)
-    majority_owner = TransactionLogEntry.where(product: self).group('wallet_id').sum(:cents).sort_by{|k,v| -v}.first
-
-    majority_owner[1].to_f / total_coins.to_f >= 0.5
-  end
-
+  # this bears commenting. If new_try_url is blank, set this to nil
   def try_url=(new_try_url)
     super(new_try_url.presence)
   end
