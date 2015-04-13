@@ -5,5 +5,10 @@ module Api
     def show
       render json: current_user
     end
+
+    def ownership
+      render json: current_user, serializer: UserApiSerializer
+    end
+
   end
 end

@@ -12,6 +12,13 @@ ASM::Application.routes.draw do
         resources :awards, only: [:create, :show]
       end
     end
+
+    resources :orgs do
+      get '/partners', to: 'orgs#partners'
+    end
+
+    get '/orgs/:org_id/partners' => 'orgs#partners'
+
   end
 
   authenticate :user, lambda { |u| u.staff? } do
