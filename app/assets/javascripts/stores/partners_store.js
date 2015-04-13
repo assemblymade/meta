@@ -12,8 +12,7 @@ class PartnersStore extends Store {
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
         case ActionTypes.PARTNERS_RECEIVE:
-          const {product, partners} = action
-          _setPartners(product, partners)
+          _setPartners(action.product, action.partners)
           this.emitChange()
           break;
       }

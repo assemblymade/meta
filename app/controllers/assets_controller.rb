@@ -1,5 +1,5 @@
 class AssetsController < ProductController
-  respond_to :html
+  respond_to :html, :json
 
   before_action :authenticate_user!, :except => [:index]
   before_action :find_product!
@@ -27,7 +27,10 @@ class AssetsController < ProductController
     return head(:forbidden) unless can? :update, @product
     Asset.find(params[:id]).delete!
 
-    redirect_to product_assets_path(@product)
+    respond_to do |format|
+      format.html { redirect_to product_assets_path(@product) }
+      format.json { render json: { id: params[:id] }, status: 200 }
+    end
   end
 
   # private

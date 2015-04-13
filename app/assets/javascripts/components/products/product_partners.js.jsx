@@ -1,15 +1,16 @@
-const Partner = require('../partner.js.jsx')
-const PeopleStore = require('../../stores/people_store');
-const AppCoins = require('../app_coins.js.jsx')
-const Tile = require('../ui/tile.js.jsx')
-const ProgressBar = require('../ui/progress_bar.js.jsx')
-const Markdown = require('../markdown.js.jsx')
-const UserStore = require('../../stores/user_store.js')
-import ProductHeader from '../products/product_header.js.jsx'
-import ProductStore from '../../stores/product_store'
-import PartnersStore from '../../stores/partners_store'
-import Button from '../ui/button.js.jsx';
+'use strict';
 
+const AppCoins = require('../app_coins.js.jsx')
+const Button = require('../ui/button.js.jsx')
+const Markdown = require('../markdown.js.jsx')
+const Partner = require('../partner.js.jsx')
+const PartnersStore = require('../../stores/partners_store')
+const PeopleStore = require('../../stores/people_store');
+const ProductHeader = require('../products/product_header.js.jsx')
+const ProductStore = require('../../stores/product_store')
+const ProgressBar = require('../ui/progress_bar.js.jsx')
+const Tile = require('../ui/tile.js.jsx')
+const UserStore = require('../../stores/user_store.js')
 
 function _parseDate(date) {
   var parsedDate = new Date(date);

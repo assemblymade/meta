@@ -5,10 +5,17 @@
  */
 
 const ActionTypes = require('../constants').ActionTypes;
-var Dispatcher = require('../dispatcher');
+const Dispatcher = require('../dispatcher');
+const { List } = require('immutable');
 const Store = require('./es6_store');
 
-let screenshots = [];
+const assetIdMatches = (id) => {
+  return (screenshot) => {
+    return screenshot.asset_id === id;
+  };
+};
+
+let screenshots = List();
 
 class ScreenshotsStore extends Store {
   constructor() {
@@ -16,24 +23,28 @@ class ScreenshotsStore extends Store {
 
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
+        case ActionTypes.SCREENSHOT_DELETED:
+          screenshots = screenshots.filterNot(assetIdMatches(action.id));
+          break;
         case ActionTypes.SCREENSHOTS_RECEIVE:
-          screenshots = action.screenshots;
-          this.emitChange();
+          screenshots = List(action.screenshots);
           break;
         case ActionTypes.SCREENSHOT_SUCCESS:
-          this.emitChange();
           break;
         case ActionTypes.SCREENSHOT_UPLOADED:
-          screenshots.push(action.screenshot);
-          break;
+          screenshots = screenshots.push(action.screenshot);
+          // no need to emit a change event
+          return;
         default:
-          break;
+          return;
       }
+
+      this.emitChange();
     });
   }
 
   getScreenshots() {
-    return screenshots || [];
+    return screenshots.toJS();
   }
 };
 

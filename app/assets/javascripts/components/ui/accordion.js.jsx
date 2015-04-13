@@ -1,9 +1,8 @@
 'use strict'
 
-import Icon from './icon.js.jsx'
+const Icon = require('./icon.js.jsx');
 
 const Accordion = React.createClass({
-
   propTypes: {
     title: React.PropTypes.string.isRequired,
   },
@@ -46,5 +45,4 @@ const Accordion = React.createClass({
   }
 })
 
-export default Accordion
-window.Accordion = Accordion
+module.exports = window.Accordion = Accordion

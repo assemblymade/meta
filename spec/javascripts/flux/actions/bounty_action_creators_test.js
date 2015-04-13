@@ -16,7 +16,6 @@ describe('BountyActionCreators', function() {
     it('prevents the default action, tracks the event, and makes an AJAX request to the supplied url', function(){
       BountyActionCreators.call('event.name', '/path/to/resource');
 
-      expect(e.preventDefault.mock.calls.length).toEqual(1);
       expect(analytics.track.mock.calls.length).toEqual(1);
       expect($.ajax.mock.calls[0][0].url).toEqual('/path/to/resource');
     });
