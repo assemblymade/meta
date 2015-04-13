@@ -423,25 +423,20 @@
     </div>
   </div>
 
-  <section class="bg-white py4 quote-slider quote-slider-about">
-    <div class="carousel">
+      </div>
 
-      <div class="item mx-auto">
+    </div>
+  </div>
+
+  <section class="bg-white py4">
+    <div class="container md-flex">
+      <div class="m2">
         <blockquote class="twitter-tweet" data-align="center" data-width="480" lang="en"><p>Dear Assembly (<a href="https://twitter.com/asm">@asm</a>). Thank you for building the internet&#39;s best learning &amp; social platform. You increased my side-project excitement 156%.</p>&mdash; Maggie Appleton (@Mappletons) <a href="https://twitter.com/Mappletons/status/552806637418082305">January 7, 2015</a></blockquote>
       </div>
 
-      <div class="item mx-auto">
-        <blockquote class="twitter-tweet" data-align="center" data-width="480" lang="en"><p>Last night I dove into <a href="http://t.co/T5aLzesWO4">http://t.co/T5aLzesWO4</a> and contributed work on <a href="https://twitter.com/helpful">@helpful</a>. Feeling really motivated to make stuff now. Thanks <a href="https://twitter.com/asm">@asm</a>.</p>&mdash; Ken Seals (@kenseals) <a href="https://twitter.com/kenseals/status/554652184957435904">January 12, 2015</a></blockquote>
+      <div class="m2">
+        <blockquote class="twitter-tweet" data-align="center" data-width="480" lang="en"><p>Just discovered <a href="http://t.co/NxjBAjq03r">assembly.com</a>. I feel like I&#39;ve been sucked into a vortex of mad scientists who only build awesome stuff. <a href="https://twitter.com/asm">@asm</a></p>&mdash; Mike Nelson (@mevlow) <a href="https://twitter.com/mevlow/status/563735831509098498">February 6, 2015</a></blockquote>
       </div>
-
-      <div class="item mx-auto">
-        <blockquote class="twitter-tweet" data-align="center" data-width="480" lang="en"><p>Just discovered <a href="http://t.co/NxjBAjq03r">http://t.co/NxjBAjq03r</a>. I feel like I&#39;ve been sucked into a vortex of mad scientists who only build awesome stuff. <a href="https://twitter.com/asm">@asm</a></p>&mdash; Mike Nelson (@mevlow) <a href="https://twitter.com/mevlow/status/563735831509098498">February 6, 2015</a></blockquote>
-      </div>
-
-      <div class="item mx-auto">
-        <blockquote class="twitter-tweet" data-align="center" data-width="480" lang="en"><p>It&#39;s amazing how fast you learn a new programming language/platform when you&#39;re working on a real project <a href="https://twitter.com/hashtag/saveyoursideproject?src=hash">#saveyoursideproject</a> <a href="https://twitter.com/asm">@asm</a></p>&mdash; Nícolas Iensen (@nicolasiensen) <a href="https://twitter.com/nicolasiensen/status/559125237628174336">January 24, 2015</a></blockquote>
-      </div>
-
     </div>
 
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -515,53 +510,6 @@
       onStep: function(from, to, percent) {
         $(this.el).find('.percent').text(Math.round(percent));
       }
-    });
-  })(jQuery);
-
-  // -- full slider
-  (function($) {
-    var $fullSlider = $('.full-slider-about'),
-        $fullSliderCarousel = $fullSlider.find('.carousel');
-    //
-    $fullSliderCarousel.owlCarousel({
-      singleItem: true,
-      slideSpeed: 300,
-      paginationSpeed: 400,
-      navigation: false,
-      afterInit: afterOWLinit,
-      afterUpdate: afterOWLinit
-    });
-    function afterOWLinit() {
-      $('.owl-controls .owl-page span').append('<a class="item-link" href="#"/>');
-      var pafinatorsLink = $('.owl-controls .item-link');
-      //
-      $.each(this.owl.userItems, function (i) {
-        $(pafinatorsLink[i])
-          .css({
-            'background': 'url(' + $(this).find('img').attr('src') + ') center center no-repeat',
-            '-webkit-background-size': 'cover',
-            '-moz-background-size': 'cover',
-            '-o-background-size': 'cover',
-            'background-size': 'cover'
-          })
-          .on('click', function(e) {
-            e.preventDefault();
-          });
-      });
-    }
-  })(jQuery);
-
-  // -- quote slider
-  (function($) {
-    var $quoteSlider = $('.quote-slider-about'),
-        $quoteSliderCarousel = $quoteSlider.find('.carousel');
-    //
-    $quoteSliderCarousel.owlCarousel({
-      singleItem: true,
-      autoPlay: 10000,
-      slideSpeed: 300,
-      paginationSpeed: 400,
-      navigation: false
     });
   })(jQuery);
 
