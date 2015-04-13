@@ -5,7 +5,7 @@ var Tile = require('./ui/tile.js.jsx')
 var Button = require('./ui/button.js.jsx')
 var Jumbotron = require('./ui/jumbotron.js.jsx')
 
-var StartPage = React.createClass({
+var ImportPage = React.createClass({
 
   propTypes: {
     productsStarted: React.PropTypes.number,
@@ -418,4 +418,4 @@ var StartPage = React.createClass({
   }
 });
 
-module.exports = StartPage;
+module.exports = ImportPage;
