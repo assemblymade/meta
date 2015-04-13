@@ -14,13 +14,12 @@ class Tweeter
   end
 
   def product_participants(product)
-    if product.user.twitter_nickname
-      participants = [product.user.twitter_nickname]
-    else
-      participants = ["asm"]
+    partners_with_twitter = TransactionLogEntry.product_partners(product.id).order('sum(cents) desc').where.not(twitter_nickname: nil)
+    nicknames = partners_with_twitter.take(15).sample(3).map{|a| a.twitter_nickname}
+    if nicknames.empty?
+      nicknames = ["asm"]
     end
-
-    TransactionLogEntry.product_partners(product.id).order('sum(cents) desc').take(15).sample(3)
+    nicknames
   end
 
   def idea_marks(idea)
