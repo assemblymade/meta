@@ -32,7 +32,7 @@ deploy:
   - restart
   - rake cleanup
   api_key:
-    secure: LHxvRYHVgDWwJwkr+48HNmcXkFgx/ZzW6hderdDaDyUGMpq0T4GdzsOh8XpsqclXLH/fw3BpXqACpQvm3489sXOUwHhO723kt1bVgvIs3NtDjiPQ3pTwmcdh0QJckxlG8+Z0E6Ikxw1DdoZfnPen2QQ/NT0L2IZCyM4tZN5ULiY=
+    secure: Um9lRlmOGoL+Uwzpg3ZVUMIwgyOsWozJDVUpbofA8LWOWm1AloVpBxKzMjq3bTGh2BhyTO/ZflEENJ5zcPDW7ssuja2HyUo6D81vFk7TYME83PqhVZDOVulTYxJ5BR3yaqC2zGBc8UNajJmFc45V5v2QrhDCPZAwduLdbk1q4vg=
 notifications:
   slack:
     secure: LwA/h6BTdQToj8xjvcdEXMHgM9XYOFhFsXkHCOfvsmowV0NNSAKK+CumSnmcnOlAP7E42MEd6aMEi3Rf+xHuYv6IbnFzUwiyh8856jtMUoWPeH2C8Aiin9/7Oe2JFHYWS0DNq2Pe4f/9Xri0luJWnCZsBZburRAbLDCM4mSc3vc=
