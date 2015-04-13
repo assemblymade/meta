@@ -103,7 +103,6 @@ let ProductBounty = React.createClass({
         <div className="container mt3">
           <Discussion newsFeedItem={item}>
             <Bounty item={item}
-                showCoins={product.slug !== 'meta'}
                 valuation={valuation} />
           </Discussion>
         </div>
