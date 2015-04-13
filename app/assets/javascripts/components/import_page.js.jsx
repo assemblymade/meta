@@ -277,22 +277,6 @@ var ImportPage = React.createClass({
                   <div className="panel panel-subtle">
                     <div className="panel-heading">
                       <p className="panel-title">
-                        <a href="#no-interest-generated" data-toggle="collapse" style={{display: 'block'}}>
-                          <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
-                          What if I start an idea here and no one is interested?
-                        </a>
-                      </p>
-                    </div>
-                    <div id="no-interest-generated" className="panel-collapse collapse">
-                      <div className="panel-body">
-                        <p>You are always free to keep building and keep trying on Assembly – so there’s no point at which you could no longer keep trying. If nobody earns App Coins in your product, you are free to take it elsewhere, but once people have earned ownership in your product, it has to live on in the Assembly community.</p>
-                        <p>In some cases, products sat for months with little interest before suddenly picking up momentum in the community. Your product could follow that trajectory.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="panel panel-subtle">
-                    <div className="panel-heading">
-                      <p className="panel-title">
                         <a href="#can-a-product-be-sold" data-toggle="collapse" style={{display: 'block'}}>
                           <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
                           Can a product be sold?
