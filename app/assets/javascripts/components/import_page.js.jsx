@@ -21,7 +21,7 @@ var ImportPage = React.createClass({
           <div className="masthead-title p4">
             <div className="clearfix">
               <h1 className="col-8 mx-auto center white">
-                 Create a community-owned product that shares the success with everyone that helps.
+                 Bring your product to Assembly, where the community can help make it awesome.
               </h1>
             </div>
           </div>
@@ -35,8 +35,8 @@ var ImportPage = React.createClass({
             <li>
               <div className="step">1</div>
               <div className="body">
-                <strong>Share your idea</strong>
-                <div className="gray-2">A good web or mobile app idea works.</div>
+                <strong>Import your product</strong>
+                <div className="gray-2">It could be launched or still in progress.</div>
               </div>
             </li>
             <li>
@@ -49,15 +49,15 @@ var ImportPage = React.createClass({
             <li>
               <div className="step">3</div>
               <div className="body">
-                <strong>Build a product</strong>
-                <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
+                <strong>Make your product better</strong>
+                <div className="gray-2">Collaborate with great designers, developers, and growth/marketing experts.</div>
               </div>
             </li>
             <li>
               <div className="step">4</div>
               <div className="body">
                 <strong>Grow it</strong>
-                <div className="gray-2">Share its success with everyone who helped.</div>
+                <div className="gray-2">Share success with everyone who helped.</div>
               </div>
             </li>
 
@@ -67,20 +67,20 @@ var ImportPage = React.createClass({
             <div className="col-xs-8 col-xs-offset-2">
               <ul className="list-reset text-large center">
                 <li className="p2">
-                  <strong>Share your idea</strong>
-                  <div className="gray-2">A good web or mobile app idea works.</div>
+                  <strong>Import your product</strong>
+                  <div className="gray-2">It could be launched or still in progress.</div>
                 </li>
                 <li className="p2">
                   <strong>Find collaborators</strong>
                   <div className="gray-2">Work together here in your own online space.</div>
                 </li>
                 <li className="p2">
-                  <strong>Build a product</strong>
-                  <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
+                  <strong>Make your product better</strong>
+                  <div className="gray-2">Collaborate with great designers, developers, and growth/marketing experts.</div>
                 </li>
                 <li className="p2">
                   <strong>Grow it</strong>
-                  <div className="gray-2">Share its success with everyone who helped.</div>
+                  <div className="gray-2">Share success with everyone who helped.</div>
                 </li>
               </ul>
             </div>
@@ -88,13 +88,13 @@ var ImportPage = React.createClass({
           <div className="text-large center" style={{padding: '60px 30px', fontSize: 20}}>
             <div className="mb3">
               <Button type="primary" action="/ideas/new">
-                Start an idea
+                Import a product
               </Button>
             </div>
             <div className="visible-xs mt3" />
             <div className="mb3">
-              Already have a product that could benefit from the community's help?&nbsp;
-              <a href="http://port.assembly.com">Start here</a>
+              Is your product still just an idea?
+              <a href="http://assembly.com/start">Start here</a>
             </div>
           </div>
         </div>
@@ -171,7 +171,7 @@ var ImportPage = React.createClass({
         <div className="container-fluid" style={{background: '#fff url(<%= image_url "section-gradient.png" %>) no-repeat center bottom'}}>
           <div className="container">
             <div className="center">
-              <h1>Turn your idea into a great product with people around the world</h1>
+              <h1>Take your idea product to the next level with people around the world</h1>
             </div>
             <div className="row">
               <div className="col-xs-2 col-xs-offset-5">
@@ -231,21 +231,6 @@ var ImportPage = React.createClass({
                     <div id="who-owns-the-intellectual-property" className="panel-collapse collapse collapse">
                       <div className="panel-body">
                         <p>You do. However, all products on Assembly are licensed under AGPL, and by agreeing to our terms of service you also are granting non-exclusive rights to Assembly to monetize this IP on behalf of the community (and you).</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="panel panel-subtle">
-                    <div className="panel-heading">
-                      <p className="panel-title">
-                        <a href="#can-an-existing-product-be-moved-to-assembly" data-toggle="collapse" style={{display: 'block'}}>
-                          <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
-                          Can an existing product be moved to Assembly?
-                        </a>
-                      </p>
-                    </div>
-                    <div id="can-an-existing-product-be-moved-to-assembly" className="panel-collapse collapse">
-                      <div className="panel-body">
-                        <p>Yes. Usually in this case, we’ll work with you to "pre-allocate" a fair number of app coins representing  your ownership (and anyone else who built the product with you). Like all products, you’ll start with 100% ownership but additional development you accept by the community will dilute ownership. If you have more questions about this, reach out to <a href="mailto:support@assembly.com">support@assembly.com</a></p>
                       </div>
                     </div>
                   </div>
@@ -402,11 +387,11 @@ var ImportPage = React.createClass({
             </div>
             <div className="text-large" style={{padding: '60px 30px', fontSize: 20}}>
               <Button type="primary" action="/ideas/new">
-                Start an idea
+                Import a product
               </Button>
               <div className="visible-xs mt3" />
               <div className="pull-right mb3">
-                Already have a product that could benefit from the community's help?&nbsp;
+                Is your product still just an idea?
                 <a href="http://port.assembly.com">Start here</a>
               </div>
             </div>
