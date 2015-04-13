@@ -2,6 +2,7 @@
   <!-- inner / gutter -->
     <div class="width-toggle tile">
      <!-- tile header -->
+     <!-- start text/html -->
        <table class="width-toggle" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0">
           <tbody class="width-toggle" style="display:block;">
             <tr class="width-toggle" style="display:block;">
@@ -36,41 +37,49 @@
         </tbody>
       </table>
        <!-- tile main -->
+       <!-- end text/html -->
+
        <table class="width-toggle" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="max-width:600px; display:block;">
         <tbody class="width-toggle" style="display:block;">
             <tr class="width-toggle" style="display:block;">
             <td class="width-toggle" style="display:block;">
+              <!-- start text/html -->
               <% if @previous_events.present? %>
                 <%= render 'emails/timeline_timestamp', timestamp: @previous_events.first.created_at %>
               <% end %>
+              <!-- end text/html -->
+
               <% @comments.each.with_index do |c, i| %>
+                <% if i == 0 %><!-- start text/html --><% end %>
+                <% if i == @comments.size - 1 %><!-- end text/html --><% end %>
+
                 <%= render 'emails/timeline_spacer' if i > 0 %>
 
-                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%">
-                      <tr>
-                          <td style="width:31px;"></td>
-                          <td style="width:32px;">
-                            <%= image_tag(c.user.avatar.url(60), width: 30, height: 30, class: 'avatar-small circle', style: 'min-width:30px; max-width:30px;') %>
-                          </td>
-                          <td style="width:13px;"></td>
-                          <td class="collapse text-2" style="padding-top:2px; font-weight:bold; color: #353941; text-align:left;">
-                              <font class="collapse text-2" style="margin-top:2px; font-weight:bold; color: #353941;">
-                                @<%= c.user.username %>
-                              </font>
-                          </td>
-                      </tr>
-                  </table>
-                  <table class="border-bottom-grey-4" border="0" cellpadding="0" cellspacing="0" style="text-align:left; width:100%">
-                      <tr>
-                          <td style="width:43px;"></td>
-                          <td bgcolor="#f2f2f2" style="width:4px; background-color:#f2f2f2"></td>
-                          <td class="text-2" style="padding-left:30px; padding-bottom:10px; color: #666d78; text-align:left;">
-                            <%== highlighted_mentions(Search::Sanitizer.new.sanitize(c.body), @user, @product) %>
-                          </td>
-                          <td style="width:20px;"></td>
-                      </tr>
-                  </table>
-                <% end %>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="width:100%">
+                  <tr>
+                    <td style="width:31px;"></td>
+                    <td style="width:32px;">
+                      <%= image_tag(c.user.avatar.url(60), width: 30, height: 30, class: 'avatar-small circle', style: 'min-width:30px; max-width:30px;') %>
+                    </td>
+                    <td style="width:13px;"></td>
+                    <td class="collapse text-2" style="padding-top:2px; font-weight:bold; color: #353941; text-align:left;">
+                      <font class="collapse text-2" style="margin-top:2px; font-weight:bold; color: #353941;">
+                        @<%= c.user.username %>
+                      </font>
+                    </td>
+                  </tr>
+                </table>
+                <table class="border-bottom-grey-4" border="0" cellpadding="0" cellspacing="0" style="text-align:left; width:100%">
+                    <tr>
+                        <td style="width:43px;"></td>
+                        <td bgcolor="#f2f2f2" style="width:4px; background-color:#f2f2f2"></td>
+                        <td class="text-2" style="padding-left:30px; padding-bottom:10px; color: #666d78; text-align:left;">
+                          <%== highlighted_mentions(Search::Sanitizer.new.sanitize(c.body), @user, @product) %>
+                        </td>
+                        <td style="width:20px;"></td>
+                    </tr>
+                </table>
+              <% end %>
 
               </td>
             </tr>
