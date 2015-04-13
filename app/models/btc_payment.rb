@@ -24,9 +24,6 @@ class BtcPayment < ActiveRecord::Base
       recipient: destination,
       sender_address: public_address,
       recipient_address: destination,
-      btc_change: amount*-100000000})
+      btc_change: float_amount * -100000000})
   end
-
-
-
 end
