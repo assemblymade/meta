@@ -1,12 +1,10 @@
 'use strict'
 
-import OverflowFade from './overflow_fade.js.jsx';
+const OverflowFade = require('./overflow_fade.js.jsx');
 
 const REM_BASE = 12
 
-
 const Reveal = React.createClass({
-
   propTypes: {
     maxHeight: React.PropTypes.number.isRequired
   },
@@ -55,7 +53,6 @@ const Reveal = React.createClass({
       revealed: true
     })
   }
-
 })
 
-export default Reveal
+module.exports = Reveal

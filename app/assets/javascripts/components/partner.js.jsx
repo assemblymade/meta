@@ -1,16 +1,16 @@
+'use strict';
+
 const Avatar = require('./ui/avatar.js.jsx')
 const ProductStore = require('../stores/product_store')
 
 const Partner = React.createClass({
-
   propTypes: {
     user: React.PropTypes.object.isRequired,
-    product: React.PropTypes.object.isRequired,
     size: React.PropTypes.number
   },
 
   render() {
-    const {user, product} = this.props
+    const {user} = this.props
     let coreTeamBadge = null
 
     if (ProductStore.isCoreTeam(user)) {
@@ -28,4 +28,4 @@ const Partner = React.createClass({
 
 })
 
-export default Partner
+module.exports = Partner

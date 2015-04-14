@@ -3,21 +3,21 @@
 // TODO asset pipelined (chrislloyd)
 // var marked = require('marked')
 
-var Avatar = require('./ui/avatar.js.jsx');
-var CommentActionCreators = require('../actions/comment_action_creators');
-var CommentStore = require('../stores/comment_store');
-var Icon = require('./ui/icon.js.jsx');
-var Heart = require('./heart.js.jsx');
-var Lovers = require('./lovers.js.jsx');
-var List = require('./ui/list.js.jsx')
-var Markdown = require('./markdown.js.jsx');
-var NewComment = require('./news_feed/new_comment.js.jsx');
-var NewCommentActionCreators = require('../actions/new_comment_action_creators');
-var ProductStore = require('../stores/product_store');
-var Routes = require('../routes');
-var Tips = require('./tips_ui.js.jsx');
-var UserStore = require('../stores/user_store');
-import Partner from './partner.js.jsx'
+const Avatar = require('./ui/avatar.js.jsx');
+const CommentActionCreators = require('../actions/comment_action_creators');
+const CommentStore = require('../stores/comment_store');
+const Heart = require('./heart.js.jsx');
+const Icon = require('./ui/icon.js.jsx');
+const List = require('./ui/list.js.jsx')
+const Lovers = require('./lovers.js.jsx');
+const Markdown = require('./markdown.js.jsx');
+const NewComment = require('./news_feed/new_comment.js.jsx');
+const NewCommentActionCreators = require('../actions/new_comment_action_creators');
+const Partner = require('./partner.js.jsx');
+const ProductStore = require('../stores/product_store');
+const Routes = require('../routes');
+const Tips = require('./tips_ui.js.jsx');
+const UserStore = require('../stores/user_store');
 
 module.exports = React.createClass({
   displayName: 'Comment',

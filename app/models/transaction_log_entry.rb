@@ -20,7 +20,7 @@ class TransactionLogEntry < ActiveRecord::Base
   end
 
   def self.product_balances(user)
-    where(wallet_id: user.id).with_cents.group(:product_id).sum(:cents)
+    where(wallet_id: user.id).with_cents.group(:product_id).order('sum(cents) desc').sum(:cents)
   end
 
   def self.product_totals
@@ -92,6 +92,7 @@ class TransactionLogEntry < ActiveRecord::Base
   def self.product_partners_with_balances(product_id)
     User.joins('inner join transaction_log_entries tle on tle.wallet_id = users.id').
       where(tle: {product_id: product_id}).
+      having('sum(cents) > 0').
       group('users.id').sum(:cents)
   end
 

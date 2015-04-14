@@ -4,7 +4,11 @@ class Screenshot < ActiveRecord::Base
   validates :position, presence: true,
                        uniqueness: { scope: :asset }
 
-   default_scope -> { where('screenshots.deleted_at is null') }
+  default_scope -> { where('screenshots.deleted_at is null') }
+
+  def asset_id
+    asset.id
+  end
 
   def url
     asset.url

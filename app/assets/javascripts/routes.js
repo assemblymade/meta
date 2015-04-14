@@ -302,6 +302,19 @@ exports.new_product_asset_path = function(options){
   return '/' + params.product_id + '/assets/new'
 }
 
+exports.product_asset_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/assets/' + params.id + '?' + op_params.join('&');
+  }
+  var params = options;
+  return '/' + params.product_id + '/assets/' + params.id + ''
+}
+
 exports.product_screenshots_path = function(options){
   if (options && options.data) {
     var op_params = []
@@ -613,3 +626,4 @@ exports.product_path = function(options){
   var params = options;
   return '/' + params.id + ''
 }
+

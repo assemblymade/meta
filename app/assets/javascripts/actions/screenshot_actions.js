@@ -5,6 +5,20 @@ const Dispatcher = require('../dispatcher');
 const ATTACHMENT_URL = '/upload/attachments';
 
 class ScreenshotActions {
+  deleteScreenshot(url) {
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      method: 'DELETE',
+      success(response) {
+        Dispatcher.dispatch({
+          type: ActionTypes.SCREENSHOT_DELETED,
+          id: response.id
+        });
+      }
+    });
+  }
+
   handleSuccess() {
     Dispatcher.dispatch({
       type: ActionTypes.SCREENSHOT_SUCCESS

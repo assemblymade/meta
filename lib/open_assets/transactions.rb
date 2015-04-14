@@ -30,7 +30,7 @@ module OpenAssets
         identifier: destination+":"+amount.to_s+":"+DateTime.now.to_s
       }
 
-      BtcPayment.create_entry(destination, public_address, float_amount)
+      BtcPayment.create_entry(destination, public_address, amount)
       send_btc_request(params)
     end
 

@@ -4,7 +4,7 @@ class Api::AwardsController < Api::ApiController
   before_action :authenticate
 
   def create
-    product = Product.find_by!(slug: params[:org_id])
+    product = get_product  
     bounty = product.tasks.find_by!(number: params[:bounty_id])
     authorize! :award, bounty
 
@@ -18,6 +18,12 @@ class Api::AwardsController < Api::ApiController
     respond_with(product, bounty, award, serializer: AwardSerializer)
   end
 
-  def show
+  def get_product
+    product = Product.find_by(slug: params[:org_id])
+    if !product
+      product = Product.find_by(id: params[:org_id])
+    end
+    product
   end
+
 end

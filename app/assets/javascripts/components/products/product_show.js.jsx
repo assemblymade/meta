@@ -4,25 +4,24 @@ const {List, Map} = require('immutable');
 const Avatar = require('../ui/avatar.js.jsx');
 const BountyCard = require('../bounty_card.js.jsx');
 const Button = require('../ui/button.js.jsx');
+const ChecklistStore = require('../../stores/checklist_store');
 const Icon = require('../ui/icon.js.jsx');
 const MetricsBadge = require('./metrics_badge.js.jsx');
+const OverflowFade = require('../ui/overflow_fade.js.jsx')
 const page = require('page');
 const Partner = require('../partner.js.jsx');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductImportantLinks = require('./product_important_links.js.jsx');
+const ProductProgressWidget = require('../product_progress_widget.js.jsx');
 const ProductScreenshotPlaceholder = require('./product_screenshot_placeholder.js.jsx');
 const ProductStore = require('../../stores/product_store');
 const ProductSubsections = require('./product_subsections.js.jsx');
+const Reveal = require('../ui/reveal.js.jsx')
 const Routes = require('../../routes');
 const Screenshots = require('./screenshots.js.jsx');
 const Tile = require('../ui/tile.js.jsx');
 const User = require('../user.js.jsx')
 const UserStore = require('../../stores/user_store');
-const ProductProgressWidget = require('../product_progress_widget.js.jsx');
-const ChecklistStore = require('../../stores/checklist_store');
-
-import Reveal from '../ui/reveal.js.jsx'
-import OverflowFade from '../ui/overflow_fade.js.jsx'
 
 let ProductShow = React.createClass({
   propTypes: {
@@ -59,7 +58,7 @@ let ProductShow = React.createClass({
 
   getInitialState() {
     return {
-      product: this.getProductStateFromStore(),
+      product: ProductStore.getProduct(),
       updates: [],
       bounties: [],
       partners: [],
@@ -67,13 +66,9 @@ let ProductShow = React.createClass({
     }
   },
 
-  getProductStateFromStore() {
-    return ProductStore.getProduct()
-  },
-
   onProductChange() {
     this.setState({
-      product: this.getProductStateFromStore()
+      product: ProductStore.getProduct()
     })
   },
 
@@ -81,9 +76,9 @@ let ProductShow = React.createClass({
     let product = this.state.product;
     let slug = product.slug;
     let user = UserStore.getUser();
-    let trust = null,
-        metrics = null,
-        metaNotice = null
+    let trust = null;
+    let metrics = null;
+    let metaNotice = null;
 
     if (UserStore.isStaff()) {
       metrics = <div className="mb3">
@@ -141,7 +136,7 @@ let ProductShow = React.createClass({
 
 
 
-    var team = List()
+    let team = List();
 
     if (product) {
       let coreTeam = List(product.core_team).map(u => [u.id, u])

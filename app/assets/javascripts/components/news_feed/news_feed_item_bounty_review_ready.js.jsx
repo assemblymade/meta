@@ -1,7 +1,7 @@
 'use strict'
 
-import NewsFeedItemEvent from './news_feed_item_event.js.jsx';
-import List from '../ui/list.js.jsx';
+const NewsFeedItemEvent = require('./news_feed_item_event.js.jsx')
+const List = require('../ui/list.js.jsx')
 
 const NewsFeedItemBountyReviewReady = React.createClass({
   propTypes: {
@@ -44,4 +44,4 @@ const NewsFeedItemBountyReviewReady = React.createClass({
   },
 })
 
-export default NewsFeedItemBountyReviewReady
+module.exports = NewsFeedItemBountyReviewReady

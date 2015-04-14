@@ -21,11 +21,6 @@ describe QueryMarks do
     result = QueryMarks.new.assign_top_bounties_for_user(1, user, test_wip_vectors)
   end
 
-  it 'take square distance between vectors' do
-    distance = QueryMarks.new.vector_square_distance(vector1, vector2)
-    expect(distance.round(2)).to eq(6.89)
-  end
-
   it 'compare two mark vectors' do
     MakeMarks.new.mark_with_name(product, 'DENMARK')
     comparison = QueryMarks.new.compare_mark_vectors(product, product)

@@ -1,11 +1,11 @@
 'use strict'
 
-import Button from '../ui/button.js.jsx';
-import Tile from '../ui/tile.js.jsx';
-import Icon from '../ui/icon.js.jsx';
-import ProductHeader from './product_header.js.jsx';
-import ProductStore from '../../stores/product_store';
-import UserStore from '../../stores/user_store';
+const Button = require('../ui/button.js.jsx');
+const Tile = require('../ui/tile.js.jsx');
+const Icon = require('../ui/icon.js.jsx');
+const ProductHeader = require('./product_header.js.jsx');
+const ProductStore = require('../../stores/product_store');
+const UserStore = require('../../stores/user_store');
 
 const Report = React.createClass({
   render() {
@@ -35,7 +35,6 @@ const Report = React.createClass({
 })
 
 const ProductTrust = React.createClass({
-
   render() {
     const product = ProductStore.getProduct()
 
@@ -125,8 +124,7 @@ const ProductTrust = React.createClass({
       <p>For organizations with iOS apps, having community access to the iOS App Store account is important. Assembly can manage access to the iOS account so that no one person can pull an app from the store and so revenue is correctly reported.</p>
       {action}
     </Report>
-  },
-
+  }
 })
 
-export default ProductTrust
+module.exports = ProductTrust

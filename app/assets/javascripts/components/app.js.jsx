@@ -8,6 +8,7 @@ var Label = require('./ui/label.js.jsx')
 // root level components
 window.ApiSettings = require('./user/api_settings.js.jsx')
 window.Hello = require('./user/hello.js.jsx')
+window.ImportPage = require('./import_page.js.jsx')
 window.ProfileProductBadges = require('./user/profile_product_badges.js.jsx')
 window.SharePanel = require('./share_panel.js.jsx')
 window.SignupForm = require('./signup/signup_form.js.jsx')

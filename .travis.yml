@@ -5,7 +5,7 @@ addons:
   postgresql: '9.3'
   code_climate:
     repo_token:
-      secure: PK/YJYSCEQ0/pRrFhruasAp91P/6MRPowVoC3fVU1fCa8CoZmck8YCbDIUkuCQhRFfbUb6ggg3yGmwSrX+WcKXwzEzvO88zUv1rb+wRey/hxzrH8f67e2d03eNDGhDSXDBxp16yTGzgGoOIkTofOS1PhwFF1FWIZ4azcxpaMMjM=
+      secure: BjbonvyKvacSXbRKWh1UdXDSS+n+yILx+tkQhpzeVxt3DPuRHxBFwVRJDZX8Kk1STANAd6wy9nrI22Hh+waciNglVryfRwHpP/+uzx2yZcjYkvQnlNn5mBXVa+/XVLlDSC4Wcd63q9aN9YD86fJ6HiX2qi0B2i0jNxjT0S2LBG8=
 install:
 - npm install
 - npm run bundle
@@ -25,14 +25,13 @@ sudo: false
 deploy:
   provider: heroku
   strategy: git
-  app:
-    secure: gv+O69pvNInWcQUSRwjPS2Fu+5gKwSTkiEzQ8KkOMygBTa1btS8DWpvQUtkxtEyXDwTz7P5UNYNNsRcL1/UCB6Xl3UknnTK825yTMfX3UDKAhNQ0+Zw0GtqXx9xXnfPthhBYGK7g2aKhoou4eJwkDIBVytmMsTxFj+fwnTSRnRo=
+  app: "asm-production"
   run:
   - rake db:migrate
   - restart
   - rake cleanup
   api_key:
-    secure: LHxvRYHVgDWwJwkr+48HNmcXkFgx/ZzW6hderdDaDyUGMpq0T4GdzsOh8XpsqclXLH/fw3BpXqACpQvm3489sXOUwHhO723kt1bVgvIs3NtDjiPQ3pTwmcdh0QJckxlG8+Z0E6Ikxw1DdoZfnPen2QQ/NT0L2IZCyM4tZN5ULiY=
+    secure: Um9lRlmOGoL+Uwzpg3ZVUMIwgyOsWozJDVUpbofA8LWOWm1AloVpBxKzMjq3bTGh2BhyTO/ZflEENJ5zcPDW7ssuja2HyUo6D81vFk7TYME83PqhVZDOVulTYxJ5BR3yaqC2zGBc8UNajJmFc45V5v2QrhDCPZAwduLdbk1q4vg=
 notifications:
   slack:
     secure: LwA/h6BTdQToj8xjvcdEXMHgM9XYOFhFsXkHCOfvsmowV0NNSAKK+CumSnmcnOlAP7E42MEd6aMEi3Rf+xHuYv6IbnFzUwiyh8856jtMUoWPeH2C8Aiin9/7Oe2JFHYWS0DNq2Pe4f/9Xri0luJWnCZsBZburRAbLDCM4mSc3vc=

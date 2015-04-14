@@ -25,6 +25,7 @@ namespace :js do
     'notifications',
     'product',
     'product_activity',
+    'product_asset',
     'product_assets',
     'product_chat',
     'product_financials',

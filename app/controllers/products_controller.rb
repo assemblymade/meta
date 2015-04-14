@@ -35,11 +35,6 @@ class ProductsController < ProductController
     render layout: 'application'
   end
 
-  def start
-    @profit = ProfitReport.all.map(&:profit).sum.round(-6)
-    render layout: 'application'
-  end
-
   def checklistitems
     find_product!
     ordered_tasks = @product.tasks.where.not(display_order: nil).order(display_order: :asc)
@@ -241,6 +236,15 @@ class ProductsController < ProductController
     flash[:applied_for_pitch_week] = true
     respond_with @product, location: product_path(@product)
   end
+
+  def import
+    render layout: 'application'
+  end
+
+  def start
+    render layout: 'application'
+  end
+
 
   # private
 
