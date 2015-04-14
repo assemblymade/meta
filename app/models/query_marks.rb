@@ -50,7 +50,7 @@ class QueryMarks
   end
 
   def add_mark_vectors(vector1, vector2)
-    Marks::VectorMath.new.add_mark_vectors(vector1, vector2)=
+    Marks::VectorMath.new.add_mark_vectors(vector1, vector2)
   end
 
   def dot_product_vectors(vector1, vector2)
