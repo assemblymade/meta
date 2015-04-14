@@ -87,14 +87,14 @@ var ImportPage = React.createClass({
           </div>
           <div className="text-large center" style={{padding: '60px 30px', fontSize: 20}}>
             <div className="mb3">
-              <Button type="primary" action="/ideas/new">
+              <Button type="primary" action="/new">
                 Import a product
               </Button>
             </div>
             <div className="visible-xs mt3" />
             <div className="mb3">
               Is your product still just an idea?&nbsp;
-              <a href="http://assembly.com/start">Start here</a>
+              <a href="http://assembly.com/ideas/new">Start here</a>
             </div>
           </div>
         </div>
@@ -370,13 +370,13 @@ var ImportPage = React.createClass({
               </div>
             </div>
             <div className="text-large" style={{padding: '60px 30px', fontSize: 20}}>
-              <Button type="primary" action="/ideas/new">
+              <Button type="primary" action="/new">
                 Import a product
               </Button>
               <div className="visible-xs mt3" />
               <div className="pull-right mb3">
                 Is your product still just an idea?&nbsp;
-                <a href="http://port.assembly.com">Start here</a>
+                <a href="http://assembly.com/ideas/new">Start here</a>
               </div>
             </div>
           </div>
