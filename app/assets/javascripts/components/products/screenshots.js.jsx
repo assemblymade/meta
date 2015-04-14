@@ -107,8 +107,6 @@ let Screenshots = React.createClass({
         );
       }
 
-      console.log(images);
-
       return images;
     }
   }

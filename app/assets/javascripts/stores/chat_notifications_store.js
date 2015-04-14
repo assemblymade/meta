@@ -51,7 +51,7 @@ class ChatNotificationsStore extends Store {
     let bareRooms = _.values(chatRooms);
 
     bareRooms.forEach((room) => {
-      if (optimisticChatRooms[room.id]) {
+      if (optimisticChatRooms[room.id] && optimisticChatRooms[room.id].last_read_at) {
         room.last_read_at = optimisticChatRooms[room.id].last_read_at;
       }
 
