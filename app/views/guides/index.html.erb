@@ -1,16 +1,18 @@
-<% title @guide_group.name, 'Guides' %>
-<% provide(:description, "Frequently asked questions about #{@guide_group.name.downcase} on Assembly.") %>
+<% title @article.name, @title %>
+<% provide(:description, @description) %>
 
 <%= render 'shared/navbar' %>
 
 <div class="container mt1">
   <section class="mt4 p3 right bg-white rounded shadow">
-    <h3 class="mtn1 mb1 py1 regular border-bottom">More Guides</h3>
+    <h3 class="mtn1 mb1 py1 regular border-bottom">More <%= @title %></h3>
     <ul class="list-reset mt2 mb0">
-      <% @guide_groups.each do |guide_group| %>
+      <% @article_list.each do |article| %>
         <li class="mt1">
           <span class="icon icon-chevron-right gray-3"></span>
-          <a class="gray-1 <%= 'bold blue' if @guide_group.slug == guide_group.slug %>" href="<%= guides_path(guide_group) %>"><%= guide_group.name %></a>
+          <% @article_link = help_path(article) if @title == "FAQs" %>
+          <% @article_link = guides_path(article) if @title == "Guides" %>
+          <%= link_to article.name, @article_link.to_s, class: ("gray-1" + " bold-blue" if @article.slug == article.slug) %>
         </li>
       <% end %>
     </ul>
@@ -18,19 +20,21 @@
 
   <article class="sm-col-11 md-col-8 mt2 bg-white rounded p4 shadow left">
 
-    <h2 class="mt0 mtn2 py2 border-bottom">Guides: <span class="regular"><%= @guide_group.name %></span></h2>
+    <h2 class="mt0 mtn2 py2 border-bottom"><%= @title %>: <span class="regular"><%= @article.name %></span></h2>
 
-    <h5 class="mb0 py2 caps gray-2">In this guide:</h5>
+    <% if @show_toc == true %>
+    <h5 class="m0 py2 caps gray-2">In this guide:</h5>
     <ul class="list-reset">
-      <% @guide_group.questions.each do |question| %>
+      <% @article.questions.each do |question| %>
         <li>
           <span class="icon icon-chevron-right gray-3"></span>
           <%= link_to question[:name], anchor: question[:anchor] %>
         </li>
       <% end %>
     </ul>
+    <% end %>
 
-    <%= @guide_group.body.html_safe %>
+    <%= @article.body.html_safe %>
 
   </article>
 </div>
