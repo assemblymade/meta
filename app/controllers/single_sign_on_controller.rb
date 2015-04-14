@@ -1,6 +1,5 @@
 class SingleSignOnController < ApplicationController
   after_filter :set_access_control_headers
-  # before_action :authenticate_user!
 
   def sso
     return render nothing: true, status: 401 unless sign(params[:payload]) == params[:sig]
