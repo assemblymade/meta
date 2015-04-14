@@ -182,6 +182,10 @@ class User < ActiveRecord::Base
     is_staff?
   end
 
+  def core_on
+    self.core_team_memberships.map{ |a| Product.find(a.product_id) }
+  end
+
   def sponsored?
     staff?
   end

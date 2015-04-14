@@ -14,8 +14,20 @@ class Api::BountiesController < Api::ApiController
 =end
 
   def index
-    @product = Product.find_by!(slug: params[:org_id])
-    @bounties = @product.tasks.where.not(state: [:closed, :resolved]).order('priority ASC NULLS LAST').limit(3)
+    @product = Product.find_by(slug: params[:org_id])
+    if !@product
+      @product = Product.find_by(id: params[:org_id])
+    end
+    n = params[:limit]
+    if !n
+      n = 3
+    end
+    state = params[:state]
+    if !state
+      @bounties = @product.tasks.where.not(state: [:closed, :resolved]).order('priority ASC NULLS LAST').limit(n)
+    else
+      @bounties = @product.tasks.where.(state: state).order('priority ASC NULLS LAST').limit(n)
+    end
 
     respond_with(@bounties, each_serializer: BountyShallowSerializer)
   end

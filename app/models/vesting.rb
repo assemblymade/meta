@@ -40,16 +40,16 @@ class Vesting < ActiveRecord::Base
     self.expiration_date - Time.now < 0
   end
 
-  def vestings_in_won_proposals(product)
+  def self.vestings_in_won_proposals(product)
     product.proposals.select(&:won?).map(&:vestings).flatten
   end
 
   def self.active_vestings_on_product(product)
-    vestings_in_won_proposals(product).select{|a| !a.expired?}.map{|b| VestingSerializer.new(b)}
+    self.vestings_in_won_proposals(product).select{|a| !a.expired?}.map{|b| VestingSerializer.new(b)}
   end
 
   def self.closed_vestings_on_product(product)
-    vestings_in_won_proposals(product).select(&:expired?).map{|b| VestingSerializer.new(b)}
+    self.vestings_in_won_proposals(product).select(&:expired?).map{|b| VestingSerializer.new(b)}
   end
 
   def self.active_contracts_on_product(product)
