@@ -7,7 +7,7 @@ describe Admin::OwnershipController do
   # before do
   #   sign_in(current_user)
   # end
-  # 
+  #
   # describe "GET Ownership Controller Page" do
   #   it "is successful" do
   #     get :index

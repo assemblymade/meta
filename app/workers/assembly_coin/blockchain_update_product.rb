@@ -2,8 +2,6 @@ module AssemblyCoin
   class BlockchainUpdateProduct < AssemblyCoin::Worker
 
     def perform(product)
-      AssemblyCoin::MaintainBtcBalance.new.perform(product.id)
-
       product.assign_asset_address
 
       distinct_txs = product.distinct_wallets_unqueued
