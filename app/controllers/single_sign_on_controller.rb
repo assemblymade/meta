@@ -42,8 +42,13 @@ class SingleSignOnController < ApplicationController
   end
 
   def sign(payload)
-    digest = OpenSSL::Digest.new('sha256')
-    OpenSSL::HMAC.hexdigest(digest, ENV["LANDLINE_SECRET"], payload)
+    return false unless payload
+
+    OpenSSL::HMAC.hexdigest(
+      OpenSSL::Digest.new('sha256'),
+      ENV["LANDLINE_SECRET"],
+      payload
+    )
   end
 
   def set_access_control_headers
