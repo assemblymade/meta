@@ -45,8 +45,8 @@ let IdeasNew = React.createClass({
                     <Icon icon="lightbulb-o" />
                   </div>
 
-                  <h3 className="mt0 mb1">Turn your idea into great products</h3>
-                  <h4 className="mt0 mb0 regular gray-2">Ideas with the most hearts will be built by the community.</h4>
+                  <h3 className="mt0 mb1">Turn your idea into a great product</h3>
+                  <h4 className="mt0 mb0 regular gray-2">If your idea gets enough hearts, the community will help you build it.</h4>
                 </div>
 
                 <IdeaForm />
