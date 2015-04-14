@@ -171,7 +171,7 @@ var ImportPage = React.createClass({
         <div className="container-fluid" style={{background: '#fff url(<%= image_url "section-gradient.png" %>) no-repeat center bottom'}}>
           <div className="container">
             <div className="center">
-              <h1>Take your idea product to the next level with people around the world</h1>
+              <h1>Take your product to the next level with people around the world</h1>
             </div>
             <div className="row">
               <div className="col-xs-2 col-xs-offset-5">
