@@ -81,14 +81,6 @@ class QueryMarks
     dot_product_vectors(vector1, vector2)
   end
 
-  def vector_square_distance(vector1,vector2)
-    vec1=Hash[vector1]
-    vec2=Hash[vector2]
-    vec3 = vec1.merge(vec2){
-      |_, v1, v2| (v1-v2)
-    }.sum{|k,v| v**2 }
-  end
-
   #GENERATE TOP_BOUNTIES, TOP_PRODUCTS
 
   def wips_on_active_products
