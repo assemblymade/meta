@@ -28,7 +28,7 @@ var StartPage = React.createClass({
         </div>
 
         <div className="container center">
-          
+
           <ul className="list list-steps hidden-xs hidden-sm">
             <li className="overlay" />
 
@@ -340,7 +340,7 @@ var StartPage = React.createClass({
                       </div>
                     </div>
                   </div>
-                        
+
                   <div className="panel panel-subtle">
                     <div className="panel-heading">
                       <p className="panel-title">
@@ -356,7 +356,7 @@ var StartPage = React.createClass({
                           If, when, and how a product earn's revenue is up to the product roadmap set by each product’s Core Team. You’ll find most products have these roadmaps in their discussions or plainly stated on their product pages.
                         </p>
                         <p>
-                          Assembly products earning revenue do so through credit card purchases through the Assembly API or by Assembly provided invoicing when amounts exceed $1,000. 
+                          Assembly products earning revenue do so through credit card purchases through the Assembly API or by Assembly provided invoicing when amounts exceed $1,000.
                         </p>
                       </div>
                     </div>
@@ -377,7 +377,7 @@ var StartPage = React.createClass({
                         <p>Additionally, once a product is earning money a community can use the income to cover costs as it needs – which might including hiring contract employees.</p>
                       </div>
                     </div>
-                  </div>                  
+                  </div>
 
                   <div className="panel panel-subtle">
                     <div className="panel-heading">
@@ -396,7 +396,7 @@ var StartPage = React.createClass({
                       </div>
                     </div>
                   </div>
-                          
+
                 </div>
               </div>
             </div>

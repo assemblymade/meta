@@ -25,6 +25,14 @@ module.exports = {
        success: dispatch.bind(null, product_id, ActionTypes.PRODUCT_UNFOLLOW_SUCCEEDED),
          error: dispatch.bind(null, product_id, ActionTypes.PRODUCT_UNFOLLOW_FAILED)
     })
+  },
+
+  changeTab: function(tabName) {
+    setTimeout(()=>
+      Dispatcher.dispatch({
+        type: ActionTypes.PRODUCT_HEADER_ACTIVE_TAB_CHANGE,
+        activeTab: tabName
+      }), 1)
   }
 }
 

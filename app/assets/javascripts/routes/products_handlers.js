@@ -30,60 +30,6 @@ let ProductsHandlers = {
   },
 
   showProductActivity(data) {
-    let {
-      bounty_marks: bountyMarks,
-      heartables,
-      items,
-      page,
-      pages,
-      post_marks: postMarks,
-      product,
-      user_hearts: userHearts,
-      valuation
-    } = data;
-
-    Dispatcher.dispatch({
-      type: ActionTypes.BOUNTY_MARKS_RECEIVE,
-      marks: bountyMarks
-    });
-
-    Dispatcher.dispatch({
-      type: ActionTypes.LOVE_RECEIVE_USER_HEARTS,
-      userHearts: userHearts
-    });
-
-    Dispatcher.dispatch({
-      type: ActionTypes.LOVE_RECEIVE_HEARTABLES,
-      heartables: (heartables || []).map((heartable) => {
-        heartable.heartable_id = heartable.id;
-        return heartable;
-      })
-    });
-
-    Dispatcher.dispatch({
-      type: ActionTypes.NEWS_FEED_ITEMS_RECEIVE,
-      news_feed_items: items,
-      page: page,
-      pages: pages
-    });
-
-    Dispatcher.dispatch({
-      type: ActionTypes.POST_MARKS_RECEIVE,
-      marks: postMarks
-    });
-
-    Dispatcher.dispatch({
-      type: ActionTypes.PRODUCT_RECEIVE,
-      product: product
-    });
-
-    Dispatcher.dispatch({
-      type: ActionTypes.VALUATION_RECEIVE,
-      valuation: valuation
-    });
-
-    _showCreateBounty();
-    _setActiveTab('activity');
   },
 
   showProductBounties(data) {

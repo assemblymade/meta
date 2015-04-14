@@ -138,7 +138,10 @@ class ProductsController < ProductController
 
   def stories
     find_product!
-    stories = Story.joins(:activities).where('activities.product_id' => @product).order(created_at: :desc).page(params[:page]).per(20)
+    stories = Story.joins(:activities).
+      where(activities: { product_id: @product}).
+      order(created_at: :desc).uniq.page(params[:page]).per(20)
+
     render json: stories,
       serializer: PaginationSerializer,
       each_serializer: TimelineStorySerializer,
@@ -148,50 +151,7 @@ class ProductsController < ProductController
   def activity
     respond_to do |format|
       format.html { render 'show' }
-      format.json {
-        news_feed_items = @product.news_feed_items
-
-        @top_wip_tags = QueryMarks.new.leading_marks_on_product(@product, MARK_DISPLAY_LIMIT).map do |name, number|
-          name
-        end
-
-        @post_marks = Marking.includes(:mark).uniq.
-          where(markable_type: Post, markable_id: news_feed_items.pluck(:target_id)).pluck(:name)
-
-        query = FilterUpdatesQuery.call(news_feed_items, filter_params)
-
-        query = query.page(params[:page]).per(10).order(last_commented_at: :desc)
-        total_pages = query.total_pages
-
-        @news_feed_items = query.map do |nfi|
-          Rails.cache.fetch([nfi, 'v2', :json]) do
-            NewsFeedItemSerializer.new(nfi).as_json
-          end
-        end
-
-        @heartables = (@news_feed_items + @news_feed_items.map{|p| p[:last_comment]}).compact
-
-        if signed_in?
-          @user_hearts = Heart.where(user: current_user, heartable_id: @heartables.map{|h| h[:id]})
-        end
-        render json: {
-          bounty_marks: @top_wip_tags,
-          heartables: @heartables,
-          items: @news_feed_items,
-          page: params[:page] || 1,
-          pages: total_pages,
-          post_marks: @post_marks,
-          product: ProductSerializer.new(
-            @product,
-            scope: current_user
-          ),
-          screenshots: ActiveModel::ArraySerializer.new(
-            @product.screenshots.order(position: :asc).limit(6),
-            each_serializer: ScreenshotSerializer
-          ),
-          user_hearts: @user_hearts
-        }
-      }
+      format.json { render json: {}, status: :ok }
     end
   end
 

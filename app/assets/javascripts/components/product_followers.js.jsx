@@ -2,7 +2,7 @@
 
 const Icon = require('./ui/icon.js.jsx');
 const ProductFollowersStore = require('../stores/product_followers_store');
-const ProductActionCreators = require('../actions/product_action_creators');
+const ProductActionCreators = require('../actions/product_actions');
 const UserActions = require('../actions/user_actions')
 const UserStore = require('../stores/user_store')
 const classnames = require('classnames')

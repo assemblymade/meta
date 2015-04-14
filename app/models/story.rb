@@ -6,7 +6,7 @@
 class Story < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
 
-  has_many :actors, through: :activities, source: :actor, source_type: 'User'
+  has_many :actors, -> { uniq }, through: :activities, source: :actor, source_type: 'User'
   has_many :activities
 
   attr_accessor :socket_id

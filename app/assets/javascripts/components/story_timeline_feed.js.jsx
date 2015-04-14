@@ -1,5 +1,6 @@
 'use strict'
 
+const ProductActions = require ('../actions/product_actions');
 const Timeline = require('./ui/timeline.js.jsx');
 const Tile = require('./ui/tile.js.jsx');
 const Spinner = require('./spinner.js.jsx');
@@ -51,7 +52,6 @@ const StoryTimelineFeed = React.createClass({
   render: function() {
     return (
       <div className="px2">
-        <div className="px2 mr1 bold gray-2">Activity Feed</div>
         <Timeline>
           <div className="py2">
             {this.renderStories()}
@@ -69,12 +69,14 @@ const StoryTimelineFeed = React.createClass({
   },
 
   componentDidMount: function() {
-    this.initializeEagerFetching();
+    window.addEventListener('scroll', this.onScroll);
     StoryTimelineStore.addChangeListener(this._onChange)
     StoryTimelineActions.fetchStories(this.props.product)
+    ProductActions.changeTab('activity')
   },
 
   componentWillUnmount: function() {
+    window.removeEventListener('scroll', this.onScroll);
     StoryTimelineStore.removeChangeListener(this._onChange);
   },
 
@@ -84,13 +86,15 @@ const StoryTimelineFeed = React.createClass({
 
   getStateFromStore: function() {
     return {
-      loading: StoryTimelineStore.getStories(),
+      loading: StoryTimelineStore.getLoading(),
       page: StoryTimelineStore.getPage(),
       stories: _(StoryTimelineStore.getStories()).sortBy((s) => -moment(s.created_at).unix()),
     }
   },
 
-  fetchMoreStoryItems: function(e) {
+  fetchMoreStoryItems: function() {
+    if (this.state.loading) { return }
+
     this.setState({
       loading: true,
       page: (this.state.page || 1) + 1
@@ -99,23 +103,32 @@ const StoryTimelineFeed = React.createClass({
     }.bind(this));
   },
 
-  initializeEagerFetching: function() {
-    var self = this;
-    var body = $(document);
+  // initializeEagerFetching: function() {
+  //   var self = this;
+  //   var body = $(document);
+  //
+  //   if (body) {
+  //     body.scroll(
+  //       _.throttle(
+  //           function(e) {
+  //             var distanceFromTop = $(window).scrollTop() + $(window).height()
+  //
+  //             if (distanceFromTop > $(document).height() - 400) {
+  //               self.fetchMoreStoryItems();
+  //             }
+  //           }, 500)
+  //     );
+  //   }
+  // },
 
-    if (body) {
-      body.scroll(
-        _.throttle(
-            function(e) {
-              var distanceFromTop = $(window).scrollTop() + $(window).height()
+  onScroll: function() {
+    var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 400
 
-              if (distanceFromTop > $(document).height() - 400) {
-                self.fetchMoreStoryItems();
-              }
-            }, 500)
-      );
+    if (atBottom) {
+      this.fetchMoreStoryItems()
     }
   },
+
   spinner: function() {
     if (this.state.loading) {
       return (
