@@ -7,7 +7,7 @@ module AssemblyCoin
     def perform(product_id)
       product = Product.find_by(id: product_id)
 
-      if not product.nil?
+      if product
         AssemblyCoin::MaintainBtcBalance.new.perform(product_id)
 
         last_issued = product.issued_coins.to_i

@@ -17,7 +17,7 @@ class BtcPayment < ActiveRecord::Base
 
   def self.create_entry(destination, public_address, float_amount)
     self.create!({
-      btcusdprice_at_moment: OpenAssets::Transaction.new.get_btc_spot_price_coinbase()*100,
+      btcusdprice_at_moment: OpenAssets::Transactions.new.get_btc_spot_price_coinbase()*100,
       created_at: DateTime.now,
       action: "Sent BTC",
       sender: "Assembly Central",
