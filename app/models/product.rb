@@ -472,7 +472,7 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def core_team
+  def core_team_members
     self.core_team_memberships.map{ |a| User.find(a.user_id) }
   end
 
