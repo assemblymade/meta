@@ -101,9 +101,9 @@ let NewIdeaForm = React.createClass({
     return (
       <form>
         <div className="form-group mb3">
-          <label className="control-label">What's the quick pitch?</label>
+          <label className="control-label">What's the 5 word pitch?</label>
 
-          <p className="mb2 h6 gray-2">If you had 5 words to describe your product to a friend, what would you say? Small words are best and small words when old are best of all.</p>
+          <p className="mb2 h6 gray-2">If you had 30 seconds to describe your idea to a friend, what would you say? Small, direct words are best.</p>
           <CharacterLimitedInput limit={60}
               value={this.state.ideaName}
               onChange={this.handleIdeaNameChange}
@@ -111,9 +111,9 @@ let NewIdeaForm = React.createClass({
         </div>
 
         <div className="form-group mb3">
-          <label className="control-label">How would it work?</label>
+          <label className="control-label">Now describe the details</label>
           <p className="mb2 h6 gray-2">
-            How did you come up with the idea? What does it do? What makes it great? Describe your vision and the problem it's solving.
+            How will this product work? What technology might it use? Who will use it? What problem does it solve for them? How will you monetize?
           </p>
 
           <NewComment canContainWork={false}
@@ -136,7 +136,7 @@ let NewIdeaForm = React.createClass({
           </div>
 
           <p className="overflow-hidden h6 gray-2">
-            When you share this on Assembly you're not committed to building this idea, however you will be in control if you do decide to build it here. You can always remove your idea from Assembly. <a href="mailto:austin.smith@assembly.com" target="_blank">More questions?</a>
+            When you share this on Assembly you're not committed to building this idea, however you will be the initial leader if you do decide to build it here. You can always remove your idea from Assembly. <a href="http://assembly.com/start">More questions?</a>
           </p>
         </div>
 
