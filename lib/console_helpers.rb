@@ -28,6 +28,8 @@ module ASM
       puts "  transfer coins from one wallet to another"
       puts "  example: transfer_coins 'firesize', 'firesize', 'whatupdave', 150_000"
       puts
+      puts "#{'unlink_github'.green} user"
+      puts
       puts "#{'unlink_twitter'.green} user"
       puts
 
@@ -145,8 +147,14 @@ module ASM
       puts "#{to_name}: #{to_balance} coins"
     end
 
+    def unlink_github(username)
+      u!(username).update!(github_uid: nil, github_login: nil)
+
+      puts "#{username}: unlinked github"
+    end
+
     def unlink_twitter(username)
-      (u(username) || raise("#{username} not found")).update!(twitter_uid: nil, twitter_nickname: nil)
+      u!(username).update!(twitter_uid: nil, twitter_nickname: nil)
 
       puts "#{username}: unlinked twitter"
     end
