@@ -93,7 +93,7 @@ var ImportPage = React.createClass({
             </div>
             <div className="visible-xs mt3" />
             <div className="mb3">
-              Is your product still just an idea?
+              Is your product still just an idea?&nbsp;
               <a href="http://assembly.com/start">Start here</a>
             </div>
           </div>
@@ -375,7 +375,7 @@ var ImportPage = React.createClass({
               </Button>
               <div className="visible-xs mt3" />
               <div className="pull-right mb3">
-                Is your product still just an idea?
+                Is your product still just an idea?&nbsp;
                 <a href="http://port.assembly.com">Start here</a>
               </div>
             </div>
