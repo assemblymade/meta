@@ -112,28 +112,6 @@ const BountyIndex = React.createClass({
     </Accordion>
   },
 
-  renderAssets: function() {
-    var assets = this.props.assets
-    var product = this.props.product
-    var assets_url = product.url+'/assets'
-
-    return (
-      <div className="clearfix mxn1">
-        {assets.map(function(asset, i) {
-          if (['jpg', 'png', 'gif'].indexOf(asset.attachment.extension) < 0) {
-            return null
-          }
-
-          return (
-            <div className="sm-col sm-col-6 px1 mb1" key={asset.name + '-' + i}>
-              <a href={assets_url} title={asset.name} className="block bg-gray-4 bg-size-cover bg-repeat-none bg-position-center" style={{backgroundImage: 'url('+asset.thumbnail_url+')', height: '80px'}}></a>
-            </div>
-          )
-        })}
-      </div>
-    )
-  },
-
   render: function() {
     var bountyFilterProps = _.pick(this.props, 'tags', 'creators', 'workers')
 
@@ -211,12 +189,6 @@ const BountyIndex = React.createClass({
 
             <div className="mb3">
               {this.renderTags()}
-            </div>
-
-            <div className="mb3">
-              <Accordion title="Assets" >
-                {this.renderAssets()}
-              </Accordion>
             </div>
           </div>
 
