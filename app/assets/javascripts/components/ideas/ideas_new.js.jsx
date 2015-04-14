@@ -1,5 +1,6 @@
 'use strict';
 
+const Sheet = require('../ui/sheet.js.jsx');
 const Drawer = require('../ui/drawer.js.jsx');
 const IdeaForm = require('./idea_form.js.jsx');
 const Icon = require('../ui/icon.js.jsx')
@@ -33,17 +34,16 @@ let IdeasNew = React.createClass({
 
   render() {
     return (
-      <article className="sm-col-11 md-col-6 mx-auto mt3 p4 bg-white rounded shadow">
-        <div className="center mb3">
-          <div className="mb3 h1 yellow">
-            <Icon icon="lightbulb-o" />
-          </div>
+      <Sheet>
+        <header className="center mb3">
+          <Icon icon="lightbulb-o" extraClasses="mb3 h1 yellow" />
 
           <h3 className="mt0 mb1">Turn your idea into a great product</h3>
           <h4 className="mt0 mb0 regular gray-2">If your idea gets enough hearts, the community will help you build it.</h4>
+        </header>
 
         <IdeaForm />
-      </article>
+      </Sheet>
     );
   }
 });
