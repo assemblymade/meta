@@ -7,6 +7,13 @@ ASM::Application.routes.draw do
   namespace :api, path: '/', constraints: { subdomain: 'api' }, defaults: { format: 'json' } do
     get '/' => 'api#root'
     resource :user, only: [:show]
+
+    resource :users do
+      get '/:user_id/ownership', to: 'users#ownership'
+      get '/:user_id', to: 'users#info'
+      get '/:user_id/core', to: 'users#core'
+    end
+
     resources :orgs, only: [:show] do
       resources :bounties, only: [:index, :show, :create, :update] do
         resources :awards, only: [:create, :show]
@@ -16,9 +23,6 @@ ASM::Application.routes.draw do
     resources :orgs do
       get '/partners', to: 'orgs#partners'
     end
-
-    get '/orgs/:org_id/partners' => 'orgs#partners'
-
   end
 
   authenticate :user, lambda { |u| u.staff? } do

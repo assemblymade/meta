@@ -20,7 +20,7 @@ class TransactionLogEntry < ActiveRecord::Base
   end
 
   def self.product_balances(user)
-    where(wallet_id: user.id).with_cents.group(:product_id).sum(:cents)
+    where(wallet_id: user.id).with_cents.group(:product_id).order('sum(cents) desc').sum(:cents)
   end
 
   def self.product_totals

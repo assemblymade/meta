@@ -472,6 +472,10 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def core_team
+    self.core_team_memberships.map{ |a| User.find(a.user_id) }
+  end
+
   def tags_with_count
     Wip::Tag.joins(:taggings => :wip).
         where('wips.closed_at is null').

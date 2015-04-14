@@ -1,11 +1,7 @@
-class ProductApiSerializer < ApplicationSerializer
-  attributes :ownership, :name
+class ProductApiSerializer < ActiveModel::Serializer
+  attributes :partners
 
-  def ownership
-    TransactionLogEntry.product_partners_with_balances(object.id)
-  end
-
-  def name
-    object.name
+  def partners
+    TransactionLogEntry.product_partners_with_balances(object.id).sort_by{|a, b| -b}.map{ |a, b| {user: UserApiSerializer.new(User.find(a)), coins: b} }
   end
 end
