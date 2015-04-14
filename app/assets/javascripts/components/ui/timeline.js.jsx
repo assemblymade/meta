@@ -7,7 +7,6 @@ const TimelineItem = React.createClass({
 })
 
 const Timeline = React.createClass({
-
   statics: {
     Item: TimelineItem
   },
@@ -17,7 +16,6 @@ const Timeline = React.createClass({
       {this.props.children}
     </div>
   }
-
 })
 
-export default Timeline
+module.exports = Timeline

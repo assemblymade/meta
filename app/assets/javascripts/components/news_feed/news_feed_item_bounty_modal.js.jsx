@@ -122,8 +122,7 @@ module.exports = React.createClass({
               averageBounty: product.average_bounty,
               coinsMinted: product.coins_minted,
               profitLastMonth: product.profit_last_month
-            }}
-            showCoins={product.slug !== 'meta'} />
+            }} />
       );
     }
 

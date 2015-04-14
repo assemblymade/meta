@@ -75,6 +75,7 @@ ASM::Application.routes.draw do
 
   get '/create'        => 'products#new',    :as => :new_product
   get '/start'         => 'products#start',  :as => :start_idea
+  get '/import'        => 'products#import', :as => :import_idea
 
   get '/styleguide' => 'pages#styleguide'
 

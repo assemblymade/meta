@@ -59,7 +59,7 @@ describe('ChatNotifications', function() {
       <Chat url="/chat" username="dexter" />
     );
 
-    expect(chat.state.data instanceof Object).toBe(true);
+    expect(chat.state.chatRooms instanceof Object).toBe(true);
     expect(chat.state.acknowledgedAt).toEqual(0);
     expect(chat.state.desktopNotificationsEnabled).toBe(false);
   });

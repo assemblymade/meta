@@ -27,8 +27,7 @@ let Bounty = React.createClass({
       user: React.PropTypes.object,
     }),
     item: React.PropTypes.object.isRequired,
-    noInvites: React.PropTypes.bool,
-    showCoins: React.PropTypes.bool
+    noInvites: React.PropTypes.bool
   },
 
   statics: {
@@ -144,14 +143,11 @@ let Bounty = React.createClass({
 
     let currentUser = UserStore.getUser();
 
-    let valuation = null
-    if (this.props.showCoins) {
-      valuation = (
+    let valuation = (
         <div className="left px3 py2 border-right border-gray-5">
           <BountyValuation {...bounty} {...this.props.valuation} allowEditing={currentUser && currentUser.is_core} />
         </div>
       )
-    }
 
     let lockMessage = null
     let worker = this.state.worker

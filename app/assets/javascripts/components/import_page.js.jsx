@@ -5,7 +5,7 @@ var Tile = require('./ui/tile.js.jsx')
 var Button = require('./ui/button.js.jsx')
 var Jumbotron = require('./ui/jumbotron.js.jsx')
 
-var StartPage = React.createClass({
+var ImportPage = React.createClass({
 
   propTypes: {
     productsStarted: React.PropTypes.number,
@@ -21,7 +21,7 @@ var StartPage = React.createClass({
           <div className="masthead-title p4">
             <div className="clearfix">
               <h1 className="col-8 mx-auto center white">
-                 Create a community-owned product that shares the success with everyone that helps.
+                 Bring your product to Assembly, where the community can help make it awesome.
               </h1>
             </div>
           </div>
@@ -35,8 +35,8 @@ var StartPage = React.createClass({
             <li>
               <div className="step">1</div>
               <div className="body">
-                <strong>Share your idea</strong>
-                <div className="gray-2">A good web or mobile app idea works.</div>
+                <strong>Import your product</strong>
+                <div className="gray-2">It could be launched or still in progress.</div>
               </div>
             </li>
             <li>
@@ -49,15 +49,15 @@ var StartPage = React.createClass({
             <li>
               <div className="step">3</div>
               <div className="body">
-                <strong>Build a product</strong>
-                <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
+                <strong>Make your product better</strong>
+                <div className="gray-2">Collaborate with great designers, developers, and growth/marketing experts.</div>
               </div>
             </li>
             <li>
               <div className="step">4</div>
               <div className="body">
                 <strong>Grow it</strong>
-                <div className="gray-2">Share its success with everyone who helped.</div>
+                <div className="gray-2">Share success with everyone who helped.</div>
               </div>
             </li>
 
@@ -67,34 +67,34 @@ var StartPage = React.createClass({
             <div className="col-xs-8 col-xs-offset-2">
               <ul className="list-reset text-large center">
                 <li className="p2">
-                  <strong>Share your idea</strong>
-                  <div className="gray-2">A good web or mobile app idea works.</div>
+                  <strong>Import your product</strong>
+                  <div className="gray-2">It could be launched or still in progress.</div>
                 </li>
                 <li className="p2">
                   <strong>Find collaborators</strong>
                   <div className="gray-2">Work together here in your own online space.</div>
                 </li>
                 <li className="p2">
-                  <strong>Build a product</strong>
-                  <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
+                  <strong>Make your product better</strong>
+                  <div className="gray-2">Collaborate with great designers, developers, and growth/marketing experts.</div>
                 </li>
                 <li className="p2">
                   <strong>Grow it</strong>
-                  <div className="gray-2">Share its success with everyone who helped.</div>
+                  <div className="gray-2">Share success with everyone who helped.</div>
                 </li>
               </ul>
             </div>
           </div>
           <div className="text-large center" style={{padding: '60px 30px', fontSize: 20}}>
             <div className="mb3">
-              <Button type="primary" action="/ideas/new">
-                Start an idea
+              <Button type="primary" action="/new">
+                Import a product
               </Button>
             </div>
             <div className="visible-xs mt3" />
             <div className="mb3">
-              Already have a product that could benefit from the community's help?&nbsp;
-              <a href="http://port.assembly.com">Start here</a>
+              Is your product still just an idea?&nbsp;
+              <a href="http://assembly.com/ideas/new">Start here</a>
             </div>
           </div>
         </div>
@@ -171,7 +171,7 @@ var StartPage = React.createClass({
         <div className="container-fluid" style={{background: '#fff url(<%= image_url "section-gradient.png" %>) no-repeat center bottom'}}>
           <div className="container">
             <div className="center">
-              <h1>Turn your idea into a great product with people around the world</h1>
+              <h1>Take your idea product to the next level with people around the world</h1>
             </div>
             <div className="row">
               <div className="col-xs-2 col-xs-offset-5">
@@ -237,21 +237,6 @@ var StartPage = React.createClass({
                   <div className="panel panel-subtle">
                     <div className="panel-heading">
                       <p className="panel-title">
-                        <a href="#can-an-existing-product-be-moved-to-assembly" data-toggle="collapse" style={{display: 'block'}}>
-                          <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
-                          Can an existing product be moved to Assembly?
-                        </a>
-                      </p>
-                    </div>
-                    <div id="can-an-existing-product-be-moved-to-assembly" className="panel-collapse collapse">
-                      <div className="panel-body">
-                        <p>Yes. Usually in this case, we’ll work with you to "pre-allocate" a fair number of app coins representing  your ownership (and anyone else who built the product with you). Like all products, you’ll start with 100% ownership but additional development you accept by the community will dilute ownership. If you have more questions about this, reach out to <a href="mailto:support@assembly.com">support@assembly.com</a></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="panel panel-subtle">
-                    <div className="panel-heading">
-                      <p className="panel-title">
                         <a href="#can-a-product-leave-assembly" data-toggle="collapse" style={{display: 'block'}}>
                           <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
                           Can a product leave Assembly?
@@ -289,22 +274,6 @@ var StartPage = React.createClass({
               </div>
               <div className="col-xs-12 col-sm-6">
                 <div className="panel-group">
-                  <div className="panel panel-subtle">
-                    <div className="panel-heading">
-                      <p className="panel-title">
-                        <a href="#no-interest-generated" data-toggle="collapse" style={{display: 'block'}}>
-                          <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
-                          What if I start an idea here and no one is interested?
-                        </a>
-                      </p>
-                    </div>
-                    <div id="no-interest-generated" className="panel-collapse collapse">
-                      <div className="panel-body">
-                        <p>You are always free to keep building and keep trying on Assembly – so there’s no point at which you could no longer keep trying. If nobody earns App Coins in your product, you are free to take it elsewhere, but once people have earned ownership in your product, it has to live on in the Assembly community.</p>
-                        <p>In some cases, products sat for months with little interest before suddenly picking up momentum in the community. Your product could follow that trajectory.</p>
-                      </div>
-                    </div>
-                  </div>
                   <div className="panel panel-subtle">
                     <div className="panel-heading">
                       <p className="panel-title">
@@ -401,13 +370,13 @@ var StartPage = React.createClass({
               </div>
             </div>
             <div className="text-large" style={{padding: '60px 30px', fontSize: 20}}>
-              <Button type="primary" action="/ideas/new">
-                Start an idea
+              <Button type="primary" action="/new">
+                Import a product
               </Button>
               <div className="visible-xs mt3" />
               <div className="pull-right mb3">
-                Already have a product that could benefit from the community's help?&nbsp;
-                <a href="http://port.assembly.com">Start here</a>
+                Is your product still just an idea?&nbsp;
+                <a href="http://assembly.com/ideas/new">Start here</a>
               </div>
             </div>
           </div>
@@ -418,4 +387,4 @@ var StartPage = React.createClass({
   }
 });
 
-module.exports = StartPage;
+module.exports = ImportPage;

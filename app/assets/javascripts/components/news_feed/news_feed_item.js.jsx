@@ -298,7 +298,6 @@ let NewsFeedItem = React.createClass({
         bounty={target}
         noInvites={true}
         item={item}
-        showCoins={product.slug !== 'meta'}
         editCoins={false} />
       break
     case 'post':
