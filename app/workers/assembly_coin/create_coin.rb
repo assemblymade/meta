@@ -14,7 +14,6 @@ module AssemblyCoin
       else
         Rails.logger.info "[coins] Product Not Found"
       end
-
     end
   end
 end
