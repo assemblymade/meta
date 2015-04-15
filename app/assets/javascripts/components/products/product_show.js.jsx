@@ -89,7 +89,7 @@ let ProductShow = React.createClass({
     if (product && product.slug == 'meta') {
       metaNotice = <div className="py3">
         <div className="p2 border rounded border-yellow shadow">
-          Hi! Assembly Meta is a special place for us to be transparent about how we're building the Assembly platform. Just a note, <span className="bold">this product will not pay out any royalties</span>. We <span className="italic">are</span> planning on doing some nice things for partners, however. &mdash; <span className="gray-2">The Assembly Team</span>
+          Hi! Assembly Meta is a special place for us to be transparent about how we&#re building the Assembly platform. Just a note, <span className="bold">this product will not pay out any royalties</span>. We <span className="italic">are</span> planning on doing some nice things for partners, however. &mdash; <span className="gray-2">The Assembly Team</span>
         </div>
       </div>
     }

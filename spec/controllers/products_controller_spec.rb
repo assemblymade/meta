@@ -146,22 +146,6 @@ describe ProductsController do
     end
   end
 
-  describe '#activity' do
-    let!(:nfi) { NewsFeedItem.make!(product: product) }
-    let!(:archived_nfi) { NewsFeedItem.make!(product:product, archived_at: Time.now) }
-
-    it "does not show archived items" do
-      get :activity, product_id: product.slug, format: :json
-
-      items = JSON.parse(response.body)["items"]
-      expect(items.count).to eq(1)
-
-      item = items.first
-      expect(item["id"]).to eq(nfi.id)
-      expect(item["archived_at"]).to eq(nil)
-    end
-  end
-
   describe '#launch' do
     let(:product) { Product.make!(user: creator) }
 
