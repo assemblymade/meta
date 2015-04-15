@@ -75,7 +75,7 @@ module.exports = _Router;
 function _blacklist() {
   var redirect = (context, next) => {
     if (BLACKLIST.indexOf(context.path) > -1) {
-      return window.location.pathname = context.canonicalPath;
+      return window.location = context.canonicalPath;
     }
 
     next();

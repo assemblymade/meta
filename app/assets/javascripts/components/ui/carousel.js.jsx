@@ -93,7 +93,7 @@ let Carousel = React.createClass({
 
       return (
         <div className="left sm-mr2" style={style} key={i}>
-          <a href="javascript:void(0);" onClick={this.handleThumbnailClick.bind(this, i)}>
+          <a href="javascript:void(0);" onClick={this.handleThumbnailClick.bind(this, i)} key={`show-${i}`}>
             {typeof image === 'string' ? <img src={image} style={style} /> : image}
           </a>
         </div>

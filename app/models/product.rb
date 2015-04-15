@@ -416,10 +416,6 @@ class Product < ActiveRecord::Base
     !greenlit_at.nil?
   end
 
-  def flagged?
-    !flagged_at.nil?
-  end
-
   def feature!
     touch(:featured_on)
   end

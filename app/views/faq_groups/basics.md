@@ -1,10 +1,10 @@
 # How does Assembly work?
 
-Assembly enables software products (apps, services, etc.) to be built like open source projects. When a product earns money, it goes to the contributors who built it.
+Assembly enables products from software and hardware, to online communities, to be built like open source projects. Contributors earn a part of the product (in App coins) when they complete a bounty made by the core team of a product.
 
 The projects are open and transparent, and anyone can help build them – whether you want to contribute a few hours or a few months. Product ideas, vision and execution are driven by the community.
 
-Each contribution you make will be rewarded with a fair amount (as determined by the community) of stake in the project -- stake is distributed through App Coins. As soon as a product is generating revenue, everyone who helped build it receives payment each month. During development, Assembly often helps cover expenses like servers and web domains.
+Each contribution you make will be rewarded with a fair amount (as determined by the community) of stake in the project -- stake is distributed through App Coins. If a product is generating revenue, everyone who helped build it receives payment each month. During development, Assembly often helps cover expenses like servers and web domains.
 
 Working on Assembly projects is a great way to learn, challenge yourself and make a meaningful contribution to a great product. Also, if the products you help build are successful, you can earn substantial income.
 
@@ -12,6 +12,8 @@ Working on Assembly projects is a great way to learn, challenge yourself and mak
 # What is the best way to get the feel for Assembly?
 
 Hop into a discussion and introduce yourself! There are lots of products in active development today([find some here!](https://assembly.com/discover)), and everyone working on them is friendly. Talk about your interests and availability, and see if there are any bounties you’d like to work on. Helping build products is a rewarding, fun way to quickly gain an understanding of how Assembly works.
+
+Or submit your own idea [here](https://assembly.com/start)!
 
 
 # What parts of building can I help out with?

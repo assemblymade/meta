@@ -29,13 +29,11 @@ let Screenshots = React.createClass({
     };
   },
 
-  handleDeleteClick(e) {
-    e.preventDefault();
+  handleDeleteClick(href, e) {
+    e && e.preventDefault();
 
     if (window.confirm('Are you sure you want to delete this asset?')) {
-      let url = e.currentTarget.href;
-
-      ScreenshotActions.deleteScreenshot(url);
+      ScreenshotActions.deleteScreenshot(href);
     }
   },
 
@@ -67,7 +65,6 @@ let Screenshots = React.createClass({
         },
         div: {
           borderRadius: 4,
-          height: 600,
           maxWidth: 100,
           width: 100
         }
@@ -80,10 +77,15 @@ let Screenshots = React.createClass({
         });
 
         return (
-          <div className="mb1 hover-toggle-wrapper relative" style={style.div} key={screenshot.id}>
-            <a href={href} className="hover-toggle-target absolute" style={style.anchor} onClick={this.handleDeleteClick}>
+          <div className="mb1 hover-toggle-wrapper relative"
+              style={style.div}
+              key={screenshot.id}>
+            <span className="hover-toggle-target absolute clickable"
+                style={style.anchor}
+                onClick={this.handleDeleteClick.bind(this, href)}
+                key={`delete-${screenshot.id}`}>
               <Icon icon="close" />
-            </a>
+            </span>
             <img className="inline" src={screenshot.url} />
           </div>
         );

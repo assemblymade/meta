@@ -47,7 +47,7 @@ module OpenAssets
         name: product.name,
         metadata: "u=https://assembly.com/#{product.slug}/coin",
         coins: total_coins,
-        identifier: product_id.to_s+":"+DateTime.now.to_s
+        identifier: product.id.to_s+":"+DateTime.now.to_s
       }.to_json
     end
 
