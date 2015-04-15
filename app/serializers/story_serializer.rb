@@ -24,7 +24,11 @@ class StorySerializer < ApplicationSerializer
   end
 
   def owner
-    object.target.try(:user)
+    if object.subject.is_a? Event::Win
+      object.subject.winner
+    else
+      object.target.try(:user)
+    end
   end
 
   def product
@@ -45,6 +49,6 @@ class StorySerializer < ApplicationSerializer
   cached
 
   def cache_key
-    [Time.now.to_i, object]
+    ['v1', object]
   end
 end

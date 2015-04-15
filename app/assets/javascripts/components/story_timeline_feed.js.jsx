@@ -1,5 +1,6 @@
 'use strict'
 
+const { List } = require('immutable');
 const ProductActions = require ('../actions/product_actions');
 const Timeline = require('./ui/timeline.js.jsx');
 const Tile = require('./ui/tile.js.jsx');
@@ -14,50 +15,68 @@ const StoryTimelineFeed = React.createClass({
   },
 
   renderStories: function() {
+    return this.state.stories.
+      groupBy(s => this.dateGroup(s.created_at)).
+      map(this.renderStoryGroup).toJS()
+  },
+
+  renderStoryGroup: function(stories, key) {
+    return (
+      <div>
+        <div className="gray-2 px2 pb1 pt2">{key}</div>
+
+        <Tile>
+          {stories.map(this.renderStory).toJS()}
+        </Tile>
+      </div>
+    )
+  },
+
+  renderStory: function(story, i) {
+    var owner = story.verb == 'awarded' ? story.owner.username : ''
+    var recentActor = story.actors[story.actors.length-1]
+
+    var cs = React.addons.classSet({
+      'clearfix px2 py2': true,
+      'border-top': i > 0
+    })
 
     return (
-      _.map(this.state.stories, function(story, i) {
-
-        var actors = _.map(story.actors, func.dot('username')).join(', @')
-        var owner = story.verb == 'awarded' ? story.owner.username : ''
-
-        return (
-          <Tile>
-            <div className="clearfix p1 py2" key={i}>
-              <a href={story.url}>
-                <div className="left mr2 mt1">
-                  <Avatar user={story.actors[0]} size={18} />
-                </div>
-                <div className="overflow-hidden">
-                  <div className="activity-body">
-                    <p className="gray-2 mb0 h6 right mr2">
-                      {moment(story.created_at).fromNow()}
-                    </p>
-                    <p className="mb0 gray-2">
-                      <span className="bold">{actors}</span> {story.verb} <strong>{owner}</strong>
-                    </p>
-                    <p className="mb0">
-                      {story.subject}
-                    </p>
-                  </div>
-                </div>
-              </a>
+      <div className={cs} key={i}>
+        <a href={story.url}>
+          <div className="left mr2 mt1">
+            <Avatar user={recentActor} size={18} />
+          </div>
+          <div className="overflow-hidden">
+            <div className="activity-body">
+              <p className="gray-2 mb0 h6 right mr2">
+                {moment(story.created_at).fromNow()}
+              </p>
+              <p className="mb0 gray-2">
+                <span className="bold">
+                  {` ${recentActor.username}`}
+                </span>
+                <span className="">
+                  {story.actors.length > 1 ?
+                    ` and ${story.actors.length-1} other${story.actors.length == 2 ? '' : 's'} ` : null}
+                </span>
+                {' ' + story.verb} <strong>{owner}</strong>
+              </p>
+              <p className="mb0">
+                {story.subject}
+              </p>
             </div>
-          </Tile>
-        )
-      })
+          </div>
+        </a>
+      </div>
     )
   },
 
   render: function() {
     return (
       <div className="px2">
-        <Timeline>
-          <div className="py2">
-            {this.renderStories()}
-          </div>
-          {this.spinner()}
-        </Timeline>
+        {this.renderStories()}
+        {this.spinner()}
       </div>
     )
   },
@@ -88,7 +107,7 @@ const StoryTimelineFeed = React.createClass({
     return {
       loading: StoryTimelineStore.getLoading(),
       page: StoryTimelineStore.getPage(),
-      stories: _(StoryTimelineStore.getStories()).sortBy((s) => -moment(s.created_at).unix()),
+      stories: List(StoryTimelineStore.getStories()).sortBy((s) => -moment(s.created_at).unix()),
     }
   },
 
@@ -102,24 +121,6 @@ const StoryTimelineFeed = React.createClass({
       StoryTimelineActions.requestNextPage(this.props.product)
     }.bind(this));
   },
-
-  // initializeEagerFetching: function() {
-  //   var self = this;
-  //   var body = $(document);
-  //
-  //   if (body) {
-  //     body.scroll(
-  //       _.throttle(
-  //           function(e) {
-  //             var distanceFromTop = $(window).scrollTop() + $(window).height()
-  //
-  //             if (distanceFromTop > $(document).height() - 400) {
-  //               self.fetchMoreStoryItems();
-  //             }
-  //           }, 500)
-  //     );
-  //   }
-  // },
 
   onScroll: function() {
     var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 400
@@ -135,6 +136,32 @@ const StoryTimelineFeed = React.createClass({
         <Spinner />
       );
     }
+  },
+
+  dateGroup: function(time) {
+    let at = moment(time)
+    let now = moment()
+    if (at.isAfter(now.startOf('day'))) {
+      return 'Today'
+    }
+
+    if (at.isAfter(now.add(-1, 'days').startOf('day'))) {
+      return 'Yesterday'
+    }
+
+    if (at.isAfter(now.startOf('isoWeek').startOf('day'))) {
+      return 'This week'
+    }
+
+    if (at.isAfter(now.startOf('month').startOf('day'))) {
+      return 'This month'
+    }
+
+    if (at.isAfter(now.startOf('year').startOf('day'))) {
+      return at.format('MMMM')
+    }
+
+    return at.format('MMMM, YYYY')
   }
 });
 

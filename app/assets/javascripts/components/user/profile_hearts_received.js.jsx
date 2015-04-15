@@ -177,22 +177,6 @@ module.exports = React.createClass({
     }
   },
 
-  sentence(parts, pluralize) {
-    switch (parts.length) {
-    case 1:
-      return `${parts[0]} ${pluralize}s`
-      break
-
-    case 2:
-      return `${parts.join(' and ')} ${pluralize}`
-      break
-
-    case 3:
-      return `${parts[0]}, ${parts[1]} and ${parts[2]} ${pluralize}`
-      break
-    }
-  },
-
   _onChange() {
     this.setState(_.extend({loading: false}, this.getStateFromStores()))
   }

@@ -48,8 +48,6 @@ var DropdownNotifications = React.createClass({
   entry: function(options) {
     var story = options.story;
 
-    var actors = _.map(story.actors, func.dot('username')).join(', @')
-
     var classes = ['px2', 'py1', 'block', 'clearfix'];
 
     if (this.isRead(story)) {
@@ -60,6 +58,8 @@ var DropdownNotifications = React.createClass({
       classes.push('gray-1');
     }
 
+    var recentActor = story.actors[story.actors.length - 1]
+
     var cs = React.addons.classSet.apply(this, classes);
 
     return (
@@ -69,10 +69,17 @@ var DropdownNotifications = React.createClass({
           key={options.key}>
 
         <div className="left mr2">
-          <Avatar user={story.actors[0]} size={18} />
+          <Avatar user={recentActor} size={18} />
         </div>
         <div className="overflow-hidden h6 mt0 mb0">
-          <strong>{actors}</strong> {this.body(story)}<br/>
+          <span className="bold">
+            {` ${recentActor.username} `}
+          </span>
+          <span className="">
+            {story.actors.length > 1 ?
+              ` and ${story.actors.length-1} other${story.actors.length == 2 ? '' : 's'} ` : null}
+          </span>
+          {this.body(story)}<br/>
           {this.preview(story)}
         </div>
       </a>

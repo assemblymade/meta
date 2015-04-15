@@ -35,7 +35,6 @@ const ProductActivity = React.createClass({
   },
 
   componentDidMount() {
-    document.title = this.state.product.name;
     window.TrackEngagement.track('product.activity')
 
     BountyMarksStore.addChangeListener(this.onBountyMarksChange);
@@ -102,11 +101,11 @@ const ProductActivity = React.createClass({
 
         <div className="container mt3">
           <div className="clearfix mxn3">
-            <div className="sm-col sm-col-8 px3 mb2 sm-mb0">
+            <div className="sm-col sm-col-9 px3 mb2 sm-mb0">
               {this.renderStoryFeed()}
             </div>
 
-            <div className="md-col md-col-4 px3">
+            <div className="md-col md-col-3 px3">
             </div>
           </div>
         </div>
