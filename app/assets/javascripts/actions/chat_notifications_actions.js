@@ -58,7 +58,6 @@ function handleReadraptor(chatRooms) {
       chatRooms,
       (hash, story) => {
         hash[story.id] = story;
-        hash[story.id].last_read_at = 0;
 
         return hash;
       },

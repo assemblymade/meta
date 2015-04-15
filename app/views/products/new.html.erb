@@ -1,4 +1,4 @@
-<% title 'Start a new product' %>
+<% title 'Import a product' %>
 <% activate_nav! :platform_create %>
 <%= render 'shared/navbar' %>
 
@@ -8,7 +8,7 @@
       <div class="bg-white rounded shadow mt4 mb4 p4">
 
         <h1 class="center yellow mb4">
-          <%= react_component 'Icon', icon: 'building' %>
+          <img src="https://d1015h9unskp4y.cloudfront.net/attachments/da827015-7f37-4fdb-80d0-b8d68ae71f32/asm_mountain_360.png" style="width: 60%">
         </h1>
 
 
@@ -20,7 +20,7 @@
           <%= form_group @product, :name, class: 'mb3' do %>
             <%= f.label :name, class: 'control-label' %>
             <p class="h6 gray-2">
-              A name is important, but it can always change. If you have a codename already, use that, otherwise don't get too hung up on making it perfect.
+              What is your product called? Don't worry, you can always change this later.
             </p>
             <% if params[:name] %>
             <%= f.text_field :name, class: 'form-control', autofocus: true, value: params[:name] %>
@@ -37,7 +37,7 @@
 
           <%= form_group @product, :description, class: 'mb3' do %>
             <%= f.label :description, 'Blurb', class: 'control-label' %>
-            <p class="h6 gray-2">How did you come up with the idea? What makes it great? Describe your vision, the problem it's solving and your advantage over the competition.</p>
+            <p class="h6 gray-2">How did you come up with the idea? What makes it great? Describe your vision, the problem you're solving and your advantage over the competition.</p>
             <%= f.text_area :description, class: 'form-control',  value: params[:blurb] || '', rows: 8 %>
           <% end %>
           <% if params[:idea_id] %>
@@ -52,13 +52,16 @@
             <p class="h6 gray-2 mb3">
               You will start off with 100% of the ownership of this product. You will be able to distribute ownership to contributors and other people after your product is created.
             </p>
+            <p class="h6 gray-2 mb3">
+              <a href="http://assembly.com/import">Learn more about importing a product</a>.
+            </p>
           <% end %>
 
 
           <div class="left-align">
 
             <div class="right ml3">
-              <button class="btn btn-primary btn-block" data-disable-with="Starting...">Create Your Product</button>
+              <button class="btn btn-primary btn-block" data-disable-with="Starting...">Import your product</button>
             </div>
 
             <p class="h6 gray-2 py1">By creating this product, you agree to Assembly's <a href="<%= tos_path %>">Terms of Service</a>.</p>

@@ -171,7 +171,7 @@ var ImportPage = React.createClass({
         <div className="container-fluid" style={{background: '#fff url(<%= image_url "section-gradient.png" %>) no-repeat center bottom'}}>
           <div className="container">
             <div className="center">
-              <h1>Take your idea product to the next level with people around the world</h1>
+              <h1>Take your product to the next level with people around the world</h1>
             </div>
             <div className="row">
               <div className="col-xs-2 col-xs-offset-5">
@@ -193,7 +193,7 @@ var ImportPage = React.createClass({
                       <p className="panel-title">
                         <a href="#why-not-just-do-open-source" data-toggle="collapse" style={{display: 'block'}}>
                           <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
-                          Why not just do open source?
+                          How is this different than open source?
                         </a>
                       </p>
                     </div>
@@ -230,7 +230,7 @@ var ImportPage = React.createClass({
                     </div>
                     <div id="who-owns-the-intellectual-property" className="panel-collapse collapse collapse">
                       <div className="panel-body">
-                        <p>You do. However, all products on Assembly are licensed under AGPL, and by agreeing to our terms of service you also are granting non-exclusive rights to Assembly to monetize this IP on behalf of the community (and you).</p>
+                        <p>You do. However, all products on Assembly are licensed under AGPL, and by agreeing to our terms of service you also are granting non-exclusive rights to Assembly to monetize this IP on behalf of the community (and you). This is how we collect revenue and distribute it to the community, but we won't be collecting money until you choose to monetize.</p>
                       </div>
                     </div>
                   </div>

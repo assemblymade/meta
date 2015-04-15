@@ -11,7 +11,7 @@ const UserStore = require('../stores/user_store.js');
 
 const NotificationsList = React.createClass({
   render: function() {
-    var productNodes = this.props.chatRooms.map(function(entry){
+    var productNodes = this.props.chatRooms.map(function(entry) {
       var label = entry.product_name ? entry.product_name : `#${entry.label}`;
       var badge = null;
 

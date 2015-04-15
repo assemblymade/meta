@@ -20,8 +20,8 @@ class ProductsController < ProductController
     @product.user = current_user
 
     @four_word_story_example = [
-        'Organize everything you love.',
-        'Easily find useful information.'
+        'Support comes from people, not software.',
+        'Find, share, and discuss indie games.'
       ].sample
 
     @idea = Idea.find_by(id: params[:idea_id])
