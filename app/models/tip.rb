@@ -6,24 +6,25 @@ class Tip < ActiveRecord::Base
   has_one :deeds, as: :karma_event
 
   def self.perform!(product, from, via, add_cents)
-    to = via.tip_receiver
-    created_at = Time.now
+    via.with_lock do
+      created_at = Time.now
+      to = via.tip_receiver
 
-    tip = Tip.find_or_initialize_by(product: product, from: from, to: to, via: via)
-    tip.cents ||= 0
+      tip = Tip.find_or_initialize_by(product: product, from: from, to: to, via: via)
+      tip.cents ||= 0
 
-    tip.with_lock do
-      TransactionLogEntry.transfer!(product, from.id, to.id, add_cents, via.id, created_at)
+      if entry = TransactionLogEntry.transfer!(product, from.id, to.id, add_cents, via.id, created_at)
+        tip.cents += add_cents
+        tip.save!
 
-      tip.cents += add_cents
-      tip.save!
+        TrackVested.perform_async(to.id, product.id, created_at)
+
+        via.try(:tip_added)
+        tip
+      else
+        nil
+      end
     end
-
-    TrackVested.perform_async(to.id, product.id, created_at)
-
-    via.try(:tip_added)
-
-    tip
   end
 
   delegate :url_params, to: :via
