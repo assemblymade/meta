@@ -17,7 +17,7 @@ class RegroupStories
     target_groups(query) do |target_id, activities|
       story = activities.first.story
       activities.each do |a|
-        puts "  #{i.to_s.rjust(count.to_s.size)}/#{count} target=#{target_id} start=#{story.try(:created_at)}"
+        Rails.logger.info "  #{i.to_s.rjust(count.to_s.size)}/#{count} target=#{target_id} start=#{story.try(:created_at)}"
         if story.nil? || a.created_at > story_end(story)
           story = a.story
         end
