@@ -73,7 +73,7 @@ var TipsUi = React.createClass({
 
     this.setState({
       pendingClicks: this.state.pendingClicks + 1,
-      pendingCents: this.state.pendingCents + increment
+      pendingCents: Math.min(this.state.userCents, this.state.pendingCents + increment)
     })
   },
 

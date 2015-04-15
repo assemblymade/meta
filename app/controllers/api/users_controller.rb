@@ -8,7 +8,9 @@ module Api
 
     def ownership
       @user = get_user
-      render json: @user, serializer: PartnerSerializer
+      balances = TransactionLogEntry.product_balances(@user).to_a
+      r = balances.map{|a, b| {product: ProductShallowSerializer.new(Product.find(a)), coins: b} }
+      render json: r
     end
 
     def info
@@ -18,7 +20,7 @@ module Api
 
     def core
       @user = get_user
-      render json: @user, serializer: UserCoreApiSerializer
+      respond_with(@user.core_on, each_serializer: ProductShallowSerializer)
     end
 
     def get_user

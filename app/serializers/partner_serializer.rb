@@ -1,11 +1,11 @@
 class PartnerSerializer < ActiveModel::Serializer
   attributes :assets
 
-  def assets
-    TransactionLogEntry.product_balances(object).map{|a, b| construct_product_item(a, b) }
+  def product
+    ProductShallowSerializer.new(Product.find(object[0]))
   end
 
-  def construct_product_item(product_id, coins)
-    {product: ProductShallowSerializer.new(Product.find(product_id)), coins: coins}
+  def coins
+    object[1]
   end
 end

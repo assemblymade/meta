@@ -41,12 +41,10 @@ let IdeasNew = React.createClass({
               <div className="p4">
 
                 <div className="center mb4">
-                  <div className="mb4 h1 yellow">
-                    <Icon icon="lightbulb-o" />
-                  </div>
+                  <img src="https://d1015h9unskp4y.cloudfront.net/attachments/da827015-7f37-4fdb-80d0-b8d68ae71f32/asm_mountain_360.png" />
 
                   <h3 className="mt0 mb1">Turn your idea into a great product</h3>
-                  <h4 className="mt0 mb0 regular gray-2">If your idea gets enough hearts, the community will help you build it.</h4>
+                  <h4 className="mt0 mb0 regular gray-2">The community collaborates to build the best ideas into products.</h4>
                 </div>
 
                 <IdeaForm />

@@ -21,7 +21,7 @@ var StartPage = React.createClass({
           <div className="masthead-title p4">
             <div className="clearfix">
               <h1 className="col-8 mx-auto center white">
-                 Create a community-owned product that shares the success with everyone that helps.
+                 Turn your idea into a product with the community.
               </h1>
             </div>
           </div>
@@ -36,7 +36,7 @@ var StartPage = React.createClass({
               <div className="step">1</div>
               <div className="body">
                 <strong>Share your idea</strong>
-                <div className="gray-2">A good web or mobile app idea works.</div>
+                <div className="gray-2">It doesn't need to be fully scoped out, it's just an idea.</div>
               </div>
             </li>
             <li>
@@ -49,15 +49,15 @@ var StartPage = React.createClass({
             <li>
               <div className="step">3</div>
               <div className="body">
-                <strong>Build a product</strong>
+                <strong>Build your product</strong>
                 <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
               </div>
             </li>
             <li>
               <div className="step">4</div>
               <div className="body">
-                <strong>Grow it</strong>
-                <div className="gray-2">Share its success with everyone who helped.</div>
+                <strong>Grow</strong>
+                <div className="gray-2">Share success with everyone who helped.</div>
               </div>
             </li>
 
@@ -68,19 +68,19 @@ var StartPage = React.createClass({
               <ul className="list-reset text-large center">
                 <li className="p2">
                   <strong>Share your idea</strong>
-                  <div className="gray-2">A good web or mobile app idea works.</div>
+                  <div className="gray-2">It doesn't need to be fully scoped out, it's just an idea.</div>
                 </li>
                 <li className="p2">
                   <strong>Find collaborators</strong>
                   <div className="gray-2">Work together here in your own online space.</div>
                 </li>
                 <li className="p2">
-                  <strong>Build a product</strong>
+                  <strong>Build your product</strong>
                   <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
                 </li>
                 <li className="p2">
                   <strong>Grow it</strong>
-                  <div className="gray-2">Share its success with everyone who helped.</div>
+                  <div className="gray-2">Share success with everyone who helped.</div>
                 </li>
               </ul>
             </div>
@@ -93,8 +93,8 @@ var StartPage = React.createClass({
             </div>
             <div className="visible-xs mt3" />
             <div className="mb3">
-              Already have a product that could benefit from the community's help?&nbsp;
-              <a href="http://port.assembly.com">Start here</a>
+              Already have a product that could benefit from the community&#39;s help?&nbsp;
+              <a href="http://assembly.com/new">Start here</a>
             </div>
           </div>
         </div>
@@ -105,7 +105,7 @@ var StartPage = React.createClass({
             <div className="col-xs-12 col-sm-4" style={{padding: '50px 40px', borderRight: '1px solid #eee'}}>
               <h1 style={{fontSize: 80, lineHeight: 1, margin: 0}}>4MM</h1>
               <h2 className="mt0">People</h2>
-              <p className="gray-2">4+ million people this year have used the products being built on Assembly.</p>
+              <p className="gray-2">Millions of people have used the products being built on Assembly.</p>
             </div>
             {/* <div class="col-xs-12 col-sm-4" style="padding: 50px 40px; border-left: 1px solid #eee; border-right: 1px solid #eee">
       <h1 style="font-size: 80px; line-height: 1; margin: 0"></h1>
@@ -171,7 +171,7 @@ var StartPage = React.createClass({
         <div className="container-fluid" style={{background: '#fff url(<%= image_url "section-gradient.png" %>) no-repeat center bottom'}}>
           <div className="container">
             <div className="center">
-              <h1>Turn your idea into a great product with people around the world</h1>
+              <h1>The community is eager to hear your idea and help you make it a reality.</h1>
             </div>
             <div className="row">
               <div className="col-xs-2 col-xs-offset-5">
@@ -181,7 +181,7 @@ var StartPage = React.createClass({
             <div className="row">
               <div className="col-xs-12 col-sm-8 col-sm-offset-2 center">
                 <h2 style={{fontSize: 32}}>Smart Questions Answered</h2>
-                <p className="lead gray-2">An outside-the-box platform for launching community products deserves some thoughtful questions ‐ these are our thoughtful answers.</p>
+                <p className="lead gray-2">An outside-the-box platform for launching community products deserves some thoughtful questions ‐ these are our answers. If anything is unanswered, we'd always love to hear from you: <a href="mailto:support@assembly.com">support@assembly.com</a></p>
               </div>
             </div>
             <br />
@@ -193,13 +193,13 @@ var StartPage = React.createClass({
                       <p className="panel-title">
                         <a href="#why-not-just-do-open-source" data-toggle="collapse" style={{display: 'block'}}>
                           <span className="glyphicon glyphicon-chevron-down small pull-right" style={{marginTop: 5}} />
-                          Why not just do open source?
+                          How is this different than open source?
                         </a>
                       </p>
                     </div>
                     <div id="why-not-just-do-open-source" className="panel-collapse collapse">
                       <div className="panel-body">
-                        <p>Open source is great. Assembly products are built with OSS. What’s unique about Assembly is that it allows you to collaborate on real products your colleagues (and mom) can use with people all around the world and then monetize them. Thanks internets!</p>
+                        <p>Open source is great. Assembly products are built with OSS. What’s unique about Assembly is that it allows you to collaborate with people all around the world on products your friends, colleagues, and mom can use, and you can monetize them fairly. Thanks internets!</p>
                       </div>
                     </div>
                   </div>
@@ -230,7 +230,7 @@ var StartPage = React.createClass({
                     </div>
                     <div id="who-owns-the-intellectual-property" className="panel-collapse collapse collapse">
                       <div className="panel-body">
-                        <p>You do. However, all products on Assembly are licensed under AGPL, and by agreeing to our terms of service you also are granting non-exclusive rights to Assembly to monetize this IP on behalf of the community (and you).</p>
+                        <p>You do. However, all products on Assembly are licensed under AGPL, and by agreeing to our terms of service you also are granting non-exclusive rights to Assembly to monetize this IP on behalf of the community (and you). This is how we collect revenue and distribute it to the community, but we won't be collecting money until you choose to monetize.</p>
                       </div>
                     </div>
                   </div>
@@ -245,7 +245,7 @@ var StartPage = React.createClass({
                     </div>
                     <div id="can-an-existing-product-be-moved-to-assembly" className="panel-collapse collapse">
                       <div className="panel-body">
-                        <p>Yes. Usually in this case, we’ll work with you to "pre-allocate" a fair number of app coins representing  your ownership (and anyone else who built the product with you). Like all products, you’ll start with 100% ownership but additional development you accept by the community will dilute ownership. If you have more questions about this, reach out to <a href="mailto:support@assembly.com">support@assembly.com</a></p>
+                        <p>Yep! <a href="http://assembly.com/import">Learn more about that process.</a></p>
                       </div>
                     </div>
                   </div>
@@ -301,7 +301,7 @@ var StartPage = React.createClass({
                     <div id="no-interest-generated" className="panel-collapse collapse">
                       <div className="panel-body">
                         <p>You are always free to keep building and keep trying on Assembly – so there’s no point at which you could no longer keep trying. If nobody earns App Coins in your product, you are free to take it elsewhere, but once people have earned ownership in your product, it has to live on in the Assembly community.</p>
-                        <p>In some cases, products sat for months with little interest before suddenly picking up momentum in the community. Your product could follow that trajectory.</p>
+                        <p>In some cases, products sat for months with little interest before suddenly picking up momentum in the community. Your product might follow that trajectory.</p>
                       </div>
                     </div>
                   </div>
@@ -356,7 +356,7 @@ var StartPage = React.createClass({
                           If, when, and how a product earn's revenue is up to the product roadmap set by each product’s Core Team. You’ll find most products have these roadmaps in their discussions or plainly stated on their product pages.
                         </p>
                         <p>
-                          Assembly products earning revenue do so through credit card purchases through the Assembly API or by Assembly provided invoicing when amounts exceed $1,000.
+                          Assembly products earning revenue typically do so through credit card purchases through the Assembly API or by Assembly provided invoicing when amounts exceed $1,000.
                         </p>
                       </div>
                     </div>
