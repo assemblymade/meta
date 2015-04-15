@@ -24,4 +24,9 @@ namespace :stories do
     end
     puts "destroyed #{count} stories"
   end
+
+  desc "Regroup stories by actors"
+  task regroup: :environment do
+    RegroupStories.new.perform(1.day.ago)
+  end
 end
