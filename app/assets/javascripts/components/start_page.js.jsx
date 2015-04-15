@@ -93,7 +93,7 @@ var StartPage = React.createClass({
             </div>
             <div className="visible-xs mt3" />
             <div className="mb3">
-              Already have a product that could benefit from the community's help?&nbsp;
+              Already have a product that could benefit from the community&#39;s help?&nbsp;
               <a href="http://assembly.com/new">Start here</a>
             </div>
           </div>
