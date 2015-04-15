@@ -19,7 +19,7 @@ module OpenAssets
       if product.coin_info
         asset_id = product.coin_info.asset_address
         if asset_id
-          end_url = "v2/coinholders/#{asset_id}"
+          end_url = "coinholders/#{asset_id}"
           coinholders = remote.get end_url
         end
       end
@@ -81,6 +81,5 @@ module OpenAssets
         end
       end
     end
-
   end
 end
