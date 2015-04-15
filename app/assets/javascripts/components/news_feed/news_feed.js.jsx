@@ -10,11 +10,6 @@ const url = require('url');
 let NewsFeed = React.createClass({
   mixins: [React.addons.PureRenderMixin, NewsFeedMixin],
   propTypes: {
-    filterCounts: function(props, propName, componentName) {
-      if (!props.filterCounts) {
-        return new Error('Required prop `filterCounts` was not found.');
-      }
-    },
     productPage: React.PropTypes.bool,
     url: React.PropTypes.string.isRequired
   },

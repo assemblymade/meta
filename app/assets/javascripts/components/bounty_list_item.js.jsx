@@ -63,7 +63,6 @@ var BountyListItem = React.createClass({
     BountyActionCreators.insertPlaceholder(this.props.index, height)
 
     event.preventDefault()
-    return false
   },
 
   handleMouseMove: function(event) {
@@ -86,7 +85,6 @@ var BountyListItem = React.createClass({
     }
 
     event.preventDefault()
-    return false
   },
 
   handleMouseUp: function(event) {
@@ -95,7 +93,6 @@ var BountyListItem = React.createClass({
     BountyActionCreators.placeBounty(this.props.bounty)
 
     event.preventDefault()
-    return false
   },
 
   render: function() {

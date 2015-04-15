@@ -220,7 +220,7 @@ let NewsFeedItem = React.createClass({
     if (target && target.type == 'task') {
       return (
         <div className="px3 left h4 mt0 mb0" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
-          <AppCoins n={target.earnable_coins_cache} />
+          <AppCoins n={target.earnable_cents} />
         </div>
       )
     }

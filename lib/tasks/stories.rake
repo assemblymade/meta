@@ -3,13 +3,20 @@ namespace :stories do
   desc "Republish stories to redis"
   task :republish => :environment do
     NewsFeed.delete_all
+    count = 0
     Story.includes(:actors, :activities).find_each do |story|
       puts "story: #{story.id} #{story.verb.rjust(15)} #{story.subject_type}"
 
-      story.reader_ids.each do |user_id|
-        NewsFeed.new(User, user_id).push(story)
+      begin
+        story.reader_ids.each do |user_id|
+          NewsFeed.new(User, user_id).push(story)
+        end
+      rescue => e
+        puts "story #{story.id} failed"
+        count += 1
       end
     end
+    puts "#{count} stories failed"
   end
 
   desc "Remove stories with orphaned targets"

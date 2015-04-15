@@ -113,7 +113,6 @@ class Activity < ActiveRecord::Base
   end
 
   def push_to_landline(room, body, actor)
-    puts "body: #{body}"
     LandlineBridgeWorker.perform_async(
       room.slug,
       body,
