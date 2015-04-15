@@ -1,6 +1,10 @@
 class ProductShallowSerializer < ApplicationSerializer
   attributes :name, :pitch, :slug, :logo_url, :url, :wips_count, :partners_count, :total_visitors
-  attributes :homepage_url, :coinprism_url
+  attributes :homepage_url, :coinprism_url, :flagged
+
+  def flagged
+    !object.flagged_at.nil?
+  end
 
   def logo_url
     object.full_logo_url
@@ -21,6 +25,6 @@ class ProductShallowSerializer < ApplicationSerializer
   cached
 
   def cache_key
-    object
+    ['v2', object]
   end
 end
