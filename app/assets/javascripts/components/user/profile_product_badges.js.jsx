@@ -19,11 +19,17 @@ module.exports = React.createClass({
   },
 
   renderProduct(product) {
-    return <div key={product.id} className="left mr1 mt1" data-toggle="tooltip" title={product.name.replace(' ', '\u00a0')}>
-      <a href={product.url}>
-        <AppIcon app={product} className="left" size={35} />
-      </a>
-    </div>
+    if (!product.flagged) {
+      return <div key={product.id} className="left mr1 mt1" data-toggle="tooltip" title={product.name.replace(' ', '\u00a0')}>
+        <a href={product.url}>
+          <AppIcon app={product} className="left" size={35} />
+        </a>
+      </div>
+    }
+    else {
+      return <div></div>
+    }
+
   },
 
   componentDidMount() {

@@ -97,7 +97,7 @@
 <% if @user.ideas.any? %>
   <h6 class="mt4">Ideas proposed</h6>
   <div class="clearfix">
-    <% @user.ideas.order(created_at: :desc).each do |idea| %>
+    <% @user.ideas.where(flagged_at: nil).order(created_at: :desc).each do |idea| %>
       <div class="py1">
         <a href="<%= idea_path(idea) %>" class="gray-2">
           <%= idea.title %>
