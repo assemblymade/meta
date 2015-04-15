@@ -181,7 +181,7 @@ var StartPage = React.createClass({
             <div className="row">
               <div className="col-xs-12 col-sm-8 col-sm-offset-2 center">
                 <h2 style={{fontSize: 32}}>Smart Questions Answered</h2>
-                <p className="lead gray-2">An outside-the-box platform for launching community products deserves some thoughtful questions ‐ these are our answers. If anything is unanswered, we'd always love to hear from you: <a href="mailto:support@assembly.com>support@assembly.com</a></p>
+                <p className="lead gray-2">An outside-the-box platform for launching community products deserves some thoughtful questions ‐ these are our answers. If anything is unanswered, we'd always love to hear from you: <a href="mailto:support@assembly.com">support@assembly.com</a></p>
               </div>
             </div>
             <br />
