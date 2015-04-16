@@ -7,6 +7,7 @@
 const ActionTypes = require('../constants').ActionTypes;
 const Dispatcher = require('../dispatcher');
 const { List } = require('immutable');
+const ProductStore = require('./product_store');
 const Store = require('./es6_store');
 
 const assetIdMatches = (id) => {
@@ -44,6 +45,13 @@ class ScreenshotsStore extends Store {
   }
 
   getScreenshots() {
+    if (ProductStore.getVideoId()) {
+      return screenshots.unshift({
+        video_id: ProductStore.getVideoId(),
+        id: `video_${ProductStore.getId()}`
+      }).toJS();
+    }
+
     return screenshots.toJS();
   }
 };

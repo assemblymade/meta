@@ -10,7 +10,7 @@ class ProductSerializer < ApplicationSerializer
   attributes :can_update, :try_url, :wips_count, :partners_count, :lead
   attributes :top_marks, :homepage_url, :screenshots, :description, :description_html, :labels
   attributes :bounty_valuation_steps, :coins_minted, :profit_last_month, :state, :greenlit_at
-  attributes :trust
+  attributes :trust, :video_id
 
   has_many :most_active_contributors, serializer: UserSerializer
 
@@ -30,6 +30,19 @@ class ProductSerializer < ApplicationSerializer
 
   def logo_url
     object.full_logo_url
+  end
+
+  def video_id
+    if object.you_tube_video_url[/youtu\.be\/([^\?]*)/]
+      $1
+    elsif object.you_tube_video_url[/vimeo.com\/(\d+)/]
+      $1
+    else
+      # From
+      # http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url/4811367#4811367
+      object.you_tube_video_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
+      $5
+    end
   end
 
   def wips_url

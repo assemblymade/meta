@@ -7,8 +7,7 @@ const Routes = require('../../routes');
 const ScreenshotActions = require('../../actions/screenshot_actions');
 const ScreenshotsStore = require('../../stores/screenshots_store');
 const UserStore = require('../../stores/user_store');
-
-const FIFTEEN_MINUTES = 15 * 60 * 1000;
+const Video = require('./video.js.jsx');
 
 let Screenshots = React.createClass({
   componentDidMount() {
@@ -76,6 +75,12 @@ let Screenshots = React.createClass({
           id: screenshot.asset_id
         });
 
+        let screenshotUrl = screenshot.url;
+
+        if (screenshot.video_id) {
+          return <Video videoId={screenshot.video_id} key={screenshot.id} />;
+        }
+
         return (
           <div className="mb1 hover-toggle-wrapper relative"
               style={style.div}
@@ -86,7 +91,7 @@ let Screenshots = React.createClass({
                 key={`delete-${screenshot.id}`}>
               <Icon icon="close" />
             </span>
-            <img className="inline" src={screenshot.url} />
+            <img className="inline" src={screenshotUrl} />
           </div>
         );
       }

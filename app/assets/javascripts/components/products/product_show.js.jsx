@@ -95,10 +95,9 @@ let ProductShow = React.createClass({
     }
 
     if (product && _.some(_.values(product.trust))) {
-
       const renderTrustCol = function(field, label) {
-        let icon = null
-        if(product.trust[field]) {
+        let icon;
+        if (product.trust[field]) {
           icon = <span className="green"><Icon icon="check-circle" fw={true} /></span>
         } else {
           icon = <span className="gray-5"><Icon icon="times-circle" fw={true} /></span>
@@ -113,28 +112,28 @@ let ProductShow = React.createClass({
         </div>
       }
 
-      trust = <div className="py3">
-                <div className="clearfix py2">
-                  <h6 className="left gray-2 caps mt0 mb0">
-                    Community Ownership
-                  </h6>
-                  <a className="right h6" href={`${product.url}/trust`}>
-                    View more
-                  </a>
-                </div>
+      trust = (
+        <div className="py3">
+          <div className="clearfix py2">
+            <h6 className="left gray-2 caps mt0 mb0">
+              Community Ownership
+            </h6>
+            <a className="right h6" href={`${product.url}/trust`}>
+              View more
+            </a>
+          </div>
 
-                <div className="clearfix mxn2">
-                  {renderTrustCol('domain', 'Community held domains')}
-                  {renderTrustCol('ip', 'Shared intellectual property')}
-                  {renderTrustCol('hosting', 'Community held hosting')}
-                  {renderTrustCol('finances', 'Community held finances')}
-                  {renderTrustCol('mobile', 'Community held mobile apps')}
-                </div>
+          <div className="clearfix mxn2">
+            {renderTrustCol('domain', 'Community held domains')}
+            {renderTrustCol('ip', 'Shared intellectual property')}
+            {renderTrustCol('hosting', 'Community held hosting')}
+            {renderTrustCol('finances', 'Community held finances')}
+            {renderTrustCol('mobile', 'Community held mobile apps')}
+          </div>
 
-              </div>
+        </div>
+      );
     }
-
-
 
     let team = List();
 
