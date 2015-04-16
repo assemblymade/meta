@@ -5,7 +5,6 @@ var url = require('url');
 var UserStore = require('../stores/user_store');
 
 var CreateBounty = React.createClass({
-  displayName: 'CreateBounty',
   propTypes: {
     onHidden: React.PropTypes.func.isRequired,
     title: React.PropTypes.string,

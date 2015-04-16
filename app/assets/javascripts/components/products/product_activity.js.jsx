@@ -17,7 +17,6 @@ const TypeaheadUserTextArea = require('../typeahead_user_textarea.js.jsx');
 const UserStore = require('../../stores/user_store');
 const StoryTimelineFeed = require('../story_timeline_feed.js.jsx')
 
-
 const BOUNTY_TARGET_TYPE = 'wip';
 const INTRODUCTION_TARGET_TYPE = 'team_membership';
 const POST_TARGET_TYPE = 'post';
@@ -86,14 +85,6 @@ const ProductActivity = React.createClass({
     let product = this.state.product;
     let slug = product.slug;
 
-    let writePostButton = <div className="mb3">
-      <Button action={window.showCreatePost} block={true}>Write a new post</Button>
-    </div>
-
-    if (product && slug === 'meta' && !UserStore.isStaff()) {
-      writePostButton = null
-    }
-
     return (
       <div>
         <ProductHeader />
@@ -105,6 +96,7 @@ const ProductActivity = React.createClass({
             </div>
 
             <div className="md-col md-col-3 px3">
+              <Button action={window.showCreatePost} block={true}>Write a new post</Button>
             </div>
           </div>
         </div>

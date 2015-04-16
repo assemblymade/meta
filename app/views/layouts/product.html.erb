@@ -104,10 +104,7 @@
         document.getElementById('create-modal-placeholder')
       );
 
-      var modal = $('#new-post-modal').modal({ show: true })
-      modal.on('hide.bs.modal', function() {
-        React.unmountComponentAtNode(document.getElementById('create-modal-placeholder'))
-      });
+      $('#new-post-modal').modal({ show: true });
     };
 
     $('#edit-membership-modal').on('shown.bs.modal', function() {

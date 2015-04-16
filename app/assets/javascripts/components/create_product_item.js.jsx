@@ -1,7 +1,6 @@
 var Bounty = require('./bounty.js.jsx');
 var page = require('page');
 var routes = require('../routes');
-var NewPostModal = require('./posts/new_post_modal.js.jsx');
 var UserActions = require('../actions/user_actions');
 var UserStore = require('../stores/user_store');
 
