@@ -20,7 +20,7 @@ var DropdownNotifications = React.createClass({
         <li className="divider" style={{ marginTop: '0px' }} />
 
         <li>
-          <a href="#mark-as-read" className="text-small" onClick={this.markAllAsRead}>Mark all as read</a>
+          <a href="javascript:void(0);" className="text-small" onClick={this.markAllAsRead}>Mark all as read</a>
         </li>
       </ul>
     );
