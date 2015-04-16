@@ -33,14 +33,15 @@ class ProductSerializer < ApplicationSerializer
   end
 
   def video_id
-    if object.you_tube_video_url[/youtu\.be\/([^\?]*)/]
+    return "" unless url = object.you_tube_video_url
+    if url[/youtu\.be\/([^\?]*)/]
       $1
-    elsif object.you_tube_video_url[/vimeo.com\/(\d+)/]
+    elsif url[/vimeo.com\/(\d+)/]
       $1
     else
       # From
       # http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url/4811367#4811367
-      object.you_tube_video_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
+      url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
       $5
     end
   end
