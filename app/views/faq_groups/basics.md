@@ -1,6 +1,6 @@
 # How does Assembly work?
 
-Assembly enables products from software and hardware, to online communities, to be built like open source projects. Contributors earn a part of the product (in App coins) when they complete a bounty made by the core team of a product.
+Assembly enables products from software and hardware, to online communities, to be built like open source projects. Contributors earn a part of the product (in App Coins) when they complete a bounty made by the core team of a product.
 
 The projects are open and transparent, and anyone can help build them – whether you want to contribute a few hours or a few months. Product ideas, vision and execution are driven by the community.
 
@@ -18,9 +18,9 @@ Or submit your own idea [here](https://assembly.com/start)!
 
 # What parts of building can I help out with?
 
-Anything and everything. Take a look at the bounties on a particular project and see if anything is of interest for you. Or, just introduce yourself to the team working on a project you like. No matter what your skills are, there’s someone on Assembly who needs them.
+Anything and everything. Take a look at the bounties on a particular project and see if anything is of interest for you. Be sure to say Hi in [general chat](https://assembly.com/chat/general) so that the Assembly community can welcome you, or to just introduce yourself to the team working on a project you like. No matter what your skills are, there’s someone on Assembly who needs them.
 
-Everyone is free to participate in supporting and evolving any apps built on Assembly in the ways they see fit. Help out as little or as much as you want.
+Everyone is free to participate in supporting and evolving any products built on Assembly in the ways they see fit. Help out as little or as much as you want.
 
 
 # Why do people work on Assembly products?
@@ -57,7 +57,7 @@ You do. However, in order for Assembly to monetize the product on behalf of you 
 This is really important to us. When a product is built on Assembly, we believe an open, transparent process is key. That means anyone can see progress, discussions, ownership and even revenue.
 
 
-Obviously, we can’t make the claim that building products in public is the best approach if we aren’t doing that ourselves. So, go check out [assembly.com/meta](https://assembly.com/meta). You can scan through our history of development and discussion, even seeing real-time updates as we ship new features.
+Obviously, we can’t make the claim that building products in public is the best approach if we aren’t doing that ourselves. So, go check out [assembly.com/meta](https://assembly.com/meta), we are Open Source! You can scan through our history of development and discussion, even seeing real-time updates as we ship new features and even help out yourself!
 
 
 # How is Assembly different from Kickstarter or an Incubator?
