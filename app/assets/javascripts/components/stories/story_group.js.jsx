@@ -8,11 +8,11 @@ const StoryTimeline = React.createClass({
 
   renderStory: function(story, i) {
     return (
-      </div>
+      <div>
         <Story story={story} i={i} />
       </div>
     )
-  }
+  },
 
   renderStoryGroup: function(stories, key) {
     return (

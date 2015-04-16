@@ -7,7 +7,7 @@ const Story = React.createClass({
     i: React.PropTypes.number.isRequired
   },
 
-  renderStory: function(verb, i) {
+  renderStory: function(story, i) {
     var owner = story.verb == 'awarded' ? story.owner.username : ''
     var recentActor = story.actors[story.actors.length-1]
 
@@ -46,7 +46,7 @@ const Story = React.createClass({
       </div>
     )
   },
-
+  
   render: function() {
     return (
       <div>

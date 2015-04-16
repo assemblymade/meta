@@ -212,7 +212,6 @@ class User < ActiveRecord::Base
     Story.joins(:activities).
       where(activities: {product_id: [product_ids]}).
       order(created_at: :desc).limit(limit)
-
   end
 
   def last_contribution
