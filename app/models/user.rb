@@ -202,6 +202,19 @@ class User < ActiveRecord::Base
     beta_subscription
   end
 
+  def story_worthy_products
+    (self.followed_products + self.core_products).uniq
+  end
+
+  def stories(limit=200)
+    product_ids = self.story_worthy_products.map{|a| a.id}
+
+    Story.joins(:activities).
+      where(activities: {product_id: [product_ids]}).
+      order(created_at: :desc).limit(limit)
+
+  end
+
   def last_contribution
     events.order("created_at ASC").last
   end

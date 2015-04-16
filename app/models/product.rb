@@ -396,8 +396,13 @@ class Product < ActiveRecord::Base
     (wip_creator_ids | event_creator_ids).size
   end
 
-  def love
-
+  def stories(limit=nil)
+    s = Story.joins(:activities).
+      where(activities: { product_id: self.id}).
+      order(created_at: :desc)
+    if limit
+      s.limit(limit)
+    end
   end
 
   def event_creator_ids

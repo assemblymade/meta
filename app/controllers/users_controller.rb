@@ -94,6 +94,18 @@ class UsersController < ApplicationController
     }
   end
 
+  def stories
+    
+    stories = Story.joins(:activities).
+      where(activities: { product_id: @product}).
+      order(created_at: :desc).uniq.page(params[:page]).per(20)
+
+    render json: stories,
+      serializer: PaginationSerializer,
+      each_serializer: TimelineStorySerializer,
+      root: :stories
+  end
+
   def awarded_bounties
     set_user
     query = AwardedBountiesQuery.new(@user, params)
