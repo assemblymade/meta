@@ -12,13 +12,13 @@ paying for these providers.
 
 #### Purchasing new domains
 
-Assembly can purchase a domain on behalf of products. Email assembly@helpful.io
+Assembly can purchase a domain on behalf of products. Email [domains@assembly.com](mailto: domains@assembly.com)
 if you have selected an available name for purchase.
 
 #### Transferring existing domains
 
 If you already own a domain that you would like to use with your Assembly
-product, unlock your domain at your registrar and email assembly@helpful.io
+product, unlock your domain at your registrar and email [domains@assembly.com](mailto: domains@assembly.com)
 with an authorization code to initialize the transfer.
 
 #### Domain ownership
