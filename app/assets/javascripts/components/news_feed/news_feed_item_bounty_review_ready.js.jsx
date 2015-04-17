@@ -1,7 +1,8 @@
 'use strict'
 
-const NewsFeedItemEvent = require('./news_feed_item_event.js.jsx')
+const BountyStore = require('../../stores/bounty_store');
 const List = require('../ui/list.js.jsx')
+const NewsFeedItemEvent = require('./news_feed_item_event.js.jsx')
 
 const NewsFeedItemBountyReviewReady = React.createClass({
   propTypes: {
@@ -11,8 +12,11 @@ const NewsFeedItemBountyReviewReady = React.createClass({
   },
 
   render: function() {
-    const {actor, id} = this.props
-    const awardUrl = this.props.award_url
+    const {
+      actor,
+      award_url: awardUrl,
+      id
+    } = this.props
 
     return (
       <NewsFeedItemEvent timestamp={this.props.timestamp}>
@@ -22,26 +26,41 @@ const NewsFeedItemBountyReviewReady = React.createClass({
           </a> submitted work to be reviewed by the core team
         </div>
         <List type="piped">
-          <List.Item>
-            <a className="gray-2 black-hover"
-              href={awardUrl + '?event_id=' + id}
-               data-method="patch"
-               data-confirm={'Are you sure you want to award this task to @' + actor.username + '?'}>
-              Award
-            </a>
-          </List.Item>
-          <List.Item>
-            <a className="gray-2 black-hover"
-               href={awardUrl + '?event_id=' + id + '&close=true'}
-               data-method="patch"
-               data-confirm={'Are you sure you want to award this task to @' + actor.username + '?'}>
-              Award and close
-            </a>
-          </List.Item>
+          {this.renderAwardButtons()}
         </List>
       </NewsFeedItemEvent>
     )
   },
+
+  renderAwardButtons() {
+    const {
+      actor,
+      award_url: awardUrl,
+      id
+    } = this.props
+
+    if (awardUrl && BountyStore.isOpen()) {
+      return [
+        <List.Item>
+          <a className="gray-2 black-hover"
+            href={awardUrl + '?event_id=' + id}
+             data-method="patch"
+             data-confirm={'Are you sure you want to award this task to @' + actor.username + '?'}>
+            Award
+          </a>
+        </List.Item>,
+
+        <List.Item>
+          <a className="gray-2 black-hover"
+             href={this.props.award_url + '?event_id=' + id + '&close=true'}
+             data-method="patch"
+             data-confirm={'Are you sure you want to award this task to @' + actor.username + '?'}>
+            Award and close
+          </a>
+        </List.Item>
+      ];
+    }
+  }
 })
 
 module.exports = NewsFeedItemBountyReviewReady

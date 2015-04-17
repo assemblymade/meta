@@ -4,6 +4,7 @@
 // var marked = require('marked')
 
 const Avatar = require('./ui/avatar.js.jsx');
+const BountyStore = require('../stores/bounty_store');
 const CommentActionCreators = require('../actions/comment_action_creators');
 const CommentStore = require('../stores/comment_store');
 const Heart = require('./heart.js.jsx');
@@ -70,6 +71,10 @@ module.exports = React.createClass({
     }
   },
 
+  isOpen() {
+    return (BountyStore.getBounty() || {}).open;
+  },
+
   isOptimistic: function() {
     return !!this.props.optimistic;
   },
@@ -90,13 +95,13 @@ module.exports = React.createClass({
     );
   },
 
-  renderAwardOption: function() {
-    if (this.currentUserIsCore()) {
+  renderAwardOptions: function() {
+    if (this.currentUserIsCore() && BountyStore.isOpen()) {
       var id = this.props.id;
       var username = this.props.author.username;
       var awardUrl = this.props.awardUrl;
 
-      return (
+      return [
         <List.Item>
           <a className="gray-2 black-hover"
               href={awardUrl + '?event_id=' + id}
@@ -104,19 +109,8 @@ module.exports = React.createClass({
               data-confirm={'Are you sure you want to award this task to @' + username + '?'}>
             Award
           </a>
-        </List.Item>
-      );
-    }
-  },
+        </List.Item>,
 
-  renderAwardAndCloseOption: function() {
-    var bounty = this.props.bounty
-    if (this.currentUserIsCore()) {
-      var id = this.props.id;
-      var username = this.props.author.username;
-      var awardUrl = this.props.awardUrl;
-
-      return (
         <List.Item>
           <a className="gray-2 black-hover"
              href={awardUrl + '?event_id=' + id + '&close=true'}
@@ -125,7 +119,7 @@ module.exports = React.createClass({
             Award and close
           </a>
         </List.Item>
-      );
+      ];
     }
   },
 
@@ -168,8 +162,7 @@ module.exports = React.createClass({
             {this.renderLove()}
             {this.renderEditOption()}
             {this.renderReply()}
-            {this.renderAwardOption()}
-            {this.renderAwardAndCloseOption()}
+            {this.renderAwardOptions()}
           </List>
         </div>
       </div>

@@ -85,6 +85,7 @@ var NewsFeedItemComments = React.createClass({
     // server and render them.
     switch (state) {
       case 'closed':
+      case 'resolved':
         var closedEvent = this.renderOptimisticClosedEvent();
 
         if (!closedEvent) {

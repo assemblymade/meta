@@ -38,16 +38,22 @@ class BountyStore extends Store {
   getState() {
     return _bounty.state
   }
+
+  isOpen() {
+    return _bounty.open
+  }
 }
 
 module.exports = new BountyStore()
 
 function _closeBounty() {
   _bounty.state = 'closed'
+  _bounty.open = false;
 }
 
 function _reopenBounty() {
   _bounty.state = 'open'
+  _bounty.open = true;
 }
 
 function _submitWork() {

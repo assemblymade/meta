@@ -111,7 +111,7 @@ let Bounty = React.createClass({
 
     this.setState({
       bounty: bounty,
-      closed: bounty.state === 'closed'
+      closed: !bounty.open
     });
   },
 
@@ -144,10 +144,10 @@ let Bounty = React.createClass({
     let currentUser = UserStore.getUser();
 
     let valuation = (
-        <div className="left px3 py2 border-right border-gray-5">
-          <BountyValuation {...bounty} {...this.props.valuation} allowEditing={currentUser && currentUser.is_core} />
-        </div>
-      )
+      <div className="left px3 py2 border-right border-gray-5">
+        <BountyValuation {...bounty} {...this.props.valuation} allowEditing={currentUser && currentUser.is_core} />
+      </div>
+    );
 
     let lockMessage = null
     let worker = this.state.worker
@@ -176,7 +176,7 @@ let Bounty = React.createClass({
           <div className="left px3 py2">
             <ul className="list-reset list-inline mt0 mb0 h6" style={{lineHeight: '2rem'}}>
               {this.renderEditButton()}
-              {this.renderOpenButton()}
+              {this.renderCloseButton()}
               {this.renderFollowButton()}
               {this.renderInviteFriendButton()}
             </ul>
@@ -210,19 +210,16 @@ let Bounty = React.createClass({
 
   renderClosedNotice() {
     let bounty = this.state.bounty;
-    let closed = bounty.state === 'resolved' || bounty.state === 'closed'
 
-    if (!closed) {
-      return
+    if (!bounty.open) {
+      return (
+        <li className="mb0">
+          <a href="#" className="btn btn-default disabled">
+            {bounty.state === 'resolved' ? 'Completed & Closed' : 'Closed'}
+          </a>
+        </li>
+      );
     }
-
-    return (
-      <li className="mb0">
-        <a href="#" className="btn btn-default disabled">
-          {bounty.state === 'resolved' ? 'Completed & Closed' : 'Closed'}
-        </a>
-      </li>
-    )
   },
 
   renderDescription() {
@@ -249,10 +246,8 @@ let Bounty = React.createClass({
 
   renderFlagButton() {
     let bounty = this.state.bounty;
-    let currentUser = window.app.currentUser();
-    let isStaff = currentUser && currentUser.get('staff');
 
-    if (isStaff) {
+    if (UserStore.isStaff()) {
       return (
         <li className="mt0">
           <ToggleButton
@@ -292,9 +287,8 @@ let Bounty = React.createClass({
     }
 
     let bounty = this.state.bounty;
-    let closed = bounty.state == 'resolved' || bounty.state == 'closed'
 
-    if (!closed) {
+    if (bounty.open) {
       return (
         <li>
           <InviteFriendBounty
@@ -317,30 +311,22 @@ let Bounty = React.createClass({
     }
   },
 
-  renderOpenButton() {
+  renderCloseButton() {
     let bounty = this.state.bounty;
 
-    if (bounty.can_update) {
+    if (bounty.can_update && bounty.open) {
       return (
         <li className="block px1 gray-2">
-          {this.renderOpenOrClosedButton()}
+          <a href="javascript:void(0);" onClick={this.closeBounty}>Close</a>
         </li>
       )
-    }
-  },
-
-  renderOpenOrClosedButton() {
-    let bounty = this.state.bounty;
-
-    if (bounty.state !== 'closed' && !this.state.closed) {
-      return <a href="javascript:void(0);" onClick={this.closeBounty}>Close</a>;
     }
   },
 
   renderPopularizeButton() {
     let item = this.props.item;
 
-    if (item && window.app.staff()) {
+    if (item && UserStore.isStaff()) {
       return (
         <li className="mt0">
           <ToggleButton
@@ -359,7 +345,7 @@ let Bounty = React.createClass({
     let currentUser = UserStore.getUser();
     let isCore = ProductStore.isCoreTeam(currentUser);
 
-    if (this.state.closed || bounty.state === 'closed') {
+    if (this.state.closed || !bounty.open) {
       if (isCore) {
         return (
           <Button action={this.reopenBounty}>
