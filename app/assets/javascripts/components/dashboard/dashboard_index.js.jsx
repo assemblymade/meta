@@ -123,7 +123,6 @@ let DashboardIndex = React.createClass({
     let showAll = this.state.showAll
     let followedProducts = showAll ? this.state.followedProducts : this.state.followedProducts.slice(0, 8)
     let divider = null
-    let showAllLink = null
     divider = <Nav.Divider />
 
     if (this.state.followedProducts.length > 8 && !showAll) {
@@ -134,7 +133,6 @@ let DashboardIndex = React.createClass({
         this.setState({ showAll: true })
       }.bind(this)
 
-      showAllLink = <Nav.Item label="Show all" onClick={click} small={true} />
     }
 
     return (
@@ -151,7 +149,6 @@ let DashboardIndex = React.createClass({
               return <Nav.Item label={product.name} href={'/dashboard/' + product.slug } active={filter == product.slug} key={product.slug} small={true} />
             })}
 
-            {showAllLink}
           </Nav>
         </div>
       </div>
@@ -289,16 +286,19 @@ let DashboardIndex = React.createClass({
   renderStoryGroups: function() {
     let items = this.state.newsFeedItems.toJS()
     let spinner = this.renderSpinner()
-    let filter = this.state.filter
+    var filter = this.state.filter
     let interests = this.state.interests
     let user = this.state.currentUser
 
+    console.log("FILTER", filter)
 
-    return (
-      <div>
-        <UserStoryTimeline user={user} />
-      </div>
-    )
+    if (filter != null) {
+      return (
+        <div>
+          <UserStoryTimeline user={user} filter={filter} />
+        </div>
+      )
+    }
   },
 
   renderBounties: function() {

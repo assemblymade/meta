@@ -141,6 +141,7 @@ ASM::Application.routes.draw do
     end
 
     get 'users/:id/stories' => 'users#stories'
+    get 'users/:id/stories/:product_id' => 'users#stories'
     get '/users/:id/karma' => 'users#karma', :as => :user_karma
     get '/users/:id/assets' => 'users#assets', :as => :user_assets
     post '/users/:id/dismiss_welcome_banner' => 'users#dismiss_welcome_banner', :as => :dismiss_welcome_banner

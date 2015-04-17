@@ -7,7 +7,8 @@ const Store = require('./es6_store')
 let _stories = []
 let _products = []
 let _loading = false
-
+let _page = 1
+let _pages = 1
 
 class UserStoryTimelineStore extends Store {
   constructor() {
@@ -19,6 +20,8 @@ class UserStoryTimelineStore extends Store {
           _stories = action.stories
           _products = action.products
           _loading = false
+          _page = action.page
+          _pages = action.pages
           this.emitChange()
           break
 
@@ -32,6 +35,14 @@ class UserStoryTimelineStore extends Store {
 
   getStories() {
     return _stories
+  }
+
+  getPage(){
+    return _page
+  }
+
+  getPages(){
+    return _pages
   }
 
   getProducts(){

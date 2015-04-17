@@ -96,10 +96,18 @@ class UsersController < ApplicationController
 
   def stories
     set_user
-    stories = @user.stories(200)
 
-    s_stories = stories.map{|a| TimelineStorySerializer.new(a)}
-    products = @user.story_worthy_products.map{|a| ProductShallowSerializer.new(a)}
+    if params.keys.include?('product_id')
+      stories = @user.stories(100, Product.find_by(slug: params[:product_id]).id)
+    else
+      stories = @user.stories(100)
+    end
+
+    s_stories = stories.map do |a|
+      r = TimelineStorySerializer.new(a)
+    end
+
+    products = @user.story_worthy_products.map{|a| [a.id, ProductShallowSerializer.new(a)]}.to_h
     r = {}
     r['stories'] = s_stories
     r['products'] = products

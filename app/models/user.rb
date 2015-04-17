@@ -206,8 +206,12 @@ class User < ActiveRecord::Base
     (self.followed_products + self.core_products).uniq
   end
 
-  def stories(limit=200)
-    product_ids = self.story_worthy_products.map{|a| a.id}
+  def stories(limit=200, product_id_filter=nil)
+    if product_id_filter
+      product_ids = product_id_filter
+    else
+      product_ids = self.story_worthy_products.map{|a| a.id}
+    end
 
     Story.joins(:activities).
       where(activities: {product_id: [product_ids]}).

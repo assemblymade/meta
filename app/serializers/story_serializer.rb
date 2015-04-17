@@ -3,8 +3,7 @@ class StorySerializer < ApplicationSerializer
 
   has_many :actors
   has_one :owner
-  has_one :product
-  attributes :key, :body_preview, :sentences, :updated, :url
+  attributes :key, :body_preview, :sentences, :updated, :url, :product_id
 
   def url
     object.url_params && url_for(object.url_params)
@@ -31,10 +30,8 @@ class StorySerializer < ApplicationSerializer
     end
   end
 
-  def product
-    if product = subject.try(:product)
-      ProductShallowSerializer.new(product)
-    end
+  def product_id
+    object.subject.try(:product).try(:id)
   end
 
   # unix timestamp to match readraptor
@@ -46,9 +43,9 @@ class StorySerializer < ApplicationSerializer
     "Story_#{object.id}"
   end
 
-  cached
-
-  def cache_key
-    ['v1', object]
-  end
+  # cached
+  #
+  # def cache_key
+  #   ['v5', object]
+  # end
 end
