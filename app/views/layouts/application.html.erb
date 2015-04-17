@@ -61,24 +61,7 @@
     </script>
 
     <% if signed_in? %>
-      <script>
-        // window.pusher needs to be defined before
-        // the content_for block executes
-        window.app.setCurrentUser(<%= UserWithBalanceSerializer.new(current_user, scope:  current_user).to_json.html_safe %>);
-        if (typeof Pusher !== 'undefined') {
-          window.pusher = new Pusher($('meta[name=pusher-key]').attr('content'), {
-            authEndpoint: <%= webhooks_pusher_path.to_json.html_safe %>
-          });
-          pusher.
-            subscribe(<%== current_user.pusher_channel.to_json %>).
-            bind_all(function(message, data) {
-              Dispatcher.dispatch({
-                type: message,
-                data: data
-              })
-            });
-        }
-      </script>
+      <%= render 'shared/pusher' %>
       <%= track_readraptor(@stories_to_mark_as_read) if @stories_to_mark_as_read %>
     <% end %>
 

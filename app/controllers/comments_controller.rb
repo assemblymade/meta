@@ -42,6 +42,7 @@ class CommentsController < ApplicationController
       @comment.publish_activity!
       @comment.notify_subscribers!
       @comment.track_acknowledgements!
+      pusher(@discussion.id, "COMMENT_ADDED", NewsFeedItemCommentSerializer.new(@comment))
       push_mentions(@comment)
     end
 

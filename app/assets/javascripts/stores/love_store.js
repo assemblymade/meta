@@ -14,6 +14,15 @@ class LoveStore extends Store {
 
     this.dispatchToken = Dispatcher.register((action) => {
       switch(action.type) {
+        case ActionTypes.COMMENT_ADDED:
+          var comment = action.data
+          _heartables[comment.id] = {
+            heartable_type: 'NewsFeedItemComment',
+            heartable_id: comment.id,
+            hearts_count: 0
+          }
+          break
+
         case ActionTypes.DISCUSSION_RECEIVE:
           setHeartables(action.comments);
           setUserHearts(action.userHearts);

@@ -20,6 +20,10 @@ class DiscussionStore extends Store {
           _canUpdate = action.bounty.can_update
           break
 
+        case ActionTypes.COMMENT_ADDED:
+          _comments.confirmed[action.data.news_feed_item_id].push(action.data)
+          break
+
         case ActionTypes.COMMENT_UPDATED:
           updateComment(action)
           break

@@ -4,7 +4,7 @@
 var ActivityFeedComment = require('../activity_feed_comment.js.jsx');
 var BountyStore = require('../../stores/bounty_store');
 var Comment = require('../comment.js.jsx');
-var DiscussionActionCreators = require('../../actions/discussion_action_creators');
+var DiscussionActions = require('../../actions/discussion_action_creators');
 var DiscussionStore = require('../../stores/discussion_store');
 var Drawer = require('../ui/drawer.js.jsx');
 var Icon = require('../ui/icon.js.jsx');
@@ -42,6 +42,7 @@ var NewsFeedItemComments = React.createClass({
     }
 
     DiscussionStore.addChangeListener(this.getDiscussionState);
+    DiscussionActions.discussionSelected(this.props.item.id)
   },
 
   componentDidUpdate: function(prevProps, prevState) {
@@ -60,6 +61,7 @@ var NewsFeedItemComments = React.createClass({
     }
 
     DiscussionStore.removeChangeListener(this.getDiscussionState);
+    DiscussionActions.discussionClosed(this.props.item.id)
   },
 
   fetchCommentsFromServer: function(e) {
@@ -69,7 +71,7 @@ var NewsFeedItemComments = React.createClass({
       this.setState({ loading: true });
     }
 
-    DiscussionActionCreators.fetchCommentsFromServer(
+    DiscussionActions.fetchCommentsFromServer(
       this.props.item.id
     );
   },
@@ -244,7 +246,6 @@ var NewsFeedItemComments = React.createClass({
     }
 
     var self = this;
-
     var renderedComments = comments.map(function(comment, i) {
       if (!showAllComments) {
         if (comment.type !== 'news_feed_item_comment') {

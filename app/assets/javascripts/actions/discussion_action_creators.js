@@ -5,8 +5,8 @@ var LoveActions = require('../actions/love_action_creators');
 var LoveStore = require('../stores/love_store');
 var Routes = require('../routes');
 
-var DiscussionActionCreators = {
-  fetchCommentsFromServer: function(itemId) {
+module.exports = {
+  fetchCommentsFromServer(itemId) {
     var url = Routes.discussion_comments_path({
       discussion_id: itemId
     });
@@ -34,7 +34,18 @@ var DiscussionActionCreators = {
         console.log(error);
       }
     });
+  },
+
+  discussionSelected(id) {
+    window.pusher.subscribe(id).bind_all((message, data) => {
+      Dispatcher.dispatch({
+        type: message,
+        data: data
+      })
+    });
+  },
+
+  discussionClosed(id) {
+    window.pusher.unsubscribe(id)
   }
 };
-
-module.exports = DiscussionActionCreators;

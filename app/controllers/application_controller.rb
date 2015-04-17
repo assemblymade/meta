@@ -173,6 +173,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def pusher(channel, message, payload)
+    PusherWorker.perform_async(
+      channel,
+      message,
+      payload.as_json,
+      socket_id: request.headers['X-Pusher-Socket-ID']
+    )
+  end
+
   def raise_not_found
     render(text: 'Not Found', status: 404)
   end
