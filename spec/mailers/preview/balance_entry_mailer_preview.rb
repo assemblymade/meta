@@ -9,7 +9,7 @@ class BalanceEntryMailerPreview < ActionMailer::Preview
       User.where(id: user_ids).shuffle.each do |user|
         balance = User::Balance.new(user)
 
-        if !user.sponsored? && balance.available_earnings > 0
+        if !user.staff? && balance.available_earnings > 0
           balance_entry_ids = User::BalanceEntry.joins(:profit_report).
                 where('profit_reports.end_at = ?', end_at).
                 where(user_id: user.id).

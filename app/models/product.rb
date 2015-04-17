@@ -69,7 +69,6 @@ class Product < ActiveRecord::Base
   has_many :team_memberships
   has_many :transaction_log_entries
   has_many :viewings, as: :viewable
-  has_many :votes, as: :voteable
   has_many :watchers, through: :watchings, source: :user
   has_many :watchings, as: :watchable
   has_many :weekly_metrics
@@ -198,10 +197,6 @@ class Product < ActiveRecord::Base
     joins(:activities).where('activities.created_at > ?', 30.days.ago).group('products.id').having('count(*) > 5').count.count
   end
 
-  def sum_viewings
-    Viewing.where(viewable: self).count
-  end
-
   def most_active_contributor_ids(limit=6)
     activities.group('actor_id').order('count_id desc').limit(limit).count('id').keys
   end
@@ -319,12 +314,6 @@ class Product < ActiveRecord::Base
     wip_creator_ids | event_creator_ids
   end
 
-  def contributors_with_no_activity_since(since)
-    contributors.select do |contributor|
-      contributor.last_contribution.created_at < since
-    end
-  end
-
   def core_team?(user)
     return false if user.nil?
     team_memberships.core_team.active.find_by(user_id: user.id).present?
@@ -366,10 +355,6 @@ class Product < ActiveRecord::Base
 
   def open_tasks_count
     tasks.where(closed_at: nil).count
-  end
-
-  def voted_for_by?(user)
-    user && user.voted_for?(self)
   end
 
   def number_of_code_tasks
@@ -424,10 +409,6 @@ class Product < ActiveRecord::Base
     chat_rooms.first || ChatRoom.general
   end
 
-  def count_presignups
-    votes.select(:user_id).distinct.count
-  end
-
   def slug_candidates
     [
       :name,
@@ -437,14 +418,6 @@ class Product < ActiveRecord::Base
 
   def creator_username
     user.username
-  end
-
-  def voted_by?(user)
-    votes.where(user: user).any?
-  end
-
-  def combined_watchers_and_voters
-    (votes.map {|vote| vote.user } + watchers).uniq
   end
 
   def asset_address

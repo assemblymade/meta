@@ -6,10 +6,6 @@ class UserDecorator < ApplicationDecorator
     helpers.image_path(avatar.url(size * 2))
   end
 
-  def sponsored?
-    is_staff?
-  end
-
   def sum_app_cents
     TransactionLogEntry.sum_balances(self)
   end

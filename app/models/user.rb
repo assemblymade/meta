@@ -16,18 +16,16 @@ class User < ActiveRecord::Base
     :unless => Rails.env.test?
 
   belongs_to :user_cluster
-  has_many :leader_positions
 
   has_many :activities,    foreign_key: 'actor_id'
-  has_many :core_products, through: :core_team_memberships, source: :product
-  has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
-
-  has_many :assembly_assets
   has_many :awards, foreign_key: 'winner_id'
   has_many :choices
+  has_many :core_products, through: :core_team_memberships, source: :product
+  has_many :core_team_memberships, -> { where(is_core: true) }, class_name: 'TeamMembership'
   has_many :deeds
   has_many :events
   has_many :hearts
+  has_many :leader_positions
   has_many :products
   has_many :product_logos
   has_many :proposals
@@ -38,7 +36,6 @@ class User < ActiveRecord::Base
   has_many :wip_workers, :class_name => 'Wip::Worker'
   has_many :wips_working_on, ->{ where(state: Task::IN_PROGRESS) }, :through => :wip_workers, :source => :wip
   has_many :wips_watched, :through => :watchings, :source => :watchable, :source_type => Wip
-  has_many :votes
   has_many :wips_awarded_to, through: :awards, source: :wip
   has_many :wips_commented_on, -> { where(events: { type: Event::Comment }).group('wips.id').order('MAX(events.created_at) DESC') }, :through => :events, :source => :wip
   has_many :screenshots, through: :assets
@@ -97,8 +94,6 @@ class User < ActiveRecord::Base
   before_validation -> { self.mail_preference = MAIL_DAILY }, on: :create
   validates :mail_preference, inclusion: { in: [MAIL_DAILY, MAIL_HOURLY, MAIL_IMMEDIATE, MAIL_NEVER] }
 
-  after_save :username_renamed, :if => :username_changed?
-
   validates :username,
     presence: true,
     uniqueness: { case_sensitive: false },
@@ -117,37 +112,37 @@ class User < ActiveRecord::Base
   scope :with_avatars, -> { where.not(gravatar_verified_at: nil) }
   scope :wip_creators, -> { joins(:wips) }
 
-  class << self
-    def find_first_by_auth_conditions(tainted_conditions)
-      conditions = tainted_conditions.dup
-      conditions.try(:permit!)
-      if login = conditions.delete(:login).try(:downcase)
-        if login.uuid?
-          where(conditions).where("id = ?", login).first
-        else
-          where(conditions).where("lower(email) = ? OR lower(username) = ?", login, login).first
-        end
+  def self.find_first_by_auth_conditions(tainted_conditions)
+    conditions = tainted_conditions.dup
+    conditions.try(:permit!)
+    if login = conditions.delete(:login).try(:downcase)
+      if login.uuid?
+        where(conditions).where("id = ?", login).first
       else
-        where(conditions).first
+        where(conditions).where("lower(email) = ? OR lower(username) = ?", login, login).first
       end
+    else
+      where(conditions).first
     end
+  end
 
-    def by_partial_match(query)
-      where("lower(name) like :query", query: "%#{query.downcase}%")
-    end
+  def self.by_partial_match(query)
+    where("lower(name) like :query", query: "%#{query.downcase}%")
+  end
 
-    %w(asm-bot maeby kernel).each do |username|
+  class << self
+    %w(asm-bot kernel).each do |username|
       define_method username.underscore.to_sym do
         find_by(username: username).tap do |user|
           raise "You need an #{username} user in your database. Run db:seeds" if user.nil?
         end
       end
     end
+  end
 
-    def contributors
-      union_query = Arel::Nodes::Union.new(wip_creators.arel, event_creators.arel)
-      User.find_by_sql(union_query.to_sql)
-    end
+  def self.contributors
+    union_query = Arel::Nodes::Union.new(wip_creators.arel, event_creators.arel)
+    User.find_by_sql(union_query.to_sql)
   end
 
   def has_github_account?
@@ -186,24 +181,12 @@ class User < ActiveRecord::Base
     self.core_team_memberships.map{ |a| Product.find(a.product_id) }
   end
 
-  def sponsored?
-    staff?
-  end
-
-  def beta_subscription
-    !beta_subscriber_at.nil?
-  end
-
-  def beta_subscription=(subscribed)
+  def beta_subscriber=(subscribed)
     self.beta_subscriber_at = subscribed.to_i == 1 ? Time.now : nil
   end
 
-  def is_beta_subscriber?
-    beta_subscription
-  end
-
-  def last_contribution
-    events.order("created_at ASC").last
+  def beta_subscriber?
+    beta_subscriber_at.present?
   end
 
   def email_failed_at!(time)
@@ -213,20 +196,8 @@ class User < ActiveRecord::Base
     self.save!
   end
 
-  def email_failed?
-    !!email_failed_at
-  end
-
-  def employment
-    UserEmployment.new(JSON.parse(extra_data)['work']) unless extra_data.nil?
-  end
-
   def confirmation_sent?
     !!confirmation_sent_at
-  end
-
-  def influence
-    1
   end
 
   def password_required?
@@ -249,17 +220,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def has_voted_for?(product)
-    product.voted_by?(self)
-  end
-
-  def most_interesting_product
-      products.where(flagged_at: nil).
-               where('lower(name) != ?', 'test').
-               order(:watchings_count).last
-
-  end
-
   def love_given
     Heart.where(user: self).count.to_f
   end
@@ -270,13 +230,6 @@ class User < ActiveRecord::Base
     else
       0
     end
-  end
-
-  def partnerships
-    Product.
-       joins(:transaction_log_entries).
-       where(transaction_log_entries: { wallet_id: id }).
-       group('products.id')
   end
 
   def involved_products
@@ -293,20 +246,8 @@ class User < ActiveRecord::Base
     Watching.watch!(self, Product.find_by!(slug: slug)) unless slug.blank?
   end
 
-  def sum_assembly_assets
-    assembly_assets.reduce(0) { |col, asset| asset.amount + col }
-  end
-
   def to_param
     username
-  end
-
-  def voted_for?(votable)
-    votable.votes.where(user: self).any?
-  end
-
-  def username_renamed
-    # UsernameRenameWorker.perform_async self.id, username_was
   end
 
   def short_name
@@ -433,14 +374,6 @@ class User < ActiveRecord::Base
       wallet_public_address: key_pair["public_address"],
       wallet_private_key: key_pair["private_key"]
     )
-  end
-
-  def sum_viewings
-    self.viewings.count
-  end
-
-  def welcome_tweet
-    Tweeter.new.tweet_welcome_user(self)
   end
 
   #governance

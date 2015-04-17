@@ -53,7 +53,6 @@ describe Wip do
         wip.allocate! joe_random
         wip.review_me! joe_random
         wip.award! closer, winning_event
-        wip.votes.create! user: winner, ip: '1.2.3.4'
         wip.reload
       }
 
@@ -89,11 +88,6 @@ describe Wip do
         expect(Activities::Open.first.target).to eq(wip)
       end
     end
-  end
-
-  it 'can be voted' do
-    wip.votes.create! user: voter, ip: '1.2.3.4'
-    wip.votes.count == 1
   end
 
   describe '#update_tag_list' do

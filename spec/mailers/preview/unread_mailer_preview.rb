@@ -18,11 +18,6 @@ class UnreadMailerPreview < ActionMailer::Preview
     UnreadMailer.unread_content(User.find_by(username: 'whatupdave').id, serialize_articles(activity))
   end
 
-  def weekly
-    newsletter = create_newsletter!
-    DigestMailer.weekly(user.id, newsletter.id)
-  end
-
   private
 
   def user

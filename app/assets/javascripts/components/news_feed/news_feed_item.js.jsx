@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 const ActivityFeedComment = require('../activity_feed_comment.js.jsx');
 const AppIcon = require('../app_icon.js.jsx');
 const ArchivedNewsFeedItemsStore = require('../../stores/archived_news_feed_items_store');
@@ -113,7 +115,7 @@ let NewsFeedItem = React.createClass({
   render: function() {
     return (
       <Tile>
-        {this.props.productPage ? null : this.renderSource()}
+        {this.props.productPage ? null : this.renderProductHeader()}
         {this.renderTarget()}
         {this.props.enableModal && this.state.modalShown ? this.renderModal() : null}
         {this.renderTags()}
@@ -326,7 +328,8 @@ let NewsFeedItem = React.createClass({
     );
   },
 
-  renderSource: function() {
+  // TODO: this probably won't be necessary with dashboard changes
+  renderProductHeader: function() {
     let product = this.props.product
 
     if (!product) {

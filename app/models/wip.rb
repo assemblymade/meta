@@ -381,10 +381,6 @@ class Wip < ActiveRecord::Base
     update! watchings_count: followings.count
   end
 
-  def sum_viewings
-    Viewing.where(viewable: self).count
-  end
-
   # stories
   def url_params
     [product, self]

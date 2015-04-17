@@ -334,7 +334,7 @@ class ProductsController < ProductController
       product_id: product.id
     )
 
-    (product.votes + product.watchings + product.team_memberships).map do |h|
+    (product.watchings + product.team_memberships).map do |h|
       next unless h.user_id
 
       heart = @idea.news_feed_item.hearts.find_or_initialize_by(user_id: h.user_id)

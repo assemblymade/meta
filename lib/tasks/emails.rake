@@ -137,7 +137,7 @@ namespace :emails do
         EmailLog.send_once(user.id, key) do
           balance = User::Balance.new(user)
 
-          if !user.sponsored?
+          if !user.staff?
             balance_entries = User::BalanceEntry.joins(:profit_report).
                   where('profit_reports.end_at = ?', end_at).
                   where(user_id: user.id)
@@ -150,17 +150,6 @@ namespace :emails do
               UserBalanceMailer.delay(queue: 'mailer').new_balance(balance_entries.pluck(:id))
             end
           end
-        end
-      end
-    end
-  end
-
-  task :pitch_week_intro => :environment do
-    User.where(id: Product.group(:user_id).count.keys).each do |user|
-      if product = user.most_interesting_product
-        EmailLog.send_once(user.id, :pitch_week_intro) do
-          puts "#{user.username.ljust(20)} #{product.name}"
-          TextMailer.delay.pitch_week_intro(user.id, product.id)
         end
       end
     end

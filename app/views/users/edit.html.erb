@@ -204,7 +204,7 @@
           <%= form_for @user, html: {class: 'form'} do |f| %>
             <div class="form-group">
               <%= f.label :beta_subscription do %>
-              <%= f.check_box :beta_subscription %>
+              <%= f.check_box :beta_subscriber? %>
               Subscribe to Assembly beta features
               <% end %>
             </div>

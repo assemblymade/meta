@@ -8,12 +8,6 @@ describe User do
     expect(user.mail_preference).to eq(User::MAIL_DAILY)
   end
 
-  it 'indicates if the user has already voted' do
-    expect {
-      product.votes.create user: user, ip: '127.0.0.1'
-    }.to change { user.has_voted_for?(product) }.from(false).to(true)
-  end
-
   it 'should return wips a user is working on' do
     user = User.make!
     task = Task.make!

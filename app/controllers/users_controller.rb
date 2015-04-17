@@ -44,13 +44,6 @@ class UsersController < ApplicationController
     respond_with @user
   end
 
-  def assets
-    authenticate_user!
-    @show_karma = current_user && current_user.staff?
-    @user = User.find_by(username: params[:id]).decorate
-    @assets = @user.assembly_assets.group_by { |asset| asset.product }
-  end
-
   def karma
     @show_karma = current_user && current_user.staff?
     @user = User.find_by(username: params[:id]).decorate

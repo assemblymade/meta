@@ -40,7 +40,12 @@ class UserAnalyticsSerializer < ActiveModel::Serializer
 
   def partner_of
     return [] if Rails.env.test?
-    object.partnerships.pluck(:name)
+    partnerships = Product.
+       joins(:transaction_log_entries).
+       where(transaction_log_entries: { wallet_id: object.id }).
+       group('products.id')
+
+    partnerships.pluck(:name)
   end
 
   def following

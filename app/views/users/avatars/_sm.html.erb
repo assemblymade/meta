@@ -2,7 +2,7 @@
   <!-- FIXME Remove explicit width and heights -->
   <img src="<%= user.avatar_url(30) %>" alt="<%= user.username %>" />
 
-  <% if user.sponsored? %>
+  <% if user.staff? %>
     <div class="avatar-sponsor"></div>
   <% end %>
 </div>
