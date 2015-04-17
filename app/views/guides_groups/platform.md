@@ -26,7 +26,7 @@ Products are owned by the community.  Individual users earn ownership of
 products they work on through <a href="#bounties">bounties</a> and <a
 href="#other-forms-of-compensation">other mechanisms</a>.  Different users will
 have different amounts of ownership.  Each product has its own, independent
-ownership distribution.  g Ownership is denominated in units called <a
+ownership distribution. Ownership is denominated in units called <a
 href="#coins">App Coins</a>.  Each product has its own coin.  So for example,
 Coderwall has one kind of App Coin and Buckets has another.  Users earn
 ownership by accumulating coins in different products.  
