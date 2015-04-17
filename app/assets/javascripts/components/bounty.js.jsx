@@ -335,8 +335,6 @@ let Bounty = React.createClass({
     if (bounty.state !== 'closed' && !this.state.closed) {
       return <a href="javascript:void(0);" onClick={this.closeBounty}>Close</a>;
     }
-
-    return <a href="javascript:void(0);" onClick={this.reopenBounty}>Reopen</a>;
   },
 
   renderPopularizeButton() {
@@ -357,10 +355,19 @@ let Bounty = React.createClass({
   },
 
   renderStartWorkButton() {
-    let currentUser = UserStore.getUser();
     let bounty = this.state.bounty;
+    let currentUser = UserStore.getUser();
+    let isCore = ProductStore.isCoreTeam(currentUser);
 
     if (this.state.closed || bounty.state === 'closed') {
+      if (isCore) {
+        return (
+          <Button action={this.reopenBounty}>
+            Closed — Reopen?
+          </Button>
+        );
+      }
+
       return (
         <Button>
           {bounty.state === 'resolved' ? 'Completed & Closed' : 'Closed'}
@@ -383,7 +390,7 @@ let Bounty = React.createClass({
       return <Button><Icon icon="lock" /> Locked for {formatShortTime(this.state.lockUntil)}</Button>
     }
 
-    if (ProductStore.isCoreTeam(UserStore.getUser())) {
+    if (isCore) {
       return <Button action={this.assignToUser} type="primary">Assign to user</Button>
     }
     return <Button action={this.startWork} type="primary">Assign to me</Button>
