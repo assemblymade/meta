@@ -298,7 +298,7 @@ namespace :bounties do
       elsif task_expiration - now < 12.hours
         unless task.state == 'reviewing'
           EmailLog.send_once task.locked_by, "#{task.id}-#{task.locked_at}" do
-            UserMailer.delay(queue: 'mailer').twelve_hour_reminder(task.locked_by, task.id)
+            # UserMailer.delay(queue: 'mailer').twelve_hour_reminder(task.locked_by, task.id)
           end
         end
       end
