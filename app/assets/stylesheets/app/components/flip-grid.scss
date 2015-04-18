@@ -38,14 +38,14 @@
     padding-top: 11rem;
     padding-bottom: 11rem;
   }
-  //
+
   p {
     @extend .text-2;
   }
   > .container  {
     position: relative;
     z-index: 5;
-    //
+
     .footer { // bootstrap overwrite
       margin:0;
       padding:0;
@@ -71,7 +71,7 @@
     }
     > .footer {
       display: none;
-      //
+
       @media screen and (min-width: 600px) {
         display: block;
         left: 38.5rem;
@@ -89,7 +89,7 @@
         max-width: 32rem;
         text-align: left;
       }
-      //
+
       p {
         margin-bottom:3.5rem;
       }
@@ -112,16 +112,13 @@
   width: 36rem;
   margin: 0 0 0 -4px;
   padding: 0;
-  //
+
   li {
     display: inline-block;
     margin: 0;
     padding: 0;
     list-style: none;
-    //
-    &:hover {
-      background: $black;
-    }
+
     img {
       width: 12rem;
     }
@@ -130,15 +127,4 @@
     position: relative;
     top: -12rem;
   }
-  a {
-    &:hover {
-      opacity: 0.25;
-    }
-  }
 }
-
-
-// -- Delta's ------------
-//
-// http://assembly.com/about
-
