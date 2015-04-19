@@ -8,12 +8,6 @@ class SingleSignOnController < ApplicationController
     return render text: "invalid user", status: 403 unless requested_user.nil? || (current_user != requested_user)
 
     payload = return_payload
-    if return_sso_url.nil?
-      # landline doesn't send return_sso_url and requires additional values
-      payload[:team] = ENV["LANDLINE_TEAM"]
-      payload[:real_name] = current_user.name,
-      payload[:profile_url] = user_url(current_user)
-    end
 
     packed = Base64.encode64(Rack::Utils.build_query(payload)).gsub("\n", '')
 
@@ -21,17 +15,24 @@ class SingleSignOnController < ApplicationController
     redirect_to "#{return_url}?payload=#{URI.escape(packed)}&sig=#{sign(packed)}"
   end
 
+  private
+
   def return_payload
-    {
-      nonce: nonce,
+    payload = req_payload.merge({
       id: current_user.id,
       avatar_url: current_user.avatar.url.to_s,
       username: current_user.username,
       email: current_user.email,
-    }
-  end
+    })
 
-  private
+    if return_sso_url.nil?
+      # landline doesn't send return_sso_url and requires additional values
+      payload[:team] = ENV["LANDLINE_TEAM"]
+      payload[:real_name] = current_user.name,
+      payload[:profile_url] = user_url(current_user)
+    end
+    payload
+  end
 
   def req_payload
     @req_payload ||= Rack::Utils.parse_query(Base64.decode64(params[:payload]))
