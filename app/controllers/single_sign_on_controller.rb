@@ -1,44 +1,54 @@
 class SingleSignOnController < ApplicationController
-  after_filter :set_access_control_headers
+  after_action :set_access_control_headers
+  before_action :authenticate_user!
 
   def sso
-    return render nothing: true, status: 401 unless sign(params[:payload]) == params[:sig]
-    return render nothing: true, status: 401 unless nonce = extract_nonce
-    return render nothing: true, status: 403 unless current_user = extract_user
+    return render text: "invalid sig", layout: false, status: 401 unless sign(params[:payload]) == params[:sig]
+    return render text: "invalid nonce", layout: false, status: 401 unless nonce
+    return render text: "invalid user", status: 403 unless requested_user.nil? || (current_user != requested_user)
 
-    user = Addressable::URI.new
-    user.query_values = {
+    payload = return_payload
+    if return_sso_url.nil?
+      # landline doesn't send return_sso_url and requires additional values
+      payload[:team] = ENV["LANDLINE_TEAM"]
+      payload[:real_name] = current_user.name,
+      payload[:profile_url] = user_url(current_user)
+    end
+
+    packed = Base64.encode64(Rack::Utils.build_query(payload)).gsub("\n", '')
+
+    return_url = return_sso_url || "#{ENV["LANDLINE_URL"]}/sessions/sso"
+    redirect_to "#{return_url}?payload=#{URI.escape(packed)}&sig=#{sign(packed)}"
+  end
+
+  def return_payload
+    {
       nonce: nonce,
-      team: ENV["LANDLINE_TEAM"],
       id: current_user.id,
       avatar_url: current_user.avatar.url.to_s,
       username: current_user.username,
       email: current_user.email,
-      real_name: current_user.name,
-      profile_url: user_url(current_user)
     }
-
-    payload = Base64.encode64(user.query)
-    sig = sign(payload)
-    url = "#{ENV["LANDLINE_URL"]}/sessions/sso?payload=#{URI.escape(payload)}&sig=#{sig}"
-
-    redirect_to url
   end
 
   private
 
-  def decode_payload
-    payload = params[:payload]
-    raw = Base64.decode64(payload)
-    uri = CGI.parse(raw)
+  def req_payload
+    @req_payload ||= Rack::Utils.parse_query(Base64.decode64(params[:payload]))
   end
 
-  def extract_nonce
-    decode_payload["nonce"][0]
+  def nonce
+    req_payload["nonce"]
   end
 
-  def extract_user
-    User.find_by(authentication_token: decode_payload["uid"][0])
+  def requested_user
+    if uid = req_payload["uid"]
+      User.find_by(authentication_token: uid)
+    end
+  end
+
+  def return_sso_url
+    req_payload["return_sso_url"]
   end
 
   def sign(payload)
