@@ -16,7 +16,7 @@ var UserStoryTimelineActions = {
           Dispatcher.dispatch({
             type: ActionTypes.USER_STORIES_RECEIVE,
             stories: data.stories,
-            products: [data.products]
+            products: data.products
           })
         }
       })
@@ -31,7 +31,7 @@ var UserStoryTimelineActions = {
           Dispatcher.dispatch({
             type: ActionTypes.USER_STORIES_RECEIVE,
             stories: data.stories,
-            products: [data.products]
+            products: data.products
           })
         }
       })
@@ -47,7 +47,6 @@ var UserStoryTimelineActions = {
 
     var stories = UserStoryTimelineStore.getStories()
     var products = UserStoryTimelineStore.getProducts()
-    console.log("PRODUCTS", products)
     if (filter == null || filter == "interests" || filter == "all") {
       $.ajax({
         url: "/users/"+user.username + "/stories",
@@ -58,7 +57,7 @@ var UserStoryTimelineActions = {
           Dispatcher.dispatch({
             type: ActionTypes.USER_STORIES_RECEIVE,
             stories: stories.concat(data.stories),
-            products: products.concat(data.products)
+            products: $.extend(products, data.products)
           })
         }
       })
@@ -73,7 +72,7 @@ var UserStoryTimelineActions = {
           Dispatcher.dispatch({
             type: ActionTypes.USER_STORIES_RECEIVE,
             stories: stories.concat(data.stories),
-            products: products.concat(data.products)
+            products: $.extend(products, data.products)
           })
         }
       })

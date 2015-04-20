@@ -24,7 +24,7 @@ const StoryGroup = React.createClass({
         <div className="gray-2 px2 pb1 pt2">{key}</div>
 
         <Tile>
-          {this.props.stories.map(this.renderStory).toJS()}
+          {stories.map(this.renderStory).toJS()}
         </Tile>
       </div>
     )

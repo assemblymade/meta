@@ -16,7 +16,7 @@ const UserStoryTimeline = React.createClass({
   getInitialState: function() {
     return {
       stories: [],
-      products: [],
+      products: {},
       loading: false
     }
   },
@@ -27,7 +27,6 @@ const UserStoryTimeline = React.createClass({
 
   componentDidMount: function() {
     window.addEventListener('scroll', this.onScroll);
-    console.log("FILTER IN TIMELINE", this.props.filter)
     UserStoryTimelineActions.fetchStories(this.props.user, this.props.filter);
     UserStoryTimelineStore.addChangeListener(this._onChange)
   },
@@ -91,7 +90,7 @@ const UserStoryTimeline = React.createClass({
       loading: true,
       page: (this.state.page || 1) + 1
     }, function() {
-      UserStoryTimelineActions.fetchStories(this.props.user, this.props.product)
+      UserStoryTimelineActions.fetchStories(this.props.user, this.props.filter)
     }.bind(this));
   },
 
