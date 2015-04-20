@@ -107,123 +107,114 @@
   }
 
 </style>
-<% if (!current_user.is_staff? && @debug) || (current_user.is_staff? && !@debug) %>
-  <div style="position: absolute; top: 48px; bottom: 0px; width: 100%; overflow:hidden">
-    <iframe width="100%" height="100%"
-      src="<%= ENV['LANDLINE_HOST'] %>/chat?team=assembly&room=<%= @chat_room.product.try(:slug) || 'general' %>&uid=<%= current_user.authentication_token %>"
-      style="border: none;">
-    </iframe>
-  </div>
-<% else %>
-  <div class="chat-wrapper">
+<div class="chat-wrapper">
 
-    <div class="nc">
+  <div class="nc">
 
-      <div class="nc-channels hidden-xs visible-sm-block visible-md-block visible-lg-block">
+    <div class="nc-channels hidden-xs visible-sm-block visible-md-block visible-lg-block">
 
-        <% if @chat_room.product %>
-          <a class="block px3 mt2 mb1" href="<%= product_path(@chat_room.product) %>" target="_blank">
-            <h4 class="mt0 mb0" style="color:rgba(255,255,255,.6)">
-              <span class="icon icon-chevron-left icon-left mxn1"></span>
-              <%= @chat_room.product.name %>
-            </h4>
-          </a>
+      <% if @chat_room.product %>
+        <a class="block px3 mt2 mb1" href="<%= product_path(@chat_room.product) %>" target="_blank">
+          <h4 class="mt0 mb0" style="color:rgba(255,255,255,.6)">
+            <span class="icon icon-chevron-left icon-left mxn1"></span>
+            <%= @chat_room.product.name %>
+          </h4>
+        </a>
 
-          <a class="block px3 mb2" href="<%= product_wips_path(@chat_room.product) %>" target="_blank">
-            <h5 class="mt0 mb0" style="color:rgba(255,255,255,.6)">
-              <%= @chat_room.product.name %> Bounties
-            </h5>
-          </a>
-
-          <hr class="mt0 mb0" style="border-color:rgba(0,0,0,0.1)">
-        <% end %>
-
-        <div class="p3">
-          <h5 class="mt0 mb2" style="color:rgba(255,255,255,.6)">Channels</h5>
-          <%= react_component 'ChannelsList', currentRoom: @chat_room.key %>
-        </div>
+        <a class="block px3 mb2" href="<%= product_wips_path(@chat_room.product) %>" target="_blank">
+          <h5 class="mt0 mb0" style="color:rgba(255,255,255,.6)">
+            <%= @chat_room.product.name %> Bounties
+          </h5>
+        </a>
 
         <hr class="mt0 mb0" style="border-color:rgba(0,0,0,0.1)">
+      <% end %>
 
-        <div class="p3">
-          <h5 class="mt0 mb2" style="color:rgba(255,255,255,.6)">People</h5>
-          <%= react_component 'MembersView', url:  api_chat_room_users_path(@chat_room) %>
-        </div>
+      <div class="p3">
+        <h5 class="mt0 mb2" style="color:rgba(255,255,255,.6)">Channels</h5>
+        <%= react_component 'ChannelsList', currentRoom: @chat_room.key %>
       </div>
 
-      <div class="nc-messages">
-        <div class="nc-messages-content">
+      <hr class="mt0 mb0" style="border-color:rgba(0,0,0,0.1)">
 
-          <div class="chat js-chat">
-            <div class="py2 px3">
-              <div class="center mb2">
-                <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= api_chat_room_comments_path(@chat_room, format: 'json') %>" style="margin-top: 36px;">Load more</a>
-              </div>
-
-              <div class="js-activity-stream"></div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="nc-messages-footer px3 py2">
-
-          <div class="js-chat-actions">
-            <%= render 'discussions/chat_box' %>
-           </div>
-
-        </div>
-
+      <div class="p3">
+        <h5 class="mt0 mb2" style="color:rgba(255,255,255,.6)">People</h5>
+        <%= react_component 'MembersView', url:  api_chat_room_users_path(@chat_room) %>
       </div>
     </div>
 
+    <div class="nc-messages">
+      <div class="nc-messages-content">
+
+        <div class="chat js-chat">
+          <div class="py2 px3">
+            <div class="center mb2">
+              <a class="btn btn-default btn-block btn-sm js-chat-load-more" href="<%= api_chat_room_comments_path(@chat_room, format: 'json') %>" style="margin-top: 36px;">Load more</a>
+            </div>
+
+            <div class="js-activity-stream"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="nc-messages-footer px3 py2">
+
+        <div class="js-chat-actions">
+          <%= render 'discussions/chat_box' %>
+         </div>
+
+      </div>
+
+    </div>
   </div>
 
-  <% content_for :javascript do %>
-    <script>
-      <% if @chat_room.product %>
-        // FIXME: It seems weird to set a product directly on app; there's a method
-        // that we've been using for that: window.app.setCurrentAnalyticsProduct()
-        app.product = new Product(<%= json @chat_room.product, scope: current_user %>);
-      <% elsif @product %>
-        app.product = new Product(<%= json @product, scope: current_user %>);
-      <% end %>
-      app.chatRoom = <%== ChatRoomSerializer.new(@chat_room).to_json %>;
+</div>
 
-      <% if signed_in? %>
-        app.chatRoom.readRaptorChatPath = '<%== ReadraptorTracker.new(@chat_room.key, current_user.id).url %>';
-      <% end %>
+<% content_for :javascript do %>
+  <script>
+    <% if @chat_room.product %>
+      // FIXME: It seems weird to set a product directly on app; there's a method
+      // that we've been using for that: window.app.setCurrentAnalyticsProduct()
+      app.product = new Product(<%= json @chat_room.product, scope: current_user %>);
+    <% elsif @product %>
+      app.product = new Product(<%= json @product, scope: current_user %>);
+    <% end %>
+    app.chatRoom = <%== ChatRoomSerializer.new(@chat_room).to_json %>;
 
-      $(document).ready(function() {
-        var dataTag = document.getElementById('ChatMessageStore')
-        var activityStream = new ActivityStream(JSON.parse(dataTag.innerHTML));
-        window.Landline = new LandlineMigration(
-          "<%= ENV['LANDLINE_URL'] %>",
-          "<%= ENV['LANDLINE_TEAM'] %>",
-          "<%= current_user.authentication_token %>"
-        );
-        activityStream.url = '<%= api_chat_room_comments_path(@chat_room) %>';
-        activityStream.id = '<%= @chat_room.id %>'
-        activityStream.product = app.product
+    <% if signed_in? %>
+      app.chatRoom.readRaptorChatPath = '<%== ReadraptorTracker.new(@chat_room.key, current_user.id).url %>';
+    <% end %>
 
-        ChatActionCreators.connectToChat(activityStream)
+    $(document).ready(function() {
+      var dataTag = document.getElementById('ChatMessageStore')
+      var activityStream = new ActivityStream(JSON.parse(dataTag.innerHTML));
+      window.Landline = new LandlineMigration(
+        "<%= ENV['LANDLINE_URL'] %>",
+        "<%= ENV['LANDLINE_TEAM'] %>",
+        "<%= current_user.authentication_token %>"
+      );
+      activityStream.url = '<%= api_chat_room_comments_path(@chat_room) %>';
+      activityStream.id = '<%= @chat_room.id %>'
+      activityStream.product = app.product
 
-        var chatView = new ChatView({
-          el: $('.js-chat'),
-          collection: activityStream,
-          scrollContainer: $('.nc-messages-content'),
-          scrollPadding: 168
-        });
+      ChatActionCreators.connectToChat(activityStream)
 
-        window.activityStream = activityStream;
-        window.chatView = chatView;
-
-        chatView.render();
-        chatView.scrollToLatestActivity();
-        $(window).load(function() {
-          delay(1, chatView.scrollToLatestActivity);
-        });
+      var chatView = new ChatView({
+        el: $('.js-chat'),
+        collection: activityStream,
+        scrollContainer: $('.nc-messages-content'),
+        scrollPadding: 168
       });
-    </script>
-  <% end %>
+
+      window.activityStream = activityStream;
+      window.chatView = chatView;
+
+      chatView.render();
+      chatView.scrollToLatestActivity();
+      $(window).load(function() {
+        delay(1, chatView.scrollToLatestActivity);
+      });
+    });
+  </script>
 <% end %>
