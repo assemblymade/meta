@@ -44,23 +44,30 @@ const StoryTimeline = React.createClass({
   },
 
   render: function() {
-    return (
-      <div className="px2">
-        <div className="clearfix border-bottom">
-          <div className="left p2 mr1 bold gray-2">Activity Minifeed</div>
-          <div className="right p2 ml1">
-            <a href={'/' + this.props.product.slug + '/activity'}>
-              View all
-            </a>
+    if (this.state.stories.length > 0) {
+      return (
+        <div className="px2">
+          <div className="clearfix border-bottom">
+            <div className="left p2 mr1 bold gray-2">Activity Minifeed</div>
+            <div className="right p2 ml1">
+              <a href={'/' + this.props.product.slug + '/activity'}>
+                View all
+              </a>
+            </div>
           </div>
+          <Timeline>
+            <div className="py2">
+              {this.renderStories()}
+            </div>
+          </Timeline>
         </div>
-        <Timeline>
-          <div className="py2">
-            {this.renderStories()}
-          </div>
-        </Timeline>
-      </div>
-    )
+      )
+    }
+    else {
+      return (
+        <div />
+      )
+    }
   },
 
   getInitialState: function() {

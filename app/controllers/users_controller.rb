@@ -94,6 +94,33 @@ class UsersController < ApplicationController
     }
   end
 
+  def stories
+    set_user
+
+    if params.keys.include?('product_id')
+      product = Product.find_by(slug: params[:product_id])
+      stories = @user.stories(limit=15, product_id_filter=[product.id], page=params[:page])
+      sp =  ProductShallowSerializer.new(product)
+      products = {}
+      products[product.id] = sp
+    else
+      pagenumber = params[:page].to_i
+      stories = @user.stories(limit=15, product_id_filter=nil, page=pagenumber)
+      products = @user.story_worthy_products.map{|a| [a.id, ProductShallowSerializer.new(a)]}.to_h
+    end
+
+    s_stories = stories.map do |a|
+      r = TimelineStorySerializer.new(a)
+    end
+
+
+    r = {}
+    r['stories'] = s_stories
+    r['products'] = products
+
+    render json: r
+  end
+
   def awarded_bounties
     set_user
     query = AwardedBountiesQuery.new(@user, params)

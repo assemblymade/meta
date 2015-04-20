@@ -171,6 +171,9 @@ var CONSTANTS = {
     USER_RECEIVE: null,
     USER_SIGNED_IN: null,
 
+    USER_STORIES_RECEIVE: null,
+    USER_STORIES_REQUEST: null,
+
     VALUATION_RECEIVE: null,
 
     WIP_EVENT_CREATING: null,

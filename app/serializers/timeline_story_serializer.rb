@@ -14,6 +14,6 @@ class TimelineStorySerializer < StorySerializer
   end
 
   def cache_key
-    ['v2', 'timeline', object]
+    ['v3', 'timeline', object]
   end
 end

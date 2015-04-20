@@ -18,6 +18,7 @@ const UserStore = require('../../stores/user_store.js')
 const Spinner = require('../spinner.js.jsx')
 const SvgIcon = require('../ui/svg_icon.js.jsx')
 const Tile = require('../ui/tile.js.jsx')
+const UserStoryTimeline = require('../stories/user_story_timeline.js.jsx')
 
 let DashboardIndex = React.createClass({
   propTypes: {
@@ -121,14 +122,8 @@ let DashboardIndex = React.createClass({
     let filter = this.state.filter
     let showAll = this.state.showAll
     let followedProducts = showAll ? this.state.followedProducts : this.state.followedProducts.slice(0, 8)
-    let followingNavItem = null
     let divider = null
-    let showAllLink = null
-
-    if (followedProducts.length) {
-      followingNavItem = <Nav.Item label="Following" href='/dashboard/following' active={filter == 'following'} />
-      divider = <Nav.Divider />
-    }
+    divider = <Nav.Divider />
 
     if (this.state.followedProducts.length > 8 && !showAll) {
       let click = function(event) {
@@ -138,15 +133,12 @@ let DashboardIndex = React.createClass({
         this.setState({ showAll: true })
       }.bind(this)
 
-      showAllLink = <Nav.Item label="Show all" onClick={click} small={true} />
     }
 
     return (
       <div>
         <Nav orientation="stacked">
           <Nav.Item label="Everything"      href='/dashboard/all'       active={filter == 'all'} />
-          <Nav.Item label="Your interests"  href='/dashboard/interests' active={filter == 'interests'} />
-          {followingNavItem}
         </Nav>
 
         <div className="md-show">
@@ -157,7 +149,6 @@ let DashboardIndex = React.createClass({
               return <Nav.Item label={product.name} href={'/dashboard/' + product.slug } active={filter == product.slug} key={product.slug} small={true} />
             })}
 
-            {showAllLink}
           </Nav>
         </div>
       </div>
@@ -292,58 +283,74 @@ let DashboardIndex = React.createClass({
     )
   },
 
-  renderNewsFeedItems: function() {
+  renderStoryGroups: function() {
     let items = this.state.newsFeedItems.toJS()
     let spinner = this.renderSpinner()
-    let filter = this.state.filter
+    var filter = this.state.filter
     let interests = this.state.interests
     let user = this.state.currentUser
 
-    if (filter == 'interests' && !interests.length) {
+    if (filter != null) {
       return (
         <div>
-          <Tile>
-            <div className="px4 py3 center">
-              <h1 className="mt0 mb0">Hey there @{user.username}!</h1>
-              <p className="gray-1">Looks like you're new around here.</p>
-              <p className="gray-2"><strong>Tell us what you're into below</strong> and we show you where to get started. </p>
-            </div>
-
-            <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
-              {this.renderMarks('Growth')}
-            </div>
-
-            <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
-              {this.renderMarks('Design')}
-            </div>
-
-            <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
-              {this.renderMarks('Development')}
-            </div>
-          </Tile>
-
-          <Tile>
-            <div className="px3 py3 border-top center">
-              {this.renderSubmit()}
-            </div>
-          </Tile>
+          <UserStoryTimeline user={user} filter={filter} />
         </div>
       )
     }
-
-    return (
-      <div>
-        {items.map(function(item) {
-          return (
-            <div className="mb2">
-              <NewsFeedItem {...item} />
-            </div>
-          )
-        })}
-        {spinner}
-      </div>
-    )
   },
+
+  renderNewsFeedItems: function() {
+   let items = this.state.newsFeedItems.toJS()
+   let spinner = this.renderSpinner()
+   let filter = this.state.filter
+   let interests = this.state.interests
+   let user = this.state.currentUser
+
+   if (filter == 'interests' && !interests.length) {
+     return (
+       <div>
+         <Tile>
+           <div className="px4 py3 center">
+             <h1 className="mt0 mb0">Hey there @{user.username}!</h1>
+             <p className="gray-1">Looks like you're new around here.</p>
+             <p className="gray-2"><strong>Tell us what you're into below</strong> and we show you where to get started. </p>
+           </div>
+
+           <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+             {this.renderMarks('Growth')}
+           </div>
+
+           <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+             {this.renderMarks('Design')}
+           </div>
+
+           <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+             {this.renderMarks('Development')}
+           </div>
+         </Tile>
+
+         <Tile>
+           <div className="px3 py3 border-top center">
+             {this.renderSubmit()}
+           </div>
+         </Tile>
+       </div>
+     )
+   }
+
+   return (
+     <div>
+       {items.map(function(item) {
+         return (
+           <div className="mb2">
+             <NewsFeedItem {...item} />
+           </div>
+         )
+       })}
+       {spinner}
+     </div>
+   )
+ },
 
   renderBounties: function() {
     if (!this.state.lockedBounties.length && !this.state.reviewingBounties.length) {
@@ -376,7 +383,7 @@ let DashboardIndex = React.createClass({
               <a className="block mb2" href={bounty.url}>
                 <Tile>
                   <div className="px3 py2">
-                    <BountyCard bounty={bounty} />
+                    <BountyCard bounty={bounty} showProduct={true} />
                   </div>
                 </Tile>
               </a>
@@ -396,7 +403,7 @@ let DashboardIndex = React.createClass({
               <a className="block mb2" href={bounty.url}>
                 <Tile>
                   <div className="px3 py2">
-                    <BountyCard bounty={bounty} />
+                    <BountyCard bounty={bounty} showProduct={true} />
                   </div>
                 </Tile>
               </a>
@@ -427,9 +434,21 @@ let DashboardIndex = React.createClass({
 
   render: function() {
     let nav = this.renderNav()
+    let storyGroups = this.renderStoryGroups()
+    let currentUser = window.app.currentUser();
+    let isStaff = currentUser && currentUser.get('staff');
+
     let newsFeedItems = this.renderNewsFeedItems()
     let product = this.renderProduct()
     let bounties = this.renderBounties()
+
+    if (isStaff) {
+        var activityFeed = storyGroups;
+    }
+    else
+    {
+        var activityFeed = newsFeedItems;
+    }
 
     return (
       <div>
@@ -445,7 +464,8 @@ let DashboardIndex = React.createClass({
             </div>
             <div className="md-col md-col-6 px2 mb4">
               <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>
-              {newsFeedItems}
+
+              {activityFeed}
             </div>
           </div>
         </div>
