@@ -103,16 +103,9 @@ class UsersController < ApplicationController
       sp =  ProductShallowSerializer.new(product)
       products = {}
       products[product.id] = sp
-      puts products
     else
-      puts "HEYE"
-      puts params
       pagenumber = params[:page].to_i
-      puts "PAGENUMBER #{pagenumber}"
-      puts @user.username
       stories = @user.stories(limit=15, product_id_filter=nil, page=pagenumber)
-      puts "STORIESSSS"
-      puts stories
       products = @user.story_worthy_products.map{|a| [a.id, ProductShallowSerializer.new(a)]}.to_h
     end
 

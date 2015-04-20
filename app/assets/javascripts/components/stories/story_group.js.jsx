@@ -10,7 +10,6 @@ const StoryGroup = React.createClass({
   },
 
   renderStory: function(story, i) {
-
     var product = this.props.products[story.product_id];
     return (
       <div>
