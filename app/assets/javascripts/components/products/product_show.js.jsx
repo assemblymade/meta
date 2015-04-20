@@ -169,7 +169,7 @@ let ProductShow = React.createClass({
 
                   <div className="py3">
                     <div className="clearfix py2">
-                      <a href={`/${product.slug}/activity`} className="right h6">View all</a>
+                      <a href={`/${product.slug}/posts`} className="right h6">View all</a>
                       <h6 className="gray-2 caps mt0 mb0">Updates ({this.state.updateCount})
                       </h6>
                     </div>

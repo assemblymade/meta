@@ -185,7 +185,7 @@ let ProductsHandlers = {
     });
 
     _showCreatePost();
-    _setActiveTab('activity');
+    _setActiveTab('posts');
   },
 
   showProductPost(data) {
@@ -227,7 +227,7 @@ let ProductsHandlers = {
     });
 
     _showCreatePost();
-    _setActiveTab('activity');
+    _setActiveTab('posts');
   },
 
   showProductPosts(data) {
@@ -256,7 +256,7 @@ let ProductsHandlers = {
     });
 
     _showCreatePost();
-    _setActiveTab('activity');
+    _setActiveTab('posts');
   }
 };
 

@@ -190,7 +190,7 @@ const BountyIndex = React.createClass({
 
             {createBountyButton}
 
-            <div className="mb3">
+            <div className="mb3 lg-show">
               <Tile>
                 <StoryTimeline product={product} />
               </Tile>
@@ -200,7 +200,7 @@ const BountyIndex = React.createClass({
               {this.renderTags()}
             </div>
 
-            <div className="mb3">
+            <div className="mb3 md-show">
               <Accordion title="Assets" >
                 {this.renderAssets()}
               </Accordion>

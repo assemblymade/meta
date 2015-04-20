@@ -67,6 +67,8 @@ var PostsIndex = React.createClass({
       <div>
         <div className="clearfix mxn3">
           <div className="sm-col-right sm-col-4 px3">
+            <Button action={window.showCreatePost} block={true}>Write a new post</Button>
+
             <div className="pb1"> {/*Filters*/}
               <Accordion title="Filters">
                 <ul className="list-reset mxn2">
@@ -75,7 +77,7 @@ var PostsIndex = React.createClass({
               </Accordion>
             </div>
 
-            <div className="mb3 md-show">
+            <div className="mb3 lg-show">
               <Tile>
                 <StoryTimeline product={product} />
               </Tile>

@@ -96,7 +96,6 @@ const ProductActivity = React.createClass({
             </div>
 
             <div className="md-col md-col-3 px3">
-              <Button action={window.showCreatePost} block={true}>Write a new post</Button>
             </div>
           </div>
         </div>
