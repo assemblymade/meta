@@ -206,16 +206,20 @@ class User < ActiveRecord::Base
     (self.followed_products + self.core_products).uniq
   end
 
-  def stories(limit=200, product_id_filter=nil)
-    if product_id_filter
-      product_ids = product_id_filter
-    else
-      product_ids = self.story_worthy_products.map{|a| a.id}
+  def stories(limit=100, product_id_filter=nil, page=nil)
+    if !product_id_filter
+      product_id_filter = self.story_worthy_products.map{|a| a.id}
     end
 
-    Story.joins(:activities).
-      where(activities: {product_id: [product_ids]}).
-      order(created_at: :desc).limit(limit)
+    stories = Story.joins(:activities).
+      where(activities: {product_id: [product_id_filter]}).
+      order(created_at: :desc)
+
+    if page
+      stories.uniq.page(page).per(limit)
+    else
+      stories.limit(limit)
+    end
   end
 
   def last_contribution

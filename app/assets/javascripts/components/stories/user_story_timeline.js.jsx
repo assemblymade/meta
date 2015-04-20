@@ -3,6 +3,7 @@ const Story = require('./story.js.jsx')
 const UserStoryTimelineActions = require ('../../actions/user_story_timeline_actions.js');
 const UserStoryTimelineStore = require('../../stores/user_story_timeline_store.js')
 const Tile = require('.././ui/tile.js.jsx');
+const Spinner = require('../spinner.js.jsx');
 const { List } = require('immutable');
 
 const UserStoryTimeline = React.createClass({
@@ -15,7 +16,8 @@ const UserStoryTimeline = React.createClass({
   getInitialState: function() {
     return {
       stories: [],
-      products: []
+      products: [],
+      loading: false
     }
   },
 
@@ -24,6 +26,7 @@ const UserStoryTimeline = React.createClass({
   },
 
   componentDidMount: function() {
+    window.addEventListener('scroll', this.onScroll);
     console.log("FILTER IN TIMELINE", this.props.filter)
     UserStoryTimelineActions.fetchStories(this.props.user, this.props.filter);
     UserStoryTimelineStore.addChangeListener(this._onChange)
@@ -31,7 +34,8 @@ const UserStoryTimeline = React.createClass({
 
   componentDidUpdate: function(props, state) {
     if (props.filter != this.props.filter) {
-      UserStoryTimelineActions.fetchStories(this.props.user, this.props.filter);
+      this.setState({stories: []});
+      UserStoryTimelineActions.fetchNewStories(this.props.user, this.props.filter);
     }
   },
 
@@ -44,6 +48,7 @@ const UserStoryTimeline = React.createClass({
     return (
       <div>
         {this.renderStoryGroups()}
+        {this.spinner()}
       </div>
     )
   },
@@ -70,10 +75,39 @@ const UserStoryTimeline = React.createClass({
   getStateFromStore: function() {
     var prods = UserStoryTimelineStore.getProducts()
     var stories = UserStoryTimelineStore.getStories()
+    var loading = UserStoryTimelineStore.getLoading()
 
     return {
       stories: stories,
-      products: prods
+      products: prods,
+      loading: loading
+    }
+  },
+
+  fetchMoreStoryItems: function() {
+    if (this.state.loading) { return }
+
+    this.setState({
+      loading: true,
+      page: (this.state.page || 1) + 1
+    }, function() {
+      UserStoryTimelineActions.fetchStories(this.props.user, this.props.product)
+    }.bind(this));
+  },
+
+  onScroll: function() {
+    var atBottom = $(window).scrollTop() + $(window).height() > $(document).height() - 400
+
+    if (atBottom) {
+      this.fetchMoreStoryItems()
+    }
+  },
+
+  spinner: function() {
+    if (this.state.loading) {
+      return (
+        <Spinner />
+      );
     }
   },
 

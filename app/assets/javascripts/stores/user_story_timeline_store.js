@@ -5,9 +5,10 @@ const Dispatcher = require('../dispatcher');
 const Store = require('./es6_store')
 
 let _stories = []
+let _filter = ""
 let _products = []
 let _loading = false
-let _page = 1
+let _page = 0
 let _pages = 1
 
 class UserStoryTimelineStore extends Store {
@@ -20,7 +21,7 @@ class UserStoryTimelineStore extends Store {
           _stories = action.stories
           _products = action.products
           _loading = false
-          _page = action.page
+          _page = _page + 1
           _pages = action.pages
           this.emitChange()
           break
@@ -47,6 +48,10 @@ class UserStoryTimelineStore extends Store {
 
   getProducts(){
     return _products
+  }
+
+  getFilter(){
+    return _filter
   }
 
   getLoading() {

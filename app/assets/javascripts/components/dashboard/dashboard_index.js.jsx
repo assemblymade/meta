@@ -290,8 +290,6 @@ let DashboardIndex = React.createClass({
     let interests = this.state.interests
     let user = this.state.currentUser
 
-    console.log("FILTER", filter)
-
     if (filter != null) {
       return (
         <div>

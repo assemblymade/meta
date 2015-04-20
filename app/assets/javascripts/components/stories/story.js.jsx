@@ -29,7 +29,7 @@ const Story = React.createClass({
     })
 
     var productName = this.props.product ? this.props.product.name : ''
-    var logo = this.props.product ? this.renderLogo(this.props.product.full_logo_url) : ''
+    var logo = this.props.product ? this.renderLogo(this.props.product.logo_url) : ''
 
     return (
       <div className={cs} key={i}>

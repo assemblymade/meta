@@ -98,16 +98,29 @@ class UsersController < ApplicationController
     set_user
 
     if params.keys.include?('product_id')
-      stories = @user.stories(100, Product.find_by(slug: params[:product_id]).id)
+      product = Product.find_by(slug: params[:product_id])
+      stories = @user.stories(limit=15, product_id_filter=[product.id], page=params[:page])
+      sp =  ProductShallowSerializer.new(product)
+      products = {}
+      products[product.id] = sp
+      puts products
     else
-      stories = @user.stories(100)
+      puts "HEYE"
+      puts params
+      pagenumber = params[:page].to_i
+      puts "PAGENUMBER #{pagenumber}"
+      puts @user.username
+      stories = @user.stories(limit=15, product_id_filter=nil, page=pagenumber)
+      puts "STORIESSSS"
+      puts stories
+      products = @user.story_worthy_products.map{|a| [a.id, ProductShallowSerializer.new(a)]}.to_h
     end
 
     s_stories = stories.map do |a|
       r = TimelineStorySerializer.new(a)
     end
 
-    products = @user.story_worthy_products.map{|a| [a.id, ProductShallowSerializer.new(a)]}.to_h
+
     r = {}
     r['stories'] = s_stories
     r['products'] = products
