@@ -299,6 +299,59 @@ let DashboardIndex = React.createClass({
     }
   },
 
+  renderNewsFeedItems: function() {
+   let items = this.state.newsFeedItems.toJS()
+   let spinner = this.renderSpinner()
+   let filter = this.state.filter
+   let interests = this.state.interests
+   let user = this.state.currentUser
+
+   if (filter == 'interests' && !interests.length) {
+     return (
+       <div>
+         <Tile>
+           <div className="px4 py3 center">
+             <h1 className="mt0 mb0">Hey there @{user.username}!</h1>
+             <p className="gray-1">Looks like you're new around here.</p>
+             <p className="gray-2"><strong>Tell us what you're into below</strong> and we show you where to get started. </p>
+           </div>
+
+           <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+             {this.renderMarks('Growth')}
+           </div>
+
+           <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+             {this.renderMarks('Design')}
+           </div>
+
+           <div className="px3 py2 border-top" style={{ backgroundColor: '#f9f9f9' }}>
+             {this.renderMarks('Development')}
+           </div>
+         </Tile>
+
+         <Tile>
+           <div className="px3 py3 border-top center">
+             {this.renderSubmit()}
+           </div>
+         </Tile>
+       </div>
+     )
+   }
+
+   return (
+     <div>
+       {items.map(function(item) {
+         return (
+           <div className="mb2">
+             <NewsFeedItem {...item} />
+           </div>
+         )
+       })}
+       {spinner}
+     </div>
+   )
+ },
+
   renderBounties: function() {
     if (!this.state.lockedBounties.length && !this.state.reviewingBounties.length) {
       return (
@@ -382,8 +435,20 @@ let DashboardIndex = React.createClass({
   render: function() {
     let nav = this.renderNav()
     let storyGroups = this.renderStoryGroups()
+    let currentUser = window.app.currentUser();
+    let isStaff = currentUser && currentUser.get('staff');
+
+    let newsFeedItems = this.renderNewsFeedItems()
     let product = this.renderProduct()
     let bounties = this.renderBounties()
+
+    if (isStaff) {
+        var activityFeed = storyGroups;
+    }
+    else
+    {
+        var activityFeed = newsFeedItems;
+    }
 
     return (
       <div>
@@ -399,7 +464,8 @@ let DashboardIndex = React.createClass({
             </div>
             <div className="md-col md-col-6 px2 mb4">
               <h6 className="gray-3 caps mt2 mb2">What&#8217;s Happening</h6>
-              {storyGroups}
+
+              {activityFeed}
             </div>
           </div>
         </div>
