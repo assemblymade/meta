@@ -43,9 +43,9 @@ class StorySerializer < ApplicationSerializer
     "Story_#{object.id}"
   end
 
-  # cached
-  #
-  # def cache_key
-  #   ['v5', object]
-  # end
+  cached
+
+  def cache_key
+    ['v3', object]
+  end
 end
