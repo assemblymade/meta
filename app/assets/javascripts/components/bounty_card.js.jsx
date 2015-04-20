@@ -3,11 +3,13 @@
 const Icon = require('./ui/icon.js.jsx');
 const Avatar = require('./ui/avatar.js.jsx');
 const AppCoins = require('./app_coins.js.jsx');
+var AppIcon = require('./app_icon.js.jsx')
 
 const BountyCard = React.createClass({
 
   propTypes: {
-    bounty: React.PropTypes.object.isRequired
+    bounty: React.PropTypes.object.isRequired,
+    showProduct: React.PropTypes.bool
   },
 
   render: function() {
@@ -36,6 +38,15 @@ const BountyCard = React.createClass({
       </div>
     }
 
+    if (this.props.showProduct) {
+      var productIcon = <div className="right px1">
+        <AppIcon app={bounty.product} size={24} />
+      </div>
+    }
+    else {
+      var productIcon = <div />
+    }
+
     return (
       <div className="clearfix">
         {locker}
@@ -48,6 +59,7 @@ const BountyCard = React.createClass({
             <div className="left px1">
               <AppCoins n={coins} color="gray-3" />
             </div>
+            {productIcon}
             {comments}
             {hearts}
           </div>
