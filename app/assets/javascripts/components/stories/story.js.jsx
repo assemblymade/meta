@@ -11,7 +11,7 @@ const Story = React.createClass({
   },
 
   renderLogo: function(logoUrl) {
-    var size = 35
+    var size = 18
     return (
       <Vignette shape="rounded" width={size} height={size}>
         <Thumbnail src={logoUrl} width={size} height={size} />
@@ -33,6 +33,12 @@ const Story = React.createClass({
 
     return (
       <div className={cs} key={i}>
+        <div className="clearfix mb1">
+          <div className="left mr2">
+            {logo}
+          </div>
+          {productName}
+        </div>
         <a href={story.url}>
           <div className="left mr2 mt1">
             <Avatar user={recentActor} size={18} />
@@ -55,12 +61,6 @@ const Story = React.createClass({
               <p className="mb0">
                 {story.subject}
               </p>
-              <span className="right gray-2 px2">
-                {productName}
-              </span>
-              <span className="right">
-                {logo}
-              </span>
             </div>
           </div>
         </a>
