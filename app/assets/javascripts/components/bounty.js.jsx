@@ -1,7 +1,7 @@
 'use strict';
 
 const AvatarWithUsername = require('./ui/avatar_with_username.js.jsx');
-const BountyActionCreators = require('../actions/bounty_action_creators');
+const BountyActionCreators = require('../actions/bounty_actions');
 const BountyStore = require('../stores/bounty_store');
 const Button = require('./ui/button.js.jsx');
 const CreateBounty = require('./create_bounty.js.jsx');
@@ -144,10 +144,10 @@ let Bounty = React.createClass({
     let currentUser = UserStore.getUser();
 
     let valuation = (
-        <div className="left px3 py2 border-right border-gray-5">
-          <BountyValuation {...bounty} {...this.props.valuation} allowEditing={currentUser && currentUser.is_core} />
-        </div>
-      )
+      <div className="left px3 py2 border-right border-gray-5">
+        <BountyValuation {...bounty} {...this.props.valuation} allowEditing={currentUser && currentUser.is_core} />
+      </div>
+    )
 
     let lockMessage = null
     let worker = this.state.worker

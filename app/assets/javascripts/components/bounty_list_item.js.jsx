@@ -1,5 +1,5 @@
 var AppCoins = require('./app_coins.js.jsx');
-var BountyActionCreators = require('../actions/bounty_action_creators.js');
+var BountyActionCreators = require('../actions/bounty_actions.js');
 var HeartCount = require('./heart_count.js.jsx');
 var IconWithNumber = require('./ui/icon_with_number.js.jsx')
 var ListItemMixin = require('../mixins/list_item_mixin.js.jsx');

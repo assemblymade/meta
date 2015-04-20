@@ -1,12 +1,14 @@
 'use strict';
 
 const Bounty = require('../bounty.js.jsx');
+const BountyActions = require('../../actions/bounty_actions');
 const BountyMarksStore = require('../../stores/bounty_marks_store');
 const BountyStore = require('../../stores/bounty_store');
 const Discussion = require('../ui/discussion.js.jsx');
 const NewsFeedItemStore = require('../../stores/news_feed_item_store');
 const ProductHeader = require('./product_header.js.jsx');
 const ProductStore = require('../../stores/product_store');
+const Spinner = require('../spinner.js.jsx');
 const ValuationStore = require('../../stores/valuation_store');
 
 let ProductBounty = React.createClass({
@@ -20,13 +22,7 @@ let ProductBounty = React.createClass({
   },
 
   componentDidMount() {
-    let {
-      product: { name },
-      target: { number, title }
-    } = this.state.item;
-
-    document.title = title + ' · #' + number + ' · ' + name;
-
+    BountyActions.fetch(this.props.params.product_id, this.props.params.id)
     BountyStore.addChangeListener(this.onBountyChange);
     BountyMarksStore.addChangeListener(this.onBountyMarksChange);
     NewsFeedItemStore.addChangeListener(this.onNewsFeedItemChange);
@@ -40,6 +36,8 @@ let ProductBounty = React.createClass({
     NewsFeedItemStore.removeChangeListener(this.onNewsFeedItemChange);
     ProductStore.removeChangeListener(this.onProductChange);
     ValuationStore.removeChangeListener(this.onValuationChange);
+
+    setTimeout(BountyActions.deselectCurrentBounty, 1)
   },
 
   getInitialState() {
@@ -91,19 +89,26 @@ let ProductBounty = React.createClass({
       valuation
     } = this.state;
 
-    if (!item) {
-      return null;
+    if (item) {
+      let {
+        target: { number, title }
+      } = item;
+
+      document.title = title + ' · #' + number + ' · ' + name;
     }
+
 
     return (
       <div>
         <ProductHeader />
 
         <div className="container mt3">
-          <Discussion newsFeedItem={item}>
-            <Bounty item={item}
-                valuation={valuation} />
-          </Discussion>
+          {!item ? <Spinner /> :
+            <Discussion newsFeedItem={item}>
+              <Bounty item={item}
+                  valuation={valuation} />
+            </Discussion>
+          }
         </div>
       </div>
     );

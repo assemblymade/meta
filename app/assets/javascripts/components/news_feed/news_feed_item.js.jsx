@@ -119,7 +119,7 @@ let NewsFeedItem = React.createClass({
         {this.renderTags()}
         {this.renderDetails()}
         {this.renderFooter()}
-        {this.renderComments()}
+        {this.props.showAllComments ? null : this.renderLastComment()}
       </Tile>
     );
   },
@@ -144,7 +144,7 @@ let NewsFeedItem = React.createClass({
     }
   },
 
-  renderComments: function() {
+  renderLastComment: function() {
     let comment = this.props.last_comment
 
     if (comment) {
@@ -194,21 +194,14 @@ let NewsFeedItem = React.createClass({
   },
 
   renderDetails: function() {
-    let target = this.props.target;
-
-    let bountyValue = this.renderBountyValue();
-    let commentsCount = this.renderCommentsCount();
-    let share = this.renderShare();
-    let heart = this.renderHeart();
-
     return (
       <div className="border-top clearfix">
-        {bountyValue}
+        {this.renderBountyValue()}
 
         <div className="right gray-2 h6 mt0 mb0" style={{ lineHeight: '24px' }}>
-          {commentsCount}
-          {share}
-          {heart}
+          {this.renderCommentsCount()}
+          {this.renderShare()}
+          {this.renderHeart()}
         </div>
       </div>
     )

@@ -29,9 +29,6 @@ let ProductsHandlers = {
     _setActiveTab('overview');
   },
 
-  showProductActivity(data) {
-  },
-
   showProductBounties(data) {
     let {
       assets,

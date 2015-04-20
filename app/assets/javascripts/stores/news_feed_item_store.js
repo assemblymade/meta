@@ -5,7 +5,7 @@ const Dispatcher = require('../dispatcher');
 const Immutable = require('immutable');
 const Store = require('./es6_store');
 
-let item = Immutable.Map();
+let item = null
 
 class NewsFeedItemStore extends Store {
   constructor() {
@@ -14,7 +14,11 @@ class NewsFeedItemStore extends Store {
     this.dispatchToken = Dispatcher.register((action) => {
       switch (action.type) {
         case ActionTypes.NEWS_FEED_ITEM_RECEIVE:
-          item = Immutable.Map(action.item);
+          item = action.item
+          this.emitChange();
+          break;
+        case ActionTypes.NEWS_FEED_ITEM_CLOSE:
+          item = null
           this.emitChange();
           break;
       }
@@ -22,7 +26,7 @@ class NewsFeedItemStore extends Store {
   }
 
   getItem() {
-    return item.toJS();
+    return item
   }
 };
 

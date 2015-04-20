@@ -37,6 +37,7 @@ namespace :js do
     'product_posts',
     'product_repos',
     'product_screenshots',
+    'product_task',
     'product_tips',
     'product_unfollow',
     'product_update_subscribe',

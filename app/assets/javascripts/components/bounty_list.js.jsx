@@ -1,4 +1,4 @@
-var BountyActionCreators = require('../actions/bounty_action_creators.js')
+var BountyActionCreators = require('../actions/bounty_actions.js')
 var BountyListItem = require('./bounty_list_item.js.jsx')
 var BountiesStore = require('../stores/bounties_store.js')
 var PaginationLinks = require('./pagination_links.js.jsx')

@@ -14,6 +14,15 @@ module.exports = {
     })
   },
 
+  get(url, success) {
+    $.ajax({
+      type: "GET",
+      url: url,
+      dataType: 'json',
+      success: success
+    })
+  },
+
   patch(url, data) {
     $.ajax({
       type: "PATCH",
