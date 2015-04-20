@@ -23,6 +23,10 @@ class BountyStore extends Store {
           _closeBounty()
           this.emitChange()
           break
+        case ActionTypes.BOUNTY_DESELECT_CURRENT:
+          _bounty = {}
+          this.emitChange()
+          break
         case ActionTypes.BOUNTY_REOPENED:
           _reopenBounty()
           this.emitChange()

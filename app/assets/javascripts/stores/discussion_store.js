@@ -28,6 +28,14 @@ class DiscussionStore extends Store {
           updateComment(action)
           break
 
+        case ActionTypes.DISCUSSION_CLOSE:
+          _comments = {
+            optimistic: {},
+            confirmed: {}
+          }
+          _events = {}
+          break
+
         case ActionTypes.DISCUSSION_RECEIVE:
           setComments(action)
           setEvents(action)

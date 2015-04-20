@@ -100,6 +100,8 @@ class TasksController < WipsController
   end
 
   def show
+    return render json: {} if params[:cache] == 'false'
+
     @bounty = @wip # fixme: legacy
 
     @milestone = MilestoneTask.where('task_id = ?', @bounty.id).first.try(:milestone)

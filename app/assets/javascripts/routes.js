@@ -393,6 +393,19 @@ exports.product_repos_path = function(options){
   return '/' + params.product_id + '/repositories'
 }
 
+exports.product_task_path = function(options){
+  if (options && options.data) {
+    var op_params = []
+    for(var key in options.data){
+      op_params.push([key, options.data[key]].join('='));
+    }
+    var params = options.params;
+    return '/' + params.product_id + '/bounties/' + params.id + '?' + op_params.join('&');
+  }
+  var params = options;
+  return '/' + params.product_id + '/bounties/' + params.id + ''
+}
+
 exports.product_wip_assign_path = function(options){
   if (options && options.data) {
     var op_params = []

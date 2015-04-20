@@ -1,4 +1,4 @@
-jest.dontMock(appFile('actions/bounty_action_creators'));
+jest.dontMock(appFile('actions/bounty_actions'));
 
 describe('BountyActionCreators', function() {
   var BountyActionCreators, Dispatcher;
@@ -8,7 +8,7 @@ describe('BountyActionCreators', function() {
     analytics.track = jest.genMockFunction();
 
     Dispatcher = require(appFile('dispatcher'));
-    BountyActionCreators = require(appFile('actions/bounty_action_creators'));
+    BountyActionCreators = require(appFile('actions/bounty_actions'));
     Dispatcher.dispatch.mockClear();
   });
 

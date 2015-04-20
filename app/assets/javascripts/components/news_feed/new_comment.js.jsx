@@ -1,4 +1,4 @@
-var BountyActionCreators = require('../../actions/bounty_action_creators');
+var BountyActionCreators = require('../../actions/bounty_actions');
 var Button = require('../ui/button.js.jsx');
 var CommentActionCreators = require('../../actions/comment_action_creators');
 var DraggingMixin = require('../../mixins/dragging_mixin');
