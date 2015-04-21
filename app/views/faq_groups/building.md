@@ -60,4 +60,4 @@ If a necessary bounty goes uncompleted, Assembly may be able to help. We're equi
 
 # What happens if development stops on an app?
 
-If an idea doesn't get and/or sustain support Assembly may decide to retire it. We'll notify the inventor and all the contributors. Assembly may also change the source code license to the MIT license and all non-code contributed work will be released under the [Creative Commons Attribution Non-Commercial 3.0 Unported License](http://www.google.com/url?q=http%3A%2F%2Fcreativecommons.org%2Flicenses%2Fby-nc%2F3.0%2Fus%2F&sa=D&sntz=1&usg=AFQjCNGD0KjEha9wLevv3yo3xo6SQsKLXw).
+If an idea doesn't get and/or sustain support Assembly may decide to retire it. We'll notify the inventor and all the contributors. Assembly may also change the source code license to the MIT license and all non-code contributed work will be released under the [Creative Commons Attribution Non-Commercial 3.0 Unported License](http://creativecommons.org/licenses/by-nc/3.0/us/).

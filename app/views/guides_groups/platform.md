@@ -118,10 +118,10 @@ count towards profit disbursements and product management decisions.
 Bounties are tasks directly involved with the development of a product.  They
 are designed by participants to advertise specific product needs.  Anyone may
 work on a bounty.  Bounties are the primary way for new users, who have no <a
-href="/guides/project-management#managing-ownership">ownership</a> in a
+href="/guides/product-management#managing-ownership">ownership</a> in a
 product, to earn their first stake in the product.
 
-Bounties are <a href="/guides/project-management#valuing-bounties">priced in
+Bounties are <a href="/guides/product-management#valuing-bounties">priced in
 App Coins</a>, which are the units of ownership of a given product.  These
 coins are awarded to users who have completed the bounty.  Bounties are awarded
 to users by <a href="#core-team">Core Team</a> members.
