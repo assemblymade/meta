@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20150410215557) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "hstore"
-  enable_extension "pg_stat_statements"
   enable_extension "uuid-ossp"
+  enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "activities", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "type",         limit: 255
@@ -705,7 +705,7 @@ ActiveRecord::Schema.define(version: 20150410215557) do
 
   add_index "product_trends", ["product_id"], name: "index_product_trends_on_product_id", unique: true, using: :btree
 
-  create_table "products", id: :uuid, force: :cascade do |t|
+  create_table "products", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "slug",                              limit: 255,                null: false
     t.string   "name",                              limit: 255,                null: false
     t.string   "pitch",                             limit: 255

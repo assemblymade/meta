@@ -65,7 +65,14 @@ const StoryTimeline = React.createClass({
     }
     else {
       return (
-        <div />
+        <div className="px2">
+          <div className="p2 mr1 bold gray-2 border-bottom">
+            Activity Minifeed
+          </div>
+          <div className="p2 gray-2">
+            No activity to show
+          </div>
+        </div>
       )
     }
   },
