@@ -1,6 +1,6 @@
 # How do I submit an app idea?
 
-If you have a great idea for an app to build on Assembly, head over [here](assembly.com/start).
+If you have a great idea for an app to build on Assembly, head over [here](http://assembly.com/start).
 
 
 # Who will build my app if I submit an idea?
