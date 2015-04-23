@@ -100,7 +100,7 @@ class TasksController < WipsController
   end
 
   def show
-    return render json: {} if params[:cache] == 'false'
+    return render json: { product: ProductSerializer.new(@product) } if params[:cache] == 'false'
 
     @bounty = @wip # fixme: legacy
 
