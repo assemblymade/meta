@@ -18,7 +18,7 @@ Or submit your own idea [here](https://assembly.com/start)!
 
 # What parts of building can I help out with?
 
-Anything and everything. Take a look at the bounties on a particular project and see if anything is of interest to you. Be sure to say "hi" in [general chat](https://assembly.com/chat/general) so that the Assembly community can welcome you, or to just introduce yourself to the team working on a project you like. No matter what your skills are, there’s someone on Assembly who needs them.
+Anything and everything. Take a look at the bounties on a particular project and see if anything is of interest to you. And be sure to pop into [Community Chat](https://assembly.com/chat/general) so that the Assembly community can welcome you, or to introduce yourself to the team working on a project you like. No matter what your skills are, there’s someone on Assembly who needs them.
 
 Everyone is free to participate in supporting and evolving any products built on Assembly in the ways they see fit. Help out as little or as much as you want.
 
@@ -55,7 +55,7 @@ You do. However, in order for Assembly to monetize the product on behalf of you 
 
 This is really important to us. When a product is built on Assembly, we believe an open, transparent process is key. That means anyone can see progress, discussions, ownership and even revenue.
 
-Obviously we couldn't make the claim that building products in public is the best approach if we weren’t doing it ourselves, so we're entirely open source. Check out [assembly.com/meta](https://assembly.com/meta) to see our development history and discussions, and even get real-time updates as we ship new features.
+Obviously we couldn't make the claim that building products in public is the best approach if we weren’t doing it ourselves, so we're entirely open source. Check out [Assembly Meta](https://assembly.com/meta) to see our development history and discussions, and even get real-time updates as we ship new features.
 
 
 # How is Assembly different from Kickstarter or an incubator?
