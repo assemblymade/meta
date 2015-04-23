@@ -98,14 +98,14 @@ let DashboardIndex = React.createClass({
             </a>
 
             <div className="border-bottom mt0 mb0"></div>
-            <div className="stat-group p3 mb0">
-              <div className="stat">
+            <div className="center flex flex-around p3 mb0">
+              <div className="inline-block">
                 <a className="block" href={product.wips_url}>
                   <div className="h4 mt0 mb0">{product.wips_count}</div>
                   <div className="gray-2">Bounties</div>
                 </a>
               </div>
-              <div className="stat">
+              <div className="inline-block">
                 <a className="block" href={product.people_url}>
                   <div className="h4 mt0 mb0">{product.partners_count}</div>
                   <div className="gray-2">Contributors</div>

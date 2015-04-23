@@ -79,27 +79,27 @@
     renderStats: function() {
       if(this.props.profitLastMonth) {
         return(
-          <div className="stat-group mb0">
-            <div className="stat">
-              <div className="stat-value">
+          <div className="center flex flex-around mb0">
+            <div className="inline-block">
+              <div className="h2 bold">
                 {this.renderOwnership()}
               </div>
-              <div className="stat-title ml2 mr2">
+              <div className="gray-2 ml2 mr2">
                 ownership<br />
                 in {this.props.product.name}
               </div>
             </div>
-            <div className="stat">
-              <div className="stat-value">
+            <div className="inline-block">
+              <div className="h2 bold">
                 {this.renderPayout()}
               </div>
-              <div className="stat-title ml2 mr2" dangerouslySetInnerHTML={{ __html: this.renderProfitLastMonth() }} />
+              <div className="gray-2 ml2 mr2" dangerouslySetInnerHTML={{ __html: this.renderProfitLastMonth() }} />
             </div>
-            <div className="stat">
-              <div className="stat-value">
+            <div className="inline-block">
+              <div className="h2 bold">
                 {this.renderSellingPrice()}
               </div>
-              <div className="stat-title ml2 mr2">
+              <div className="gray-2 ml2 mr2">
                 if {this.props.product.name} was <br /> sold for $1 million
               </div>
             </div>
@@ -107,20 +107,20 @@
         )
       } else {
         return(
-          <div className="stat-group mb0">
-            <div className="stat">
-              <div className="stat-value">
+          <div className="center flex flex-around mb0">
+            <div className="inline-block">
+              <div className="h2 bold">
                 {this.renderOwnership()}
               </div>
-              <div className="stat-title ml2 mr2">
+              <div className="gray-2 ml2 mr2">
                 ownership in {this.props.product.name}
               </div>
             </div>
-            <div className="stat">
-              <div className="stat-value">
+            <div className="inline-block">
+              <div className="h2 bold">
                 {this.renderAverage()}
               </div>
-              <div className="stat-title ml2 mr2">
+              <div className="gray-2 ml2 mr2">
                 the average {this.props.product.name} bounty
               </div>
             </div>
