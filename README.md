@@ -1,7 +1,7 @@
 # Assembly
-[![Build Status](https://magnum.travis-ci.com/assemblymade/meta.svg?token=yfARxv3oq7ZT3ZbmJWVN&branch=master)](https://magnum.travis-ci.com/assemblymade/meta)
+
+[![Build Status](https://travis-ci.org/assemblymade/meta.svg?branch=master)](https://travis-ci.org/assemblymade/meta)
 [![Code Climate](https://codeclimate.com/github/assemblymade/meta/badges/gpa.svg)](https://codeclimate.com/github/assemblymade/meta)
-<br />
 
 <a href="https://assembly.com/meta/bounties"><img src="https://asm-badger.herokuapp.com/meta/badges/tasks.svg" height="24px" alt="Open Tasks" /></a>
 
