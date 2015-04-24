@@ -3,6 +3,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def facebook
     @user = User.find_by(facebook_uid: auth_hash['uid'])
+    @avatar_url = auth_hash['info']['image']
     if @user
       remember_me(@user)
       sign_in(@user)
