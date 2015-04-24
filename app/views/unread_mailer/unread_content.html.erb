@@ -46,10 +46,9 @@
                       <h4><%= product.name %></h4>
                     </p>
                     <% nfis.each do |nfi, new_comments| %>
-                      <% raise nfis.inspect if nfi.nil? %>
-
+                      <% link_entity = new_comments.any? ? new_comments.first : nfi %>
                       <p style="font-size:14px;line-height:18px;color:#2B2F3E;">
-                        <a href="<%= url_for(nfi.url_params) %>">
+                        <a href="<%= url_for(link_entity.url_params) %>">
                           <%= t "stories.subjects.long.#{nfi.target.class.model_name.singular}.other", nfi.target.attributes.symbolize_keys %>
                         </a>
                         <% if new_comments.size > 0 %>
