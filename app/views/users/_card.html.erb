@@ -22,10 +22,10 @@
 
     <!-- Staff -->
     <% if user.staff? %>
-      <a class="block px3 py2 border-top gray-2" href="<%= product_people_path(product_id: 'meta', filter: 'core') %>" title="Assembly Staff">
+      <span class="block px3 py2 border-top gray-2" title="Assembly Staff">
         <%= inline_react_component 'Icon', icon: 'coffee' %>
         Assembly Staff
-      </a>
+      </span>
     <% end %>
 
     <!-- Twitter -->
