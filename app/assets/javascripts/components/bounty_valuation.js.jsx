@@ -24,7 +24,9 @@ var BountyValuation = React.createClass({
 
   renderLightbox: function() {
     if (this.state.shown) {
-      return <BountyBreakdown {...this.props} onHidden={this.handleHide} />
+      return <BountyBreakdown {...this.props}
+          steps={this.props.product.bounty_valuation_steps}
+          onHidden={this.handleHide} />
     }
   },
 
