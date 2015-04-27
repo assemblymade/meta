@@ -136,7 +136,7 @@ module.exports = React.createClass({
     let that = this;
 
     $.ajax({
-      url: `vimeo.com/api/v2/video/${id}.json`,
+      url: `https://vimeo.com/api/v2/video/${id}.json`,
       success(res) {
         that.setState({
           thumb: res[0].thumbnail_large,
