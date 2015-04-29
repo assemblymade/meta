@@ -474,6 +474,9 @@ let DashboardIndex = React.createClass({
   },
 
   getStateFromStore: function() {
+    if (!this.isMounted()) {
+      return
+    }
     let dashboard = DashboardStore.getDashboard()
 
     this.setState({

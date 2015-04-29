@@ -22,12 +22,12 @@ let ProductBounty = React.createClass({
   },
 
   componentDidMount() {
-    BountyActions.fetch(this.props.params.product_id, this.props.params.id)
     BountyStore.addChangeListener(this.onBountyChange);
     BountyMarksStore.addChangeListener(this.onBountyMarksChange);
     NewsFeedItemStore.addChangeListener(this.onNewsFeedItemChange);
     ProductStore.addChangeListener(this.onProductChange);
     ValuationStore.addChangeListener(this.onValuationChange);
+    BountyActions.fetch(this.props.params.product_id, this.props.params.id)
   },
 
   componentWillUnmount() {
@@ -36,8 +36,23 @@ let ProductBounty = React.createClass({
     NewsFeedItemStore.removeChangeListener(this.onNewsFeedItemChange);
     ProductStore.removeChangeListener(this.onProductChange);
     ValuationStore.removeChangeListener(this.onValuationChange);
+  },
 
-    setTimeout(BountyActions.deselectCurrentBounty, 1)
+  componentDidUpdate(prop, state) {
+    // console.log('componentDidUpdate', this.state)
+    var prevId = state.bounty.id
+    var newId = this.state.bounty.id
+    if (prevId != newId) {
+      setTimeout(() => {
+        if (newId) {
+          BountyActions.fetch(this.props.params.product_id, this.props.params.id)
+        } else {
+          BountyActions.deselectCurrentBounty()
+        }
+      }, 1)
+
+      // console.log('bounty updated', this.state.bounty.id)
+    }
   },
 
   getInitialState() {
@@ -97,13 +112,14 @@ let ProductBounty = React.createClass({
       document.title = title + ' · #' + number + ' · ' + name;
     }
 
+    var hasContent = item && Object.keys(bounty).length > 1;
 
     return (
       <div>
         <ProductHeader />
 
         <div className="container mt3">
-          {!item ? <Spinner /> :
+          {!hasContent ? <Spinner /> :
             <Discussion newsFeedItem={item}>
               <Bounty item={item}
                   valuation={valuation} />

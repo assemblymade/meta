@@ -29,6 +29,7 @@ var CONSTANTS = {
     BOUNTY_MARKS_RECEIVE: null,
     BOUNTY_RECEIVE: null,
     BOUNTY_REOPENED: null,
+    BOUNTY_SELECTED_CHANGED: null,
     BOUNTY_WORK_SUBMITTED: null,
 
     CHAT_ADDED: null,

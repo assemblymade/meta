@@ -46,10 +46,6 @@ var NewsFeedItemComments = React.createClass({
   },
 
   componentDidUpdate: function(prevProps, prevState) {
-    if (this.props.item.id != prevProps.item.id) {
-      debugger
-    }
-
     if (window.location.hash) {
       if (this.state.comments.length > prevState.comments.length) {
         $(document.body).animate({
@@ -65,7 +61,7 @@ var NewsFeedItemComments = React.createClass({
     }
 
     DiscussionStore.removeChangeListener(this.getDiscussionState);
-    DiscussionActions.discussionClosed(this.props.item.id)
+    setTimeout(() => DiscussionActions.discussionClosed(this.props.item.id),1)
   },
 
   fetchCommentsFromServer: function(e) {
@@ -81,6 +77,10 @@ var NewsFeedItemComments = React.createClass({
   },
 
   getBountyState: function() {
+    if (!this.isMounted()) {
+      return
+    }
+
     var state = BountyStore.getState();
     var comments = this.state.comments;
 
