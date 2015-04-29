@@ -52,12 +52,10 @@ var BountyBreakdown = React.createClass({
   },
 
   renderNewOffer: function() {
-    return VoteBountyOffer(
-      _.extend({}, this.props, {
-        onChange: this.handleOfferChanged,
-        user: this.state.currentUser
-      })
-    );
+    return <VoteBountyOffer {...this.props}
+        onChange={this.handleOfferChanged}
+        user={this.state.currentUser}
+        coinsMinted={this.props.product.coins_minted} />;
   },
 
   renderActions: function() {
