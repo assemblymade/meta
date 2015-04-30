@@ -54,7 +54,7 @@ class WipContracts
         percentage: core_team_contracts.map(&:amount).sum.to_f
       },
       others: product_contracts.map{|c| {
-        username: c.user.username,
+        username: User.unscoped.find(c.user_id).username,
         percentage: c.percentage.to_f
       }}
     }
