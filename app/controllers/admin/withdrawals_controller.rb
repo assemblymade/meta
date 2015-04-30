@@ -1,8 +1,16 @@
 class Admin::WithdrawalsController < AdminController
-  respond_to :html
+  respond_to :html, :json
 
   def index
     @withdrawals = User::Withdrawal.all.order(created_at: :desc)
+  end
+
+  def update
+    @withdrawal = User::Withdrawal.find(params[:id])
+    @withdrawal.update(
+      amount_withheld: (params[:amount_withheld].gsub('$','').strip.to_d * 100).to_i
+    )
+    render json: @withdrawal
   end
 
   def payment_sent

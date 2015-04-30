@@ -9,14 +9,8 @@ class User::Withdrawal < ActiveRecord::Base
 
   acts_as_sequenced column: :reference, start_at: 1
 
-  def withholding
-    if percentage = user.tax_info.try(:withholding)
-      percentage * total_amount
-    end
-  end
-
   def payable_amount
-    total_amount - withholding
+    total_amount - amount_withheld
   end
 
   # def type   #inelegant work-around for now, no user has ever changed payment types
