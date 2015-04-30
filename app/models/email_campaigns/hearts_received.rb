@@ -5,7 +5,7 @@ module EmailCampaigns
     def process!
       recent_hearts = Heart.includes(:heartable).where('created_at > ?', 12.hours.ago)
 
-      by_user = recent_hearts.each_with_object({}) do |heart, o|
+      by_user = recent_hearts.select(&:heartable).each_with_object({}) do |heart, o|
         author_id = heart.heartable.author_id
         o[author_id] ||= []
         o[author_id] << heart unless author_id == heart.user_id
