@@ -20,7 +20,6 @@ module EmailCampaigns
           oldest_unsent_heart = unsent_hearts.map(&:created_at).sort.first
 
           if oldest_unsent_heart.nil? || oldest_unsent_heart < 30.minutes.ago
-
             send[user_id] = unsent_hearts.map(&:id) if unsent_hearts.any?
             unsent_hearts.each{|h| h.update! sent_at: Time.now }
           end
