@@ -1,26 +1,27 @@
 <% title @article.name, @title %>
 <% provide(:description, @description) %>
+<% provide(:body_class, "bg-white") %>
 
 <%= render 'shared/navbar' %>
 
-<div class="container mt1">
-  <section class="mt4 p3 right bg-white rounded shadow">
-    <h3 class="mtn1 mb1 py1 regular border-bottom">More <%= @title %></h3>
+<div class="container mt3">
+  <section class="mt4 p3 right well">
+    <h3 class="caps gray-2 h4 center mt0 mb2">More <%= @title %></h3>
     <ul class="list-reset mt2 mb0">
       <% @article_list.each do |article| %>
         <li class="mt1">
           <span class="icon icon-chevron-right gray-3"></span>
           <% @article_link = help_path(article) if @title == "FAQs" %>
           <% @article_link = guides_path(article) if @title == "Guides" %>
-          <%= link_to article.name, @article_link.to_s, class: ("gray-1" + " bold-blue" if @article.slug == article.slug) %>
+          <%= link_to article.name, @article_link.to_s, class: ("gray-1" + " bold blue" if @article.slug == article.slug) %>
         </li>
       <% end %>
     </ul>
   </section>
 
-  <article class="sm-col-11 md-col-8 mt2 bg-white rounded p4 shadow left">
+  <article class="sm-col-11 md-col-8 left">
 
-    <h2 class="mt0 mtn2 py2 border-bottom"><%= @title %>: <span class="regular"><%= @article.name %></span></h2>
+    <h2 class="mtn1 py2 border-bottom"><%= @title %>: <span class="regular"><%= @article.name %></span></h2>
 
     <% if @show_toc == true %>
     <h5 class="m0 py2 caps gray-2">In this guide:</h5>
