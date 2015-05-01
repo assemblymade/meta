@@ -3,11 +3,7 @@
 const Drawer = require('../ui/drawer.js.jsx');
 const IdeaForm = require('./idea_form.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
-<<<<<<< HEAD
-const Tile = require('../ui/tile.js.jsx')
-=======
 const Tile = require('../ui/tile.js.jsx');
->>>>>>> Stop using Sheet
 
 let IdeasNew = React.createClass({
   propTypes: {
