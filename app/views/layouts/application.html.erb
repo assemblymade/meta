@@ -34,7 +34,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="<%= yield(:body_class) %> bg-gray-6">
+  <body class="<%= yield(:body_class) %> <%= 'bg-gray-6' unless yield(:body_class) == 'bg-white' %>">
     <%= yield %>
 
     <% hydrate_stores %>

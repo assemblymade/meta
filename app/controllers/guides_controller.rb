@@ -1,5 +1,4 @@
 class GuidesController < ApplicationController
-
   def faq
     @article_list = FaqGroup.all
     @article = FaqGroup.find_by_slug!(params.fetch(:group))
@@ -17,5 +16,4 @@ class GuidesController < ApplicationController
     @show_toc = true
     render :index
   end
-
 end
