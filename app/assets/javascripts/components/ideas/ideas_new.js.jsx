@@ -1,6 +1,5 @@
 'use strict';
 
-const Sheet = require('../ui/sheet.js.jsx');
 const Drawer = require('../ui/drawer.js.jsx');
 const IdeaForm = require('./idea_form.js.jsx');
 const Icon = require('../ui/icon.js.jsx');
