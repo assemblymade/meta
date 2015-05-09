@@ -180,28 +180,6 @@
 
 .pointer { cursor: pointer; }
 
-
-// ### transitions
-
-.tranx_fx {
-  -webkit-transition-duration: $transition-duration;
-  -webkit-transition-timing-function: $transition-function;
-  transition-duration: $transition-duration;
-  transition-timing-function: $transition-function;
-}
-
-.tranx_m {
-  -webkit-transition-property: margin;
-  transition-property: margin;
-  @extend .tranx_fx;
-}
-
-.tranx_p {
-  -webkit-transition-property: padding;
-  transition-property: padding;
-  @extend .tranx_fx;
-}
-
 // ### responsive
 // natively basscss has "sm, med, lg" prefixes for this, but we need more granular options
 // I propose the folowing standard .r###_selector

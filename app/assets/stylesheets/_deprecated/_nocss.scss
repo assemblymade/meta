@@ -1676,23 +1676,3 @@ $px4:   4px;
 .#{$pre}open {
   max-height: 100%;
 }
-
-// ### Transitions ###
-.#{$pre}tranx_fx {
-  -webkit-transition-duration: $transition-duration;
-  -webkit-transition-timing-function: $transition-function;
-  transition-duration: $transition-duration;
-  transition-timing-function: $transition-function;
-}
-
-.#{$pre}tranx_m {
-  -webkit-transition-property: margin;
-  transition-property: margin;
-  // @extend .tranx_fx;
-}
-
-.#{$pre}tranx_p {
-  -webkit-transition-property: padding;
-  transition-property: padding;
-  // @extend .tranx_fx;
-}
