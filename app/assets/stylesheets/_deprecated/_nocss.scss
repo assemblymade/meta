@@ -1661,11 +1661,6 @@ $px4:   4px;
   @extend .#{$pre}fs1_1;
   @extend .#{$pre}lh1_7;
 }
-.#{$pre}h7, .#{$pre}h7 h7, .#{$pre}h7 a, .#{$pre}h7 p  {       // 12/12
-  @extend .#{$pre}fs1;
-  @extend .#{$pre}lh1;
-  @extend .#{$pre}caps;
-}
 
 .#{$pre}text-1, .#{$pre}text-1 a, .#{$pre}text-1 p  {         // 20/28
   @extend .#{$pre}fs1_7;
