@@ -7,14 +7,3 @@
     margin-top: 0;
   }
 }
-
-// TODO Think about moving in with .summary
-.page-header-meta {
-  margin-top: $line-height-computed / 4;
-  font-size: $font-size-small;
-  color: $brand-muted;
-
-  > ul {
-    margin-bottom: 0;
-  }
-}

@@ -75,46 +75,6 @@
   /* ^^^^^^^ about page */
 }
 
-// -- Delta's ------------
-//
-// http://assembly.com/ideas
-.hero-ideas {
-  padding-top: 5rem;
-  padding-bottom: 4rem;
-  color: $white;
-  background-image: url(../assets/ideas/ideas-header-bg.jpg);
-  background-position: top center;
-  @media screen and (min-width: 768px) {
-    background-image: url(../assets/ideas/ideas-header-bg-lg.jpg);
-  }
-  > .container  {
-    @extend .text-2;
-    text-align: center;
-    //
-    > .main {
-      margin-bottom: 2.75rem;
-    }
-  }
-  h1 {
-    color: $white;
-    margin-top:0;
-    margin-bottom: 3rem;
-  }
-  a {
-    color: $white;
-    text-decoration:underline;
-  }
-  ._button {
-    margin:0 auto;
-    padding-left:3.25rem;
-    padding-right:3.25rem;
-    .title {
-      font-size:1.5rem;
-      line-height:2.75rem;
-    }
-  }
-}
-
 // For the about page
 .hero-about-top {
   padding-top: 6rem;

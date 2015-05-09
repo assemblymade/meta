@@ -90,7 +90,7 @@ var OnlineUsersStore = require('../stores/online_users_store');
 
       if (isMemberOnline(member)) {
         indicator = (
-          <div className="indicator indicator-success icon-right"></div>
+          <div className="indicator bg-green icon-right"></div>
         )
       }
 

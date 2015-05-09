@@ -76,10 +76,6 @@ $task-list-complete-bg: lighten($body-bg, 2%);
     .textcomplete-wrapper {
       width: 100%;
     }
-
-    .list-meta {
-      margin-top: 4px;
-    }
   }
 
   &:first-child {
@@ -161,15 +157,6 @@ $task-list-complete-bg: lighten($body-bg, 2%);
 
   .task-list-item-title {
     color: $gray-2;
-  }
-}
-
-.task-list-item-remove {
-  background-color: #FCFDFD;
-  text-decoration: line-through;
-
-  .list-meta {
-    display: none;
   }
 }
 

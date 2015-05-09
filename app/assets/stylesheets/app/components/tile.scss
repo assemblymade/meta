@@ -56,12 +56,12 @@
 
 .svg-icon-heart {
   width: 1.6rem;
-  //
+
   .path1 {
-    fill:transparent;
+    fill: transparent;
   }
   .path2 {
-    fill:$gray-3;
+    fill: $gray-3;
   }
 }
 
@@ -71,23 +71,5 @@
 
 .svg-icon-share {
   width: 1.9rem;
-  fill:$gray-3;
-}
-
-// -- Size Variations ------------
-
-.tile-small {
-  min-height: 30.5rem;
-  margin-bottom: 0; // let the grid/container create margins
-  //
-  > .main {
-    height: 17rem;
-    overflow: hidden;
-  }
-  > .main a .content {
-    color: $gray-1;
-  }
-  .action-bar{
-    margin-top: -1rem;
-  }
+  fill: $gray-3;
 }
