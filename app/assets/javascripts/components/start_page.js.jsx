@@ -34,28 +34,28 @@ var StartPage = React.createClass({
 
             <li>
               <div className="step">1</div>
-              <div className="body">
+              <div className="body px2">
                 <strong>Share your idea</strong>
                 <div className="gray-2">It doesn't need to be fully scoped out, it's just an idea.</div>
               </div>
             </li>
             <li>
               <div className="step">2</div>
-              <div className="body">
+              <div className="body px2">
                 <strong>Find collaborators</strong>
                 <div className="gray-2">Work together here in your own online space.</div>
               </div>
             </li>
             <li>
               <div className="step">3</div>
-              <div className="body">
+              <div className="body px2">
                 <strong>Build your product</strong>
                 <div className="gray-2">Don’t worry about the costs. We’ve got your back.</div>
               </div>
             </li>
             <li>
               <div className="step">4</div>
-              <div className="body">
+              <div className="body px2">
                 <strong>Grow</strong>
                 <div className="gray-2">Share success with everyone who helped.</div>
               </div>
