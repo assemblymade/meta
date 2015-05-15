@@ -25,7 +25,7 @@ var FormGroup = require('./form_group.js.jsx');
       return (
         <form onSubmit={this.handleSubmit}>
           <div className="p3">
-            <h2 className="alpha">Ask a friend</h2>
+            <h2 className="mt0">Ask a friend</h2>
             <p className="gray-2">Know somebody who could help with this? Anybody can help out, all you need to do is ask.</p>
 
             <div className="alert alert-info alert-dismissable" role="alert" style={{ display: this.state.alertDisplay }}>

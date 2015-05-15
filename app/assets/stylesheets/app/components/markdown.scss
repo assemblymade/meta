@@ -60,7 +60,5 @@
 .shrink-images {
   img { max-width: 50%;}
 
-  .modal-content {
-    img { max-width: 100%; }
-  }
+  .modal-content img { max-width: 100%; }
 }

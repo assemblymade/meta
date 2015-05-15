@@ -170,234 +170,16 @@ $px4:   4px;
 .#{$pre}z9   { z-index:9 }
 .#{$pre}z10  { z-index:10 }
 
-// -- position
-.#{$pre}pos-absolute	{ position:absolute }
-.#{$pre}pos-fixed		{ position:fixed }
-.#{$pre}pos-relative	{ position:relative }
-.#{$pre}pos-static		{ position:static }
-
-// top
-.#{$pre}pos-t0      { top:$r0 }
-.#{$pre}pos-t0_25   { top:$r0_25 }
-.#{$pre}pos-t0_5    { top:$r0_5 }
-.#{$pre}pos-t0_75   { top:$r0_75 }
-.#{$pre}pos-t1      { top:$r1 }
-.#{$pre}pos-t1_25   { top:$r1 }
-.#{$pre}pos-t1_5    { top:$r1_5 }
-.#{$pre}pos-t1_75   { top:$r1_75 }
-.#{$pre}pos-t2      { top:$r2 }
-.#{$pre}pos-t2_25   { top:$r2_25 }
-.#{$pre}pos-t2_5    { top:$r2_5 }
-.#{$pre}pos-t2_75   { top:$r2_75 }
-.#{$pre}pos-t3      { top:$r3 }
-.#{$pre}pos-t3_25   { top:$r3_25 }
-.#{$pre}pos-t3_5    { top:$r3_5 }
-.#{$pre}pos-t3_75   { top:$r3_75 }
-.#{$pre}pos-t4      { top:$r4 }
-.#{$pre}pos-t4_25   { top:$r4_25 }
-.#{$pre}pos-t4_5    { top:$r4_5 }
-.#{$pre}pos-t4_75   { top:$r4_75 }
-.#{$pre}pos-t5      { top:$r5 }
-.#{$pre}pos-t5_25   { top:$r5_25 }
-.#{$pre}pos-t5_5    { top:$r5_5 }
-.#{$pre}pos-t5_75   { top:$r5_75 }
-
-.#{$pre}pos-tn0_25   { top:-$r0_25 }
-.#{$pre}pos-tn0_5    { top:-$r0_5 }
-.#{$pre}pos-tn0_75   { top:-$r0_75 }
-.#{$pre}pos-tn1      { top:-$r1 }
-.#{$pre}pos-tn1_25   { top:-$r1_25 }
-.#{$pre}pos-tn1_5    { top:-$r1_5 }
-.#{$pre}pos-tn1_75   { top:-$r1_75 }
-.#{$pre}pos-tn2      { top:-$r2 }
-.#{$pre}pos-tn2_25   { top:-$r2_25 }
-.#{$pre}pos-tn2_5    { top:-$r2_5 }
-.#{$pre}pos-tn2_75   { top:-$r2_75 }
-.#{$pre}pos-tn3      { top:-$r3 }
-.#{$pre}pos-tn3_25   { top:-$r3_25 }
-.#{$pre}pos-tn3_5    { top:-$r3_5 }
-.#{$pre}pos-tn3_75   { top:-$r3_75 }
-.#{$pre}pos-tn4      { top:-$r4 }
-.#{$pre}pos-tn4_25   { top:-$r4_25 }
-.#{$pre}pos-tn4_5    { top:-$r4_5 }
-.#{$pre}pos-tn4_75   { top:-$r4_75 }
-.#{$pre}pos-tn5      { top:-$r5 }
-.#{$pre}pos-tn5_25   { top:-$r5_25 }
-.#{$pre}pos-tn5_5    { top:-$r5_5 }
-.#{$pre}pos-tn5_75   { top:-$r5_75 }
-
-// right
-.#{$pre}pos-r0      { right:$r0 }
-.#{$pre}pos-r0_25   { right:$r0_25 }
-.#{$pre}pos-r0_5    { right:$r0_5 }
-.#{$pre}pos-r0_75   { right:$r0_75 }
-.#{$pre}pos-r1      { right:$r1 }
-.#{$pre}pos-r1_25   { right:$r1_25 }
-.#{$pre}pos-r1_5    { right:$r1_5 }
-.#{$pre}pos-r1_75   { right:$r1_75 }
-.#{$pre}pos-r2      { right:$r2 }
-.#{$pre}pos-r2_25   { right:$r2_25 }
-.#{$pre}pos-r2_5    { right:$r2_5 }
-.#{$pre}pos-r2_75   { right:$r2_75 }
-.#{$pre}pos-r3      { right:$r3 }
-.#{$pre}pos-r3_25   { right:$r3_25 }
-.#{$pre}pos-r3_5    { right:$r3_5 }
-.#{$pre}pos-r3_75   { right:$r3_75 }
-.#{$pre}pos-r4      { right:$r4 }
-.#{$pre}pos-r4_25   { right:$r4_25 }
-.#{$pre}pos-r4_5    { right:$r4_5 }
-.#{$pre}pos-r4_75   { right:$r4_75 }
-.#{$pre}pos-r5      { right:$r5 }
-.#{$pre}pos-r5_25   { right:$r5_25 }
-.#{$pre}pos-r5_5    { right:$r5_5 }
-.#{$pre}pos-r5_75   { right:$r5_75 }
-
-.#{$pre}pos-rn0_25   { right:-$r0_25 }
-.#{$pre}pos-rn0_5    { right:-$r0_5 }
-.#{$pre}pos-rn0_75   { right:-$r0_75 }
-.#{$pre}pos-rn1      { right:-$r1 }
-.#{$pre}pos-rn1_25   { right:-$r1_25 }
-.#{$pre}pos-rn1_5    { right:-$r1_5 }
-.#{$pre}pos-rn1_75   { right:-$r1_75 }
-.#{$pre}pos-rn2      { right:-$r2 }
-.#{$pre}pos-rn2_25   { right:-$r2_25 }
-.#{$pre}pos-rn2_5    { right:-$r2_5 }
-.#{$pre}pos-rn2_75   { right:-$r2_75 }
-.#{$pre}pos-rn3      { right:-$r3 }
-.#{$pre}pos-rn3_25   { right:-$r3_25 }
-.#{$pre}pos-rn3_5    { right:-$r3_5 }
-.#{$pre}pos-rn3_75   { right:-$r3_75 }
-.#{$pre}pos-rn4      { right:-$r4 }
-.#{$pre}pos-rn4_25   { right:-$r4_25 }
-.#{$pre}pos-rn4_5    { right:-$r4_5 }
-.#{$pre}pos-rn4_75   { right:-$r4_75 }
-.#{$pre}pos-rn5      { right:-$r5 }
-.#{$pre}pos-rn5_25   { right:-$r5_25 }
-.#{$pre}pos-rn5_5    { right:-$r5_5 }
-.#{$pre}pos-rn5_75   { right:-$r5_75 }
-
-// bottom
-.#{$pre}pos-b0      { bottom:$r0 }
-.#{$pre}pos-b0_25   { bottom:$r0_25 }
-.#{$pre}pos-b0_5    { bottom:$r0_5 }
-.#{$pre}pos-b0_75   { bottom:$r0_75 }
-.#{$pre}pos-b1      { bottom:$r1 }
-.#{$pre}pos-b1_25   { bottom:$r1_25 }
-.#{$pre}pos-b1_5    { bottom:$r1_5 }
-.#{$pre}pos-b1_75   { bottom:$r1_75 }
-.#{$pre}pos-b2      { bottom:$r2 }
-.#{$pre}pos-b2_25   { bottom:$r2_25 }
-.#{$pre}pos-b2_5    { bottom:$r2_5 }
-.#{$pre}pos-b2_75   { bottom:$r2_75 }
-.#{$pre}pos-b3      { bottom:$r3 }
-.#{$pre}pos-b3_25   { bottom:$r3_25 }
-.#{$pre}pos-b3_5    { bottom:$r3_5 }
-.#{$pre}pos-b3_75   { bottom:$r3_75 }
-.#{$pre}pos-b4      { bottom:$r4 }
-.#{$pre}pos-b4_25   { bottom:$r4_25 }
-.#{$pre}pos-b4_5    { bottom:$r4_5 }
-.#{$pre}pos-b4_75   { bottom:$r4_75 }
-.#{$pre}pos-b5      { bottom:$r5 }
-.#{$pre}pos-b5_25   { bottom:$r5_25 }
-.#{$pre}pos-b5_5    { bottom:$r5_5 }
-.#{$pre}pos-b5_75   { bottom:$r5_75 }
-
-.#{$pre}pos-bn0_25   { bottom:-$r0_25 }
-.#{$pre}pos-bn0_5    { bottom:-$r0_5 }
-.#{$pre}pos-bn0_75   { bottom:-$r0_75 }
-.#{$pre}pos-bn1      { bottom:-$r1 }
-.#{$pre}pos-bn1_25   { bottom:-$r1_25 }
-.#{$pre}pos-bn1_5    { bottom:-$r1_5 }
-.#{$pre}pos-bn1_75   { bottom:-$r1_75 }
-.#{$pre}pos-bn2      { bottom:-$r2 }
-.#{$pre}pos-bn2_25   { bottom:-$r2_25 }
-.#{$pre}pos-bn2_5    { bottom:-$r2_5 }
-.#{$pre}pos-bn2_75   { bottom:-$r2_75 }
-.#{$pre}pos-bn3      { bottom:-$r3 }
-.#{$pre}pos-bn3_25   { bottom:-$r3_25 }
-.#{$pre}pos-bn3_5    { bottom:-$r3_5 }
-.#{$pre}pos-bn3_75   { bottom:-$r3_75 }
-.#{$pre}pos-bn4      { bottom:-$r4 }
-.#{$pre}pos-bn4_25   { bottom:-$r4_25 }
-.#{$pre}pos-bn4_5    { bottom:-$r4_5 }
-.#{$pre}pos-bn4_75   { bottom:-$r4_75 }
-.#{$pre}pos-bn5      { bottom:-$r5 }
-.#{$pre}pos-bn5_25   { bottom:-$r5_25 }
-.#{$pre}pos-bn5_5    { bottom:-$r5_5 }
-.#{$pre}pos-bn5_75   { bottom:-$r5_75 }
-
-// left
-.#{$pre}pos-l0      { left:$r0 }
-.#{$pre}pos-l0_25   { left:$r0_25 }
-.#{$pre}pos-l0_5    { left:$r0_5 }
-.#{$pre}pos-l0_75   { left:$r0_75 }
-.#{$pre}pos-l1      { left:$r1 }
-.#{$pre}pos-l1_25   { left:$r1_25 }
-.#{$pre}pos-l1_5    { left:$r1_5 }
-.#{$pre}pos-l1_75   { left:$r1_75 }
-.#{$pre}pos-l2      { left:$r2 }
-.#{$pre}pos-l2_25   { left:$r2_25 }
-.#{$pre}pos-l2_5    { left:$r2_5 }
-.#{$pre}pos-l2_75   { left:$r2_75 }
-.#{$pre}pos-l3      { left:$r3 }
-.#{$pre}pos-l3_25   { left:$r3_25 }
-.#{$pre}pos-l3_5    { left:$r3_5 }
-.#{$pre}pos-l3_75   { left:$r3_75 }
-.#{$pre}pos-l4      { left:$r4 }
-.#{$pre}pos-l4_25   { left:$r4_25 }
-.#{$pre}pos-l4_5    { left:$r4_5 }
-.#{$pre}pos-l4_75   { left:$r4_75 }
-.#{$pre}pos-l5      { left:$r5 }
-.#{$pre}pos-l5_25   { left:$r5_25 }
-.#{$pre}pos-l5_5    { left:$r5_5 }
-.#{$pre}pos-l5_75   { left:$r5_75 }
-
-.#{$pre}pos-ln0_25   { left:-$r0_25 }
-.#{$pre}pos-ln0_5    { left:-$r0_5 }
-.#{$pre}pos-ln0_75   { left:-$r0_75 }
-.#{$pre}pos-ln1      { left:-$r1 }
-.#{$pre}pos-ln1_25   { left:-$r1_25 }
-.#{$pre}pos-ln1_5    { left:-$r1_5 }
-.#{$pre}pos-ln1_75   { left:-$r1_75 }
-.#{$pre}pos-ln2      { left:-$r2 }
-.#{$pre}pos-ln2_25   { left:-$r2_25 }
-.#{$pre}pos-ln2_5    { left:-$r2_5 }
-.#{$pre}pos-ln2_75   { left:-$r2_75 }
-.#{$pre}pos-ln3      { left:-$r3 }
-.#{$pre}pos-ln3_25   { left:-$r3_25 }
-.#{$pre}pos-ln3_5    { left:-$r3_5 }
-.#{$pre}pos-ln3_75   { left:-$r3_75 }
-.#{$pre}pos-ln4      { left:-$r4 }
-.#{$pre}pos-ln4_25   { left:-$r4_25 }
-.#{$pre}pos-ln4_5    { left:-$r4_5 }
-.#{$pre}pos-ln4_75   { left:-$r4_75 }
-.#{$pre}pos-ln5      { left:-$r5 }
-.#{$pre}pos-ln5_25   { left:-$r5_25 }
-.#{$pre}pos-ln5_5    { left:-$r5_5 }
-.#{$pre}pos-ln5_75   { left:-$r5_75 }
-
 // -- floats & clears
 .#{$pre}float-left  { float:left }
 .#{$pre}float-right { float:right }
 .#{$pre}float-none  { float:none }
 
-// -- alignment
-.#{$pre}margin-align-right { margin-right:$r0; margin-left:auto; }
-.#{$pre}margin-align-center { margin-right:auto; margin-left:auto; }
-.#{$pre}margin-left-align { margin-right:auto; margin-left:$r0; }
+// -- text alignment
 
 .#{$pre}text-align-right   { text-align:right }
 .#{$pre}text-align-center  { text-align:center }
 .#{$pre}text-left-align    { text-align:left }
-
-.#{$pre}valign-top     { vertical-align:top }
-.#{$pre}valign-middle  { vertical-align:middle }
-.#{$pre}valign-bottom  { vertical-align:bottom }
-.#{$pre}valign-pro     {
-  top: $pc50;
-  -webkit-transform: translateY(-$pc50);
-  transform: translateY(-$pc50);
-}
 
 // ### Table ###
 .#{$pre}table        { display:table }
@@ -409,283 +191,6 @@ $px4:   4px;
 .#{$pre}list-reset { list-style: none; padding-left:$r0 }
 .#{$pre}list-inline > li { display:inline-block }
 .#{$pre}list-none > li { display:none }
-
-.#{$pre}list-mr0 > li     { margin-right:$r0 }
-.#{$pre}list-mr0_25 > li  { margin-right:$r0_25 }
-.#{$pre}list-mr0_5 > li   { margin-right:$r0_5 }
-.#{$pre}list-mr0_75 > li  { margin-right:$r0_75 }
-.#{$pre}list-mr1 > li     { margin-right:$r1 }
-.#{$pre}list-mr1_25 > li  { margin-right:$r1_25 }
-.#{$pre}list-mr1_5 > li   { margin-right:$r1_5 }
-.#{$pre}list-mr1_75 > li  { margin-right:$r1_75 }
-.#{$pre}list-mr2 > li     { margin-right:$r2 }
-.#{$pre}list-mr2_25 > li  { margin-right:$r2_25 }
-.#{$pre}list-mr2_5 > li   { margin-right:$r2_5 }
-.#{$pre}list-mr2_75 > li  { margin-right:$r2_75 }
-.#{$pre}list-mr3 > li     { margin-right:$r3 }
-.#{$pre}list-mr3_25 > li  { margin-right:$r3_25 }
-.#{$pre}list-mr3_5 > li   { margin-right:$r3_5 }
-.#{$pre}list-mr3_75 > li  { margin-right:$r3_75 }
-.#{$pre}list-mr4 > li     { margin-right:$r4 }
-.#{$pre}list-mr4_25 > li  { margin-right:$r4_25 }
-.#{$pre}list-mr4_5 > li   { margin-right:$r4_5 }
-.#{$pre}list-mr4_75 > li  { margin-right:$r4_75 }
-.#{$pre}list-mr5 > li     { margin-right:$r5 }
-.#{$pre}list-mr5_25 > li  { margin-right:$r5_25 }
-.#{$pre}list-mr5_5 > li   { margin-right:$r5_5 }
-.#{$pre}list-mr5_75 > li  { margin-right:$r5_75 }
-
-.#{$pre}list-ml0 > li     { margin-left:$r0 }
-.#{$pre}list-ml0_25 > li  { margin-left:$r0_25 }
-.#{$pre}list-ml0_5 > li   { margin-left:$r0_5 }
-.#{$pre}list-ml0_75 > li  { margin-left:$r0_75 }
-.#{$pre}list-ml1 > li     { margin-left:$r1 }
-.#{$pre}list-ml1_25 > li  { margin-left:$r1_25 }
-.#{$pre}list-ml1_5 > li   { margin-left:$r1_5 }
-.#{$pre}list-ml1_75 > li  { margin-left:$r1_75 }
-.#{$pre}list-ml2 > li     { margin-left:$r2 }
-.#{$pre}list-ml2_25 > li  { margin-left:$r2_25 }
-.#{$pre}list-ml2_5 > li   { margin-left:$r2_5 }
-.#{$pre}list-ml2_75 > li  { margin-left:$r2_75 }
-.#{$pre}list-ml3 > li     { margin-left:$r3 }
-.#{$pre}list-ml3_25 > li  { margin-left:$r3_25 }
-.#{$pre}list-ml3_5 > li   { margin-left:$r3_5 }
-.#{$pre}list-ml3_75 > li  { margin-left:$r3_75 }
-.#{$pre}list-ml4 > li     { margin-left:$r4 }
-.#{$pre}list-ml4_25 > li  { margin-left:$r4_25 }
-.#{$pre}list-ml4_5 > li   { margin-left:$r4_5 }
-.#{$pre}list-ml4_75 > li  { margin-left:$r4_75 }
-.#{$pre}list-ml5 > li     { margin-left:$r5 }
-.#{$pre}list-ml5_25 > li  { margin-left:$r5_25 }
-.#{$pre}list-ml5_5 > li   { margin-left:$r5_5 }
-.#{$pre}list-ml5_75 > li  { margin-left:$r5_75 }
-
-// -- height
-.#{$pre}ht100p  { height:$pc100 }
-.#{$pre}ht75p   { height:$pc75 }
-.#{$pre}ht66p   { height:$pc66 }
-.#{$pre}ht50p   { height:$pc50 }
-.#{$pre}ht33p   { height:$pc33 }
-.#{$pre}ht25p   { height:$pc25 }
-
-.#{$pre}ht0     { height:$r0 }
-.#{$pre}ht0_25  { height:$r0_25 }
-.#{$pre}ht0_5   { height:$r0_5 }
-.#{$pre}ht0_75  { height:$r0_75 }
-.#{$pre}ht1     { height:$r1 }
-.#{$pre}ht1_25  { height:$r1_25 }
-.#{$pre}ht1_5   { height:$r1_5 }
-.#{$pre}ht1_75  { height:$r1_75 }
-.#{$pre}ht2     { height:$r2 }
-.#{$pre}ht2_25  { height:$r2_25 }
-.#{$pre}ht2_5   { height:$r2_5 }
-.#{$pre}ht2_75  { height:$r2_75 }
-.#{$pre}ht3     { height:$r3 }
-.#{$pre}ht3_25  { height:$r3_25 }
-.#{$pre}ht3_5   { height:$r3_5 }
-.#{$pre}ht3_75  { height:$r3_75 }
-.#{$pre}ht4     { height:$r4 }
-.#{$pre}ht4_25  { height:$r4_25 }
-.#{$pre}ht4_5   { height:$r4_5 }
-.#{$pre}ht4_75  { height:$r4_75 }
-.#{$pre}ht5     { height:$r5 }
-.#{$pre}ht5_25  { height:$r5_25 }
-.#{$pre}ht5_5   { height:$r5_5 }
-.#{$pre}ht5_75  { height:$r5_75 }
-.#{$pre}ht6     { height:$r6 }
-.#{$pre}ht6_25  { height:$r6_25 }
-.#{$pre}ht6_5   { height:$r6_5 }
-.#{$pre}ht6_75  { height:$r6_75 }
-.#{$pre}ht7     { height:$r7 }
-.#{$pre}ht7_25  { height:$r7_25 }
-.#{$pre}ht7_5   { height:$r7_5 }
-.#{$pre}ht7_75  { height:$r7_75 }
-.#{$pre}ht8     { height:$r8 }
-.#{$pre}ht8_25  { height:$r8_25 }
-.#{$pre}ht8_5   { height:$r8_5 }
-.#{$pre}ht8_75  { height:$r8_75}
-.#{$pre}ht9     { height:$r9 }
-.#{$pre}ht9_25  { height:$r9_25 }
-.#{$pre}ht9_5   { height:$r9_5 }
-.#{$pre}ht9_75  { height:$r9_75 }
-.#{$pre}ht10    { height:$r10 }
-.#{$pre}ht10_25 { height:$r10_25 }
-.#{$pre}ht10_5  { height:$r10_5 }
-.#{$pre}ht10_75 { height:$r10_75 }
-.#{$pre}ht11    { height:$r11 }
-.#{$pre}ht11_25 { height:$r11_25 }
-.#{$pre}ht11_5  { height:$r11_5 }
-.#{$pre}ht11_75 { height:$r11_75 }
-.#{$pre}ht12    { height:$r12 }
-.#{$pre}ht12_25 { height:$r12_25 }
-.#{$pre}ht12_5  { height:$r12_5 }
-.#{$pre}ht12_75 { height:$r12_75 }
-.#{$pre}ht13    { height:$r13 }
-.#{$pre}ht13_25 { height:$r13_25 }
-.#{$pre}ht13_5  { height:$r13_5 }
-.#{$pre}ht13_75 { height:$r13_75 }
-.#{$pre}ht14    { height:$r14 }
-.#{$pre}ht14_25 { height:$r14_25 }
-.#{$pre}ht14_5  { height:$r14_5 }
-.#{$pre}ht14_75 { height:$r14_75 }
-.#{$pre}ht15    { height:$r15 }
-.#{$pre}ht15_25 { height:$r15_25 }
-.#{$pre}ht15_5  { height:$r15_5 }
-.#{$pre}ht15_75 { height:$r15_75 }
-.#{$pre}ht16    { height:$r16 }
-.#{$pre}ht16_25 { height:$r16_25 }
-.#{$pre}ht16_5  { height:$r16_5 }
-.#{$pre}ht16_75 { height:$r16_75 }
-.#{$pre}ht17    { height:$r17 }
-.#{$pre}ht17_25 { height:$r17_25 }
-.#{$pre}ht17_5  { height:$r17_5 }
-.#{$pre}ht17_75 { height:$r17_75 }
-.#{$pre}ht18    { height:$r18 }
-.#{$pre}ht18_25 { height:$r18_25 }
-.#{$pre}ht18_5  { height:$r18_5 }
-.#{$pre}ht18_75 { height:$r18_75 }
-.#{$pre}ht19    { height:$r19 }
-.#{$pre}ht19_25 { height:$r19_25 }
-.#{$pre}ht19_5  { height:$r19_5 }
-.#{$pre}ht19_75 { height:$r19_75 }
-.#{$pre}ht20    { height:$r20 }
-.#{$pre}ht20_25 { height:$r20_25 }
-.#{$pre}ht20_5  { height:$r20_5 }
-.#{$pre}ht20_75 { height:$r20_75 }
-.#{$pre}ht21    { height:$r22 }
-.#{$pre}ht21_25 { height:$r22_25 }
-.#{$pre}ht21_5  { height:$r21_5 }
-.#{$pre}ht21_75 { height:$r21_75 }
-.#{$pre}ht22    { height:$r22 }
-.#{$pre}ht22_25 { height:$r22_25 }
-.#{$pre}ht22_5  { height:$r22_5 }
-.#{$pre}ht22_75 { height:$r22_75 }
-.#{$pre}ht23    { height:$r23 }
-.#{$pre}ht23_25 { height:$r23_25 }
-.#{$pre}ht23_5  { height:$r23_5 }
-.#{$pre}ht23_75 { height:$r23_75 }
-.#{$pre}ht24    { height:$r24 }
-.#{$pre}ht24_25 { height:$r24_25 }
-.#{$pre}ht24_5  { height:$r24_5 }
-.#{$pre}ht24_75 { height:$r24_75 }
-.#{$pre}ht25    { height:$r25 }
-.#{$pre}ht25_25 { height:$r25_25 }
-.#{$pre}ht25_5  { height:$r25_5 } // 300px
-.#{$pre}ht25_75 { height:$r25_75 }
-
-// -- max-height
-.#{$pre}mh110p  { max-height:$pc110; }
-.#{$pre}mh100p  { max-height:$pc100; }
-.#{$pre}mh75p   { max-height:$pc75; }
-.#{$pre}mh66p   { max-height:$pc66; }
-.#{$pre}mh50p   { max-height:$pc50; }
-.#{$pre}mh33p   { max-height:$pc33; }
-.#{$pre}mh25p   { max-height:$pc25; }
-
-.#{$pre}mh0     { max-height:$r0 }
-.#{$pre}mh0_25  { max-height:$r0_25 }
-.#{$pre}mh0_5   { max-height:$r0_5 }
-.#{$pre}mh0_75  { max-height:$r0_75 }
-.#{$pre}mh1     { max-height:$r1 }
-.#{$pre}mh1_25  { max-height:$r1_25 }
-.#{$pre}mh1_5   { max-height:$r1_5 }
-.#{$pre}mh1_75  { max-height:$r1_75 }
-.#{$pre}mh2     { max-height:$r2 }
-.#{$pre}mh2_25  { max-height:$r2_25 }
-.#{$pre}mh2_5   { max-height:$r2_5 }
-.#{$pre}mh2_75  { max-height:$r2_75 }
-.#{$pre}mh3     { max-height:$r3 }
-.#{$pre}mh3_25  { max-height:$r3_25 }
-.#{$pre}mh3_5   { max-height:$r3_5 }
-.#{$pre}mh3_75  { max-height:$r3_75 }
-.#{$pre}mh4     { max-height:$r4 }
-.#{$pre}mh4_25  { max-height:$r4_25 }
-.#{$pre}mh4_5   { max-height:$r4_5 }
-.#{$pre}mh4_75  { max-height:$r4_75 }
-.#{$pre}mh5     { max-height:$r5 }
-.#{$pre}mh5_25  { max-height:$r5_25 }
-.#{$pre}mh5_5   { max-height:$r5_5 }
-.#{$pre}mh5_75  { max-height:$r5_75 }
-.#{$pre}mh6     { max-height:$r6 }
-.#{$pre}mh6_25  { max-height:$r6_25 }
-.#{$pre}mh6_5   { max-height:$r6_5 }
-.#{$pre}mh6_75  { max-height:$r6_75 }
-.#{$pre}mh7     { max-height:$r7 }
-.#{$pre}mh7_25  { max-height:$r7_25 }
-.#{$pre}mh7_5   { max-height:$r7_5 }
-.#{$pre}mh7_75  { max-height:$r7_75 }
-.#{$pre}mh8     { max-height:$r8 }
-.#{$pre}mh8_25  { max-height:$r8_25 }
-.#{$pre}mh8_5   { max-height:$r8_5 }
-.#{$pre}mh8_75  { max-height:$r8_75}
-.#{$pre}mh9     { max-height:$r9 }
-.#{$pre}mh9_25  { max-height:$r9_25 }
-.#{$pre}mh9_5   { max-height:$r9_5 }
-.#{$pre}mh9_75  { max-height:$r9_75 }
-.#{$pre}mh10    { max-height:$r10 }
-.#{$pre}mh10_25 { max-height:$r10_25 }
-.#{$pre}mh10_5  { max-height:$r10_5 }
-.#{$pre}mh10_75 { max-height:$r10_75 }
-.#{$pre}mh11    { max-height:$r11 }
-.#{$pre}mh11_25 { max-height:$r11_25 }
-.#{$pre}mh11_5  { max-height:$r11_5 }
-.#{$pre}mh11_75 { max-height:$r11_75 }
-.#{$pre}mh12    { max-height:$r12 }
-.#{$pre}mh12_25 { max-height:$r12_25 }
-.#{$pre}mh12_5  { max-height:$r12_5 }
-.#{$pre}mh12_75 { max-height:$r12_75 }
-.#{$pre}mh13    { max-height:$r13 }
-.#{$pre}mh13_25 { max-height:$r13_25 }
-.#{$pre}mh13_5  { max-height:$r13_5 }
-.#{$pre}mh13_75 { max-height:$r13_75 }
-.#{$pre}mh14    { max-height:$r14 }
-.#{$pre}mh14_25 { max-height:$r14_25 }
-.#{$pre}mh14_5  { max-height:$r14_5 }
-.#{$pre}mh14_75 { max-height:$r14_75 }
-.#{$pre}mh15    { max-height:$r15 }
-.#{$pre}mh15_25 { max-height:$r15_25 }
-.#{$pre}mh15_5  { max-height:$r15_5 }
-.#{$pre}mh15_75 { max-height:$r15_75 }
-.#{$pre}mh16    { max-height:$r16 }
-.#{$pre}mh16_25 { max-height:$r16_25 }
-.#{$pre}mh16_5  { max-height:$r16_5 }
-.#{$pre}mh16_75 { max-height:$r16_75 }
-.#{$pre}mh17    { max-height:$r17 }
-.#{$pre}mh17_25 { max-height:$r17_25 }
-.#{$pre}mh17_5  { max-height:$r17_5 }
-.#{$pre}mh17_75 { max-height:$r17_75 }
-.#{$pre}mh18    { max-height:$r18 }
-.#{$pre}mh18_25 { max-height:$r18_25 }
-.#{$pre}mh18_5  { max-height:$r18_5 }
-.#{$pre}mh18_75 { max-height:$r18_75 }
-.#{$pre}mh19    { max-height:$r19 }
-.#{$pre}mh19_25 { max-height:$r19_25 }
-.#{$pre}mh19_5  { max-height:$r19_5 }
-.#{$pre}mh19_75 { max-height:$r19_75 }
-.#{$pre}mh20    { max-height:$r20 }
-.#{$pre}mh20_25 { max-height:$r20_25 }
-.#{$pre}mh20_5  { max-height:$r20_5 }
-.#{$pre}mh20_75 { max-height:$r20_75}
-.#{$pre}mh21    { max-height:$r21 }
-.#{$pre}mh21_25 { max-height:$r21_25 }
-.#{$pre}mh21_5  { max-height:$r21_5 }
-.#{$pre}mh21_75 { max-height:$r21_75 }
-.#{$pre}mh22    { max-height:$r22 }
-.#{$pre}mh22_25 { max-height:$r22_25 }
-.#{$pre}mh22_5  { max-height:$r22_5 }
-.#{$pre}mh22_75 { max-height:$r22_75 }
-.#{$pre}mh23    { max-height:$r23 }
-.#{$pre}mh23_25 { max-height:$r23_25 }
-.#{$pre}mh23_5  { max-height:$r23_5 }
-.#{$pre}mh23_75 { max-height:$r23_75 }
-.#{$pre}mh24    { max-height:$r24 }
-.#{$pre}mh24_25 { max-height:$r24_25 }
-.#{$pre}mh24_5  { max-height:$r24_5 }
-.#{$pre}mh24_75 { max-height:$r24_75 }
-.#{$pre}mh25    { max-height:$r25 }
-.#{$pre}mh25_25 { max-height:$r25_25 }
-.#{$pre}mh25_5  { max-height:$r25_5 }	 // 300px
-.#{$pre}mh25_75 { max-height:$r25_75 }
 
 // -- width
 .#{$pre}w110p  { width:$pc110; }
@@ -1020,10 +525,6 @@ $px4:   4px;
 .#{$pre}py7_75  { padding-top:$r7_75; padding-bottom:$r7_75 }
 
 // top
-.#{$pre}pt0      { padding-top:$r0 }
-.#{$pre}pt0_25   { padding-top:$r0_25 }
-.#{$pre}pt0_5    { padding-top:$r0_5 }
-.#{$pre}pt0_75   { padding-top:$r0_75 }
 .#{$pre}pt1      { padding-top:$r1 }
 .#{$pre}pt1_25   { padding-top:$r1_25 }
 .#{$pre}pt1_5    { padding-top:$r1_5 }
@@ -1186,10 +687,6 @@ $px4:   4px;
 .#{$pre}m7_75   { margin:$r7_75 }
 
 // left & right
-.#{$pre}mx0     { margin-left:$r0; margin-right:$r0 }
-.#{$pre}mx0_25  { margin-left:$r0_25; margin-right:$r0_25 }
-.#{$pre}mx0_5   { margin-left:$r0_5; margin-right:$r0_5 }
-.#{$pre}mx0_75  { margin-left:$r0_75; margin-right:$r0_75 }
 .#{$pre}mx1     { margin-left:$r1; margin-right:$r1 }
 .#{$pre}mx1_25  { margin-left:$r1_25; margin-right:$r1_25 }
 .#{$pre}mx1_5   { margin-left:$r1_5; margin-right:$r1_5 }
@@ -1252,10 +749,6 @@ $px4:   4px;
 .#{$pre}mxn7_75  { margin-left:-$r7_75; margin-right:-$r7_75 }
 
 // top & bottom
-.#{$pre}my0     { margin-top:$r0; margin-bottom:$r0 }
-.#{$pre}my0_25  { margin-top:$r0_25; margin-bottom:$r0_25 }
-.#{$pre}my0_5   { margin-top:$r0_5; margin-bottom:$r0_5 }
-.#{$pre}my0_75  { margin-top:$r0_75; margin-bottom:$r0_75 }
 .#{$pre}my1     { margin-top:$r1; margin-bottom:$r1 }
 .#{$pre}my1_25  { margin-top:$r1_25; margin-bottom:$r1_25 }
 .#{$pre}my1_5   { margin-top:$r1_5; margin-bottom:$r1_5 }
@@ -1597,79 +1090,24 @@ $px4:   4px;
 .#{$pre}caps { text-transform: uppercase }
 
 .#{$pre}strong { font-weight:bold }
-.#{$pre}fw-500 { font-weight:500 }
-.#{$pre}fw-600 { font-weight:600 }
 
 .#{$pre}italic { font-style: italic }
 
 .#{$pre}fs0    { font-size:$r0 }
 .#{$pre}fs0_9  { font-size:$r0_9 }
-.#{$pre}fs1    { font-size:$r1 }
-.#{$pre}fs1_1  { font-size:$r1_1 }
-.#{$pre}fs1_2  { font-size:$r1_2 }
-.#{$pre}fs1_3  { font-size:$r1_3 }
-.#{$pre}fs1_4  { font-size:$r1_4 }
-.#{$pre}fs1_5  { font-size:$r1_5 }
-.#{$pre}fs1_6  { font-size:$r1_6 }
-.#{$pre}fs1_7  { font-size:$r1_7 }
-.#{$pre}fs1_8  { font-size:$r1_8 }
-.#{$pre}fs1_9  { font-size:$r1_9 }
-.#{$pre}fs2    { font-size:$r2 }
-.#{$pre}fs2_5  { font-size:$r2_5 }
+.#{$pre}h5    { font-size:$r1 }
+.#{$pre}h5_1  { font-size:$r1_1 }
+.#{$pre}h5_2  { font-size:$r1_2 }
+.#{$pre}h5_3  { font-size:$r1_3 }
+.#{$pre}h5_4  { font-size:$r1_4 }
+.#{$pre}h5_5  { font-size:$r1_5 }
+.#{$pre}h5_6  { font-size:$r1_6 }
+.#{$pre}h5_7  { font-size:$r1_7 }
+.#{$pre}h5_8  { font-size:$r1_8 }
+.#{$pre}h5_9  { font-size:$r1_9 }
+.#{$pre}h4    { font-size:$r2 }
+.#{$pre}h4_5  { font-size:$r2_5 }
 .#{$pre}fs3_5  { font-size:$r3_5 }
-
-.#{$pre}lh0    { line-height:$r0 }
-.#{$pre}lh0_9  { line-height:$r0_9 }
-.#{$pre}lh1    { line-height:$r1 }
-.#{$pre}lh1_1  { line-height:$r1_1 }
-.#{$pre}lh1_2  { line-height:$r1_2 }
-.#{$pre}lh1_3  { line-height:$r1_3 }
-.#{$pre}lh1_4  { line-height:$r1_4 }
-.#{$pre}lh1_5  { line-height:$r1_5 }
-.#{$pre}lh1_6  { line-height:$r1_6 }
-.#{$pre}lh1_7  { line-height:$r1_7 }
-.#{$pre}lh1_8  { line-height:$r1_8 }
-.#{$pre}lh1_9  { line-height:$r1_9 }
-.#{$pre}lh2    { line-height:$r2 }
-.#{$pre}lh2_25  { line-height:$r2_25 }
-.#{$pre}lh2_5  { line-height:$r2_5 }
-.#{$pre}lh2_75  { line-height:$r2_25 }
-.#{$pre}lh3    { line-height:$r3 }
-.#{$pre}lh4    { line-height:$r4 }
-
-.#{$pre}h1, .#{$pre}h1 h1, .#{$pre}h1 a, .#{$pre}h1 p {        // 42/48
-  @extend .#{$pre}fs3_5;
-  @extend .#{$pre}lh4;
-}
-.#{$pre}h2, .#{$pre}h2 h2, .#{$pre}h2 a, .#{$pre}h2 p  {       // 30/36
-  @extend .#{$pre}fs2_5;
-  @extend .#{$pre}lh3;
-}
-.#{$pre}h3, .#{$pre}h3 h3, .#{$pre}h3 a, .#{$pre}h3 p  {       // 24/30
-  @extend .#{$pre}fs2;
-  @extend .#{$pre}lh2_5;
-}
-.#{$pre}h4, .#{$pre}h4 h4, .#{$pre}h4 a, .#{$pre}h4 p  {       // 18/22
-  @extend .#{$pre}fs1_5;
-  @extend .#{$pre}lh1_9;
-}
-.#{$pre}h5, .#{$pre}h5 h5, .#{$pre}h5 a, .#{$pre}h5 p  {       // 15/20
-  @extend .#{$pre}fs1_3;
-  @extend .#{$pre}lh1_7;
-}
-.#{$pre}h6, .#{$pre}h6 h6, .#{$pre}h6 a, .#{$pre}h6 p  {       // 13/20
-  @extend .#{$pre}fs1_1;
-  @extend .#{$pre}lh1_7;
-}
-
-.#{$pre}text-1, .#{$pre}text-1 a, .#{$pre}text-1 p  {         // 20/28
-  @extend .#{$pre}fs1_7;
-  @extend .#{$pre}lh2_25;
-}
-.#{$pre}text-2, .#{$pre}text-2 a, .#{$pre}text-2 p {          // 15/24
-  @extend .#{$pre}fs1_3;
-  @extend .#{$pre}lh2;
-}
 
 // ### Misc ###
 

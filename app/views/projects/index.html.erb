@@ -4,9 +4,9 @@
 <% if @milestones.empty? %>
   <div class="row">
     <div class="col-md-6 col-xs-6 col-md-offset-3 col-xs-offset-3">
-      <div class="well well-lg omega">
-        <h3 class="alpha"><strong>Organize your work into Projects</strong></h3>
-        <p class="gray-2 omega">
+      <div class="well well-lg mb0">
+        <h3 class="mt0"><strong>Organize your work into Projects</strong></h3>
+        <p class="gray-2 mb0">
           Projects give you a great way to organize tasks. For example, you could make projects for the main screens
           in <%= @product.name %>. This helps people quickly grasp the vision.
         </p>
@@ -36,7 +36,7 @@
             </span>
           </td>
           <td>
-            <div class="progress omega" style="min-width:200px">
+            <div class="progress mb0" style="min-width:200px">
               <div class="progress-bar progress-bar-success" style="width:<%= number_to_percentage(milestone.progress * 100, precision: 0) %>">
                 <% if milestone.progress > 0 %>
                   <%= number_to_percentage(milestone.progress * 100, precision: 0) %>

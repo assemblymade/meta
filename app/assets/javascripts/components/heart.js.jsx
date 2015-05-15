@@ -80,7 +80,7 @@ var Heart = React.createClass({
     </div>
 
     return (
-      <a className="inline-block valign-top fs6 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
+      <a className="inline-block valign-top h2 gray no-focus" href="javascript:void(0);" onClick={this.handleClick}>
         {heartWithCount}
       </a>
     );
@@ -147,7 +147,7 @@ var Heart = React.createClass({
 
     return (
       <div onClick={this.handleClick} className="border rounded py1 px2">
-        <div className="inline-block valign-top fs6 gray no-focus">
+        <div className="inline-block valign-top h2 gray no-focus">
           {heartWithCount}
         </div>
       </div>

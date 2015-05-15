@@ -58,7 +58,7 @@ module.exports = React.createClass({
 
             <div className="activity-actions">
 
-              <ul className="list-inline pull-right omega">
+              <ul className="list-inline pull-right mb0">
                 <li>
                   <div className="dropdown">
                     <a href="#" className="dropdown-toggle" id={"dropdown-" + id} data-toggle="dropdown">

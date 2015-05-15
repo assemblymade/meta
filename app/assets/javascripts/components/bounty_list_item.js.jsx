@@ -114,7 +114,7 @@ var BountyListItem = React.createClass({
         <div className="table mb0">
           <div className="table-cell">
             <div className="px3 pt3 pb3">
-              <div className="mt0 mb1 mtn1 h4 fw-500 clickable">
+              <div className="mt0 mb1 mtn1 h4 bold clickable">
                 {this.renderTitle()}
               </div>
               <div className="clearfix h6 mt0 mb0 gray-3 mxn1">
@@ -206,9 +206,9 @@ var BountyListItem = React.createClass({
     return (
       <a className={classes} href={bounty.url}>
         {bounty.title} {' '}
-        <span className="gray-2 fs4">
+        <span className="gray-2 h3">
           #{bounty.number}
-          <span className="gray-2 visible-hover fw-200"> posted {moment(bounty.created_at).fromNow()}</span>
+          <span className="gray-2 visible-hover light"> posted {moment(bounty.created_at).fromNow()}</span>
         </span>
       </a>
     )

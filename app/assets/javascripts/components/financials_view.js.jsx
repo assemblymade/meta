@@ -65,7 +65,7 @@
       // TODO: Break out dl-inline styles into reusable SCSS components
       return (
         <div>
-          <ul className="list-inline omega">
+          <ul className="list-inline mb0">
             <li>
               <span className="bg-green"></span>
               <span className="green">Payout</span>

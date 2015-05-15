@@ -45,7 +45,7 @@
 		{
 			that.backdrop(function ()
 			{
-				var transition = $.support.transition && that.$element.hasClass('fade');
+				var transition = $.support.transition && that.$element.hasClass('muted');
 
 				if (!that.$element.parent().length)
 				{
@@ -100,7 +100,7 @@
 			.attr('aria-hidden', true)
 			.off('click.dismiss.lightbox');
 
-		$.support.transition && this.$element.hasClass('fade') ?
+		$.support.transition && this.$element.hasClass('muted') ?
 			this.$element
 				.one($.support.transition.end, $.proxy(this.hideModal(slide), this))
 				.emulateTransitionEnd(300) :
@@ -150,12 +150,12 @@
 	Lightbox.prototype.backdrop = function (callback)
 	{
 		var that    = this
-		var animate = this.$element.hasClass('fade') ? 'fade' : ''
+		var animate = this.$element.hasClass('muted') ? 'muted' : ''
 		if (this.isShown && this.options.backdrop)
 		{
 			var doAnimate = $.support.transition && animate;
 
-			this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
+			this.$backdrop = $('<div class="bg-black ' + animate + '" />')
 				.appendTo(document.body);
 
 			this.$element.on('click.dismiss.lightbox', $.proxy(function (e)
@@ -183,7 +183,7 @@
 		{
 			this.$backdrop.removeClass('in');
 
-			$.support.transition && this.$element.hasClass('fade')?
+			$.support.transition && this.$element.hasClass('muted')?
 				this.$backdrop
 					.one($.support.transition.end, callback)
 					.emulateTransitionEnd(150) :

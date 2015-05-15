@@ -80,7 +80,7 @@ var NewDomainTransfer = React.createClass({
                 <input name="domain[transfer_auth_code]" type="text" className="form-control" />
               </FormGroup>
             </div>
-            <div className="modal-footer">
+            <div className="modal-footer py2 px3">
               <button type="button" className={'btn btn-default'} onClick={this.props.onCancel}>
                 Cancel
               </button>
@@ -122,7 +122,7 @@ var DomainPurchaseApplication = React.createClass({
                 <input name="domain[name]" type="text" className="form-control" placeholder="example.com" autofocus />
               </FormGroup>
             </div>
-            <div className="modal-footer">
+            <div className="modal-footer py2 px3">
               <button type="button" className={'btn btn-default'} onClick={this.props.onCancel}>
                 Cancel
               </button>

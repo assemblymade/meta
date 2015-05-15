@@ -9,7 +9,7 @@
 
     <div class="deprecated-card-body">
 
-      <div class="progress progress-small">
+      <div class="progress progress-sm">
         <div class="progress-bar progress-bar-success" style="width:<%= number_to_percentage(milestone.progress * 100, precision: 0) %>"></div>
       </div>
 
@@ -18,7 +18,7 @@
           <%= milestone.wip.title %>
         </div>
 
-        <p class="omega">
+        <p class="mb0">
           <% if milestone.tasks.count.zero? %>
             No tasks added
           <% else %>

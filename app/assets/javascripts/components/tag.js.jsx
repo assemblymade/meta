@@ -8,7 +8,7 @@ var Tag = React.createClass({
   render: function() {
     var tag = this.props.tag;
     return (
-      <a className="fs1 caps gray-2 mr2 pointer" href={this.props.tag.url}>
+      <a className="h5 caps gray-2 mr2 pointer" href={this.props.tag.url}>
         #{this.props.tag.name}
       </a>
     );

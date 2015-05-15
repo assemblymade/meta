@@ -21,7 +21,7 @@
           </div>
           <div className="activity-body">
             <div className="activity-actions">
-              <ul className="list-inline pull-right omega hidden-xs">
+              <ul className="list-inline pull-right mb0 hidden-xs">
                 <li>
                   <div className="dropdown">
                     <a href="#" className="dropdown-toggle" data-toggle="dropdown">
