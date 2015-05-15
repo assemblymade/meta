@@ -41,22 +41,18 @@
 
 		// This bit is added since we don't display until we have the size
 		//  which prevents image jumping
-		this.preloadSize(function()
-		{
-			that.backdrop(function ()
-			{
-				var transition = $.support.transition && that.$element.hasClass('muted');
+		this.preloadSize(function() {
+			that.backdrop(function () {
+				var transition = $.support.transition && that.$element.hasClass("muted");
 
-				if (!that.$element.parent().length)
-				{
-					that.$element.appendTo(document.body); // don't move modals dom position
+				if (!that.$element.parent().length) {
+				  that.$element.appendTo(document.body); // don't move modals dom position
 				}
 
 				that.$element.show();
 
-				if (transition)
-				{
-					that.$element[0].offsetWidth; // force reflow
+				if (transition) {
+				  that.$element[0].offsetWidth; // force reflow
 				}
 
 				that.$element
