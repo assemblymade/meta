@@ -198,15 +198,13 @@ ASM::Application.routes.draw do
     post 'unfollow'
   end
 
-  # Help
-  get '/help/:group', :to => 'questions#index', :as => :help
-  get '/help' => redirect('/help/basics'), :as => :faq
+  # Guides & Help
+  get "/help/:group" => "questions#index", as: :help
+  get "/help" => redirect("/help/basics"), as: :faq
+  get "/guides/:group" => "guides#index", as: :guides
+  get "/guides" => "guides#index"
 
   get '/metrics' => 'metrics#overview'
-
-  # Guides
-  get '/guides/:group', :to => 'guides#index', :as => :guides
-  get '/guides', :to => 'guides#index'
 
   # redirect support-foo to helpful
   get '/support-foo', to: redirect('/helpful')
