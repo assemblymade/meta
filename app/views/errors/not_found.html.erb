@@ -10,7 +10,7 @@
 
 <%= render 'shared/navbar' %>
 
-<article class="sm-col-11 md-col-6 mx-auto mt4 center">
+<div class="sm-col-11 md-col-6 mx-auto mt4 center">
   <h3 class-"mt0" <% if [3,5].include?(@background) %>style="color:#eee;"<% end %>>We couldn't find that :(</h3>
   <form action="<%= discover_path %>">
     <div class="form-group has-feedback">
@@ -21,4 +21,4 @@
     </div>
     <button type="submit" class="button button--default sr-only">Search</button>
   </form>
-</article>
+</div>
