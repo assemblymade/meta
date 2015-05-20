@@ -95,7 +95,7 @@ module ASM
       user = u!(username)
 
       membership = product.team_memberships.find_by!(user: user)
-      membership.upate!(is_core: false)
+      membership.update!(is_core: false)
 
       puts "#{username} removed from #{slug} core team"
     end
