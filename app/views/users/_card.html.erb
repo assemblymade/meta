@@ -16,7 +16,7 @@
   </div>
 
   <% if user.bio? %>
-    <div class="p3 center gray-1 border-top">
+    <div class="p2 center gray-1 border-top">
       <%= react_component 'Markdown', content: markdown(user.bio), normalized: true %>
     </div>
   <% end %>
