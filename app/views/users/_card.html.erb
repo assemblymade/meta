@@ -8,7 +8,10 @@
     <h3 class="black mt0 mb0"><strong><%= user.username %></strong></h3>
 
     <% if user.location? %>
-      <div class="h6 gray-2 mt0 mb0"><%= user.location %></div>
+      <div class="h6 gray-2 mt1">
+        <%= inline_react_component 'Icon', icon: 'map-marker' %>
+        <%= user.location %>
+      </div>
     <% end %>
   </div>
 
