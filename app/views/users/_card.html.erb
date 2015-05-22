@@ -23,7 +23,6 @@
 
   <div class="h6 mt0 mb0 center">
 
-    <!-- Staff -->
     <% if user.staff? %>
       <span class="block px3 py2 border-top gray-2" title="Assembly Staff">
         <%= inline_react_component 'Icon', icon: 'coffee' %>
@@ -31,7 +30,6 @@
       </span>
     <% end %>
 
-    <!-- Twitter -->
     <% if user.twitter_connected? %>
       <a class="block px3 py2 border-top gray-2" href="<%= user.twitter_url %>" target="_blank" title="@<%= @user.twitter_nickname %>">
         <%= inline_react_component 'Icon', icon: 'twitter' %>
@@ -44,7 +42,6 @@
       </a>
     <% end %>
 
-    <!-- GitBub -->
     <% if user.github_connected? %>
       <a class="block px3 py2 border-top gray-2" href="<%= user.github_url %>" title="<%= @user.github_login %>" target="_blank">
         <%= inline_react_component 'Icon', icon: 'github' %>
