@@ -66,13 +66,7 @@
   </div>
 </div>
 
-<% if can?(:update, @user) %>
-  <!-- FIXME: This URL is a hack -->
-  <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
-    Edit Profile
-  </a>
-  <br>
-<% end %>
+<%= link_to "Edit profile", edit_user_path, class: "btn btn-default btn-block mb2" if can?(:update, @user) %>
 
 <%= react_component 'ProfileProductBadges' %>
 
