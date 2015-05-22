@@ -30,7 +30,7 @@
 
     <!-- Twitter -->
     <% if user.twitter_connected? %>
-      <a class="block px3 py2 border-top gray-2" href="<%= user.twitter_url %>" title="@<%= @user.twitter_nickname %>">
+      <a class="block px3 py2 border-top gray-2" href="<%= user.twitter_url %>" target="_blank" title="@<%= @user.twitter_nickname %>">
         <%= inline_react_component 'Icon', icon: 'twitter' %>
         <%= user.twitter_nickname %>
       </a>
@@ -41,9 +41,9 @@
       </a>
     <% end %>
 
-    <!-- Github -->
+    <!-- GitBub -->
     <% if user.github_connected? %>
-      <a class="block px3 py2 border-top gray-2" href="<%= user.github_url %>" title="<%= @user.github_login %>">
+      <a class="block px3 py2 border-top gray-2" href="<%= user.github_url %>" title="<%= @user.github_login %>" target="_blank">
         <%= inline_react_component 'Icon', icon: 'github' %>
         <%= @user.github_login %>
       </a>
@@ -56,12 +56,9 @@
 
     <% if current_user %>
       <% if current_user.is_staff? %>
-        <div class="block border-top gray-2 py2" style="font-size: 80%">
-          Bitcoin Assets Address
-          <br>
-          <a href=<%= user.coinprism_url %>>
-            <%= user.wallet_public_address %>
-          </a>
+        <div class="block border-top gray-2 py2">
+          <span class="block">Bitcoin Assets Address:</span>
+          <%= link_to user.wallet_public_address, user.coinprism_url %>
         </div>
       <% end %>
     <% end %>
