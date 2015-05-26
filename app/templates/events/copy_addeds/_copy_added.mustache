@@ -1,7 +1,7 @@
 <div class="activity" id="{{anchor}}">
 
   <div class="pull-left">
-    <div class="marker marker-blue">
+    <div class="marker blue border-blue">
       <span class="icon icon-document"></span>
     </div>
   </div>
@@ -23,14 +23,14 @@
               {{#award_url}}
                 <li>
                   <a class="event-award" href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
-                    <i class="glyphicon glyphicon-star-empty dropdown-glyph"></i>
+                    <i class="glyphicon glyphicon-star-empty mr1"></i>
                     Award bounty to {{#actor}}@{{username}}{{/actor}}
                   </a>
                 </li>
 
                 <li>
                   <a class="event-award" href="{{award_url}}?event_id={{id}}&close=true" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
-                    <i class="glyphicon glyphicon-star dropdown-glyph"></i>
+                    <i class="glyphicon glyphicon-star mr1"></i>
                     Award bounty to {{#actor}}@{{username}}{{/actor}} and close it
                   </a>
                 </li>
@@ -39,7 +39,7 @@
               {{#edit_url}}
                 <li class="hidden">
                   <a href="{{edit_url}}">
-                    <i class="icon-pencil dropdown-glyph"></i>
+                    <i class="icon-pencil mr1"></i>
                     Edit comment
                   </a>
                 </li>
@@ -48,7 +48,7 @@
               {{#anchor}}
               <li>
                 <a href="#{{anchor}}">
-                  <i class="icon-link dropdown-glyph"></i>
+                  <i class="icon-link mr1"></i>
                   Permalink
                 </a>
               </li>

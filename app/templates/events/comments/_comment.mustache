@@ -23,14 +23,14 @@
               {{#award_url}}
                 <li>
                   <a class="event-award" href="{{award_url}}?event_id={{id}}" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
-                    <i class="glyphicon glyphicon-star-empty dropdown-glyph"></i>
+                    <i class="glyphicon glyphicon-star-empty mr1"></i>
                     Award bounty to {{#actor}}@{{username}}{{/actor}} and keep it open
                   </a>
                 </li>
 
                 <li>
                   <a class="event-award" href="{{award_url}}?event_id={{id}}&close=true" data-method="patch" data-confirm="Are you sure you want to award this task to {{#actor}}@{{username}}{{/actor}}?">
-                    <i class="glyphicon glyphicon-star dropdown-glyph"></i>
+                    <i class="glyphicon glyphicon-star mr1"></i>
                     Award bounty to {{#actor}}@{{username}}{{/actor}} and close it
                   </a>
                 </li>
@@ -39,7 +39,7 @@
               {{#edit_url}}
                 <li>
                   <a href="{{edit_url}}" role="menuitem">
-                    <i class="icon icon-pencil dropdown-glyph"></i>
+                    <i class="icon icon-pencil mr1"></i>
                     Edit comment
                   </a>
                 </li>
@@ -48,7 +48,7 @@
               {{#anchor}}
                 <li>
                   <a href="#{{anchor}}" role="menuitem">
-                    <i class="icon icon-link dropdown-glyph"></i>
+                    <i class="icon icon-link mr1"></i>
                     Permalink
                   </a>
                 </li>

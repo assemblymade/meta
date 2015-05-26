@@ -1,164 +1,166 @@
-(function() {
-  var CustomBountyOffer = React.createClass({
-    getInitialState: function() {
-      var value = this.props.steps[2]
 
-      if(this.props.onChange) {
-        this.props.onChange({ target: { value: value }})
-      }
+var CustomBountyOffer = React.createClass({
+  propTypes: {
+    product: React.PropTypes.shape({
+      average_bounty: React.PropTypes.number.isRequired,
+      coins_minted: React.PropTypes.number.isRequired
+    })
+  },
 
-      return {
-        value: value
-      }
-    },
+  getInitialState: function() {
+    var value = this.props.steps[2]
 
-    renderOwnership: function() {
-      var value = this.state.value
-      var ownership = value / (value + this.props.coinsMinted) * 100;
+    if (this.props.onChange) {
+      this.props.onChange({ target: { value: value }})
+    }
 
-      if(ownership < 0.001) {
-        return "< 0.001%"
-      } else if(ownership < 1) {
-        var roundedOwnership = Math.floor(ownership * 1000) / 1000
-        return roundedOwnership + "%"
-      } else if(ownership < 10) {
-        var roundedOwnership = Math.floor(ownership * 100) / 100
-        return roundedOwnership + "%"
-      } else {
-        var roundedOwnership = Math.floor(ownership)
-        return roundedOwnership + "%"
-      }
-    },
+    return {
+      value: value
+    }
+  },
 
-    renderSellingPrice: function() {
-      var value = this.state.value
-      var ownership = value / (value + this.props.coinsMinted);
+  renderOwnership: function() {
+    var value = this.state.value
+    var ownership = value / (value + this.props.product.coins_minted) * 100;
 
-      var sellingPrice = Math.round(ownership * 1000000);
+    if (ownership < 0.001) {
+      return "< 0.001%"
+    } else if(ownership < 1) {
+      var roundedOwnership = Math.floor(ownership * 1000) / 1000
+      return roundedOwnership + "%"
+    } else if(ownership < 10) {
+      var roundedOwnership = Math.floor(ownership * 100) / 100
+      return roundedOwnership + "%"
+    } else {
+      var roundedOwnership = Math.floor(ownership)
+      return roundedOwnership + "%"
+    }
+  },
 
-      return "$" + sellingPrice
-    },
+  renderSellingPrice: function() {
+    var value = this.state.value
+    var ownership = value / (value + this.props.coinsMinted);
 
-    renderPayout: function() {
-      var value = this.state.value
-      var ownership = value / (value + this.props.coinsMinted);
+    var sellingPrice = Math.round(ownership * 1000000);
 
-      var profitLastMonth = Math.round(this.props.profitLastMonth / 100)
-      var payout = Math.round(ownership * (profitLastMonth || 20000));
+    return "$" + sellingPrice
+  },
 
-      return "$" + payout
-    },
+  renderPayout: function() {
+    var value = this.state.value
+    var ownership = value / (value + this.props.coinsMinted);
 
-    renderProfitLastMonth: function() {
-      var profitLastMonth = Math.round(this.props.profitLastMonth / 100)
+    var profitLastMonth = Math.round(this.props.profitLastMonth / 100)
+    var payout = Math.round(ownership * (profitLastMonth || 20000));
 
-      if(profitLastMonth) {
-        return "each month out <br /> of $" + profitLastMonth + "/mo"
-      } else {
-        return "each month if you <br /> made $20,000/mo"
-      }
-    },
+    return "$" + payout
+  },
 
-    renderAverage: function() {
-      var average = this.state.value / this.props.averageBounty
+  renderProfitLastMonth: function() {
+    var profitLastMonth = Math.round(this.props.profitLastMonth / 100)
 
-      if(average < 0.001) {
-        return "< 0.001x"
-      } else if(average < 1) {
-        var roundedAverage = Math.floor(average * 1000) / 1000
-        return roundedAverage + 'x'
-      } else if(average < 10) {
-        var roundedAverage = Math.floor(average * 100) / 100
-        return roundedAverage + 'x'
-      } else {
-        var roundedAverage = Math.floor(average)
-        return roundedAverage + 'x'
-      }
-    },
+    if(profitLastMonth) {
+      return "each month out <br /> of $" + profitLastMonth + "/mo"
+    } else {
+      return "each month if you <br /> made $20,000/mo"
+    }
+  },
 
-    renderStats: function() {
-      if(this.props.profitLastMonth) {
-        return(
-          <div className="center flex flex-around mb0">
-            <div className="inline-block">
-              <div className="h2 bold">
-                {this.renderOwnership()}
-              </div>
-              <div className="gray-2 ml2 mr2">
-                ownership<br />
-                in {this.props.product.name}
-              </div>
+  renderAverage: function() {
+    var average = this.state.value / this.props.product.average_bounty
+
+    if(average < 0.001) {
+      return "< 0.001x"
+    } else if(average < 1) {
+      var roundedAverage = Math.floor(average * 1000) / 1000
+      return roundedAverage + 'x'
+    } else if(average < 10) {
+      var roundedAverage = Math.floor(average * 100) / 100
+      return roundedAverage + 'x'
+    } else {
+      var roundedAverage = Math.floor(average)
+      return roundedAverage + 'x'
+    }
+  },
+
+  renderStats: function() {
+    if(this.props.profitLastMonth) {
+      return(
+        <div className="center flex flex-around mb0">
+          <div className="inline-block">
+            <div className="h2 bold">
+              {this.renderOwnership()}
             </div>
-            <div className="inline-block">
-              <div className="h2 bold">
-                {this.renderPayout()}
-              </div>
-              <div className="gray-2 ml2 mr2" dangerouslySetInnerHTML={{ __html: this.renderProfitLastMonth() }} />
-            </div>
-            <div className="inline-block">
-              <div className="h2 bold">
-                {this.renderSellingPrice()}
-              </div>
-              <div className="gray-2 ml2 mr2">
-                if {this.props.product.name} was <br /> sold for $1 million
-              </div>
+            <div className="gray-2 ml2 mr2">
+              ownership<br />
+              in {this.props.product.name}
             </div>
           </div>
-        )
-      } else {
-        return(
-          <div className="center flex flex-around mb0">
-            <div className="inline-block">
-              <div className="h2 bold">
-                {this.renderOwnership()}
-              </div>
-              <div className="gray-2 ml2 mr2">
-                ownership in {this.props.product.name}
-              </div>
+          <div className="inline-block">
+            <div className="h2 bold">
+              {this.renderPayout()}
             </div>
-            <div className="inline-block">
-              <div className="h2 bold">
-                {this.renderAverage()}
-              </div>
-              <div className="gray-2 ml2 mr2">
-                the average {this.props.product.name} bounty
-              </div>
-            </div>
+            <div className="gray-2 ml2 mr2" dangerouslySetInnerHTML={{ __html: this.renderProfitLastMonth() }} />
           </div>
-        )
-      }
-    },
-
-    render: function() {
-      return (
-        <div>
-          <div>
-            <div style={{ position: 'relative' }}>
-              <span className="icon icon-app-coin yellow" style={{ position: 'absolute', top: '12px', left: '8px' }}></span>
-              <input name="earnable" type="text" defaultValue={this.state.value} onChange={this.handleOfferChange} className="form-control yellow bold input-lg" style={{ 'padding-left': '30px' }} />
+          <div className="inline-block">
+            <div className="h2 bold">
+              {this.renderSellingPrice()}
             </div>
-          </div>
-          <div className="mt2">
-            {this.renderStats()}
+            <div className="gray-2 ml2 mr2">
+              if {this.props.product.name} was <br /> sold for $1 million
+            </div>
           </div>
         </div>
       )
-    },
-
-    handleOfferChange: function(e) {
-      this.setState({
-        value: parseInt(e.target.value.replace(/[^\d]/g, '')) || 0
-      })
-
-      if(this.props.onChange) {
-        this.props.onChange(e);
-      }
+    } else {
+      return(
+        <div className="center flex flex-around mb0">
+          <div className="inline-block">
+            <div className="h2 bold">
+              {this.renderOwnership()}
+            </div>
+            <div className="gray-2 ml2 mr2">
+              ownership in {this.props.product.name}
+            </div>
+          </div>
+          <div className="inline-block">
+            <div className="h2 bold">
+              {this.renderAverage()}
+            </div>
+            <div className="gray-2 ml2 mr2">
+              the average {this.props.product.name} bounty
+            </div>
+          </div>
+        </div>
+      )
     }
-  });
+  },
 
-  if (typeof module !== 'undefined') {
-    module.exports = CustomBountyOffer;
+  render: function() {
+    return (
+      <div>
+        <div>
+          <div style={{ position: 'relative' }}>
+            <span className="icon icon-app-coin yellow" style={{ position: 'absolute', top: '12px', left: '8px' }}></span>
+            <input name="earnable" type="text" defaultValue={this.state.value} onChange={this.handleOfferChange} className="form-control yellow bold input-lg" style={{ 'padding-left': '30px' }} />
+          </div>
+        </div>
+        <div className="mt2">
+          {this.renderStats()}
+        </div>
+      </div>
+    )
+  },
+
+  handleOfferChange: function(e) {
+    this.setState({
+      value: parseInt(e.target.value.replace(/[^\d]/g, '')) || 0
+    })
+
+    if(this.props.onChange) {
+      this.props.onChange(e);
+    }
   }
+});
 
-  window.CustomBountyOffer = CustomBountyOffer;
-})();
+module.exports = window.CustomBountyOffer = CustomBountyOffer;

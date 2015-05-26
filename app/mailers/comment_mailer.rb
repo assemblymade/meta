@@ -6,7 +6,9 @@ class CommentMailer < BaseMailer
   layout 'new_email'
 
   def mentioned(user_id, comment_id)
-    @user = User.find(user_id)
+    @user = User.unscoped.find(user_id)
+    return prevent_delivery if @user.deleted_at?
+
     @comment = NewsFeedItemComment.find(comment_id)
     @nfi = @comment.news_feed_item
 
@@ -21,7 +23,9 @@ class CommentMailer < BaseMailer
   end
 
   def new_comment(user_id, comment_id)
-    @user = User.find(user_id)
+    @user = User.unscoped.find(user_id)
+    return prevent_delivery if @user.deleted_at?
+
     @comment = NewsFeedItemComment.find(comment_id)
     @nfi = @comment.news_feed_item
 
@@ -42,13 +46,5 @@ class CommentMailer < BaseMailer
     mail(options) do |format|
       format.html { render layout: nil }
     end
-  end
-
-  def url_test
-    @user = User.find_by!(username: 'whatupdave')
-
-    @comment = NewsFeedItemComment.find('dee8ec69-0901-4699-b6b0-b0b6e9e7d1b7')
-
-    mail to: @user.email, subject: 'URL testing'
   end
 end

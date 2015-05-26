@@ -107,6 +107,9 @@ let Bounty = React.createClass({
   },
 
   getBounty() {
+    if (!this.isMounted()) {
+      return
+    }
     let bounty = BountyStore.getBounty();
 
     this.setState({

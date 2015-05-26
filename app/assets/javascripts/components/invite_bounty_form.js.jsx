@@ -48,7 +48,7 @@ var FormGroup = require('./form_group.js.jsx');
 
             <FormGroup error={this.state.errors.tip_cents}>
               <label>Leave a tip</label>
-              <p className="help-block">Start off on the right foot; generosity always pays off.</p>
+              <p className="h6">Start off on the right foot; generosity always pays off.</p>
 
               <div className="btn-group center" data-toggle="buttons" style={{width:'100%'}}>
                 <label className="btn btn-default active" style={{width:'34%'}}>

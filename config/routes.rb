@@ -230,7 +230,7 @@ ASM::Application.routes.draw do
     resources :user_books, only: [:index]
     resources :profit_reports, path: 'profit-reports', only: [:index, :show]
     resources :product_rankings, path: 'products', only: [:index, :update]
-    resources :withdrawals, only: [:index] do
+    resources :withdrawals, only: [:index, :update] do
       patch :payment_sent
     end
     resources :pitch_week_applications, path: 'pitch-week', only: [:index] do
@@ -347,7 +347,6 @@ ASM::Application.routes.draw do
 
     get '/checklistitems' => 'products#checklistitems'
     get '/ownership' => 'products#ownership'
-    get '/people' => 'products#people'
     get '/coin' => 'products#coin'
     get '/stories' => 'products#stories'
 

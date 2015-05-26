@@ -42,16 +42,10 @@ var NewsFeedItemComments = React.createClass({
     }
 
     DiscussionStore.addChangeListener(this.getDiscussionState);
-    console.log('props', this.props.item)
-    console.log('subscribing', this.props.item.id)
     DiscussionActions.discussionSelected(this.props.item.id)
   },
 
   componentDidUpdate: function(prevProps, prevState) {
-    if (this.props.item.id != prevProps.item.id) {
-      debugger
-    }
-
     if (window.location.hash) {
       if (this.state.comments.length > prevState.comments.length) {
         $(document.body).animate({
@@ -67,8 +61,7 @@ var NewsFeedItemComments = React.createClass({
     }
 
     DiscussionStore.removeChangeListener(this.getDiscussionState);
-    console.log('unsubscribing', this.props.item.id)
-    DiscussionActions.discussionClosed(this.props.item.id)
+    setTimeout(() => DiscussionActions.discussionClosed(this.props.item.id),1)
   },
 
   fetchCommentsFromServer: function(e) {
@@ -84,6 +77,10 @@ var NewsFeedItemComments = React.createClass({
   },
 
   getBountyState: function() {
+    if (!this.isMounted()) {
+      return
+    }
+
     var state = BountyStore.getState();
     var comments = this.state.comments;
 
@@ -207,8 +204,6 @@ var NewsFeedItemComments = React.createClass({
   },
 
   render: function() {
-    console.log('render props', this.props.item)
-
     return (
       <div>
         {this.renderComments()}

@@ -1,7 +1,7 @@
 <% title 'New Post', @post.product.name %>
 <% activate_nav! :updates %>
 
-<div class="page-header sheet-header">
+<div class="mt0 mb4 border-bottom sheet-header">
   <% if current_user.staff? %>
     <% if @post.flagged? %>
       <button class="btn btn-muted disabled pull-right">Post already flagged</button>
@@ -13,7 +13,7 @@
     <% end %>
   <% end %>
 
-  <h1 class="page-header-title">Editing <q><%= @post.title %></q></h1>
+  <h1 class="mt0 mb4 border-bottom-title">Editing <q><%= @post.title %></q></h1>
 </div>
 
 <div class="sheet-body">
@@ -23,7 +23,7 @@
         <div class="form-group">
           <%= f.label :title, 'Post title', class: 'form-label' %>
           <%= f.text_field :title, class: 'form-control' %>
-          <p class="help-block">
+          <p class="h6">
             <strong>URL:</strong>
             <%= product_post_url(@post.product, @post) %>
           </p>

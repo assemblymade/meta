@@ -49,7 +49,7 @@ var SwagType = React.createClass({
               <img width={this.state.item.width || "40px"} src={this.state.item.imageURL || defaultImage} />
             </div>
           <div className="caption">
-            <p className="help-block">{this.state.item.desc}</p>
+            <p className="h6">{this.state.item.desc}</p>
           </div>
         </div>
       </div>

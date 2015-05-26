@@ -48,6 +48,8 @@ module Mailgun
           error = "Mailgun Error: #{curl.body_str}"
         end
 
+        user.email_failed_at!(Time.parse(params.fetch(:timestamp)))
+
         raise Mailgun::DeliveryError.new(error)
       end
 
@@ -59,4 +61,3 @@ module Mailgun
 end
 
 ActionMailer::Base.add_delivery_method :mailgun, Mailgun::DeliveryMethod
-

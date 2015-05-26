@@ -232,7 +232,7 @@ const SignupForm = React.createClass({
             onKeyPress={this.handleKeyPress}
             value={password}
             onChange={this.handleChange('password')} />
-        <p className="help-block">
+        <p className="h6">
           8 characters minimum.
         </p>
       </div>

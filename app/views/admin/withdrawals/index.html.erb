@@ -28,7 +28,8 @@
       <td><%= withdrawal.payment_sent_at %></td>
       <td>
         <% if withdrawal.payment_sent_at.nil? %>
-          <%= link_to admin_withdrawal_payment_sent_path(withdrawal), method: :patch, class: 'btn btn-default' do %>
+          <%= react_component 'AdminWithholding', withdrawal.attributes %>
+          <%= link_to admin_withdrawal_payment_sent_path(withdrawal), method: :patch, class: 'btn btn-success' do %>
             <span class="glyphicon glyphicon-share-alt"></span>
             Mark as sent
           <% end %>

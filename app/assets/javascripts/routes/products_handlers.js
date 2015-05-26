@@ -92,6 +92,7 @@ let ProductsHandlers = {
 
   showProductBounty(data) {
     let {
+      bounty,
       product,
     } = data;
 
@@ -99,6 +100,11 @@ let ProductsHandlers = {
       type: ActionTypes.PRODUCT_RECEIVE,
       product: product
     });
+
+    Dispatcher.dispatch({
+      type: ActionTypes.BOUNTY_SELECTED_CHANGED,
+      id: bounty.id
+    })
   },
 
   showProductMetrics(product) {

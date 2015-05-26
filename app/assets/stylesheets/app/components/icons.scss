@@ -30,7 +30,7 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
-  &.dropdown-glyph {
+  &.mr1 {
     // vertical-align: text-bottom;
     color: $gray-2;
     top: -1px;
@@ -180,13 +180,13 @@ you can use the generic selector below, but it's slower:
   position: relative;
   top: -2px;
 
-  &.dropdown-glyph {
+  &.mr1 {
     color: $gray-2;
   }
 }
 
 .active {
-  .dropdown-glyph {
+  .mr1 {
     color: $link-color;
   }
 }

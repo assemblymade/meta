@@ -40,7 +40,7 @@ module StreamEvents
     end
 
     def icon_class
-      "marker-blue icon-document"
+      "blue border-blue icon-document"
     end
   end
 end

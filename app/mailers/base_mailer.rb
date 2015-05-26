@@ -32,6 +32,10 @@ class BaseMailer < ActionMailer::Base
     end
   end
 
+  def prevent_delivery
+    mail.perform_deliveries = false
+  end
+
   def list_headers(object_type, object_id, username, thread_parts, message_parts, archive_url)
     reply_address = SecureReplyTo.new(object_type, object_id, username).to_s
 

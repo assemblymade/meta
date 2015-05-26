@@ -77,7 +77,7 @@ module.exports = React.createClass({
     if (this.props.user_id == UserStore.getUsername()) {
       return <div className="m4 p3 bg-gray-6 center">
         Get involved in <a href="/discover">products</a>, complete bounties and you&#39;ll
-        earn yourself app coins. App coins represent your ownership in products. <a href="/help/profits#profits-2">Learn more in the FAQ</a>
+        earn yourself app coins. App coins represent your ownership in products. <a href="/help/revenue">Learn more in the FAQ</a>
       </div>
     }
     return <div />

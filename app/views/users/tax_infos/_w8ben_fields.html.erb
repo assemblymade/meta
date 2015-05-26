@@ -8,7 +8,7 @@
       <%= form_group @tax_info, :full_name do %>
         <%= f.label :full_name %>
         <%= f.text_field :full_name, class: 'form-control' %>
-        <p class="help-block">As shown on your income tax return</p>
+        <p class="h6">As shown on your income tax return</p>
       <% end %>
     </div>
     <div class="col-md-5 col-md-offset-1">
@@ -16,7 +16,7 @@
         <%= f.label :citizenship %>
         <%= f.country_select(:citizenship) %>
 
-        <p class="help-block">If different from full name (optional)</p>
+        <p class="h6">If different from full name (optional)</p>
       <% end %>
     </div>
   </div>
@@ -26,14 +26,14 @@
       <%= form_group @tax_info, :address do %>
         <%= f.label :address, 'Permanent residence address' %>
         <%= f.text_field :address, class: 'form-control' %>
-        <p class="help-block">Street, apt. or suite no., or rural route</p>
+        <p class="h6">Street, apt. or suite no., or rural route</p>
       <% end %>
     </div>
     <div class="col-md-5 col-md-offset-1">
       <%= form_group @tax_info, :city do %>
         <%= f.label :city, 'City or town, state or province' %>
         <%= f.text_field :city, class: 'form-control' %>
-        <p class="help-block">Include postal code where appropriate</p>
+        <p class="h6">Include postal code where appropriate</p>
       <% end %>
     </div>
   </div>
@@ -52,14 +52,14 @@
       <%= form_group @tax_info, :mailing_address do %>
         <%= f.label :mailing_address, 'Mailing address' %>
         <%= f.text_field :mailing_address, class: 'form-control' %>
-        <p class="help-block">If different than permanent address (optional)</p>
+        <p class="h6">If different than permanent address (optional)</p>
       <% end %>
     </div>
     <div class="col-md-5 col-md-offset-1">
       <%= form_group @tax_info, :mailing_city do %>
         <%= f.label :mailing_city, 'City or town, state or province' %>
         <%= f.text_field :mailing_city, class: 'form-control' %>
-        <p class="help-block">Include postal code where appropriate</p>
+        <p class="h6">Include postal code where appropriate</p>
       <% end %>
     </div>
   </div>
@@ -78,14 +78,14 @@
       <%= form_group @tax_info, :taxpayer_id do %>
         <%= f.label :taxpayer_id, 'U.S. tax ID number' %>
         <%= f.text_field :taxpayer_id, class: 'form-control' %>
-        <p class="help-block">SSN or ITIN (if required)</p>
+        <p class="h6">SSN or ITIN (if required)</p>
       <% end %>
     </div>
     <div class="col-md-5 col-md-offset-1">
       <%= form_group @tax_info, :foreign_tax_id do %>
         <%= f.label :foreign_tax_id, 'Foreign tax ID number' %>
         <%= f.text_field :foreign_tax_id, class: 'form-control' %>
-        <p class="help-block">If you do not have a foreign tax ID number, complete date of birth</p>
+        <p class="h6">If you do not have a foreign tax ID number, complete date of birth</p>
       <% end %>
     </div>
   </div>
@@ -144,14 +144,14 @@
       <%= form_group @tax_info, :signature do %>
         <%= f.label :signature, 'Your signature'%>
         <%= f.text_field :signature, class: 'form-control' %>
-        <p class="help-block">Typing your name acts as your signature</p>
+        <p class="h6">Typing your name acts as your signature</p>
       <% end %>
     </div>
     <div class="col-md-5 col-md-offset-1">
       <%= form_group @tax_info, :signature_capacity do %>
         <%= f.label :signature_capacity, 'Capacity in which acting' %>
         <%= f.text_field :signature_capacity, class: 'form-control' %>
-        <p class="help-block">If form is not signed by beneficial owner</p>
+        <p class="h6">If form is not signed by beneficial owner</p>
       <% end %>
     </div>
   </div>

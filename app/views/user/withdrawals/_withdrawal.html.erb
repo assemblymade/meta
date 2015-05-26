@@ -6,8 +6,8 @@
     <% if withdrawal.payment_sent_at.nil? %>
       <span class="gray-2">(pending)</span>
     <% end %>
-    <% if withdrawal.withholding > 0 %>
-      <span class="gray-2">(<%= currency withdrawal.withholding %> withheld in taxes)</span>
+    <% if withdrawal.amount_withheld > 0 %>
+      <span class="gray-2">(<%= currency withdrawal.amount_withheld %> withheld in taxes)</span>
     <% end %>
   </td>
 </tr>

@@ -43,7 +43,8 @@ let NewIdeaForm = React.createClass({
       ideaBody: idea.raw_body || '',
       ideaName: idea.name || '',
       isFounder: true,
-      showWarning: false
+      showWarning: false,
+      buttonValid: true
     };
   },
 
@@ -70,8 +71,13 @@ let NewIdeaForm = React.createClass({
     });
   },
 
+  buttonValid() {
+    return this.state.buttonValid || !_.isEmpty(this.props.initialIdea);
+  },
+
   onNextClick(e) {
     e.preventDefault();
+    this.setState({buttonValid: false});
 
     if (_.isEmpty(this.props.initialIdea)) {
       let idea = {
@@ -81,6 +87,7 @@ let NewIdeaForm = React.createClass({
       };
 
       IdeaActionCreators.submitIdeaClicked(idea);
+
     } else {
       let slug = this.props.initialIdea.slug;
 
@@ -130,7 +137,7 @@ let NewIdeaForm = React.createClass({
 
         <div className="clearfix mt3">
           <div className="right ml4">
-            <Button type="primary" action={this.isValidIdea() && this.onNextClick}>
+            <Button type="primary" action={this.isValidIdea() && this.buttonValid() && this.onNextClick}>
               {_.isEmpty(idea) ? 'Next' : 'Update'}
             </Button>
           </div>

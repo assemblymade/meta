@@ -15,7 +15,8 @@
     },
 
     handleClick: function(toggle) {
-      return function() {
+      return function(e) {
+        e.preventDefault()
         this.setState({
           toggle: toggle
         })

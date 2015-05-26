@@ -83,6 +83,7 @@ class Invite < ActiveRecord::Base
   def set_invitee
     return if username_or_email.nil?
 
+
     if username_or_email =~ User::USERNAME_REGEX
       self.invitee = User.find_by(username: $1.strip)
     else

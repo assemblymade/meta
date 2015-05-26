@@ -41,7 +41,7 @@
               <div id="email-form" class="<%= 'display-none' if f.object.facebook_uid.blank? && f.object.errors.blank? %>">
                 <div class="form-group <%= 'has-error' if f.object.errors[:username].any? %>">
                   <% if f.object.errors[:username].any? %>
-                    <p class="help-block pull-right">
+                    <p class="h6 pull-right">
                       <%= f.object.errors[:username].to_sentence %>
                     </p>
                   <% end %>
@@ -52,7 +52,7 @@
 
                 <div class="form-group <%= 'has-error' if f.object.errors[:email].any? %>">
                   <% if f.object.errors[:email].any? %>
-                    <p class="help-block pull-right">
+                    <p class="h6 pull-right">
                       <%= f.object.errors[:email].to_sentence %>
                     </p>
                   <% end %>
@@ -63,14 +63,14 @@
 
                 <div class="form-group <%= 'has-error' if f.object.errors[:password].any? %>">
                   <% if f.object.errors[:password].any? %>
-                    <p class="help-block pull-right">
+                    <p class="h6 pull-right">
                       <%= f.object.errors[:password].to_sentence %>
                     </p>
                   <% end %>
 
                   <%= f.label :password, class: 'control-label' %>
                   <%= f.password_field :password, autocomplete: false, class: 'form-control input-lg' %>
-                  <p class="help-block">
+                  <p class="h6">
                     8 characters minimum. You're smart, choose a good one.
                   </p>
                 </div>

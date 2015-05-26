@@ -70,14 +70,14 @@ module.exports = React.createClass({
 
                       <li>
                         <a href={editUrl} role="menuitem">
-                          <i className="icon icon-pencil dropdown-glyph"></i>
+                          <i className="icon icon-pencil mr1"></i>
                           Edit comment
                         </a>
                       </li>
 
                       <li>
                         <a href={'#' + anchor} role="menuitem">
-                          <i className="icon icon-link dropdown-glyph"></i>
+                          <i className="icon icon-link mr1"></i>
                           Permalink
                         </a>
                       </li>
@@ -126,14 +126,14 @@ module.exports = React.createClass({
       return [
         <li>
           <a className="event-award" href={awardUrl + '?event_id=' + id} data-method="patch" data-confirm={"Are you sure you want to award this task to " + actor.username + "?"}>
-            <i className="glyphicon glyphicon-star-empty dropdown-glyph"></i>
+            <i className="glyphicon glyphicon-star-empty mr1"></i>
             Award bounty to {actor.username} and keep it open
           </a>
         </li>,
 
         <li>
           <a className="event-award" href={awardUrl + '?event_id=' + id + '&close=true'} data-method="patch" data-confirm={"Are you sure you want to award this task to " + actor.username + "?"}>
-            <i className="glyphicon glyphicon-star dropdown-glyph"></i>
+            <i className="glyphicon glyphicon-star mr1"></i>
             Award bounty to {actor.username} and close it
           </a>
         </li>

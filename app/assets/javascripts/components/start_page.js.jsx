@@ -407,7 +407,7 @@ var StartPage = React.createClass({
               <div className="visible-xs mt3" />
               <div className="pull-right mb3">
                 Already have a product that could benefit from the community's help?&nbsp;
-                <a href="http://port.assembly.com">Start here</a>
+                <a href="http://assembly.com/new">Start here</a>
               </div>
             </div>
           </div>

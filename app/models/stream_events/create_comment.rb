@@ -26,7 +26,7 @@ module StreamEvents
     end
 
     def icon_class
-      "marker-default icon-speech-bubble"
+      "gray-5 border-gray-5 icon-speech-bubble"
     end
   end
 end

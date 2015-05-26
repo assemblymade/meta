@@ -58,7 +58,7 @@ a.deprecated-card:hover {
   padding: 20px;
 }
 
-.deprecated-card-footer {
+.deprecated-bg-gray-5 py2 px1 {
   @include clearfix;
   padding: ($line-height-computed / 4) 20px;
   // border-top: 1px solid $brand-divider;

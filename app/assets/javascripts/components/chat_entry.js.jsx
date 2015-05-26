@@ -30,13 +30,13 @@
                     <ul className="dropdown-menu pull-right text-small" role="menu">
                       <li role="presentation">
                         <a href={"#comment-" + this.props.entry.number} role="menuitem">
-                          <i className="icon icon-link dropdown-glyph" />
+                          <i className="icon icon-link mr1" />
                           Permalink
                         </a>
                       </li>
                       <li role="presentation">
                         <a className="clickable js-chat-create-wip" role="menuitem">
-                          <i className="icon icon-plus-circled dropdown-glyph" />
+                          <i className="icon icon-plus-circled mr1" />
                           Create bounty
                         </a>
                       </li>

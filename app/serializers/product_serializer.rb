@@ -75,7 +75,7 @@ class ProductSerializer < ApplicationSerializer
   end
 
   def top_marks
-    object.marks.limit(4).map(&:name)
+    Marking.joins(:mark).where(markable_id: object.id).order('weight desc').limit(4).pluck('marks.name')
   end
 
   def labels

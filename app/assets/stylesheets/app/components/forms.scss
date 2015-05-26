@@ -4,10 +4,6 @@
   text-align: right;
 }
 
-.help-block {
-  font-size: $font-size-small;
-}
-
 textarea {
   resize: vertical;
 }
@@ -16,11 +12,9 @@ input[type=radio], input[type=checkbox] {
   margin-top: 6px;
 }
 
-.form-control {
-  &:focus {
-    @include placeholder {
-      color: #cccccc;
-    }
+.form-control:focus {
+  @include placeholder {
+    color: $gray-3;
   }
 }
 

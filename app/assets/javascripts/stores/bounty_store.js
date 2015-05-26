@@ -27,6 +27,12 @@ class BountyStore extends Store {
           _bounty = {}
           this.emitChange()
           break
+        case ActionTypes.BOUNTY_SELECTED_CHANGED:
+          _bounty = {
+            id: action.id
+          }
+          this.emitChange()
+          break
         case ActionTypes.BOUNTY_REOPENED:
           _reopenBounty()
           this.emitChange()

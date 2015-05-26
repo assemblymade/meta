@@ -21,6 +21,7 @@ class DeleteUserAccount
     end
     Activity.where(actor_id: @user.id).delete_all
     Heart.where(user_id: @user.id).delete_all
+    Heart.where(target_user_id: @user.id).delete_all
   end
 
   def soft_deletes
@@ -36,7 +37,11 @@ class DeleteUserAccount
 
 
     Idea.unscoped.where(user_id: @user.id).update_all(deleted_at: at)
-    NewsFeedItem.unscoped.where(source_id: @user.id).update_all(deleted_at: at)
+    nfis = NewsFeedItem.unscoped.where(source_id: @user.id)
+    nfis.each do |nfi|
+      nfi.comments.update_all(deleted_at: at)
+    end
+    nfis.update_all(deleted_at: at)
     NewsFeedItemComment.unscoped.where(user_id: @user.id).update_all(deleted_at: at)
     TeamMembership.unscoped.where(user_id: @user.id).update_all(deleted_at: at)
 
