@@ -10,23 +10,7 @@ paying for these providers.
 
 # Domains
 
-#### Purchasing new domains
-
-Assembly can purchase a domain on behalf of products. Email [domains@assembly.com](mailto: domains@assembly.com)
-if you have selected an available name for purchase.
-
-#### Transferring existing domains
-
-If you already own a domain that you would like to use with your Assembly
-product, unlock your domain at your registrar and email [domains@assembly.com](mailto: domains@assembly.com)
-with an authorization code to initialize the transfer.
-
-#### Domain ownership
-
-Assembly holds domains on behalf of the respective products to which they
-belong. All products on Assembly must transfer ownership of their domains
-within 90 days of joining the platform. Products that have not transfered their
-domains within this timeframe will be removed from the platform.
+Domains for Assembly products are held by core team members in the community. When you choose to contribute to a product, it's important to note who holds the domain and to build trust with that person as you build a product together. If you own a domain for a product, you might put a pledge in the product description that shows your commitment to protecting it on behalf of the community.
 
 # Version Control
 
