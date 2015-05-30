@@ -9,9 +9,9 @@ ASM::Application.routes.draw do
     resource :user, only: [:show]
 
     resource :users do
-      get '/:user_id/ownership', to: 'users#ownership'
-      get '/:user_id', to: 'users#info'
-      get '/:user_id/core', to: 'users#core'
+      get '/:user_id/ownership' => 'users#ownership'
+      get '/:user_id' => 'users#info'
+      get '/:user_id/core' => 'users#core'
     end
 
     resources :orgs, only: [:show] do
@@ -21,7 +21,7 @@ ASM::Application.routes.draw do
     end
 
     resources :orgs do
-      get '/partners', to: 'orgs#partners'
+      get '/partners' => 'orgs#partners'
     end
   end
 
@@ -32,11 +32,11 @@ ASM::Application.routes.draw do
   end
 
   if Rails.env.development?
-    get "/impersonate/:id", :to => "users#impersonate", :as => :impersonate
+    get "/impersonate/:id" => "users#impersonate", as: :impersonate
   end
 
   authenticated do
-    get '/', to: redirect('/dashboard')
+    get '/' => redirect('/dashboard')
   end
 
   # Global Chat Experiment
@@ -54,7 +54,7 @@ ASM::Application.routes.draw do
   get '/sso' => 'single_sign_on#sso'
 
   # Legacy
-  get '/discover/blog', to: redirect('/discover/updates')
+  get '/discover/blog' => redirect('/discover/updates')
   get '/explore' => redirect('/discover')
   get '/blog'    => redirect('http://blog.assembly.com')
 
@@ -70,9 +70,9 @@ ASM::Application.routes.draw do
   # Readraptor proxy. Remove this when javascript clients can talk directly to RR
   get '/_rr/articles/:id' => 'readraptor#show', as: :readraptor_article
 
-  get '/create'        => 'products#new',    :as => :new_product
-  get '/start'         => 'products#start',  :as => :start_idea
-  get '/import'        => 'products#import', :as => :import_idea
+  get '/create'        => 'products#new',    as: :new_product
+  get '/start'         => 'products#start',  as: :start_idea
+  get '/import'        => 'products#import', as: :import_idea
 
   get '/styleguide' => 'pages#styleguide'
 
@@ -94,10 +94,10 @@ ASM::Application.routes.draw do
 
   as :user do
     # Sessions
-    get    '/login'  => 'users/sessions#new', :as => :new_user_session
+    get    '/login'  => 'users/sessions#new', as: :new_user_session
     post   '/login'  => 'users/sessions#create'
-    get    '/user'   => 'users/sessions#show', :as => :user_session
-    delete '/logout' => 'users/sessions#destroy', :as => :destroy_user_session
+    get    '/user'   => 'users/sessions#show', as: :user_session
+    delete '/logout' => 'users/sessions#destroy', as: :destroy_user_session
 
     # Registrations
     controller 'users/registrations' do
@@ -111,9 +111,9 @@ ASM::Application.routes.draw do
     # settings
     get    '/settings' => 'users#edit', as: :edit_user
     patch  '/settings' => 'users/registrations#update'
-    get    '/settings/email' => 'users/registrations#edit_email', :as => :edit_user_email
-    get    '/settings/profile' => 'users/profiles#edit', :as => :edit_user_profile
-    get    '/settings/notifications' => "users/notifications#edit", :as => :settings_notifications
+    get    '/settings/email' => 'users/registrations#edit_email', as: :edit_user_email
+    get    '/settings/profile' => 'users/profiles#edit', as: :edit_user_profile
+    get    '/settings/notifications' => "users/notifications#edit", as: :settings_notifications
     patch  '/settings/notifications' => "users/notifications#update"
 
     namespace :users, path: 'user' do
@@ -125,8 +125,8 @@ ASM::Application.routes.draw do
     end
 
     # Confirmation
-    get    '/users/confirmation/new' => 'users/confirmations#new', :as => :new_user_confirmation
-    get    '/users/confirmation' => 'users/confirmations#show', :as => :user_confirmation
+    get    '/users/confirmation/new' => 'users/confirmations#new', as: :new_user_confirmation
+    get    '/users/confirmation' => 'users/confirmations#show', as: :user_confirmation
     post   '/users/confirmation' => 'users/confirmations#create'
 
     resources :users, only: [:show, :update] do
@@ -139,10 +139,10 @@ ASM::Application.routes.draw do
 
     get 'users/:id/stories' => 'users#stories'
     get 'users/:id/stories/:product_id' => 'users#stories'
-    get '/users/:id/karma' => 'users#karma', :as => :user_karma
-    get '/users/:id/assets' => 'users#assets', :as => :user_assets
-    post '/users/:id/dismiss_welcome_banner' => 'users#dismiss_welcome_banner', :as => :dismiss_welcome_banner
-    post '/users/:id/dismiss_showcase_banner' => 'users#dismiss_showcase_banner', :as => :dismiss_showcase_banner
+    get '/users/:id/karma' => 'users#karma', as: :user_karma
+    get '/users/:id/assets' => 'users#assets', as: :user_assets
+    post '/users/:id/dismiss_welcome_banner' => 'users#dismiss_welcome_banner', as: :dismiss_welcome_banner
+    post '/users/:id/dismiss_showcase_banner' => 'users#dismiss_showcase_banner', as: :dismiss_showcase_banner
 
     resources :notifications, only: [:index]
     resources :choices, only: [:index, :create, :update, :destroy]
@@ -150,7 +150,7 @@ ASM::Application.routes.draw do
     # saved searches
     scope '/user', controller: 'users' do
       get :unread
-      get 'tracking/:article_id' => 'users#tracking', :as => :readraptor
+      get 'tracking/:article_id' => 'users#tracking', as: :readraptor
 
       resources :saved_searches, only: [:create, :destroy]
 
@@ -181,14 +181,14 @@ ASM::Application.routes.draw do
   end
 
   # Facebook
-  get '/channel.html' => 'facebook#channel', :as => :facebook_channel
+  get '/channel.html' => 'facebook#channel', as: :facebook_channel
 
   # Exceptions
-  get "/404", :to => "errors#not_found"
-  get "/500", :to => "errors#error"
-  get "/errors/crash", :to => "errors#test_exception"
-  get "/errors/maintenance", :to => "errors#maintenance"
-  get "/errors/heroku", :to => "errors#test_heroku"
+  get "/404" => "errors#not_found"
+  get "/500" => "errors#error"
+  get "/errors/crash" => "errors#test_exception"
+  get "/errors/maintenance" => "errors#maintenance"
+  get "/errors/heroku" => "errors#test_heroku"
 
   resources :tags, only: [] do
     post 'follow'
@@ -196,18 +196,18 @@ ASM::Application.routes.draw do
   end
 
   # Help
-  get '/help/:group', :to => 'questions#index', :as => :help
-  get '/help' => redirect('/help/basics'), :as => :faq
+  get '/help/:group' => 'questions#index', as: :help
+  get '/help' => redirect('/help/basics'), as: :faq
 
   get '/metrics' => 'metrics#overview'
 
   # Guides
-  get '/guides/:group', :to => 'guides#index', :as => :guides
-  get '/guides', :to => 'guides#index'
+  get '/guides/:group' => 'guides#index', as: :guides
+  get '/guides' => 'guides#index'
 
   # redirect support-foo to helpful
-  get '/support-foo', to: redirect('/helpful')
-  get '/support-foo/*extra', to: redirect {|p, req| "/helpful/#{p[:extra]}" }
+  get '/support-foo' => redirect('/helpful')
+  get '/support-foo/*extra' => redirect {|p, req| "/helpful/#{p[:extra]}" }
 
   # Admin
   namespace :admin do
@@ -293,9 +293,9 @@ ASM::Application.routes.draw do
 
   post '/products' => 'products#create', as: :products
 
-  get '/products/:id', to: redirect(ProductRedirector.new), as: :full_product
-  get '/products/:product_id/discussions/:id', to: redirect(ProductRedirector.new(:discussion)), as: :full_product_discussion
-  get '/products/:product_id/tasks/:id', to: redirect(ProductRedirector.new(:task)), as: :full_product_task
+  get '/products/:id' => redirect(ProductRedirector.new), as: :full_product
+  get '/products/:product_id/discussions/:id' => redirect(ProductRedirector.new(:discussion)), as: :full_product_discussion
+  get '/products/:product_id/tasks/:id' => redirect(ProductRedirector.new(:task)), as: :full_product_task
 
   get '/activities/:id' => 'activity#show'
   get '/hotbounties' => 'hot_bounties#show'
@@ -310,7 +310,7 @@ ASM::Application.routes.draw do
   put '/:product_id/integrations/:provider/update' => 'integrations#update'
 
   # legacy
-  get '/meta/chat', to: redirect(path: '/chat/general')
+  get '/meta/chat' => redirect(path: '/chat/general')
 
   # FIXME: Fix news_feed_items_controller to allow missing product
   get '/news_feed_items' => 'dashboard#news_feed_items'
@@ -451,13 +451,13 @@ ASM::Application.routes.draw do
     resources :work
 
     # legacy
-    get :chat, to: redirect('/chat/%{product_id}')
-    get :team, to: redirect(path: '%{product_id}/people')
-    get :welcome, to: redirect(path: '%{product_id}')
-    get '/wips', to: redirect(path: '/%{product_id}/bounties')
-    get '/wips/*all', to: redirect(path: '/%{product_id}/bounties/%{all}')
+    get :chat => redirect('/chat/%{product_id}')
+    get :team => redirect(path: '%{product_id}/people')
+    get :welcome => redirect(path: '%{product_id}')
+    get '/wips' => redirect(path: '/%{product_id}/bounties')
+    get '/wips/*all' => redirect(path: '/%{product_id}/bounties/%{all}')
 
-    get '/:number', to: redirect(path: '%{product_id}/wips/%{number}'),
+    get '/:number' => redirect(path: '%{product_id}/wips/%{number}'),
       constraints: {number: /\d+/},
       as: :shortcut
   end
