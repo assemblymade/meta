@@ -57,7 +57,7 @@ class PaymentsController < ProductController
     _request :get, url
   end
 
-  # we can't override the exiting #request method
+  # we can't override the existing #request method
   def _request(method, url, body = {})
     resp = connection.send(method) do |req|
       req.url url
