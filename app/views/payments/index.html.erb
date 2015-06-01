@@ -57,11 +57,4 @@
     </div>
     <button type="submit" class="btn btn-default">Create</button>
   </form>
-
-  <% if current_user && @product.core_team?(current_user) %>
-    <div class="well center mt4">
-      <h5 class="mt0 mb0">Payments Authentication Token (visible to core team only)</h5>
-      <%= @product.authentication_token %>
-    </div>
-  <% end %>
 </div>
