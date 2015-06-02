@@ -89,8 +89,8 @@ ASM::Application.routes.draw do
   end
 
   devise_for :users,
-    :skip, to: [:registrations, :sessions, :confirmations],
-    :controllers, to: { :omniauth_callbacks, to: "users/omniauth_callbacks", :passwords, to: 'users/passwords' }
+    skip: [:registrations, :sessions, :confirmations],
+    :controllers: { omniauth_callbacks: "users/omniauth_callbacks", passwords: 'users/passwords' }
 
   as :user do
     # Sessions
@@ -404,7 +404,7 @@ ASM::Application.routes.draw do
       patch 'stop_work'
       patch 'review'
       patch 'reject'
-      patch 'award', :action, to: :award, :on, to: :member
+      patch 'award', :action => :award, :on => :member
       post 'promote'
       post 'demote'
       patch 'watch'
