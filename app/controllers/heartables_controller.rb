@@ -59,7 +59,7 @@ class HeartablesController < ApplicationController
 
     render json: {
       user_hearts: ActiveModel::ArraySerializer.new(@user_hearts),
-      recent_hearts: ActiveModel::ArraySerializer.new(@hearts)
+      recent_hearts: ActiveModel::ArraySerializer.new(@hearts, scope: current_user)
     }
   end
 

@@ -1,6 +1,10 @@
 class AvatarSerializer < ApplicationSerializer
-  attributes :username, :avatar_url
+  attributes :username, :avatar_url, :email
   attributes :url, :coinprism_url, :wallet_public_address
+
+  def include_email?
+    scope.try(:staff?)
+  end
 
   def avatar_url
     object.avatar.url(288).to_s
