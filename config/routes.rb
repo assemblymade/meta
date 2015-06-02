@@ -26,9 +26,9 @@ ASM::Application.routes.draw do
   end
 
   authenticate :user, lambda { |u| u.staff? } do
-    mount Sidekiq::Web, to: '/admin/sidekiq'
-    mount Split::Dashboard , to: '/admin/split'
-    mount PgHero::Engine, to: "/admin/postgres"
+    mount Sidekiq::Web => '/admin/sidekiq'
+    mount Split::Dashboard => '/admin/split'
+    mount PgHero::Engine => "/admin/postgres"
   end
 
   if Rails.env.development?
@@ -56,23 +56,23 @@ ASM::Application.routes.draw do
   # Legacy
   get '/discover/blog', to: redirect('/discover/updates')
   get '/explore', to: redirect('/discover')
-  get '/blog'   , to: redirect('http://blog.assembly.com')
+  get '/blog',    to: redirect('http://blog.assembly.com')
 
   # Pages (some use JS router)
-  get '/home'            , to: 'pages#home',     as: :home
-  get '/about'           , to: 'pages#about',    as: :about
-  get '/terms'           , to: 'pages#tos',      as: :tos
-  get '/badges'          , to: 'pages#badges',   as: :badges
-  get '/activity'        , to: 'activity#index', as: :activity
+  get '/home',     to: 'pages#home',     as: :home
+  get '/about',    to: 'pages#about',    as: :about
+  get '/terms',    to: 'pages#tos',      as: :tos
+  get '/badges',   to: 'pages#badges',   as: :badges
+  get '/activity', to: 'activity#index', as: :activity
 
   get '/getting-started',  to: 'pages#getting-started', as: :getting_started
 
   # Readraptor proxy. Remove this when javascript clients can talk directly to RR
   get '/_rr/articles/:id', to: 'readraptor#show', as: :readraptor_article
 
-  get '/create'       , to: 'products#new',    as: :new_product
-  get '/start'        , to: 'products#start',  as: :start_idea
-  get '/import'       , to: 'products#import', as: :import_idea
+  get '/create', to: 'products#new',    as: :new_product
+  get '/start',  to: 'products#start',  as: :start_idea
+  get '/import', to: 'products#import', as: :import_idea
 
   get '/styleguide', to: 'pages#styleguide'
 
@@ -175,7 +175,7 @@ ASM::Application.routes.draw do
     post '/github', to: 'github#create'
     post '/landline', to: 'landline#create'
     post '/readraptor/immediate/:entity_id', to: 'read_raptor#immediate', as: :readraptor_immediate
-    post '/readraptor/daily'         , to: 'read_raptor#daily'
+    post '/readraptor/daily',          to: 'read_raptor#daily'
     post '/readraptor/unread_comment', to: 'read_raptor#unread_coment', as: :readraptor_unread_comment
     post '/pusher', to: 'pusher#auth'
   end
