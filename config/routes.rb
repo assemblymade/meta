@@ -289,7 +289,7 @@ ASM::Application.routes.draw do
     resources :textcompletes, only: [:index]
   end
 
-  root :to, to: 'pages#home'
+  root to: 'pages#home'
 
   post '/products', to: 'products#create', as: :products
 
