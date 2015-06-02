@@ -89,8 +89,8 @@ ASM::Application.routes.draw do
   end
 
   devise_for :users,
-    skip: [:registrations, :sessions, :confirmations],
-    :controllers: { omniauth_callbacks: "users/omniauth_callbacks", passwords: 'users/passwords' }
+    :skip => [:registrations, :sessions, :confirmations],
+    :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :passwords => 'users/passwords' }
 
   as :user do
     # Sessions
