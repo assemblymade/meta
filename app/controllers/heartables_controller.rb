@@ -53,9 +53,10 @@ class HeartablesController < ApplicationController
                            where(user_id: current_user.id)
     end
 
-    @hearts = Heart.includes(:user).
-                    where(heartable_id: params[:heartable_ids]).
-                    select('distinct on (heartable_id) *')
+    @hearts = Heart.includes(:user).where(heartable_id: params[:heartable_ids])
+    if params[:all_hearts].blank?
+      @hearts = @hearts.select('distinct on (heartable_id) *')
+    end
 
     render json: {
       user_hearts: ActiveModel::ArraySerializer.new(@user_hearts),
