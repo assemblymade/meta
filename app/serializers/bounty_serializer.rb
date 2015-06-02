@@ -2,6 +2,7 @@ class BountySerializer < ApplicationSerializer
   include MarkdownHelper
 
   attributes :can_update, :comments_count, :contracts, :flagged, :following,
+    :description,
     :hearts_count, :markdown_description, :most_recent_other_wip_worker,
     :news_feed_item_id, :number, :offers, :open, :state, :title, :value,
     :locked_at, :priority, :earnable_cents
