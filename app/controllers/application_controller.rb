@@ -64,7 +64,10 @@ class ApplicationController < ActionController::Base
   end
 
   def strip_auth_token
-    if params[:auth_token].present? && request.headers['Content-Type'] != 'application/json'
+    if user = authenticate_with_http_basic {|u, p| u ? User.find_by(authentication_token: u) : nil }
+      sign_in user
+      
+    elsif params[:auth_token].present? && request.headers['Content-Type'] != 'application/json'
       user = User.find_by!(authentication_token: params[:auth_token])
       sign_in user
       redirect_to(url_for(params.except(:auth_token)))

@@ -51,6 +51,7 @@ class TasksController < WipsController
           PaginationSerializer.new(
             @bounties,
             each_serializer: BountyListSerializer,
+            scope: current_user,
             root: :bounties
           ).as_json
         )
