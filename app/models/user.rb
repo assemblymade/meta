@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   include ActiveRecord::UUID
   include Elasticsearch::Model
   include GlobalID::Identification
+  include Kaminari::ActiveRecordModelExtension
 
   LEADER_TIME_SPAN = 7.days
 
