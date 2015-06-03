@@ -22,19 +22,19 @@
       opacity: 0.05;
     }
   }
+}
 
-  .deprecated-card-inner {
-    position: absolute;
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-size: cover !important;
-    background-position: center !important;
-    opacity: 1;
-    @include transition-property(opacity);
-    @include transition-duration($transition-out-duration);
-    @include transition-timing-function($transition-function);
-  }
+.deprecated-card-inner {
+  position: absolute;
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-size: cover !important;
+  background-position: center !important;
+  opacity: 1;
+  @include transition-property(opacity);
+  @include transition-duration($transition-out-duration);
+  @include transition-timing-function($transition-function);
 }
 
 a.deprecated-card:hover {
@@ -58,7 +58,7 @@ a.deprecated-card:hover {
   padding: 20px;
 }
 
-.deprecated-bg-gray-5 py2 px1 {
+.deprecated-card-footer {
   @include clearfix;
   padding: ($line-height-computed / 4) 20px;
   // border-top: 1px solid $brand-divider;
