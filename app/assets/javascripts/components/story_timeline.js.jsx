@@ -69,8 +69,12 @@ const StoryTimeline = React.createClass({
           <div className="p2 mr1 bold gray-2 border-bottom">
             Activity Minifeed
           </div>
-          <div className="p2 gray-2">
-            No activity to show
+          <div className="p2 gray-2 center">
+            <div className="h3">
+              <Icon icon="bolt" />
+            </div>
+
+            <p>No activity to show yet</p>
           </div>
         </div>
       )

@@ -67,11 +67,11 @@ var PostsIndex = React.createClass({
       <div>
         <div className="clearfix mxn3">
           <div className="sm-col-right sm-col-4 px3">
-            <Button action={window.showCreatePost} block={true}>Write a new post</Button>
+            <Button action={window.showCreatePost} block={true} type="primary">Write a new post</Button>
 
-            <div className="pb1"> {/*Filters*/}
+            <div className="mt2 mb2"> {/*Filters*/}
               <Accordion title="Filters">
-                <ul className="list-reset mxn2">
+                <ul className="list-reset">
                   {this.renderFilters()}
                 </ul>
               </Accordion>
@@ -84,7 +84,7 @@ var PostsIndex = React.createClass({
             </div>
           </div>
 
-          <div className="sm-col sm-col-8 px3">
+          <div className="sm-col sm-col-8 sm-px2 md-px3">
             {this.state.loading ? <Spinner /> : <PostList posts={posts} />}
           </div>
         </div>
@@ -94,23 +94,25 @@ var PostsIndex = React.createClass({
 
   renderFilters: function() {
     var path = window.location.pathname;
+    var filterItemClasses = "block py2 px3 lh1 rounded bg-darken-1-hover";
 
     return [
-      <li className="mb1 lh0_9" key="filter-all">
-        <a href={path + "?discussions=true"} className="pill-hover block py1 px3" onClick={this.fetchDiscussions}>
-          <span className="fs1 fw-500 caps">all posts</span>
+      <li className="mb1" key="filter-all">
+        <a href={path + "?discussions=true"} className={filterItemClasses} onClick={this.fetchDiscussions}>
+          <span className="h5 bold caps lh1">all posts</span>
         </a>
       </li>,
 
-      <li className="mb1 lh0_9" key="filter-announcements">
-        <a href={path + "?announcements=true"} className="pill-hover block py1 px3" onClick={this.fetchAnnouncements}>
-          <span className="fs1 fw-500 caps">announcements</span>
+      <li className="mb1" key="filter-announcements">
+        <a href={path + "?announcements=true"} className={filterItemClasses} onClick={this.fetchAnnouncements}>
+          <span className="h5 bold caps lh1">announcements</span>
         </a>
       </li>,
 
-      <li className="mb1 lh0_9" key="filter-archived">
-        <a href={path + "?archived=true"} className="pill-hover block py1 px3" onClick={this.fetchArchivedPosts}>
-          <span className="fs1 fw-500 caps">archived posts</span>
+      <li className="mb1" key="filter-archived">
+        <a href={path + "?archived=true"} className={filterItemClasses} onClick={this.fetchArchivedPosts}>
+          <span className="h5 bold caps lh1">archived posts</span>
+>>>>>>> Stashed changes
         </a>
       </li>
     ];

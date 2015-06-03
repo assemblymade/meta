@@ -33,8 +33,8 @@ var ListItemMixin = {
 
     return tags.map(function(tag) {
       return (
-        <a className="mr2" href={tag.url} key={'post-tag-' + tag.name}>
-          <Label name={tag.name} />
+        <a className="gray-2 caps h6 mr2" href={tag.url} key={'post-tag-' + tag.name}>
+          #{tag.name}
         </a>
       )
     });

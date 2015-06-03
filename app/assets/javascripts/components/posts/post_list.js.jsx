@@ -10,10 +10,8 @@ var PostList = React.createClass({
 
   render: function() {
     return (
-      <div className="row mt0">
-        <div className="col-xs-12">
-          {this.renderPosts()}
-        </div>
+      <div className="sm-col-12">
+        {this.renderPosts()}
       </div>
     );
   },
@@ -24,15 +22,15 @@ var PostList = React.createClass({
     if (!posts.length) {
       var product = ProductStore.getProduct().name;
 
-      return [
-        <h4 className="gray-2" key="heading">
-          There don't seem to be any posts here
-        </h4>,
-
-        <p key="explanation">
-          {"Blog posts by " + product + "'s partners will appear here just as soon as they're written."}
-        </p>
-      ];
+      return (
+        <div className="bg-white border rounded p3 mb3 center" key="explanation">
+          <div className="h2 mt2 gray-3">
+            <Icon icon="edit" />
+          </div>
+          <h3 className="light mt2">No posts here...yet!</h3>
+          <p className="gray-2">{"Blog posts by " + ProductStore.getProduct().name + "'s partners will appear here as soon as they're written."}</p>
+        </div>
+      );
     }
 
     return _.map(posts, function(post) {
