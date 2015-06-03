@@ -113,7 +113,7 @@ var BountyListItem = React.createClass({
       <div className="bg-white rounded shadow mb2 js-bounty-list-item visible-hover-wrapper" style={style} data-bounty-id={bounty.id}>
         <div className="table mb0">
           <div className="table-cell">
-            <div className="px3 pt3 pb3">
+            <div className="p3">
               <div className="mt0 mb1 mtn1 h4 bold clickable">
                 {this.renderTitle()}
               </div>
