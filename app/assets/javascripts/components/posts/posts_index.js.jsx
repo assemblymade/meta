@@ -112,7 +112,6 @@ var PostsIndex = React.createClass({
       <li className="mb1" key="filter-archived">
         <a href={path + "?archived=true"} className={filterItemClasses} onClick={this.fetchArchivedPosts}>
           <span className="h5 bold caps lh1">archived posts</span>
->>>>>>> Stashed changes
         </a>
       </li>
     ];
