@@ -14,7 +14,6 @@ var PostListIem = React.createClass({
   /**
    * ListItemMixin: this.onModalHidden()
    *                this.renderComments({Number: count})
-   *                this.renderLove({String: news_feed_item_id})
    *                this.renderTags({[Object: tag]})
    *                this.showModal()
    */
