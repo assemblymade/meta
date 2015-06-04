@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   include Kaminari::ActiveRecordModelExtension
 
   LEADER_TIME_SPAN = 7.days
+  SIGNUP_SOURCE_CHANGELOG = 'changelog'
 
   attr_encryptor :wallet_private_key,
     :key => ENV["USER_ENCRYPTION_KEY"],

@@ -27,7 +27,7 @@ class BaseMailer < ActionMailer::Base
   end
 
   def prevent_delivery_to_unsubscribed_users
-    if @user && @user.mail_never?
+    if @user && (@user.mail_never? || @user.source == User::SIGNUP_SOURCE_CHANGELOG)
       mail.perform_deliveries = false
     end
   end

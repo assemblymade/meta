@@ -3,7 +3,7 @@ class SingleSignOnController < ApplicationController
 
   def sso
     if return_sso_url.present?
-      cookies.permanent[:user_source] = 'changelog'
+      cookies.permanent[:user_source] = User::SIGNUP_SOURCE_CHANGELOG
     end
     authenticate_user!
 
