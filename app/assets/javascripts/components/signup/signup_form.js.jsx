@@ -1,6 +1,7 @@
 'use strict';
 
 const Button = require('../ui/button.js.jsx');
+const Cookie = require('../../cookie');
 const Icon = require('../ui/icon.js.jsx');
 const SignupActions = require('../../actions/signup_actions');
 const SignupFormStore = require('../../stores/signup_form_store');
@@ -188,7 +189,8 @@ const SignupForm = React.createClass({
     SignupActions.signup({
       username: username,
       email: email,
-      password: password
+      password: password,
+      source: Cookie.getCookie('user_source')
     });
   },
 

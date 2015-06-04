@@ -51,6 +51,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       :name,
       :password,
       :password_confirmation,
+      :source,
       :follow_product,
       :avatar_url
     )

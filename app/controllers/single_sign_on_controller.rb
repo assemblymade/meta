@@ -1,8 +1,12 @@
 class SingleSignOnController < ApplicationController
   after_action :set_access_control_headers
-  before_action :authenticate_user!
 
   def sso
+    if return_sso_url.present?
+      cookies.permanent[:user_source] = 'changelog'
+    end
+    authenticate_user!
+
     return render text: "invalid sig", layout: false, status: 401 unless sign(params[:payload]) == params[:sig]
     return render text: "invalid nonce", layout: false, status: 401 unless nonce
     return render text: "invalid user", status: 403 unless requested_user.nil? || (current_user != requested_user)
