@@ -27,8 +27,4 @@ Each Assembly product has an associated Github repo under the [asm-products orga
 
 
 #### Domains
-Assembly holds domains on behalf of the respective products to which they belong. All products on Assembly must transfer ownership of their domains within 90 days of joining the platform. Products that have not transfered their domains within this time frame will be removed from the platform.
-
-If you already own a domain that you would like to use with your Assembly product, unlock your domain at your registrar and email assembly@helpful.io with an authorization code to initialize the transfer.
-
-If you do not have a domain and would like to purchase one, email assembly@helpful.io. Include the name of your Assembly product, the desired domain name, and a link to the Github repository for your product.
+Domains for Assembly products are held by core team members in the community(that's you!). When you choose to contribute to a product, it's important to note who holds the domain and to build trust with that person as you build a product together. If you own a domain for a product, you might put a pledge in the product description that shows your commitment to protecting it on behalf of the community.

@@ -2,11 +2,7 @@
 
 #### What hosting provider should I use?
 
-Assembly can often cover paid hosting costs for products that use Heroku.
-To get started with this process, email support@assembly.com to transfer
-ownership of your Heroku app.  You are free to use other platforms, such as
-AWS, DigitalOcean, Google App Engine, or others. However, we do not yet support
-paying for these providers.
+You are free to use whatever hosting platform you choose, such as Heroku, AWS, DigitalOcean, Google App Engine, or others.
 
 # Domains
 

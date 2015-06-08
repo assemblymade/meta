@@ -4,7 +4,7 @@ Assembly enables products--from software and hardware, to online communities--to
 
 The projects are open and transparent, and anyone can help build them, whether you want to contribute a few hours or a few months. Product ideas, vision and execution are driven by the community.
 
-Each contribution you make will be rewarded with a fair amount (as determined by the community) of stake in the project. Stake is distributed in the form of App Coins. If a product is generating revenue, everyone who helped build it receives payment each month. During development, Assembly often helps cover expenses like servers and web domains.
+Each contribution you make will be rewarded with a fair amount (as determined by the community) of stake in the project. Stake is distributed in the form of App Coins. If a product is generating revenue, everyone who helped build it receives payment each month.
 
 Working on Assembly projects is a great way to learn, challenge yourself and make a meaningful contribution to a great product. Also, if the products you help build are successful, you can earn substantial income.
 

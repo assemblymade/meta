@@ -4,7 +4,7 @@ Yes. You can take any product you've already started building, launched, or is e
 
 # How do prepare my existing product for Assembly?
 
-Assembly manages all domains in escrow on behalf of the contributors and core team. Additionally collects the revenue and distributes proceeds to all the contributors. Before an existing product can be built on Assembly, its important that the code base is released under the AGPL license and the domain and revenue collection is transferred for management to Assembly.
+Read about this in our [guides](https://assembly.com/guides)
 
 # If another company wants to acquire my product, will that be possible?
 
@@ -26,14 +26,14 @@ Not exactly. A person's contributions can be rejected, and they can be booted of
 
 Before allowing everyone to read your source code, do a quick check for any glaring vulnerabilities. Getting setup on [Code Climate](https://codeclimate.com/) can also help identify potential security issues and show you which messy parts of your app need some refactoring. You'll also want to remove any private information from your repo (that includes anything in the entire git history). Moving configuration related passwords and keys outside of the repo and then squahsing all of the previous history is a good start. If you need any help or want another developer to double check your app, [contact us](mailto:support@assembly.com).
 
-# How do I transfer my domain?
+# What do I do with my domain?
 
-[Contact us](mailto:support@assembly.com) and we'll help you get started. Assembly will release your domain back to the original owner at anytime requested prior to accepting contributions from Assembly contributors. If a product has accepted contributions from the Assembly community then reclaiming the domain requires unanimous consent from the Core Team, Assembly and a notice to the community with proper time for feedback.
+Domains for Assembly products are held by core team members in the community(that's you!). When you choose to contribute to a product, it's important to note who holds the domain and to build trust with that person as you build a product together. If you own a domain for a product, you might put a pledge in the product description that shows your commitment to protecting it on behalf of the community.
 
 # What do I do about hosting my new product?
 
 Continue to host the product in the same way your used to. Report any monthly expenses to your product's financials so the community can reimburse those costs from the future profit.
 
-# How do we transfer revenue collection to Assembly?
+# How do we collect revenue?
 
 [Contact us](mailto:support@assembly.com).

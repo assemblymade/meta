@@ -4,7 +4,7 @@
 Each Assembly product has an associated Github repo under the [asm-products organization](https://github.com/asm-products/). Your product repo will be located at `github.com/asm-products/PRODUCTSLUG`. Please push the source code for your app to this repository. Send an email to assembly@helpful.io if you have problems accessing your repository.
 
 #### Hosting
-Assembly generally can cover hosting costs if your app is hosted on Heroku. Send an email to assembly@helpful.io if you need a Heroku app created on your behalf or if you have an existing Heroku app that you need to transfer. Assembly requires ownership of the Heroku app so that we can track expenses and pay for hosting.
+You are free to use whatever hosting platform you choose, such as Heroku, AWS, DigitalOcean, Google App Engine, or others.
 
 #### SSL
 If you require a SSL certificate for your service, send an email to assembly@helpful.io.
@@ -16,8 +16,5 @@ Check out the [Assembly payments repo](https://github.com/asm-products/payments
 ) and README for instructions on how to integrate Assembly payments with your app. https://github.com/asm-products/payments
 
 #### Domains
-Assembly holds domains on behalf of the respective products to which they belong. All products on Assembly must transfer ownership of their domains within 90 days of joining the platform. Products that have not transfered their domains within this time frame will be removed from the platform.
 
-If you already own a domain that you would like to use with your Assembly product, unlock your domain at your registrar and email assembly@helpful.io with an authorization code to initialize the transfer.
-
-If you do not have a domain and would like to purchase one, email assembly@helpful.io. Include the name of your Assembly product, the desired domain name, and a link to the Github repository for your product.
+Domains for Assembly products are held by core team members in the community. When you choose to contribute to a product, it's important to note who holds the domain and to build trust with that person as you build a product together. If you own a domain for a product, you might put a pledge in the product description that shows your commitment to protecting it on behalf of the community.

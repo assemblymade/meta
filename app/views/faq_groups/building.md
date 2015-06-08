@@ -15,7 +15,7 @@ However, Assembly retains a license to commercialize the app so we can award the
 
 # What technology is used to build Assembly apps?
 
-An Assembly app's core technology is decided by the Core Team and early contributors when development is first started. Typically, we suggest hosting components on [Heroku](https://www.heroku.com/) when possible. This guarantees the code the community builds will have a [level of modularity](http://12factor.net/).
+An Assembly app's core technology is decided by the Core Team and early contributors when development is first started. Lots of people use [Heroku](https://www.heroku.com/), which guarantees the code the community builds will have a [level of modularity](http://12factor.net/).
 
 As other technologies like [docker](http://www.docker.io/) and [vagrant](http://www.vagrantup.com/) evolve so may our stack. We’d love to hear your thoughts on this.
 
