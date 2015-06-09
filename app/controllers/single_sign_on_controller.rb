@@ -5,7 +5,10 @@ class SingleSignOnController < ApplicationController
     if return_sso_url.present?
       cookies.permanent[:user_source] = User::SIGNUP_SOURCE_CHANGELOG
     end
-    authenticate_user!
+    if !signed_in?
+      redirect_to new_user_registration_path
+      return
+    end
 
     return render text: "invalid sig", layout: false, status: 401 unless sign(params[:payload]) == params[:sig]
     return render text: "invalid nonce", layout: false, status: 401 unless nonce

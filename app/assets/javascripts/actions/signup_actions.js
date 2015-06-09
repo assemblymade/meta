@@ -23,7 +23,7 @@ module.exports = window.SignupActions = {
   },
 
   signup(info) {
-    request('/signup', info, '/discover');
+    request('/signup', info, '/user/after_sign_up');
   }
 };
 

@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def after_sign_up_path_for_user
-    discover_path
+    session[:previous_url] || discover_path
   end
 
   def after_sign_out_path_for_user
@@ -130,7 +130,15 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    ignored_locations = %w(/ /users/auth/facebook/callback /login /logout /signup /notifications.json)
+    ignored_locations = %w(
+      /
+      /users/auth/facebook/callback
+      /login
+      /logout
+      /signup
+      /notifications.json
+      /user/after_sign_up
+    )
     if (!request.xhr? &&
         !ignored_locations.include?(request.path) &&
         (request.format == "text/html" || request.content_type == "text/html"))

@@ -325,7 +325,9 @@ ASM::Application.routes.draw do
     resources :comments, only: [:index, :create, :update]
   end
 
-  resource :user, only: [:update]
+  resource :user, only: [:update] do
+    get :after_sign_up
+  end
 
   # Products
   resources :products, path: '/', except: [:index, :create, :destroy] do

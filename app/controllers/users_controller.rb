@@ -175,6 +175,10 @@ class UsersController < ApplicationController
     render nothing: true, status: 200
   end
 
+  def after_sign_up
+    redirect_to after_sign_up_path_for_user
+  end
+
   if Rails.env.development?
     def impersonate
       sign_in(:user, User.find(params[:id]))
