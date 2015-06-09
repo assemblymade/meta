@@ -61,14 +61,19 @@ class ProductsController < ProductController
 
   def ownership
     find_product!
-    ownership = CsvCompiler.new.get_product_partner_breakdown(@product)
+    eom = 1.month.ago
+    if params[:eom]
+      eom = Date.parse(params[:eom])
+    end
+    at = TransactionLogEntry.end_of_month(eom)
+    ownership = CsvCompiler.new.get_product_partner_breakdown(@product, at)
 
     csv_file = CSV.generate({}) do |csv|
       ownership.each do |a|
         csv << a
       end
     end
-    send_data csv_file, :type => 'text/csv'
+    send_data csv_file, :type => 'text/csv', :filename => "#{@product.slug}-#{at.iso8601}.csv"
   end
 
   def create

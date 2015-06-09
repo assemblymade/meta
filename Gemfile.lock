@@ -665,3 +665,6 @@ DEPENDENCIES
   webmock
   workflow
   zeroclipboard-rails
+
+BUNDLED WITH
+   1.10.3

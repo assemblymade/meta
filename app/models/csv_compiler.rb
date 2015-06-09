@@ -1,7 +1,13 @@
 class CsvCompiler
 
-  def get_product_partner_breakdown(product, before_date=0.days.ago)
-    entries = TransactionLogEntry.where(product_id: product.id).where('created_at < ?', before_date).with_cents.group(:wallet_id).sum(:cents)
+  def get_product_partner_breakdown(product, at)
+    entries = TransactionLogEntry.
+      where(product_id: product.id).
+      where('created_at <= ?', at).
+      with_cents.
+      group(:wallet_id).
+      sum(:cents)
+
     users = User.where(id: entries.keys).to_a
     user_ids = users.map(&:id)
     user_entries = []
