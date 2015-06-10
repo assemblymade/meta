@@ -1,51 +1,43 @@
-<% title @guide_group.name, 'Guides' %>
-<% provide(:description, "Frequently asked questions about #{@guide_group.name.downcase} on Assembly.") %>
+<% title @article.name, @title %>
+<% provide(:description, @description) %>
+<% provide(:body_class, "bg-white") %>
 
-<!-- TODO Deprecate. Pages now use gray bg. (chrislloyd) -->
-<style>body { background-color: white !important; }</style>
+<%= render "shared/navbar" %>
 
-<%= render 'shared/navbar' %>
+<div class="container mt3">
+  <section class="mt4 p3 right well">
+    <h4 class="caps gray-2 center mt0 mb2">More <%= @title %></h4>
+    <ul class="list-reset mt2 mb0">
+      <% @article_list.each do |article| %>
+        <li class="mt1">
+          <span class="icon icon-chevron-right gray-3"></span>
+          <% @article_link = help_path(article) if @title == "FAQs" %>
+          <% @article_link = guides_path(article) if @title == "Guides" %>
+          <%= link_to article.name, @article_link.to_s, class: ("gray-1" + " bold blue" if @article.slug == article.slug) %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
 
-<%# cache FaqGroup.cache_key(@guide_group) do %>
-  <div class="container">
+  <article class="sm-col-11 md-col-8 left">
 
-    <div class="border-bottom py3 mb4">
-      <ol class="breadcrumb mb2">
-        <li class="active">Guides</li>
-        <li></li>
-      </ol>
-      <h1 class="mt2 mb0"><%= @guide_group.name %></h1>
-    </div>
+    <h2 class="mtn1 py2 border-bottom"><%= @title %>: <span class="regular"><%= @article.name %></span></h2>
 
-    <div class="clearfix mxn4">
-      <div class="md-col md-col-8 px4">
+    <% if @show_toc == true %>
+    <h5 class="m0 py2 caps gray-2">In this guide:</h5>
+    <ul class="list-reset">
+      <% @article.questions.each do |question| %>
+        <li>
+          <span class="icon icon-chevron-right gray-3"></span>
+          <%= link_to question[:name], anchor: question[:anchor] %>
+        </li>
+      <% end %>
+    </ul>
+    <% end %>
 
-            <ul class="list-reset">
-              <% @guide_group.questions.each do |question| %>
-                <li class="question">
-                  <%= link_to question[:name], anchor: question[:anchor] %>
-                </li>
-              <% end %>
-            </ul>
+    <%= @article.body.html_safe %>
 
-            <hr class="border-bottom mt4 mb4">
+  </article>
+</div>
 
-            <%= @guide_group.body.html_safe %>
-
-      </div>
-
-      <div class="md-col md-col-4 px4">
-        <ul class="list-reset">
-          <% @guide_groups.each do |guide_group| %>
-            <li>
-              <a class="block gray-1 py1 <%= 'bold blue' if @guide_group.slug == guide_group.slug %>" href="<%= guides_path(guide_group) %>"><%= guide_group.name %></a>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-<%# end %>
-
-<%= render 'shared/footer' %>
+<%= render "shared/footer" %>
