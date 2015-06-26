@@ -18,7 +18,7 @@ Or submit your own idea [here](https://assembly.com/start)!
 
 # What parts of building can I help out with?
 
-Anything and everything. Take a look at the bounties on a particular project and see if anything is of interest to you. And be sure to pop into [Community Chat](https://assembly.com/chat/general) so that the Assembly community can welcome you, or to introduce yourself to the team working on a project you like. No matter what your skills are, there’s someone on Assembly who needs them.
+Anything and everything. Take a look at the bounties on a particular project and see if anything is of interest to you. No matter what your skills are, there’s someone on Assembly who needs them.
 
 Everyone is free to participate in supporting and evolving any products built on Assembly in the ways they see fit. Help out as little or as much as you want.
 

@@ -69,26 +69,6 @@ namespace :emails do
     end
   end
 
-  task :joined_team_no_work_yet => :environment do
-    User.find(TeamMembership.where('created_at < ?', 1.day.ago).group(:user_id).count.keys).each do |user|
-      if Task.won_by(user).empty? &&                          # no bounties won
-         Event::ReviewReady.where(user_id: user.id).empty? && # no work submitted
-         Wip::Worker.where(user_id: user.id).empty?           # no work started
-
-         # we'll only send this once per user. Even though they join multiple products
-         unless EmailLog.sent_to(user.id, :joined_team_no_work_yet).any?
-           EmailLog.log_send user.id, :joined_team_no_work_yet do
-             membership = user.team_memberships.order(created_at: :desc).first
-
-             next if membership.product.core_team?(user)
-
-             UserMailer.delay(queue: 'mailer').joined_team_no_work_yet membership.id
-           end
-         end
-      end
-    end
-  end
-
   task :joined_team_no_introduction_yet => :environment do
     TeamMembership.where('created_at < ?', 1.day.ago).where(bio: nil).each do |membership|
       EmailLog.send_once(membership.user.id, :joined_team_no_introduction_yet) do

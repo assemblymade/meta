@@ -50,15 +50,6 @@
           </p>
         <% end %>
       <% end %>
-
-      <% if @product.chat_rooms.any? %>
-        <% chat_room = @product.chat_rooms.first %>
-
-        <hr class="border-bottom">
-        <a href="<%= chat_room_path(chat_room) %>">
-          Chat about the plan for <%= @product.name %>.
-        </a>
-      <% end %>
     </div>
   </div>
 </div>

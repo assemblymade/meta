@@ -1,8 +1,6 @@
 'use strict';
 
 var Avatar = require('./ui/avatar.js.jsx');
-var ChatNotifications = require('./chat_notifications.js.jsx');
-var ChatNotificationsToggler = require('./chat_notifications_toggler.js.jsx');
 var DropdownMenu = require('./ui/dropdown_menu.js.jsx')
 var DropdownMixin = require('../mixins/dropdown_mixin.js.jsx')
 var DropdownNotifications = require('./dropdown_notifications.js.jsx');
@@ -57,7 +55,6 @@ var Navbar = React.createClass({
           <HeartsReceived />
         </li>
 
-        {this.state.showChat && this.renderChatNotifications()}
         {this.state.showStories && this.renderStories()}
 
         <li className="left dropdown hidden-xs">
@@ -69,19 +66,6 @@ var Navbar = React.createClass({
         </li>
       </ul>
     )
-  },
-
-  renderChatNotifications() {
-    return <li className="left sm-show px1">
-      <ChatNotificationsToggler
-        icon="comments"
-        href='#notifications'
-        label='Chat' />
-
-      <ChatNotifications
-          url={this.props.chatPath}
-          username={UserStore.getUser().username} />
-    </li>
   },
 
   renderStories() {
@@ -114,8 +98,7 @@ var Navbar = React.createClass({
   getStateFromStores() {
     let stories = StoryStore.getStories()
     return {
-      showStories: (stories && stories.length > 0),
-      showChat: moment(UserStore.getUser().created_at).add(2, 'minutes').isBefore(moment())
+      showStories: (stories && stories.length > 0)
     }
   }
 

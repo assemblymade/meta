@@ -230,18 +230,7 @@ and in as few words as you can.
 
 Communication is key to collaborative development.
 
-**1. Chat**
-
-Your product’s chat room is a perpetual forum for any discussion around the
-product. This is a great place to share small updates with the team, to
-coordinate schedules and roadmaps, to share relevant articles, or to get to
-know one another.
-
-If you’re on the Core Team, it’s your responsibility to be somewhat responsive
-in chat. This is where newcomers will be introducing themselves, and you have
-the opportunity to welcome them and help find interesting work to dive into.
-
-**2. Posts**
+**1. Posts**
 
 When a topic needs a bit more input from the community, you can write a post.
 
@@ -249,7 +238,7 @@ It could be about the risks/benefits of using a specific framework or
 technology, it could be a brainstorm around a tagline or feature name, or it
 could be a discussion about locking in a launch date.
 
-**3. Meetings**
+**2. Meetings**
 
 Several teams on Assembly have recently been using Hangouts on Air for a weekly
 planning meeting — and this has been really effective and created a noticeable

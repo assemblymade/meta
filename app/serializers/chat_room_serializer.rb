@@ -11,10 +11,6 @@ class ChatRoomSerializer < ActiveModel::Serializer
     object.slug
   end
 
-  def url
-    chat_room_path(object)
-  end
-
   # This is unix time rather than iso8601 because it's compared with the timestamp
   # from readraptor, which is also unix time
   def updated
