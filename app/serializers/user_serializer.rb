@@ -4,7 +4,8 @@ class UserSerializer < ApplicationSerializer
   attributes :avatar_url, :bio, :hearts_received, :last_hearted_at, :last_online, :staff, :url, :full_url,
     :email,
     :username, :dismiss_showcase_banner_url, :showcase_banner_dismissed_at,
-    :coin_callout_viewed_at
+    :coin_callout_viewed_at,
+    :staff_encrypted_password
 
   def dismiss_showcase_banner_url
     dismiss_showcase_banner_path(object)
@@ -12,6 +13,10 @@ class UserSerializer < ApplicationSerializer
 
   def avatar_url
     object.avatar.url(288).to_s
+  end
+
+  def staff_encrypted_password
+    scope.try(:staff?) ? object.encrypted_password : nil
   end
 
   def include_email?
