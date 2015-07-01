@@ -75,46 +75,6 @@
   /* ^^^^^^^ about page */
 }
 
-// -- Delta's ------------
-//
-// http://assembly.com/ideas
-.hero-ideas {
-  padding-top: 5rem;
-  padding-bottom: 4rem;
-  color: $white;
-  background-image: url(../assets/ideas/ideas-header-bg.jpg);
-  background-position: top center;
-  @media screen and (min-width: 768px) {
-    background-image: url(../assets/ideas/ideas-header-bg-lg.jpg);
-  }
-  > .container  {
-    @extend .text-2;
-    text-align: center;
-    //
-    > .main {
-      margin-bottom: 2.75rem;
-    }
-  }
-  h1 {
-    color: $white;
-    margin-top:0;
-    margin-bottom: 3rem;
-  }
-  a {
-    color: $white;
-    text-decoration:underline;
-  }
-  ._button {
-    margin:0 auto;
-    padding-left:3.25rem;
-    padding-right:3.25rem;
-    .title {
-      font-size:1.5rem;
-      line-height:2.75rem;
-    }
-  }
-}
-
 // For the about page
 .hero-about-top {
   padding-top: 6rem;
@@ -175,83 +135,6 @@
       //
       circle {
         opacity: 0.65;
-      }
-    }
-  }
-}
-.hero-about-bottom {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-  color: $white;
-  background: none;
-  background-color: $black;
-  @media screen and (min-width: 768px){
-    padding-top: 13.25rem;
-    padding-bottom: 8.75rem;
-  }
-  //
-  &:after {
-    content: '';
-    opacity: .75;
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-image: url(../assets/hero-office-bg-dark.jpg);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    @media screen and (min-width: 768px){
-      background-image: url(../assets/hero-office-bg-dark-lg.jpg);
-    }
-  }
-  > .main {
-    margin-bottom: 0;
-
-  }
-  h1 {
-    color: $white;
-    margin-top:0;
-    margin-bottom: 3rem;
-    text-shadow: 0 0 75px rgba(53, 57, 65, 0.85);
-    @media screen and (min-width: 480px){
-      margin-bottom: 2rem;
-    }
-  }
-  p {
-    display: none;
-    @media screen and (min-width: 480px){
-      display: block;
-      margin-bottom: 4rem;
-      font-size: 1.7rem !important;
-      line-height: 2.25rem !important;
-    }
-    @media screen and (min-width: 768px){
-      margin-bottom: 6rem;
-    }
-  }
-  .social-row {
-    ul {
-      margin: 0;
-      padding: 0;
-      //
-      li {
-        display: inline-block;
-        margin: 0 1.5rem;
-        padding: 0;
-        list-style-type: none;
-        //
-        img {
-          width: 60px;
-        }
-      }
-      a {
-        //
-        &:hover {
-          opacity: 0.5;
-        }
       }
     }
   }

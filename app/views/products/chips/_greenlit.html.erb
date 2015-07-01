@@ -5,11 +5,11 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <h4 class="alpha omega"><%= product.name %></h4>
-      <p class="omega"><%= product.pitch %></p>
+      <h4 class="mt0 mb0"><%= product.name %></h4>
+      <p class="mb0"><%= product.pitch %></p>
     </div>
     <div class="col-sm-6 right-align">
-      <ul class="list-inline omega">
+      <ul class="list-inline mb0">
         <% product.followers.limit(6).each do |user| %>
           <li>
             <%= avatar_tag(user, 18) %>
@@ -19,7 +19,7 @@
           <span class="badge">+ <%= product.followers.count %></span>
         </li>
       </ul>
-      <p class="gray-2 small omega">
+      <p class="gray-2 small mb0">
         Started <%= product.created_at.strftime("%B %d, %Y") %>
       </p>
     </div>

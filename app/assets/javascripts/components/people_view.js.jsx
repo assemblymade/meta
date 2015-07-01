@@ -130,8 +130,8 @@
 
       return (
         <div>
-          <p className="omega">
-            <ul className="list-inline omega pull-right">
+          <p className="mb0">
+            <ul className="list-inline mb0 pull-right">
               {this.skills(member)}
             </ul>
             <strong>

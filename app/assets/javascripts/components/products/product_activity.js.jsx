@@ -120,7 +120,7 @@ const ProductActivity = React.createClass({
         return (
           <li className="mb1 lh0_9" key={tag + '-' + i}>
             <a href={href} className="pill-hover block py1 px3">
-              <span className="fs1 fw-500 caps">{tag + ' posts'}</span>
+              <span className="h5 bold caps">{tag + ' posts'}</span>
             </a>
           </li>
         );

@@ -264,7 +264,7 @@ let NewsFeedItem = React.createClass({
   renderFooter: function() {
     if (this.props.showAllComments) {
       return (
-        <div className="card-footer px3 py2 clearfix">
+        <div className="bg-gray-5 py2 px3 clearfix">
           <ul className="list-inline mt0 mb0 py1 right">
             {this.renderArchiveButton()}
             {this.renderSubscribeButton()}

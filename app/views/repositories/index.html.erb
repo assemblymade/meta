@@ -8,8 +8,8 @@
   </div>
 <% end %>
 
-<div class="page-header sheet-header">
-  <h2 class="page-header-title">Repositories</h2>
+<div class="mt0 mb4 border-bottom sheet-header">
+  <h2 class="mt0 mb4 border-bottom-title">Repositories</h2>
 </div>
 
 <% has_repos = @product.repos.any? %>
@@ -17,7 +17,7 @@
 <div class="sheet-body">
   <div class="row">
     <div class="col-xs-12 col-md-12">
-      <p class="gray-2 alpha" style="margin-bottom: 20px;">
+      <p class="gray-2 mt0" style="margin-bottom: 20px;">
         <%= @product.name %> uses GitHub repositories to manage the product's development
         process. Repos give a clear history of every change to the codebase
         &mdash; even changes to PNGs! Not sure what a repo is? Not to worry

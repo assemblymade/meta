@@ -29,7 +29,7 @@ var FormGroup = React.createClass({
   },
 
   errorMessage: function() {
-    return <span className="help-block">{this.props.error}</span>
+    return <span className="h6">{this.props.error}</span>
   }
 });
 

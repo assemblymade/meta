@@ -132,7 +132,7 @@ $input-height-small: (floor($font-size-small * $line-height-small) + ($padding-s
 $legend-color:        $gray-2;
 $legend-border-color: #e5e5e5;
 
-$input-group-addon-bg:           $gray-1;
+$input-group-addon-bg:           #fff;
 $input-group-addon-border-color: $input-border;
 
 
@@ -567,7 +567,6 @@ $blockquote-font-size:     $font-size-base * 1.15;
 $blockquote-border-color:  $brand-info;
 $blockquote-border-width:  4px;
 $page-header-border-color: $brand-border;
-
 
 // Miscellaneous
 

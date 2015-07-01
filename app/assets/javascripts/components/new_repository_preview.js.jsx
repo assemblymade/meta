@@ -116,7 +116,7 @@
           </div>
 
           <FormGroup>
-            <div className="form-group gray-2 omega">
+            <div className="form-group gray-2 mb0">
               <label>
                 {this.props.addonText + this.state.inputPreview}
               </label>

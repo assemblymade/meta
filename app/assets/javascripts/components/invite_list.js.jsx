@@ -10,7 +10,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
       })
       return (
         <div className="panel panel-default">
-          <ul className="list-group list-group-breakout small omega">
+          <ul className="list-group list-group-breakout small mb0">
             <ReactCSSTransitionGroup transitionName="invite">
               {inviteNodes}
             </ReactCSSTransitionGroup>

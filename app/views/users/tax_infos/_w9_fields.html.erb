@@ -6,14 +6,14 @@
       <%= form_group @tax_info, :full_name do %>
         <%= f.label :full_name %>
         <%= f.text_field :full_name, class: 'form-control' %>
-        <p class="help-block">As shown on your income tax return</p>
+        <p class="h6">As shown on your income tax return</p>
       <% end %>
     </div>
     <div class="col-md-5 col-md-offset-1">
       <%= form_group @tax_info, :business_name do %>
         <%= f.label :business_name %>
         <%= f.text_field :business_name, class: 'form-control' %>
-        <p class="help-block">If different from full name (optional)</p>
+        <p class="h6">If different from full name (optional)</p>
       <% end %>
     </div>
   </div>
@@ -44,14 +44,14 @@
       <%= form_group @tax_info, :address do %>
         <%= f.label :address %>
         <%= f.text_field :address, class: 'form-control' %>
-        <p class="help-block">Including apt. or suite no.</p>
+        <p class="h6">Including apt. or suite no.</p>
       <% end %>
     </div>
     <div class="col-md-5 col-md-offset-1">
       <%= form_group @tax_info, :city do %>
         <%= f.label :city %>
         <%= f.text_field :city, class: 'form-control' %>
-        <p class="help-block">Including apt. or suite no.</p>
+        <p class="h6">Including apt. or suite no.</p>
       <% end %>
     </div>
   </div>
@@ -76,7 +76,7 @@
         <div class="input-group">
           <%= f.date_select :date_of_birth, class: 'form-control', start_year: Time.now.year - 120 %>
         </div>
-        <p class="help-block">Required for individuals</p>
+        <p class="h6">Required for individuals</p>
       <% end %>
     </div>
   </div>
@@ -86,7 +86,7 @@
       <%= form_group @tax_info, :signature do %>
         <%= f.label :signature, 'Your signature'%>
         <%= f.text_field :signature, class: 'form-control' %>
-        <p class="help-block">Typing your name acts as your signature</p>
+        <p class="h6">Typing your name acts as your signature</p>
       <% end %>
     </div>
   </div>

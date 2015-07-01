@@ -17,7 +17,7 @@ module StreamEvents
     end
 
     def icon_class
-      "marker-purple icon-double-chevron-up"
+      "purple border-purple icon-double-chevron-up"
     end
   end
 end

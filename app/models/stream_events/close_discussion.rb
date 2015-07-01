@@ -2,7 +2,7 @@ module StreamEvents
   class CloseDiscussion < CloseTask
 
     def icon_class
-      "marker-black icon-disc"
+      "black border-black icon-disc"
     end
 
   end

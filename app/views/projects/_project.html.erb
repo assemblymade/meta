@@ -2,17 +2,17 @@
 
 <div class="deprecated-card">
   <div class="deprecated-card-body">
-    <h2 class="alpha omega"><%= project.title %></h2>
+    <h2 class="mt0 mb0"><%= project.title %></h2>
   </div>
-  <div class="deprecated-card-footer">
-    <ul class="list-piped omega pull-left">
+  <div class="bg-gray-5 py2 px1">
+    <ul class="list-piped mb0 pull-left">
       <li>
         Started by
         <a href="<%= user_path(project.user) %>">@<%= project.user.username %></a>
       </li>
     </ul>
 
-    <ul class="list-piped omega pull-right">
+    <ul class="list-piped mb0 pull-right">
     </ul>
   </div>
 </div>
@@ -40,19 +40,19 @@
     <div class="panel panel-default">
       <div class="panel-body">
 
-        <div class="progress progress-small omega" style="margin-bottom: 10px;">
+        <div class="progress progress-sm mb0" style="margin-bottom: 10px;">
           <div class="progress-bar progress-bar-success" style="width:<%= number_to_percentage milestone.progress * 100, precision: 0 %>;">
 
           </div>
         </div>
 
-        <h6 class="gray-2 omega">
+        <h6 class="gray-2 mb0">
           <span class="pull-right"><%= number_to_percentage milestone.progress * 100, precision: 0 %></span>
           Progress
         </h6>
       </div>
 
-      <ul class="list-group list-group-breakout small omega">
+      <ul class="list-group list-group-breakout small mb0">
         <li class="list-group-item">
           <span class="badge"><%= milestone.tasks.open.count %></span>
           Bounties remaining
@@ -70,7 +70,7 @@
         <h6 class="panel-title">Contributors</h6>
       </div>
       <div class="panel-body">
-        <ul class="list-grid omega">
+        <ul class="list-grid mb0">
           <% milestone.wip.contributors.each do |contributor| %>
             <li>
               <%= avatar_tag(contributor, 24) %>
@@ -102,7 +102,7 @@
           <% end %>
         </ul>
 
-        <p class="small gray-2 omega">Designs added to tasks in this project will be displayed here</p>
+        <p class="small gray-2 mb0">Designs added to tasks in this project will be displayed here</p>
       </div>
     </div>
   </div>

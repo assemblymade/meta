@@ -53,7 +53,7 @@ var Update = React.createClass({
     var footer
 
     if (UserStore.getUser()) {
-      footer = <div className="card-footer px3 py2 clearfix">
+      footer = <div className="bg-gray-5 py2 px3 clearfix">
         <ul className="list-inline mt0 mb0 py1 right">
           {this.renderArchiveButton()}
           {this.renderSubscribeButton()}

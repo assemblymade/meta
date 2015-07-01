@@ -48,7 +48,7 @@
     },
 
     logo: function() {
-      return <img src={this.props.product.poster} className='alpha mb2' style={{ width: '100px', paddingTop: '0px' }} />;
+      return <img src={this.props.product.poster} className='mt0 mb2' style={{ width: '100px', paddingTop: '0px' }} />;
     },
 
     render: function() {
@@ -88,7 +88,7 @@
       var product = this.props.product;
 
       return (
-        <div className="alpha" style={{ 'text-align': 'center' }}>
+        <div className="mt0" style={{ 'text-align': 'center' }}>
           <h4 className>{product.name}</h4>
           {this.logo()}
           <p>

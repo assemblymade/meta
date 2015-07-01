@@ -29,7 +29,7 @@ a.underline-hover:hover { text-decoration: underline; }
 
 .callout { display:inline-block; padding-right:4px; padding-left:4px; line-height: 20px; background-color: #feffbc; text-decoration: none; }
 
-.h1,.h2,.h3,.h4,.h5,.h6,.h7 { font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; font-weight:normal; margin-bottom:15px; color:#000; }
+.h1,.h2,.h3,.h4,.h5,.h6 { font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; font-weight:normal; margin-bottom:15px; color:#000; }
 .h1 small, .h2 small, .h3 small, .h4 small, .h5 small, .h6 small { font-size: 60%; color: #6f6f6f; line-height: 0; text-transform: none; }
 
 .h1 { font-size: 42px; mso-line-height-rule:exactly; line-height: 48px; }
@@ -38,11 +38,9 @@ a.underline-hover:hover { text-decoration: underline; }
 .h4 { font-size: 18px; mso-line-height-rule:exactly; line-height: 22px; }
 .h5 { font-size: 15px; mso-line-height-rule:exactly; line-height: 20px; }
 .h6 { font-size: 13px; mso-line-height-rule:exactly; line-height: 20px; }
-.h7 { font-size: 12px; mso-line-height-rule:exactly; line-height: 20px; }
 
 .text-1 { font-size: 20px; mso-line-height-rule:exactly; line-height: 28px; }
 .text-2 { font-size: 15px; mso-line-height-rule:exactly; line-height: 24px; }
-.text-3 { font-size: 13px; mso-line-height-rule:exactly; line-height: 20px; }
 
 .lh_48 { mso-line-height-rule:exactly; line-height: 48px; }
 .lh_36 { mso-line-height-rule:exactly; line-height: 36px; }
@@ -113,8 +111,6 @@ img { border: none; }
 .tile { max-width:600px; margin:0 auto; }
 .tile-item { border-bottom: 1px solid #ecedef; }
 .tile-header { max-width:600px; display:block; }
-
-.nametag { margin-top:2px; font-size: 15px; line-height: 24px; font-weight: bold; color: #353941;}
 
 .avatar-small { width:30px; height:30px;  }
 

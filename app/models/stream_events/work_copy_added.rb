@@ -17,7 +17,7 @@ module StreamEvents
     end
 
     def icon_class
-      "marker-blue icon-pencil"
+      "blue border-blue icon-pencil"
     end
   end
 end

@@ -27,7 +27,7 @@ module.exports = React.createClass({
       <div className="table mb0">
         <div className="table-cell">
           <div className="px3 pt3 pb3" onClick={this.handleClick}>
-            <div className="mt0 mb1 mtn1 h4 fw-500 clickable">
+            <div className="mt0 mb1 mtn1 h4 bold clickable">
               <a href={this.props.url}>
                 {this.props.title}
               </a>
@@ -35,7 +35,7 @@ module.exports = React.createClass({
             <div>
               {this.renderSummary()}
             </div>
-            <div className="mt1 gray-1 fs4">
+            <div className="mt1 gray-1 h3">
               <Markdown content={this.props.body} normalized={true} />
               {this.renderReadMore()}
             </div>

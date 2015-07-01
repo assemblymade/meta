@@ -32,7 +32,7 @@
           <div class="form-group">
             <%= f.label :name, 'Name', class: 'form-label' %>
             <%= f.text_field :name, class: 'form-control input-lg', maxlength: 255, autocomplete: 'off' %>
-            <p class="help-block">
+            <p class="h6">
               A name is important, but it can always change. If you have a codename already, use that, otherwise don't get too hung up on making it perfect.
             </p>
           </div>
@@ -40,7 +40,7 @@
           <div class="form-group">
             <%= f.label :pitch, 'Five word pitch', class: 'form-label' %>
             <%= f.text_field :pitch, class: 'form-control' %>
-            <p class="help-block">
+            <p class="h6">
               If you had 30 seconds to describe your business to a friend, what would you say? Use simple, direct words.
             </p>
           </div>
@@ -48,7 +48,7 @@
           <div class="form-group">
             <%= f.label :you_tube_video_url, 'Pitch video link', class: 'form-label' %>
             <%= f.url_field :you_tube_video_url, class: 'form-control', maxlength: 255 %>
-            <p class="help-block">
+            <p class="h6">
               Add a link to a video that describes your product. It could be as simple as you talking into a webcam, or
               as awesome as an animated product video.
             </p>
@@ -63,7 +63,7 @@
             <div class="form-group">
               <%= f.label :try_url, 'Product Try URL', class: 'form-label' %>
               <%= f.url_field :try_url, class: 'form-control', placeholder: "eg: https://#{@product.slug}.com?utm=assembly", maxlength: 255 %>
-              <p class="help-block">
+              <p class="h6">
                 Once you've added this link your product will show up as Live.
               </p>
             </div>
@@ -104,7 +104,7 @@
                 <%= f.text_area :lead, class: 'form-control input-lg', rows: 2 %>
               </div>
               <div class="col-md-4">
-                <p class="help-block alpha">
+                <p class="h6 mt0">
                   Keep it short. How would you describe your product in a tweet?
                 </p>
               </div>
@@ -118,7 +118,7 @@
                 <%= f.text_area :description, class: 'form-control', rows: 2, data: { autosize: '', 'validate-length' => 2 } %>
               </div>
               <div class="col-md-4">
-                <p class="help-block alpha">
+                <p class="h6 mt0">
                   Dive into the details. How did you come up with the idea? What makes it great?
                 </p>
               </div>
@@ -145,7 +145,7 @@
             <%= f.text_area :goals, class: 'form-control', data: { autosize: '' }, rows: 2 %>
           </div>
           <div class="col-md-4">
-            <p class="help-block alpha">
+            <p class="h6 mt0">
               What problems are you trying to solve with the product? Setting goals early often helps align people's expectations later.
             </p>
           </div>
@@ -159,7 +159,7 @@
             <%= f.text_area :key_features, class: 'form-control', data: { autosize: '' }, rows: 2 %>
           </div>
           <div class="col-md-4">
-            <p class="alpha help-block">
+            <p class="mt0 h6">
               What do you expect the key features of the product to be? What sets it apart from others?
             </p>
           </div>
@@ -173,7 +173,7 @@
             <%= f.text_area :target_audience, class: 'form-control', data: { autosize: '' }, rows: 2 %>
           </div>
           <div class="col-md-4">
-            <p class="alpha help-block">
+            <p class="mt0 h6">
               Who are you solving problems for? What is unique about that market?
             </p>
           </div>
@@ -187,7 +187,7 @@
             <%= f.text_area :competing_products, class: 'form-control', data: { autosize: '' }, rows: 2 %>
           </div>
           <div class="col-md-4">
-            <p class="alpha help-block">
+            <p class="mt0 h6">
               What do you consider is your biggest competition? For example, Facebook may consider MySpace their biggest competitor.
             </p>
           </div>
@@ -201,7 +201,7 @@
             <%= f.text_area :competitive_advantage, class: 'form-control', data: { autosize: '' }, rows: 2 %>
           </div>
           <div class="col-md-4">
-            <p class="alpha help-block">
+            <p class="mt0 h6">
               What advantage do you have over these competitors that is uniquely yours?
             </p>
           </div>
@@ -215,7 +215,7 @@
             <%= f.text_area :monetization_strategy, class: 'form-control', data: { autosize: '' }, rows: 2 %>
           </div>
           <div class="col-md-4">
-            <p class="alpha help-block">
+            <p class="mt0 h6">
               How should this product be monetized?
             </p>
           </div>

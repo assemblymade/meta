@@ -17,7 +17,7 @@ module StreamEvents
     end
 
     def icon_class
-      "marker-default icon-plus"
+      "gray-5 border-gray-5 icon-plus"
     end
   end
 end

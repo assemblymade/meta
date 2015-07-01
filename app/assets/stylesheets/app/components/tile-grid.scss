@@ -22,7 +22,7 @@
 
 // -- Base Component ------------
 .tile-grid {
-  
+
   .footer {
     // bootstrap overwrite
     margin:0;
@@ -156,11 +156,6 @@
     }
     &:hover {
       background: $gray-4;
-    }
-    .h7 {
-      margin-bottom: 0.25rem;
-      font-weight: bold;
-      opacity: 0.3;
     }
   }
   .float-item:last-child {

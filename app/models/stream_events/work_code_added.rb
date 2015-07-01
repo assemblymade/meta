@@ -18,7 +18,7 @@ module StreamEvents
     end
 
     def icon_class
-      "marker-blue icon-pull-request"
+      "blue border-blue icon-pull-request"
     end
   end
 end

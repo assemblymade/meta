@@ -4,17 +4,11 @@
 @import "constants";
 
 // Libraries
-@import 'bootstrap';
+@import "bootstrap";
 
-@import 'app/mixins/*';
+@import "app/mixins/*";
 
-@import 'basscss';
-
-@import '_deprecated/basspluss';
-@import '_deprecated/utility';
-@import '_deprecated/nocss_vars';
-@import '_deprecated/nocss';
-@import '_deprecated/nocss_mq';
+@import "basscss";
 
 @import "app/main";
 
@@ -24,4 +18,4 @@
 @import "components/*";
 @import "app/slop";
 
-@import 'c3/c3'
+@import "c3/c3";

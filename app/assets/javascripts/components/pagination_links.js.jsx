@@ -1,5 +1,3 @@
-
-
 (function() {
   var PaginationLinks = React.createClass({
     getDefaultProps: function() {
@@ -56,7 +54,7 @@
   var Link = React.createClass({
     render: function() {
       var classes = React.addons.classSet({
-        'page': true,
+        'py3': true,
         'active': this.props.active
       });
 

@@ -26,15 +26,9 @@
 	text-transform: none;
 	line-height: 1;
 
-	/* Better Font Rendering =========== */
+	/* Better Font Rendering */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-
-  &.dropdown-glyph {
-    // vertical-align: text-bottom;
-    color: $gray-2;
-    top: -1px;
-  }
 }
 
 .icon-right {
@@ -179,16 +173,6 @@ you can use the generic selector below, but it's slower:
   vertical-align: middle;
   position: relative;
   top: -2px;
-
-  &.dropdown-glyph {
-    color: $gray-2;
-  }
-}
-
-.active {
-  .dropdown-glyph {
-    color: $link-color;
-  }
 }
 
 .icon-user-female:before {

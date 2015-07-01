@@ -1,23 +1,19 @@
-
-
 <% @product = Product.find_by_slug('kjdb') %>
 
 <%= render 'shared/navbar' %>
 
 <div class="container">
 
-  <div class="alert alert-warning">
-    <div class="pull-right">
-      <a class="btn btn-success btn-xs" href="#">Submit for review</a>
-    </div>
+  <div class="bg-yellow py3 px2 mb2 border border-darken-1 white rounded">
+    <a class="button button--default bg-white inline-block right" href="#">Submit for review</a>
     <p>This product is pending review. It's only visible to people with a direct link.</p>
   </div>
 
-  <div class="alert alert-info">
+  <div class="bg-blue py3 px2 mb2 border border-darken-1 white rounded">
     <div class="pull-right">
       Submitted 5 days ago
     </div>
-    <p>This product was submitted to be reviewed by Assembly.</p>
+    <p class="mb0">This product was submitted to be reviewed by Assembly.</p>
   </div>
 
   <h1><%= @product.name %></h1>
@@ -66,7 +62,7 @@
       </div>
     </div>
     <div class="col-md-3 col-md-offset-1">
-      <h6 class="gray-2 alpha">Elsewhere</h6>
+      <h6 class="gray-2 mt0">Elsewhere</h6>
       <ul class="list-reset">
         <li><a href="#">Homepage</a></li>
         <li><a href="#">Twitter</a></li>
@@ -81,15 +77,15 @@
   <div class="row">
     <% @product.tasks.first(3).each do |bounty| %>
       <div class="col-md-4">
-        <div class="card">
+        <div class="border rounded mb1 bg-white">
           <div class="card-body" style="min-height:200px">
-            <h6 class="gray-2 alpha omega">Bounty</h6>
-            <h4 class="alpha"><%= bounty.title %></h4>
-            <p class="omega">
+            <h6 class="gray-2 mt0 mb0">Bounty</h6>
+            <h4 class="mt0"><%= bounty.title %></h4>
+            <p class="mb0">
               <%= product_markdown(bounty.product, truncate(bounty.description, length: 120)) %>
             </p>
           </div>
-          <div class="card-footer">
+          <div class="bg-gray-5 py2 px1">
             <span class="yellow">
               <span class="icon icon-app-coin"></span>
               <%= number_with_delimiter(bounty.value) %>
