@@ -22,7 +22,7 @@ Glad you asked! We wrote a blog post about just that: [blog.assembly.com/build-m
 
 # Can I port a project I’ve been building onto Assembly?
 
-Yes. We’re still ironing out the best way to handle these requests, but we’d love to hear about your project and help you port it onto Assembly. Come [introduce yourself to us in chat](https://assembly.com/chat/general).
+Yes. We’re still ironing out the best way to handle these requests, but we’d love to hear about your project and help you port it onto Assembly. Come [introduce yourself to us in chat](https://cove.assembly.com/chat/general).
 
 Annuities can be paid to founders who bring more established products to the platform. They are paid out of the product's profit, after any expenses. If the monthly profit drops below the annuities, they will only be paid up to the available profit and there would be no royalty payout to other contributors for that month.
 

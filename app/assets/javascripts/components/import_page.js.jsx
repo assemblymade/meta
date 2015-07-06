@@ -262,7 +262,7 @@ var ImportPage = React.createClass({
                     <div id="what-is-assemblys-fee" className="panel-collapse collapse">
                       <div className="panel-body">
                         <p>
-                          Assembly collects a 10% platform fee of the revenue after expenses. This is initially used to cover basic operating costs until a product’s revenue exceeds costs. Any proceeds after expenses are distributed to App Coin holders based on their App Coin percentages. You can see <a href="https://assembly.com/coderwall/financials">Coderwall</a> as an example of a mature product paying out in this model.
+                          Assembly collects a 10% platform fee of the revenue after expenses. This is initially used to cover basic operating costs until a product’s revenue exceeds costs. Any proceeds after expenses are distributed to App Coin holders based on their App Coin percentages. You can see <a href="https://cove.assembly.com/coderwall/financials">Coderwall</a> as an example of a mature product paying out in this model.
                         </p>
                         <p>
                           We care deeply that we’re creating more value for the community than the 10% collected as a platform fee. Building on Assembly not only connects you with others around the world, but you also can build products with the freedom of not having to hand initial capital to run the product, managing the finances, paying accounting and legal costs and all the other burdens of operating a traditional company. We’re also investing in continuing to find ways to create new value for the community as well as exploring ways to reduce fees if feasible.

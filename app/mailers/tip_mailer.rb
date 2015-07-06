@@ -20,10 +20,6 @@ class TipMailer < BaseMailer
       url_for(@tip.via.url_params)
     when Event.to_s
       product_wip_url(@product, @via.wip)
-    when Activity.to_s
-      if chat_room = @product.chat_rooms.first
-        chat_room_url(@product)
-      end
     end
     mail to: @user.email_address,
          subject: "#{@tip.from.username} tipped you #{pluralize(@tip.cents, 'coin')}"

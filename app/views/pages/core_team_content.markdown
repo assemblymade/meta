@@ -12,8 +12,8 @@ Awarding WIPs means the Core Team can give other members of the community owners
 
 * _Focus_. If the work doesn’t solve the problem that the WIP asked for then that’s a reason to not award. Try to clarify the contributor’s understanding of the task or create a new WIP for the work.
 * _Progress_. If a contribution introduces more issues than it solves then it shouldn’t be awarded.
-* _Speed_. A WIP doesn’t have to be perfect but if it helps solve an immediate issue it should be merged. For example [#203](https://assembly.com/helpful/wips/203)
-* _Quality_. This is entirely subjective but good work should be rewarded. For an example see [@chexee vs. @vlad in #101](https://assembly.com/helpful/wips/101).
+* _Speed_. A WIP doesn’t have to be perfect but if it helps solve an immediate issue it should be merged. For example [#203](https://cove.assembly.com/helpful/wips/203)
+* _Quality_. This is entirely subjective but good work should be rewarded. For an example see [@chexee vs. @vlad in #101](https://cove.assembly.com/helpful/wips/101).
 
 The Core Team can also “un-award” a WIP, but this exceptional rather than a habitual.
 
@@ -41,7 +41,7 @@ Assembly is a community process and discussions should be open to the community.
 The Core Team work on products like everybody else. While it may feel like they’re managers, people only respect leaders who get their hands dirty. Who did you like more in Braveheart: William Wallace who lead his army from the front line or the British generals who issued orders from the safety of a hill?
 
 ### A Good Workflow
-Not sure where to start? Assembly recommends Core Team members think about the steps they need to take and get in a rhythm so they spend the least amount of time working on Helpful. A good daily workflow that has worked for [@chrislloyd](https://assembly.com/users/chrislloyd) looks like:
+Not sure where to start? Assembly recommends Core Team members think about the steps they need to take and get in a rhythm so they spend the least amount of time working on Helpful. A good daily workflow that has worked for [@chrislloyd](https://cove.assembly.com/users/chrislloyd) looks like:
 
 1. Use Helpful
 2. Review pull requests on GitHub

@@ -105,7 +105,7 @@ var Discussion = React.createClass({
   },
 
   shareUrl() {
-    return 'https://assembly.com' + this.props.newsFeedItem.url
+    return 'https://cove.assembly.com' + this.props.newsFeedItem.url
   },
 
   mailToLink() {

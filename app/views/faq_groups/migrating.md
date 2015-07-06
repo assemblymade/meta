@@ -4,7 +4,7 @@ Yes. You can take any product you've already started building, launched, or is e
 
 # How do prepare my existing product for Assembly?
 
-Read about this in our [guides](https://assembly.com/guides)
+Read about this in our [guides](https://cove.assembly.com/guides)
 
 # If another company wants to acquire my product, will that be possible?
 

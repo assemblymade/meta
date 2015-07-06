@@ -31,7 +31,7 @@
   "jshintConfig": {
     "asi": true
   },
-  "homepage": "https://assembly.com",
+  "homepage": "https://cove.assembly.com",
   "dependencies": {
     "babelify": "^5.0.4",
     "browserify": "^5.9.1",

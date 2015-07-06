@@ -39,12 +39,9 @@ ASM::Application.routes.draw do
     get '/', to: redirect('/dashboard')
   end
 
-  # Global Chat Experiment
-  resources :chat_rooms, only: [:index, :show], path: 'chat'
-
   get '/still-field' => redirect('/discover') # bad product
 
-  # Bugfix. Read more at https://assembly.com/meta/198
+  # Bugfix. Read more at https://cove.assembly.com/meta/198
   get '/webhooks/pusher' => redirect('/discover')
 
   # Internal
@@ -247,23 +244,12 @@ ASM::Application.routes.draw do
 
   # Old api
   namespace :api do
-    resources :chat_rooms, path: 'chat' do
-      resources :comments, only: [:create, :index], module: :chat
-      resources :users, only: [:index], module: :chat, path: 'online'
-    end
-
-    post '/sb' => 'slack_bridge#receive'
-
     resources :products, only: [] do
       get :info
       get :workers
 
       get :core_team
       get :authorization
-      namespace :chat do
-        resources :comments, only: [:create]
-      end
-
       resources :partners, only: [:index]
 
       resources :bounties, only: [:index, :create] do
@@ -307,9 +293,6 @@ ASM::Application.routes.draw do
   get '/integrations/:provider/callback' => 'integrations#callback'
   get '/:product_id/integrations/:provider/authorize' => 'integrations#authorize', as: :product_integrations
   put '/:product_id/integrations/:provider/update' => 'integrations#update'
-
-  # legacy
-  get '/meta/chat', to: redirect(path: '/chat/general')
 
   # FIXME: Fix news_feed_items_controller to allow missing product
   get '/news_feed_items' => 'dashboard#news_feed_items'
@@ -452,7 +435,6 @@ ASM::Application.routes.draw do
     resources :work
 
     # legacy
-    get :chat, to: redirect('/chat/%{product_id}')
     get :team, to: redirect(path: '%{product_id}/people')
     get :welcome, to: redirect(path: '%{product_id}')
     get '/wips', to: redirect(path: '/%{product_id}/bounties')

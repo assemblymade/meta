@@ -21,7 +21,7 @@ class CreateProject < ApiWorker
           },
           {
             title: "Choose the tech stack",
-            description: "- Choose the language and frameworks to build the project with. \n - This should include the APIs, libraries, languages, and services that are needed.\n - See this bounty for an example of a completed bounty for scoping out the [tech stack](https://assembly.com/pay-it-forward/bounties/1)"
+            description: "- Choose the language and frameworks to build the project with. \n - This should include the APIs, libraries, languages, and services that are needed.\n - See this bounty for an example of a completed bounty for scoping out the [tech stack](https://cove.assembly.com/pay-it-forward/bounties/1)"
           },
           {
             title: "Commit a README file to the repository",

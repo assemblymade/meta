@@ -7,7 +7,7 @@ class BountySerializer < ApplicationSerializer
     :news_feed_item_id, :number, :offers, :open, :state, :title, :value,
     :locked_at, :priority, :earnable_cents
 
-  attributes :chat_room_url, :close_url, :edit_url, :flag_url, :follow_url,
+  attributes :close_url, :edit_url, :flag_url, :follow_url,
     :offers_url, :mute_url, :stop_work_url, :tag_url,
     :unflag_url, :reopen_url, :url, :lock_url
 
@@ -64,10 +64,6 @@ class BountySerializer < ApplicationSerializer
 
   def offers
     bounty.active_offers
-  end
-
-  def chat_room_url
-    chat_room_path(product.main_chat_room)
   end
 
   def close_url

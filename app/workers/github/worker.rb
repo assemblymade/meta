@@ -8,7 +8,7 @@ module Github
         active: "true",
         events: %w(push pull_request pull_request_review_comment issue_comment),
         config: {
-          url: 'https://assembly.com/webhooks/github',
+          url: 'https://cove.assembly.com/webhooks/github',
           content_type: 'json'
         }
     end

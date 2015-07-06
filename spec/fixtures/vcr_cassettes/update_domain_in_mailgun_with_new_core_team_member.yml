@@ -48,7 +48,7 @@ http_interactions:
               "description": "Wip event replies",
               "created_at": "Wed, 18 Sep 2013 00:24:14 GMT",
               "actions": [
-                "forward(\"https://assembly.com/webhooks/mailgun/reply\")"
+                "forward(\"https://cove.assembly.com/webhooks/mailgun/reply\")"
               ],
               "priority": 0,
               "expression": "match_recipient(\".*@assemblymail.com\")",

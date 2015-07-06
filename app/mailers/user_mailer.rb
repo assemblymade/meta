@@ -2,7 +2,6 @@ class UserMailer < BaseMailer
   helper :avatar, :markdown, :wip
 
   layout 'email', only: [:welcome,
-                         :joined_team_no_work_yet,
                          :joined_team_no_introduction_yet,
                          :featured_wips,
                          :twelve_hour_reminder,
@@ -94,19 +93,6 @@ class UserMailer < BaseMailer
            to:  @user.email,
           bcc: "matt@assembly.com",
       subject: "RE: #{@wip.title}"
-  end
-
-  def joined_team_no_work_yet(membership_id)
-    mailgun_campaign 'community'
-    mailgun_tag 'user#joined_team_no_work_yet'
-
-    @membership = TeamMembership.find(membership_id)
-    @user = @membership.user
-    @product = @membership.product
-
-    mail from: 'austin@assembly.com',
-           to: @user.email,
-      subject: "Need help getting started on #{@product.name}?"
   end
 
   def joined_team_no_introduction_yet(membership_id)
