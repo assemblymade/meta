@@ -41,7 +41,7 @@ ASM::Application.routes.draw do
 
   get '/still-field' => redirect('/discover') # bad product
 
-  # Bugfix. Read more at https://assembly.com/meta/198
+  # Bugfix. Read more at https://cove.assembly.com/meta/198
   get '/webhooks/pusher' => redirect('/discover')
 
   # Internal

@@ -11,9 +11,9 @@ Working on Assembly projects is a great way to learn, challenge yourself and mak
 
 # What is the best way to get the feel for Assembly?
 
-Hop into a discussion and introduce yourself! There are lots of products in active development today ([find some here!](https://assembly.com/discover)), and everyone working on them is friendly. Talk about your interests and availability and see if there are any bounties you’d like to work on. Helping build products is a rewarding, fun way to quickly gain an understanding of how Assembly works.
+Hop into a discussion and introduce yourself! There are lots of products in active development today ([find some here!](https://cove.assembly.com/discover)), and everyone working on them is friendly. Talk about your interests and availability and see if there are any bounties you’d like to work on. Helping build products is a rewarding, fun way to quickly gain an understanding of how Assembly works.
 
-Or submit your own idea [here](https://assembly.com/start)!
+Or submit your own idea [here](https://cove.assembly.com/start)!
 
 
 # What parts of building can I help out with?
@@ -48,14 +48,14 @@ A key ingredient to success on Assembly is community support. There are many way
 
 # Who owns the intellectual property?
 
-You do. However, in order for Assembly to monetize the product on behalf of you and the community, we need some non-exclusive rights that are outlined in our [terms of service](https://assembly.com/terms).
+You do. However, in order for Assembly to monetize the product on behalf of you and the community, we need some non-exclusive rights that are outlined in our [terms of service](https://cove.assembly.com/terms).
 
 
 # What does transparency mean to Assembly?
 
 This is really important to us. When a product is built on Assembly, we believe an open, transparent process is key. That means anyone can see progress, discussions, ownership and even revenue.
 
-Obviously we couldn't make the claim that building products in public is the best approach if we weren’t doing it ourselves, so we're entirely open source. Check out [Assembly Meta](https://assembly.com/meta) to see our development history and discussions, and even get real-time updates as we ship new features.
+Obviously we couldn't make the claim that building products in public is the best approach if we weren’t doing it ourselves, so we're entirely open source. Check out [Assembly Meta](https://cove.assembly.com/meta) to see our development history and discussions, and even get real-time updates as we ship new features.
 
 
 # How is Assembly different from Kickstarter or an incubator?

@@ -89,7 +89,7 @@ namespace :bounties do
         row << [q.title, (q.product.name rescue 'nil'),
                 q.comments_count, time_ago_in_words(q.created_at),
                 time_ago_in_words(q.updated_at), q.state,
-                "https://assembly.com/#{q.slug rescue 'nil'}"]
+                "https://cove.assembly.com/#{q.slug rescue 'nil'}"]
       end
     end
   end

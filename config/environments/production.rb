@@ -60,7 +60,7 @@ ASM::Application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = {
-    host: 'assembly.com',
+    host: 'cove.assembly.com',
     protocol: 'https',
     only_path: false
   }

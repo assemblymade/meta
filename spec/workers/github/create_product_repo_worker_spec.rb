@@ -5,7 +5,7 @@ describe Github::CreateProductRepoWorker do
 
   it 'Creates a repo on Github with AGPL license' do
     VCR.use_cassette('create_github_repo') do
-      Github::CreateProductRepoWorker.new.perform(product.id, 'https://assembly.com', 'testing-1-2-3')
+      Github::CreateProductRepoWorker.new.perform(product.id, 'https://cove.assembly.com', 'testing-1-2-3')
 
       info = Github::Worker.new.get("/repos/asm-products/testing-1-2-3/readme")
       expect(info['path']).to eq("README.md")

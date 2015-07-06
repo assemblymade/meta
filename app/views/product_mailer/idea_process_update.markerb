@@ -1,12 +1,12 @@
 Hi <%= @product.user.short_name %>
 
-I wanted to update you with some great news about the app idea, [<%= @product.name %>](<%= product_url(@product) %>), you shared on [Assembly](https://assembly.com/). Just to refresh your memory, Assembly is an open platform for crowd-founding software products.
+I wanted to update you with some great news about the app idea, [<%= @product.name %>](<%= product_url(@product) %>), you shared on [Assembly](https://cove.assembly.com/). Just to refresh your memory, Assembly is an open platform for crowd-founding software products.
 
 We just released the first improvement of many that makes sharing an idea a more open and collaborative process on Assembly. You can now get started on <%= @product.name %> today and rally the community around building it immediately. Assembly is here to support you and as many products the community has an interest in building.
 
 The next time you view [<%= @product.name %>](<%= product_url(@product) %>) you'll notice we’ve introduced app goals. They will help guide your product from idea to launch on Assembly. Your product will unlock privileges for every goal it completes. Everyone that contributes on your idea will be helping complete its goals.
 
-We've also introduced a [featured apps and promoted tasks](https://assembly.com/explore) section. These are great places to start looking for something to jump in on if you’re new to Assembly. We'll be regularly featuring apps with the most momentum that are on their way to launching. The latest tasks allow an app's team to promote important tasks, that once complete, would really help the app. Tasks can include design work related to logos and wireframes, coding new features and fixing bugs, or any other way to grow the app. Promoted tasks always receive twice the bounty of points when completed so its a great way to quickly make a real impact.
+We've also introduced a [featured apps and promoted tasks](https://cove.assembly.com/explore) section. These are great places to start looking for something to jump in on if you’re new to Assembly. We'll be regularly featuring apps with the most momentum that are on their way to launching. The latest tasks allow an app's team to promote important tasks, that once complete, would really help the app. Tasks can include design work related to logos and wireframes, coding new features and fixing bugs, or any other way to grow the app. Promoted tasks always receive twice the bounty of points when completed so its a great way to quickly make a real impact.
 
 
 I wanted to thank you again for your continued support of Assembly. We’re excited about the other great stuff we have in the pipeline and look forward to sharing it soon. In the meantime, please feel free to contact me or email me if you have any questions or feedback.

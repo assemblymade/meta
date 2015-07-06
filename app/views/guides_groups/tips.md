@@ -151,7 +151,7 @@ soon as you can.
 
 As a direct result of building Helpful in public, the team got early feedback
 and validation from potential customers – including ]someone who worked in
-customer support at Airbnb](https://assembly.com/helpful/discussions/457) for
+customer support at Airbnb](https://cove.assembly.com/helpful/discussions/457) for
 three years.
 
 *Coming up with ideas*

@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/assemblymade/meta.svg?branch=master)](https://travis-ci.org/assemblymade/meta)
 [![Code Climate](https://codeclimate.com/github/assemblymade/meta/badges/gpa.svg)](https://codeclimate.com/github/assemblymade/meta)
 
-<a href="https://assembly.com/meta/bounties"><img src="https://asm-badger.herokuapp.com/meta/badges/tasks.svg" height="24px" alt="Open Tasks" /></a>
+<a href="https://cove.assembly.com/meta/bounties"><img src="https://asm-badger.herokuapp.com/meta/badges/tasks.svg" height="24px" alt="Open Tasks" /></a>
 
 ## Dependencies
 

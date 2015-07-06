@@ -20,4 +20,4 @@ You can [submit a bounty](/meta/wips), or you can [hop into general chat](/chat/
 
 # How can I change my account settings?
 
-https://assembly.com/settings
+https://cove.assembly.com/settings
