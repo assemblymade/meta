@@ -13,18 +13,18 @@ the app, manage expenses, and distribute revenue to you and your contributors.
 Each Assembly product has an associated Github repo under the [asm-products
 organization](https://github.com/asm-products/). Your product repo will be
 located at `github.com/asm-products/PRODUCTSLUG`. Please push the source code
-for your app to this repository. Send an email to assembly@helpful.io if you
+for your app to this repository. Send an email to support@assembly.com if you
 have problems accessing your repository.
 
 #### App Distribution
 
 When you are ready to submit your app to the App Store for review, send an
-email to assembly@helpful.io with your product name and a link to your source
+email to support@assembly.com with your product name and a link to your source
 code repositories.
 
 #### Monetization and In-App purchases
 
-Send an email to assembly@helpful.io if you are planning to add in-app
+Send an email to support@assembly.com if you are planning to add in-app
 purchases or use ad SDKs to monetize your app.
 
 #### Domains
@@ -35,9 +35,9 @@ within 90 days of joining the platform. Products that have not transfered their
 domains within this time frame will be removed from the platform.
 
 If you already own a domain that you would like to use with your Assembly
-product, unlock your domain at your registrar and email assembly@helpful.io
+product, unlock your domain at your registrar and email support@assembly.com
 with an authorization code to initialize the transfer.
 
 If you do not have a domain and would like to purchase one, email
-assembly@helpful.io. Include the name of your Assembly product, the desired
+support@assembly.com. Include the name of your Assembly product, the desired
 domain name, and a link to the Github repository for your product.

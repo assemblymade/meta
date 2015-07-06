@@ -17,13 +17,13 @@ Google Wallet Transaction ID for Target Developer Account Registration
 ```
 
 #### Ad SDK Integrations
-If your app uses Ad SDKs such as AdMob, you will need to update SDK integrations. Send an email to assembly@helpful.io for information on how to do this.
+If your app uses Ad SDKs such as AdMob, you will need to update SDK integrations. Send an email to support@assembly.com for information on how to do this.
 
 #### App Analytics
 If you are tracking analytics with Google Analytics, add user permissions for ben@assembly.com to your Google Analytics account.
 
 #### Source code
-Each Assembly product has an associated Github repo under the [asm-products organization](https://github.com/asm-products/). Your product repo will be located at `github.com/asm-products/PRODUCTSLUG`. Please push the source code for your app to this repository. Send an email to assembly@helpful.io if you have problems accessing your repository.
+Each Assembly product has an associated Github repo under the [asm-products organization](https://github.com/asm-products/). Your product repo will be located at `github.com/asm-products/PRODUCTSLUG`. Please push the source code for your app to this repository. Send an email to support@assembly.com if you have problems accessing your repository.
 
 
 #### Domains

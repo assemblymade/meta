@@ -208,10 +208,6 @@ ASM::Application.routes.draw do
   get '/guides/:group', :to => 'guides#index', :as => :guides
   get '/guides', :to => 'guides#index'
 
-  # redirect support-foo to helpful
-  get '/support-foo', to: redirect('/helpful')
-  get '/support-foo/*extra', to: redirect {|p, req| "/helpful/#{p[:extra]}" }
-
   # Admin
   namespace :admin do
     resources :apps, only: [:index, :update]

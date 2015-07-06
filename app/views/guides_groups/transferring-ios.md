@@ -26,15 +26,15 @@ Team ID: X6E8S7R9CM
 3. Agree to Apple's transfer agreement terms and click 'Request Transfer'.
 ![Request transfer](https://developer.apple.com/library/ios/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Art/at_confirm_transfer_2x.png)
 
-4. Send an email to assembly@helpful.io with your app name and the github repository for your product.
+4. Send an email to support@assembly.com with your app name and the github repository for your product.
 
 #### Source code
-Each Assembly product has an associated Github repo under the [asm-products organization](https://github.com/asm-products/). Your product repo will be located at `github.com/asm-products/PRODUCTSLUG`. Please push the source code for your app to this repository. Send an email to assembly@helpful.io if you have problems accessing your repository.
+Each Assembly product has an associated Github repo under the [asm-products organization](https://github.com/asm-products/). Your product repo will be located at `github.com/asm-products/PRODUCTSLUG`. Please push the source code for your app to this repository. Send an email to support@assembly.com if you have problems accessing your repository.
 
 
 #### Domains
 Assembly holds domains on behalf of the respective products to which they belong. All products on Assembly must transfer ownership of their domains within 90 days of joining the platform. Products that have not transfered their domains within this time frame will be removed from the platform.
 
-If you already own a domain that you would like to use with your Assembly product, unlock your domain at your registrar and email assembly@helpful.io with an authorization code to initialize the transfer.
+If you already own a domain that you would like to use with your Assembly product, unlock your domain at your registrar and email support@assembly.com with an authorization code to initialize the transfer.
 
-If you do not have a domain and would like to purchase one, email assembly@helpful.io. Include the name of your Assembly product, the desired domain name, and a link to the Github repository for your product.
+If you do not have a domain and would like to purchase one, email support@assembly.com. Include the name of your Assembly product, the desired domain name, and a link to the Github repository for your product.

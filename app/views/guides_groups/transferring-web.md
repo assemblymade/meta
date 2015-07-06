@@ -1,7 +1,7 @@
 # Transferring a Web App
 
 #### Source code
-Each Assembly product has an associated Github repo under the [asm-products organization](https://github.com/asm-products/). Your product repo will be located at `github.com/asm-products/PRODUCTSLUG`. Please push the source code for your app to this repository. Send an email to assembly@helpful.io if you have problems accessing your repository.
+Each Assembly product has an associated Github repo under the [asm-products organization](https://github.com/asm-products/). Your product repo will be located at `github.com/asm-products/PRODUCTSLUG`. Please push the source code for your app to this repository. Send an email to support@assembly.com if you have problems accessing your repository.
 
 Make sure to remove sensitive info like private configuration keys and passwords.
 
@@ -9,10 +9,10 @@ Make sure to remove sensitive info like private configuration keys and passwords
 You are free to use whatever hosting platform you choose, such as Heroku, AWS, DigitalOcean, Google App Engine, or others. You don't need to transfer this but might want to share access with people in the community who join your team.
 
 #### SSL
-If you require a SSL certificate for your service, send an email to assembly@helpful.io.
+If you require a SSL certificate for your service, send an email to support@assembly.com.
 
 #### Accepting Payments
-Send an email to assembly@helpful.io if your product is already accepting revenue.
+Send an email to support@assembly.com if your product is already accepting revenue.
 
 If you are not accepting payments yet, but would like to, you should use Assembly Payments. Assembly Payments is a proxy through Stripe that allows your product to collect revenue from customers. Using Assembly payments makes it easy for Assembly to distribute revenue to you and contributors on your product. Assembly will issue US citizens a 1099 if their share of the revenue exceeds a certain threshold as specified by the IRS.
 

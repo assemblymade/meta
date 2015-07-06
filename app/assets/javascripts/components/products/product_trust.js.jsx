@@ -60,7 +60,7 @@ const ProductTrust = React.createClass({
     const status = product.trust.domain
     let action = null
     if (UserStore.isSignedIn() && !status && ProductStore.isCoreTeam(UserStore.getUser())) {
-      action = <Button action="mailto:assembly@helpful.io?subject=Domains">Buy or transfer an existing domain</Button>
+      action = <Button action="mailto:support@assembly.com?subject=Domains">Buy or transfer an existing domain</Button>
     } else {
       action = <a href="/guides/domains#domains">Learn more</a>
     }
@@ -116,7 +116,7 @@ const ProductTrust = React.createClass({
     const status = product.trust.mobile
     let action = null
     if (UserStore.isSignedIn() && !status && ProductStore.isCoreTeam(UserStore.getUser())) {
-      action = <Button action="mailto:assembly@helpful.io?subject=Mobile">Submit app for iOS or Android stores</Button>
+      action = <Button action="mailto:support@assembly.com?subject=Mobile">Submit app for iOS or Android stores</Button>
     } else {
       action = <a href="/guides/starting-ios">Learn more</a>
     }
