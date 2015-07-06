@@ -35,7 +35,7 @@ var SwagType = React.createClass({
       this.props.respondToClick(this);
     },
     render: function() {
-      var defaultImage = "https://treasure.assembly.com/assets/flag-36b9a010cd4cc717cc842a5add1a5f65.svg"
+      var defaultImage = "https://d2djt307o0spbm.cloudfront.net/assets/flag-36b9a010cd4cc717cc842a5add1a5f65.svg"
       var classes = (this.state.active ? "active " : '') + "thumbnail flair"
 
       return (
@@ -70,7 +70,7 @@ var SwagTypeSelector = React.createClass({
   },
   renderRow: function(itemRow) {
     var colwidth = 12/itemRow.length;
-    var defaultImage = "https://treasure.assembly.com/assets/flag-36b9a010cd4cc717cc842a5add1a5f65.svg"
+    var defaultImage = "https://d2djt307o0spbm.cloudfront.net/assets/flag-36b9a010cd4cc717cc842a5add1a5f65.svg"
 
     var itemNodes = itemRow.map(function(item, i) {
       return (
