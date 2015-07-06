@@ -1,6 +1,9 @@
 require 'sidekiq/web'
 
 ASM::Application.routes.draw do
+  constraints(:host => /^assembly.com/) do
+    match "/(*path)" => redirect {|params, req| "https://cove.assembly.com/#{params[:path]}"},  via: [:get, :post]
+  end
 
   # api
   # ◕ᴥ◕
