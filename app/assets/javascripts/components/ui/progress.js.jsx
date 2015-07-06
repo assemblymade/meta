@@ -49,7 +49,7 @@ const Progress = React.createClass({
       'progress--sm': size === 'sm',
       'progress--default': size === 'default',
     })
-    
+
     return (
       <div className={cs}>
         {this.props.children}
