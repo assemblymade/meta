@@ -5,8 +5,8 @@ const Avatar = require('../ui/avatar.js.jsx');
 const BountyCard = require('../bounty_card.js.jsx');
 const Button = require('../ui/button.js.jsx');
 const ChecklistStore = require('../../stores/checklist_store');
+const ExportToChangelogPanel = require('./ExportToChangelogPanel.jsx');
 const Icon = require('../ui/icon.js.jsx');
-const MetricsBadge = require('./metrics_badge.js.jsx');
 const OverflowFade = require('../ui/overflow_fade.js.jsx')
 const page = require('page');
 const Partner = require('../partner.js.jsx');
@@ -79,12 +79,6 @@ let ProductShow = React.createClass({
     let trust = null;
     let metrics = null;
     let metaNotice = null;
-
-    if (UserStore.isStaff()) {
-      metrics = <div className="mb3">
-        <MetricsBadge product={product} />
-      </div>
-    }
 
     if (product && product.slug == 'meta') {
       metaNotice = <div className="py3">
@@ -230,7 +224,7 @@ let ProductShow = React.createClass({
                 </Accordion>
               </div>
 
-              {metrics}
+              <ExportToChangelogPanel product={product} />
 
             </div>
           </div>
