@@ -69,30 +69,12 @@ class IdeasController < ProductController
 
   def show
     find_idea!
-
-    @marks = @idea.marks.map(&:name)
-
-    if nfi = @idea.news_feed_item
-      @heartables = ([nfi] + nfi.comments).to_a
-      store_data heartables: @heartables
-      if signed_in?
-        store_data user_hearts: Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
+    respond_to do |format|
+      format.html { redirect_to "http://changelog.assembly.com/rfs/#{@idea.slug}" }
+      format.json do
+        render json: {}
       end
     end
-
-    related_ideas = FilterIdeasQuery.call(mark: @marks.sample).where.not(id: @idea.id)
-    related_ideas = (related_ideas.empty? ?
-      FilterIdeasQuery.call.where.not(id: @idea.id) : related_ideas).limit(2)
-
-    respond_with({
-      idea: IdeaSerializer.new(@idea),
-      heartables: @heartables || [],
-      related_ideas: ActiveModel::ArraySerializer.new(
-        related_ideas,
-        each_serializer: IdeaSerializer
-      ),
-      user_hearts: @user_hearts || []
-    })
   end
 
   def start_conversation
