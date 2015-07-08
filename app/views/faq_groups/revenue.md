@@ -28,7 +28,7 @@ Additionally, most products have “tip contract.” The default tip contract is
 
 # What happens to my App Coins if I stop working on an app?
 
-Your App Coins remain with you in perpetuity, even after you stop working on the products, as long as you remain an active member (Being an active member just means keeping your email information up to date and commenting, upvoting or completing work once per year).
+Your App Coins remain with you in perpetuity, even after you stop working on the products, as long as you remain an active member (Being an active member means keeping your email information up to date, participating on product discussions, and completing a bounty within the year).
 
 Contributions by other community members will continue to earn them new App Coins which would dilute your stake over time. However, these contributions increase the value of the product, so you end up with a smaller slice of a larger pie.
 
