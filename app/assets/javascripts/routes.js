@@ -639,4 +639,3 @@ exports.product_path = function(options){
   var params = options;
   return '/' + params.id + ''
 }
-

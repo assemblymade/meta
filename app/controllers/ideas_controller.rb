@@ -51,31 +51,9 @@ class IdeasController < ProductController
 
   def index
     respond_to do |format|
-      format.html
+      format.html { redirect_to 'http://changelog.assembly.com/rfs' }
       format.json do
-        @ideas = FilterIdeasQuery.call(filter_params).
-                  page(params[:page]).per(IDEAS_PER_PAGE)
-
-        total_pages = @ideas.total_pages
-
-        store_data pagination_store: {
-          current_page: params[:page] || 1,
-          total_pages: total_pages
-        }
-
-        @heartables = @ideas.map(&:news_feed_item)
-        if signed_in?
-          @user_hearts = Heart.where(user_id: current_user.id).where(heartable_id: @heartables.map(&:id))
-        end
-
-        respond_with({
-          categories: categories,
-          heartables: @heartables,
-          ideas: ActiveModel::ArraySerializer.new(@ideas),
-          topics: topics,
-          total_pages: total_pages,
-          user_hearts: @user_hearts
-        })
+        render json: {}
       end
     end
   end
