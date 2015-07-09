@@ -32,8 +32,7 @@ let IdeasHandlers = {
   },
 
   showIdea(data) {
-    let idea = data.idea;
-    window.location.href = `http://changelog.assembly.com/rfs/${idea.slug}`
+    window.location.href = data.url
   },
 
   showStartConversation(idea) {

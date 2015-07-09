@@ -69,10 +69,20 @@ class IdeasController < ProductController
 
   def show
     find_idea!
+    at = @idea.created_at
+    url = [
+      "http://changelog.assembly.com/rfs",
+      at.year,
+      "%02d" % at.month,
+      "%02d" % at.day,
+      @idea.slug
+    ].join('/')
     respond_to do |format|
-      format.html { redirect_to "http://changelog.assembly.com/rfs/#{@idea.slug}" }
+      format.html {
+        redirect_to url
+      }
       format.json do
-        render json: {}
+        render json: {url: url}
       end
     end
   end
