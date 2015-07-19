@@ -80,28 +80,6 @@ class WipsController < ProductController
     respond_with @wip, location: product_wip_path(@product, @wip)
   end
 
-  def award
-    if winner_id = params.fetch(:event_id)
-      authorize! :award, @wip
-      @event = Event.find(winner_id) rescue NewsFeedItemComment.find(winner_id)
-
-      @wip.award! current_user, @event
-
-      if params[:close]
-        @wip.close! current_user
-      end
-
-      if @product.tasks.won_by(@event.user).count == 1
-        BadgeMailer.delay(queue: 'mailer').first_win(@event.id) unless @product.meta?
-      end
-      TrackVested.perform_async(@event.user_id, @product.id, Time.now)
-    end
-    redirect_to product_wip_path(@wip.product, @wip)
-
-    Karma::Kalkulate.new.karma_from_bounty_completion(@wip, current_user.id)
-    Karma::Kalkulate.new.karma_from_bounty_creation_after_completion(@wip)
-  end
-
   def search
     query, product_id = params[:query], params[:product_id]
     @results = Wip.search do
