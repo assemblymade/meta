@@ -7,7 +7,7 @@
     "lint": "node_modules/.bin/jsxhint app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx",
     "postinstall": "npm run bundle",
     "bundle": "node_modules/.bin/browserify -t [ babelify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx app/assets/javascripts/d3/*.js -o app/assets/javascripts/components.js",
-    "watch": "node_modules/.bin/refreshify -t [ babelify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx app/assets/javascripts/d3/*.js -o app/assets/javascripts/components.js -v"
+    "watch": "node_modules/.bin/watchify -t [ babelify reactify ] app/assets/javascripts/components/**.js.jsx app/assets/javascripts/components/**/*.js.jsx app/assets/javascripts/d3/*.js -o app/assets/javascripts/components.js -v"
   },
   "repository": {
     "type": "git",

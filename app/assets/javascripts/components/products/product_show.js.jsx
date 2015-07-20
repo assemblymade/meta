@@ -5,7 +5,6 @@ const Avatar = require('../ui/avatar.js.jsx');
 const BountyCard = require('../bounty_card.js.jsx');
 const Button = require('../ui/button.js.jsx');
 const ChecklistStore = require('../../stores/checklist_store');
-const ExportToChangelogPanel = require('./ExportToChangelogPanel.jsx');
 const Icon = require('../ui/icon.js.jsx');
 const OverflowFade = require('../ui/overflow_fade.js.jsx')
 const page = require('page');
@@ -139,6 +138,10 @@ let ProductShow = React.createClass({
         .sortBy(u => !ProductStore.isCoreTeam(u))
     }
 
+    let newHome = `https://assembly.com/${product.slug}`
+    let ownership = `https://cove.assembly.com/${product.slug}/ownership.csv`
+    let log = `https://cove.assembly.com/${product.slug}/log.csv`
+
     return (
       <div>
         <ProductHeader />
@@ -152,32 +155,19 @@ let ProductShow = React.createClass({
                 <div className="p3 sm-p4">
 
                   <div className="mb3">
-                    <Reveal>
-                      <Markdown color="black" content={product.lead + "\n" + product.description_html} normalized={true} lead={true} ref="description" />
-                    </Reveal>
+                    <div className="markdown black markdown--normalized markdown--lead">
+                      <p>
+                        {product.name} has been migrated to the new Assembly,
+                        you can find it at <a href={newHome}>{newHome}</a>
+                      </p>
 
-                    {this.renderEditButton()}
-                  </div>
-
-                  {metaNotice}
-
-                  <div className="py3">
-                    <div className="clearfix py2">
-                      <a href={`/${product.slug}/posts`} className="right h6">View all</a>
-                      <h6 className="gray-2 caps mt0 mb0">Updates ({this.state.updateCount})
-                      </h6>
+                      <p>
+                        The total ownership ledger can be downloaded
+                        at <a href={ownership}>{ownership}</a> and a more
+                        detailed transaction log of all coin movements can be downloaded
+                        at <a href={log}>{log}</a>
+                      </p>
                     </div>
-                    {this.renderUpdates()}
-                  </div>
-
-                  <div className="py3">
-                    <div className="clearfix py2">
-                      <h6 className="left gray-2 caps mt0 mb0">
-                        Important links
-                      </h6>
-                    </div>
-
-                    <ProductImportantLinks product={product} />
                   </div>
 
                   <div className="py3">
@@ -201,31 +191,6 @@ let ProductShow = React.createClass({
 
                 </div>
               </Tile>
-            </div>
-
-            <div className="sm-col sm-col-4 px3">
-              {this.renderProductProgressWidget()}
-
-              <div className="mb3">
-                <Accordion title="Get started">
-                  <div className="mxn3">
-                    <Tile>
-                      {_.sortBy(this.state.bounties, (b) => b.priority).map((bounty) => {
-                        return <a className="block px3 py2 clearfix border-bottom" href={bounty.url}>
-                          <div className="right blue ml2">
-                            <Icon icon="angle-right" />
-                          </div>
-                          <BountyCard bounty={bounty} key={bounty.id} />
-                        </a>
-                      })}
-                    </Tile>
-                    <a className="h6 block px3 py2 gray-2" href={`${product.url}/bounties`}>View more</a>
-                  </div>
-                </Accordion>
-              </div>
-
-              <ExportToChangelogPanel product={product} />
-
             </div>
           </div>
         </div>

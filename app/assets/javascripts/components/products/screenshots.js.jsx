@@ -48,10 +48,6 @@ let Screenshots = React.createClass({
       return <Carousel images={images} />;
     }
 
-    if (isCore) {
-      return <ProductScreenshotPlaceholder />;
-    }
-
     return null;
   },
 
@@ -107,13 +103,6 @@ let Screenshots = React.createClass({
 
     if (screenshots.length) {
       images = screenshots.map(this.wrapScreenshot(isCore));
-
-      if (isCore) {
-        images.push(
-          <ProductScreenshotPlaceholder size="small" key={'placeholder-' + images.length} />
-        );
-      }
-
       return images;
     }
   }

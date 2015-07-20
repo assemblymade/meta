@@ -47,7 +47,7 @@ var Markdown = React.createClass({
       return (
         <div className={cs}>
           {this.props.content}
-      </div>
+        </div>
       )
     }
 
