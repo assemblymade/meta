@@ -77,15 +77,6 @@ let ProductShow = React.createClass({
     let user = UserStore.getUser();
     let trust = null;
     let metrics = null;
-    let metaNotice = null;
-
-    if (product && product.slug == 'meta') {
-      metaNotice = <div className="py3">
-        <div className="p2 border rounded border-yellow shadow">
-          Hi! Assembly Meta is a special place for us to be transparent about how we&#re building the Assembly platform. Just a note, <span className="bold">this product will not pay out any royalties</span>. We <span className="italic">are</span> planning on doing some nice things for partners, however. &mdash; <span className="gray-2">The Assembly Team</span>
-        </div>
-      </div>
-    }
 
     if (product && _.some(_.values(product.trust))) {
       const renderTrustCol = function(field, label) {
@@ -138,10 +129,6 @@ let ProductShow = React.createClass({
         .sortBy(u => !ProductStore.isCoreTeam(u))
     }
 
-    let newHome = `https://assembly.com/${product.slug}`
-    let ownership = `https://cove.assembly.com/${product.slug}/ownership.csv`
-    let log = `https://cove.assembly.com/${product.slug}/log.csv`
-
     return (
       <div>
         <ProductHeader />
@@ -155,19 +142,7 @@ let ProductShow = React.createClass({
                 <div className="p3 sm-p4">
 
                   <div className="mb3">
-                    <div className="markdown black markdown--normalized markdown--lead">
-                      <p>
-                        {product.name} has been migrated to the new Assembly,
-                        you can find it at <a href={newHome}>{newHome}</a>
-                      </p>
-
-                      <p>
-                        The total ownership ledger can be downloaded
-                        at <a href={ownership}>{ownership}</a> and a more
-                        detailed transaction log of all coin movements can be downloaded
-                        at <a href={log}>{log}</a>
-                      </p>
-                    </div>
+                    {this.renderDescription()}
                   </div>
 
                   <div className="py3">
@@ -196,6 +171,71 @@ let ProductShow = React.createClass({
         </div>
       </div>
     );
+  },
+
+  renderDescription() {
+    const { product } = this.state
+
+    if (product.slug === 'coderwall') {
+      return this.renderProductDescription()
+    }
+
+    let newHome = `https://assembly.com/${product.slug}`
+    let ownership = `https://cove.assembly.com/${product.slug}/ownership.csv`
+    let log = `https://cove.assembly.com/${product.slug}/log.csv`
+
+    return (
+      <div className="markdown black markdown--normalized markdown--lead">
+        <p>
+          {product.name} has been migrated to the new Assembly,
+          you can find it at <a href={newHome}>{newHome}</a>
+        </p>
+
+        <p>
+          The total ownership ledger can be downloaded
+          at <a href={ownership}>{ownership}</a> and a more
+          detailed transaction log of all coin movements can be downloaded
+          at <a href={log}>{log}</a>
+        </p>
+      </div>
+    )
+  },
+
+  renderProductDescription() {
+    const { product } = this.state
+
+    let metaNotice = null;
+
+    if (product && product.slug == 'meta') {
+      metaNotice = <div className="py3">
+        <div className="p2 border rounded border-yellow shadow">
+          Hi! Assembly Meta is a special place for us to be transparent about how we&#re building the Assembly platform. Just a note, <span className="bold">this product will not pay out any royalties</span>. We <span className="italic">are</span> planning on doing some nice things for partners, however. &mdash; <span className="gray-2">The Assembly Team</span>
+        </div>
+      </div>
+    }
+
+    return (
+      <div>
+        <div>
+          <Reveal>
+            <Markdown color="black" content={product.lead + "\n" + product.description_html} normalized={true} lead={true} ref="description" />
+          </Reveal>
+
+          {this.renderEditButton()}
+        </div>
+
+        {metaNotice}
+
+        <div className="py3">
+          <div className="clearfix py2">
+            <a href={`/${product.slug}/posts`} className="right h6">View all</a>
+            <h6 className="gray-2 caps mt0 mb0">Updates ({this.state.updateCount})
+            </h6>
+          </div>
+          {this.renderUpdates()}
+        </div>
+      </div>
+    )
   },
 
   renderProductProgressWidget() {

@@ -30,6 +30,10 @@ let ProductsHandlers = {
   },
 
   showProductBounties(data) {
+    if (data.redirect_to) {
+      window.location.href = data.redirect_to
+      return
+    }
     let {
       assets,
       bounties,
@@ -91,6 +95,11 @@ let ProductsHandlers = {
   },
 
   showProductBounty(data) {
+    if (data.redirect_to) {
+      window.location.href = data.redirect_to
+      return
+    }
+
     let {
       bounty,
       product,

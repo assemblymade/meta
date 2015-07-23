@@ -19,4 +19,7 @@ module.exports = [
   ['/:product_id/trust', require('../components/products/product_trust.js.jsx'), ProductsHandlers.showProductTrust],
   ['/:product_id/metrics/snippet', require('../components/products/metrics_snippet.js.jsx'), ProductsHandlers.showProductMetrics],
   ['/:product_id/partners', require('../components/products/product_partners.js.jsx'), ProductsHandlers.showProductPartners],
+
+  ['/:product_id/bounties', require('../components/products/product_bounties.js.jsx'), ProductsHandlers.showProductBounties],
+  ['/:product_id/bounties/:id', require('../components/products/product_bounty.js.jsx'), ProductsHandlers.showProductBounty],
 ];

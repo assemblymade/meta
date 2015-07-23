@@ -5,7 +5,70 @@ class TasksController < WipsController
     only: :index
 
   def index
-    redirect_to "https://assembly.com/#{params[:product_id]}"
+    if params[:product_id] != 'coderwall'
+      respond_to do |format|
+        format.html { redirect_to "https://assembly.com/#{params[:product_id]}" }
+        format.json { render json: { redirect_to: "https://assembly.com/#{params[:product_id]}" } }
+      end
+
+      return
+    end
+
+    reject_blacklisted_users!
+
+    respond_to do |format|
+      format.html do
+        expires_now
+        render 'bounties/index'
+      end
+
+      format.json do
+        if params[:count]
+          tasks_count = {
+            total: @product.tasks.where(state: ['open', 'awarded']).count
+          }
+          render json: tasks_count
+          return
+        end
+
+        # TODO Figure out a better way to do this by manually setting params to FilterWipsQuery
+        if params.fetch(:format, 'html') == 'html'
+          params.merge!(sort: 'priority', state: 'open')
+        end
+
+        @bounties = find_wips
+        store_data bounties: @bounties
+
+        @heartables = NewsFeedItem.where(target_id: @bounties.map(&:id))
+
+        response = {
+            tags: Wip::Tag.suggested_tags,
+            product: ProductSerializer.new(@product, scope: current_user),
+            valuation: {
+              url: product_wips_path(@product),
+              maxOffer: (6 * @product.average_bounty).round(-4),
+              averageBounty: @product.average_bounty,
+              coinsMinted: @product.coins_minted,
+              profitLastMonth: @product.profit_last_month,
+              steps: BountyGuidance::Valuations.suggestions(@product),
+            },
+            assets: ActiveModel::ArraySerializer.new(
+              @product.assets.order(created_at: :desc).limit(4),
+              each_serializer: AssetSerializer
+            )
+        }.merge(
+          PaginationSerializer.new(
+            @bounties,
+            each_serializer: BountyListSerializer,
+            scope: current_user,
+            root: :bounties
+          ).as_json
+        )
+
+        render json: response
+      end
+    end
+
   end
 
   def new
@@ -13,7 +76,74 @@ class TasksController < WipsController
   end
 
   def show
-    redirect_to "https://assembly.com/#{params[:product_id]}"
+    if params[:product_id] != 'coderwall'
+      respond_to do |format|
+        format.html { redirect_to "https://assembly.com/#{params[:product_id]}" }
+        format.json { render json: { redirect_to: "https://assembly.com/#{params[:product_id]}" } }
+      end
+
+      return
+    end
+
+    if params[:cache] == 'false'
+     return render json: {
+       product: ProductSerializer.new(@product),
+       bounty: { id: @wip.id },
+     }
+   end
+
+   @bounty = @wip # fixme: legacy
+
+   @milestone = MilestoneTask.where('task_id = ?', @bounty.id).first.try(:milestone)
+   if signed_in?
+     @invites = Invite.where(invitor: current_user, via: @wip)
+   end
+
+   store_data product_assets: @bounty.product.assets
+
+   if Watching.watched?(current_user, @bounty.news_feed_item)
+     store_data user_subscriptions: [@bounty.news_feed_item.id]
+   end
+
+   # FIXME: This call is dominating the worker queue
+   # if current_user && @wip
+   #   ViewWorker.perform_async(current_user.id, @wip.id, "Wip")
+   # end
+
+   respond_to do |format|
+     format.html { render 'bounties/show' }
+     format.json do
+       response = Rails.cache.fetch(@bounty) do
+         {
+           tags: Wip::Tag.suggested_tags,
+           product: ProductSerializer.new(@product, scope: current_user),
+           valuation: {
+             product: ProductSerializer.new(@product),
+             url: product_wips_path(@product),
+             maxOffer: (6 * @product.average_bounty).round(-4),
+             averageBounty: @product.average_bounty,
+             coinsMinted: @product.coins_minted,
+             profitLastMonth: @product.profit_last_month,
+             steps: BountyGuidance::Valuations.suggestions(@product),
+           },
+           assets: ActiveModel::ArraySerializer.new(
+             @product.assets.order(created_at: :desc).limit(4),
+             each_serializer: AssetSerializer
+           )
+         }
+       end.merge(
+         bounty: BountySerializer.new(
+           @bounty,
+           scope: current_user
+         ),
+         item: NewsFeedItemSerializer.new(@bounty.news_feed_item),
+         heartables: @heartables,
+         user_hearts: @user_hearts
+       )
+
+       render json: response
+     end
+   end
   end
 
   def assign
