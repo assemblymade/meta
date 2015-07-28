@@ -22,4 +22,7 @@ module.exports = [
 
   ['/:product_id/bounties', require('../components/products/product_bounties.js.jsx'), ProductsHandlers.showProductBounties],
   ['/:product_id/bounties/:id', require('../components/products/product_bounty.js.jsx'), ProductsHandlers.showProductBounty],
+  ['/:product_id/posts', require('../components/products/product_posts.js.jsx'), ProductsHandlers.showProductPosts],
+  ['/:product_id/posts/new', require('../components/products/product_new_post.js.jsx'), ProductsHandlers.showProductNewPost],
+  ['/:product_id/posts/:id', require('../components/products/product_post.js.jsx'), ProductsHandlers.showProductPost]
 ];

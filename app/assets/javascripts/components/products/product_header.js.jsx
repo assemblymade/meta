@@ -108,6 +108,7 @@ const ProductHeader = React.createClass({
                 <Nav type="tabs">
                   <Nav.Item active={this.isActive('overview')} href={product.url} label="Overview" />
                   <Nav.Item active={this.isActive('bounties')} href={product.url + '/bounties'} label="Bounties" />
+                  <Nav.Item active={this.isActive('posts')} href={product.url + '/posts'} label="Posts" />
                 </Nav>
               </div>
             </div>

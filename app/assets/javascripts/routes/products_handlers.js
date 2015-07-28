@@ -156,6 +156,11 @@ let ProductsHandlers = {
   },
 
   showProductPost(data) {
+    if (data.redirect_to) {
+      window.location.href = data.redirect_to
+      return
+    }
+
     let {
       heartables,
       item,
@@ -198,6 +203,11 @@ let ProductsHandlers = {
   },
 
   showProductPosts(data) {
+    if (data.redirect_to) {
+      window.location.href = data.redirect_to
+      return
+    }
+
     let {
       heartables,
       posts,
