@@ -20,8 +20,8 @@ class Users::BalancesController < ApplicationController
 
     @balance = User::Balance.new(current_user)
 
-    if @balance.available_to_payout < 10000
-      flash[:warning] = "Sorry, you can't withdraw less than $100.00 at this stage"
+    if @balance.available_to_payout < 1
+     flash[:warning] = "Sorry, you can't withdraw less than $0.01 at this time"
     else
       @withdrawal = User::Withdrawal.create!(
         user: current_user,

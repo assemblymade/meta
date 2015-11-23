@@ -15,7 +15,8 @@ class ProfitReport < ActiveRecord::Base
   FEE = 0.10
 
   def self.grace_period
-    1.month
+    # 1.month
+    1.day
   end
 
   def profit

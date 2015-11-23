@@ -36,3 +36,5 @@ vagrant/cache
 vagrant/meta-box/output-virtualbox-iso/
 vagrant/meta-box/packer_cache/
 vagrant/meta-box/*.box
+
+shutdown.*
