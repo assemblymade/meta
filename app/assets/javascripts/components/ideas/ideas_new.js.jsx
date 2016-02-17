@@ -1,9 +1,9 @@
 'use strict';
 
 const Drawer = require('../ui/drawer.js.jsx');
-const Tile = require('../ui/tile.js.jsx')
 const IdeaForm = require('./idea_form.js.jsx');
-const Icon = require('../ui/icon.js.jsx')
+const Icon = require('../ui/icon.js.jsx');
+const Tile = require('../ui/tile.js.jsx');
 
 let IdeasNew = React.createClass({
   propTypes: {
@@ -34,24 +34,17 @@ let IdeasNew = React.createClass({
 
   render() {
     return (
-      <div className="container">
-        <div className="clearfix mt4 mb4">
-          <div className="col-8 mx-auto">
-            <Tile>
-              <div className="p4">
+      <div className="sm-col-11 md-col-8 mx-auto mt3 mb4">
+        <Tile>
+          <div className="mt3 mb4 px4">
+            <img className="mx-auto block" src="https://d1015h9unskp4y.cloudfront.net/attachments/da827015-7f37-4fdb-80d0-b8d68ae71f32/asm_mountain_360.png" />
 
-                <div className="center mb4">
-                  <img src="https://d1015h9unskp4y.cloudfront.net/attachments/da827015-7f37-4fdb-80d0-b8d68ae71f32/asm_mountain_360.png" />
+            <h3 className="mb1 center">Turn your idea into a great product</h3>
+            <h4 className="mt0 mb3 regular gray-2 center">The community collaborates to build the best ideas into products.</h4>
 
-                  <h3 className="mt0 mb1">Turn your idea into a great product</h3>
-                  <h4 className="mt0 mb0 regular gray-2">The community collaborates to build the best ideas into products.</h4>
-                </div>
-
-                <IdeaForm />
-              </div>
-            </Tile>
+            <IdeaForm />
           </div>
-        </div>
+        </Tile>
       </div>
     );
   }
