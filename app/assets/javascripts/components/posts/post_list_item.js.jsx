@@ -14,7 +14,6 @@ var PostListIem = React.createClass({
   /**
    * ListItemMixin: this.onModalHidden()
    *                this.renderComments({Number: count})
-   *                this.renderLove({String: news_feed_item_id})
    *                this.renderTags({[Object: tag]})
    *                this.showModal()
    */
@@ -28,21 +27,31 @@ var PostListIem = React.createClass({
 
   render: function() {
     var post = this.props.post;
+    var user = post.user;
 
     return (
       <div className="bg-white rounded shadow mb2">
-        <div className="px3">
-          {this.renderTitle()}
+        <div className="px3 py1">
+          <a href={post.url} className="h4 mt2 black block">
+            {post.title}
+          </a>
+          <p className="mb1 h6 gray-2">
+            written {moment(post.created_at).fromNow()} by <a href={user.url}>@{user.username}</a>
+          </p>
+
           {this.renderSummary()}
         </div>
 
-        <div className="px3 mb1 mt0 gray-2">
-
-          {this.renderComments(post.comments_count)}
+        <div className="border-top px3 py2 gray-2">
+          <div>
+            <div className="inline-block mr2">
+              <Heart size="small" heartable_type='NewsFeedItem' heartable_id={this.props.post.news_feed_item_id} />
+            </div>
+            {this.renderComments(post.comments_count)}
+          </div>
           {this.renderTags(post.marks)}
         </div>
-        {this.renderLove(this.props.post.news_feed_item_id)}
-        {this.renderUser()}
+
         {this.renderModal()}
       </div>
 
@@ -71,40 +80,11 @@ var PostListIem = React.createClass({
 
     if (post.summary) {
       return (
-        <div className="h5 mt0 mb2 gray-2">
+        <div className="h5 mt2 mb2 gray-1">
           {post.summary}
         </div>
       );
     }
-  },
-
-  renderTitle: function() {
-    var post = this.props.post;
-
-    return (
-      <div className="h4 mb1 mt0" style={{ paddingTop: '1rem' }}>
-        <a href={post.url} className="black">
-          {post.title}
-        </a>
-      </div>
-    );
-  },
-
-  renderUser: function() {
-    var post = this.props.post;
-    var user = post.user;
-
-    return (
-      <div className="h6 px3 py2 b0 mt0 border-top clearfix">
-        <div className="left mr2">
-          <Avatar user={user} size={24} />
-        </div>
-
-        <div className="overflow-hidden gray-2">
-          <a href={user.url}>@{user.username}</a> wrote this post {moment(post.created_at).fromNow()}
-        </div>
-      </div>
-    );
   }
 });
 

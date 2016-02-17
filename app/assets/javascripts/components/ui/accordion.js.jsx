@@ -18,7 +18,7 @@ const Accordion = React.createClass({
         chevron = null
 
     if (this.state.open) {
-      content = <div className="px3">{this.props.children}</div>
+      content = this.props.children
     }
 
     if (this.state.open) {
@@ -29,7 +29,7 @@ const Accordion = React.createClass({
 
     return (
       <div>
-        <a className="pill block black black-hover pointer px3 py1 mb1 h5 mt0 mb0 visible-hover-wrapper" onClick={this.toggleOpen}>
+        <a className="pill block black black-hover bg-darken-1-hover pointer px3 py1 mb1 h5 mt0 mb0 visible-hover-wrapper" onClick={this.toggleOpen}>
           <div className="visible-hover right gray-2">
             {chevron}
           </div>
