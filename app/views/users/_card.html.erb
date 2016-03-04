@@ -8,19 +8,21 @@
     <h3 class="black mt0 mb0"><strong><%= user.username %></strong></h3>
 
     <% if user.location? %>
-      <div class="h6 gray-2 mt0 mb0"><%= user.location %></div>
+      <div class="h6 gray-2 mt1">
+        <%= inline_react_component 'Icon', icon: 'map-marker' %>
+        <%= user.location %>
+      </div>
     <% end %>
   </div>
 
   <% if user.bio? %>
-    <div class="p3 center gray-1 border-top">
+    <div class="p2 center gray-1 border-top">
       <%= react_component 'Markdown', content: markdown(user.bio), normalized: true %>
     </div>
   <% end %>
 
   <div class="h6 mt0 mb0 center">
 
-    <!-- Staff -->
     <% if user.staff? %>
       <span class="block px3 py2 border-top gray-2" title="Assembly Staff">
         <%= inline_react_component 'Icon', icon: 'coffee' %>
@@ -28,9 +30,8 @@
       </span>
     <% end %>
 
-    <!-- Twitter -->
     <% if user.twitter_connected? %>
-      <a class="block px3 py2 border-top gray-2" href="<%= user.twitter_url %>" title="@<%= @user.twitter_nickname %>">
+      <a class="block px3 py2 border-top gray-2" href="<%= user.twitter_url %>" target="_blank" title="@<%= @user.twitter_nickname %>">
         <%= inline_react_component 'Icon', icon: 'twitter' %>
         <%= user.twitter_nickname %>
       </a>
@@ -41,9 +42,8 @@
       </a>
     <% end %>
 
-    <!-- Github -->
     <% if user.github_connected? %>
-      <a class="block px3 py2 border-top gray-2" href="<%= user.github_url %>" title="<%= @user.github_login %>">
+      <a class="block px3 py2 border-top gray-2" href="<%= user.github_url %>" title="<%= @user.github_login %>" target="_blank">
         <%= inline_react_component 'Icon', icon: 'github' %>
         <%= @user.github_login %>
       </a>
@@ -56,12 +56,9 @@
 
     <% if current_user %>
       <% if current_user.is_staff? %>
-        <div class="block border-top gray-2 py2" style="font-size: 80%">
-          Bitcoin Assets Address
-          <br>
-          <a href=<%= user.coinprism_url %>>
-            <%= user.wallet_public_address %>
-          </a>
+        <div class="block border-top gray-2 py2">
+          <span class="block">Bitcoin Assets Address:</span>
+          <%= link_to user.wallet_public_address, user.coinprism_url %>
         </div>
       <% end %>
     <% end %>
@@ -69,13 +66,7 @@
   </div>
 </div>
 
-<% if can?(:update, @user) %>
-  <!-- FIXME: This URL is a hack -->
-  <a class="btn btn-default btn-block" href="<%= edit_user_path %>">
-    Edit Profile
-  </a>
-  <br>
-<% end %>
+<%= link_to "Edit profile", edit_user_path, class: "btn btn-default btn-block mb2" if can?(:update, @user) %>
 
 <%= react_component 'ProfileProductBadges' %>
 
